@@ -20,12 +20,10 @@ package org.apache.camel.component.esper;
 import java.util.List;
 
 import net.esper.event.EventBean;
-import net.esper.event.EventType;
 import org.apache.camel.ContextTestSupport;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.util.ObjectHelper;
 
 /**
  * @version $Revision: 1.1 $
@@ -35,10 +33,10 @@ public class EsperRouteTest extends ContextTestSupport {
         MockEndpoint endpoint = getMockEndpoint("mock:results");
         endpoint.expectedMessageCount(2);
 
-        template.sendBody("direct:start", new MyEvent("a",1));
-        template.sendBody("direct:start", new MyEvent("b",5));
-        template.sendBody("direct:start", new MyEvent("c",1));
-        template.sendBody("direct:start", new MyEvent("d",5));
+        template.sendBody("direct:start", new MyEvent("a", 1));
+        template.sendBody("direct:start", new MyEvent("b", 5));
+        template.sendBody("direct:start", new MyEvent("c", 1));
+        template.sendBody("direct:start", new MyEvent("d", 5));
 
         String[] expectedFoos = {"b", "d"};
 
