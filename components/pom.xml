@@ -35,6 +35,7 @@
 
   <modules>
     <module>camel-esper</module>
+    <module>camel-exist</module>
   </modules>
 
 </project>
