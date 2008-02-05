@@ -176,6 +176,7 @@
 
   <modules>
     <module>components</module>
+    <module>examples</module>
   </modules>
 
   <scm>
