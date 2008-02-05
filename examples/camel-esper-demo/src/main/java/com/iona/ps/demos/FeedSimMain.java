@@ -82,7 +82,7 @@ public class FeedSimMain {
         Random random = new Random();
         while(seconds < numSeconds) {
             seconds++;
-            Thread.sleep(500);
+            Thread.sleep(1000);
 
             FeedEnum feedToDropOff;
             if (random.nextDouble() * 100 < dropProbability)
