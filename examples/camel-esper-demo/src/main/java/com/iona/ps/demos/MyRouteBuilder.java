@@ -17,7 +17,7 @@ public class MyRouteBuilder extends RouteBuilder {
 
 		from("activemq:EventStreamQueue").to("esper://feed");
 		from("esper://feed?eql=insert into TicksPerSecond select feed, count(*) as cnt from com.iona.ps.demos.MarketDataEvent.win:time_batch(1 sec) group by feed")
-				.to("esper:// feed");
+				.to("esper://feed");
 		from("esper://feed?eql=select feed, avg(cnt) as avgCnt, cnt as feedCnt from TicksPerSecond.win:time(10 sec) group by feed + having cnt < avg(cnt) * 0.75")
 				.process(new Processor() {
 					@SuppressWarnings("unchecked")
@@ -28,6 +28,6 @@ public class MyRouteBuilder extends RouteBuilder {
 						System.out.println(map);
 					}
 				});
-
+		
 	}
 }
