@@ -53,15 +53,17 @@ public class EsperConsumer extends DefaultConsumer<Exchange> implements UpdateLi
     }
 
     public void update(EventBean[] newEvents, EventBean[] oldEvents) {
-        for (EventBean eventBean : newEvents) {
-            Object underlying = eventBean.getUnderlying();
-            Exchange exchange = endpoint.createExchange(eventBean, statement);
-            try {
-                getProcessor().process(exchange);
-            }
-            catch (Exception e) {
-                throw new RuntimeExchangeException(e, exchange);
-            }
-        }
+		if (newEvents != null) {
+	        for (EventBean eventBean : newEvents) {
+	            Object underlying = eventBean.getUnderlying();
+	            Exchange exchange = endpoint.createExchange(eventBean, statement);
+	            try {
+	                getProcessor().process(exchange);
+	            }
+	            catch (Exception e) {
+	                throw new RuntimeExchangeException(e, exchange);
+	            }
+	        }
+		}
     }
 }
