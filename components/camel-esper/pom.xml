@@ -24,7 +24,7 @@
 
   <parent>
     <groupId>org.apache.camel.extra</groupId>
-    <artifactId>camel-parent</artifactId>
+    <artifactId>components</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
 
@@ -40,7 +40,7 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-  
+
   <properties>
     <camel.osgi.export.pkg>org.apache.camel.component.esper*</camel.osgi.export.pkg>
   </properties>
@@ -65,11 +65,6 @@
       <scope>test</scope>
     </dependency>
 
-    <dependency>
-      <groupId>commons-logging</groupId>
-      <artifactId>commons-logging</artifactId>
-      <scope>test</scope>
-    </dependency>
     <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
