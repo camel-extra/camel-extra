@@ -33,6 +33,14 @@
   <name>Camel :: Esper</name>
   <description>Camel Esper support</description>
 
+  <licenses>
+    <license>
+      <name>GPL, Version 3.0</name>
+      <url>http://www.gnu.org/licenses/gpl.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+  
   <properties>
     <camel.osgi.export.pkg>org.apache.camel.component.esper*</camel.osgi.export.pkg>
   </properties>
