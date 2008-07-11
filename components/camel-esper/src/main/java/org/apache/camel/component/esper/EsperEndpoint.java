@@ -7,6 +7,8 @@
  **************************************************************************************/
 package org.apache.camel.component.esper;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import net.esper.client.EPAdministrator;
 import net.esper.client.EPRuntime;
 import net.esper.client.EPServiceProvider;
@@ -31,6 +33,8 @@ public class EsperEndpoint extends DefaultEndpoint<Exchange> {
     private boolean mapEvents;
     private String pattern;
     private String eql;
+    private EPStatement statement;
+    private AtomicInteger consumers = new AtomicInteger(0);
 
     public EsperEndpoint(String uri, EsperComponent component, String name) {
         super(uri, component);
@@ -47,23 +51,40 @@ public class EsperEndpoint extends DefaultEndpoint<Exchange> {
     }
 
     public EsperConsumer createConsumer(Processor processor) throws Exception {
-        EPStatement statement = createStatement();
+        EPStatement stat = getStatement();
+        consumers.incrementAndGet();
         return new EsperConsumer(this, statement, processor);
     }
 
     @Override
     public PollingConsumer<Exchange> createPollingConsumer() throws Exception {
-        EPStatement statement = createStatement();
+        EPStatement stat = getStatement();
+        consumers.incrementAndGet();
         return new EsperPollingConsumer(this, statement);
     }
 
-    public EPStatement createStatement() {
+    private EPStatement getStatement() {
+        if (statement == null) {
+            statement = createStatement();
+            //statement.start();
+        }
+        return statement;
+    }
+
+    protected EPStatement createStatement() {
         if (pattern != null) {
             return getEsperAdministrator().createPattern(pattern);
         }
         else {
             ObjectHelper.notNull(eql, "eql or pattern");
             return getEsperAdministrator().createEQL(eql);
+        }
+    }
+
+    public synchronized void removeConsumer() {
+        if (0 == consumers.decrementAndGet()) {
+            statement.stop();
+            statement.destroy();
         }
     }
 

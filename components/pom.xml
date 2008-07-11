@@ -36,6 +36,7 @@
   <modules>
     <module>camel-esper</module>
     <module>camel-exist</module>
+    <module>camel-hibernate</module>
     <!--<module>camel-vtdxml</module>-->
   </modules>
 

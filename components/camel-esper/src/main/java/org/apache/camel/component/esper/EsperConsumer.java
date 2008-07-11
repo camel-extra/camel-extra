@@ -32,18 +32,17 @@ public class EsperConsumer extends DefaultConsumer<Exchange> implements UpdateLi
     protected void doStart() throws Exception {
         super.doStart();
         statement.addListener(this);
-        //statement.start();
     }
 
     @Override
     protected void doStop() throws Exception {
         super.doStop();
-        statement.stop();
-        statement.destroy();
+        statement.removeListener(this);
+        endpoint.removeConsumer();
     }
 
     public void update(EventBean[] newEvents, EventBean[] oldEvents) {
-		if (newEvents != null) {
+      if (newEvents != null) {
 	        for (EventBean eventBean : newEvents) {
 	            Object underlying = eventBean.getUnderlying();
 	            Exchange exchange = endpoint.createExchange(eventBean, statement);
@@ -54,6 +53,6 @@ public class EsperConsumer extends DefaultConsumer<Exchange> implements UpdateLi
 	                throw new RuntimeExchangeException(e, exchange);
 	            }
 	        }
-		}
+		  }
     }
 }
