@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping
+	package="org.apache.camel.examples">
+
+	<import class="MultiSteps"/>
+
+	<class name="MultiSteps">
+
+		<id name="id">
+			<generator class="native"/>
+		</id>
+
+		<property name="address"
+				length="1000"/>
+
+    <property name="step"/>
+  </class>
+
+</hibernate-mapping>
