@@ -82,9 +82,16 @@ public class HibernateConsumer extends ScheduledPollConsumer<Exchange> {
         Exchange exchange = createExchange(result);
         try {
             getProcessor().process(exchange);
+            if (exchange.isFailed()) {
+                throw new RuntimeCamelException(exchange.getException());
+            }
         } catch (Exception e) {
             LOG.error("Failed: " + e, e);
-            throw new HibernateException(e);
+            if (e instanceof RuntimeCamelException) {
+                throw (RuntimeCamelException)e;
+            } else {
+                throw new RuntimeCamelException(e);
+            }
         }
     }
 
