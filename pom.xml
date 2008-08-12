@@ -161,21 +161,16 @@
 
   <distributionManagement>
     <repository>
-      <id>camel-extra.releases</id>
-      <name>Apache Release Distribution Repository</name>
-      <url>https://camel-extra.googlecode.com/svn/repo/</url>
+      <id>camel-extra-release</id>
+      <name>Camel Extra Maven repository of releases</name>
+      <url>dav:https://camel-extra.googlecode.com/svn/maven2/releases</url>
     </repository>
-    <!--
-        <snapshotRepository>
-          <id>apache.snapshots</id>
-          <name>Apache Development Snapshot Repository</name>
-          <url>${snapshot-repo-url}</url>
-        </snapshotRepository>
-        <site>
-          <id>apache.website</id>
-          <url>${site-repo-url}</url>
-        </site>
-    -->
+    <snapshotRepository>
+      <id>camel-extra-snapshot</id>
+      <name>Camel Extra Maven repository of snapshots</name>
+      <url>dav:https://camel-extra.googlecode.com/svn/maven2/snapshots</url>
+      <uniqueVersion>false</uniqueVersion>
+    </snapshotRepository>
   </distributionManagement>
 
   <scm>
