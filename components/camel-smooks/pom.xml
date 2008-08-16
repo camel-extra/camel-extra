@@ -1,0 +1,74 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.apache.camel.extra</groupId>
+        <artifactId>components</artifactId>
+        <version>1.0</version>
+    </parent>
+
+    <artifactId>camel-smooks</artifactId>
+    <packaging>bundle</packaging>
+    <name>Camel :: Smoks</name>
+    <description>Camel Smooks support</description>
+
+    <properties>
+        <camel.osgi.export.pkg>org.apache.camel.component.smooks.*;org.apache.camel.dataformat.edi.*</camel.osgi.export.pkg>
+    </properties>
+
+    <repositories>
+        <!-- official codehaus maven repo -->
+        <repository>
+            <id>codehaus</id>
+            <url>http://dist.codehaus.org</url>
+        </repository>
+
+        <!-- snapshot repo for newer versions of smoks -->
+        <repository>
+            <id>codehaus.m2.snapshots</id>
+            <url>http://snapshots.repository.codehaus.org</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+    </repositories>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>milyn</groupId>
+            <artifactId>milyn-smooks-core</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>milyn</groupId>
+            <artifactId>milyn-smooks-edi</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+
+        <!-- testing -->
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-core</artifactId>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+</project>
