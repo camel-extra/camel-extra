@@ -15,7 +15,7 @@
     <description>Camel Smooks support</description>
 
     <properties>
-        <camel.osgi.export.pkg>org.apache.camel.component.smooks.*;org.apache.camel.dataformat.edi.*</camel.osgi.export.pkg>
+        <camel.osgi.export.pkg>org.apache.camel.dataformat.edi</camel.osgi.export.pkg>
     </properties>
 
     <repositories>
