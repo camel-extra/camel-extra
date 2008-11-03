@@ -1,0 +1,15 @@
+import spit;
+
+extension org::apache::camel::spit::Extensions reexport;
+extension org::apache::camel::spit::GenEditorExtensions reexport;
+
+/*
+ * use this file to overwrite the label() and the image()
+ * extension for your model elements
+ */
+
+ String label(Splitter thing) : 
+     "splitter";
+
+String label(PropertiesBlock pb) : "properties";
+String label(PropertyDef pd) : pd.name.toString() ;

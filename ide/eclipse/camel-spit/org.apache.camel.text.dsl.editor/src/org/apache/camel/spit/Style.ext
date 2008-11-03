@@ -1,0 +1,15 @@
+import scanning;
+import spit;
+
+extension org::apache::camel::spit::GenStyle reexport;
+
+/*
+ * Overwrite 'FontStyle fontstyle(String keyword, Object ctx)' to customize the style of keywords.
+ * Use 'createFontStyle(boolean bold, boolean italic, boolean strikethrough, boolean underline, Color fg, Color bg)' 
+ * and 'createColor(Integer red, Integer green, Integer blue)' as utility extenisons
+ *
+ * By default the context sensitive coloring is NOT executed. To change this overwrite
+ * 'delayContextSensitiveStyling()' where -1 means no execution, 0 stands for execution in time and any number larger 
+ * than 0 is the amount of milliseconds to deleay the context coloring;
+ */
+

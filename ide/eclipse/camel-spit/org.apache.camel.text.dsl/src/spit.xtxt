@@ -1,0 +1,146 @@
+//specify your DSL grammar rules here ...
+//IMPORTANT: You should change the property 'overwrite.pluginresources=true' in the properties file to 'overwrite.pluginresources=false' AFTER first generation
+
+File :
+    (imports+=Import)*
+    (interceptorDecls+=GlobalInterceptorDecl)*
+    (routes+=Route)*
+    (interceptorDefs+=InterceptorChainDef)*
+    ;
+    
+Route :
+    "route" name=ID from=From (Interceptors)? "{" process=ProcessExpr "}"
+    ;
+ 
+Import : 
+    "import" (location=URI)
+    ;
+    
+GlobalInterceptorDecl :
+    "global" "interceptors" (interceptorName=[InterceptorChainDef])
+    ;
+    
+InterceptorChainDef :
+    "interceptor" name=ID "{"
+       (chain+=BeanExpr)+
+     "}"
+     ;
+
+Interceptors :
+    "interceptors" "(" (interceptorName+=[InterceptorChainDef])+ ")"
+    ;
+    
+From :
+    "from" Endpoint
+    ;
+
+To :
+    "to" Endpoint
+    ;
+
+PatternExpr :
+   Choice | Recipients | Pipeline | Filter | Splitter | Resequencer | Transformer | DynamicRecipients
+   ;
+     
+Endpoint :
+    uri=STRING
+    ;
+       
+ProcessExpr : 
+   PatternOrBeanExpr
+   ;
+   
+PatternOrBeanExpr :
+   BeanExpr | PatternExpr
+   ;
+   
+BeanExpr :
+   BEAN id=ID (method=ID)?
+   ;
+
+SimplePattern : 
+    (Interceptors)? "{"
+        (targets+=ToTarget)+
+        (PropertiesBlock)?
+    "}"
+    ;
+    
+Transformer :
+   "transformer" (Interceptors)? "{"
+       beanref=BeanExpr
+       (target+=ToTarget)+
+   "}"
+    ;
+    
+Choice :
+   "choice" (Interceptors)? "{"
+      (when+=WhenClause)*
+      (otherwise=OtherwiseClause)?
+    "}"
+   ;
+    
+Recipients :
+    "recipients" SimplePattern
+    ;
+
+DynamicRecipients :
+    "dynamic" "recipients" Expression
+    ;
+
+Pipeline :
+    "pipeline" SimplePattern
+    ;
+  
+Filter :
+    "filter" expr=Expression SimplePattern
+    ;
+
+Splitter :
+   "splitter" expr=Expression SimplePattern
+   ;
+
+Resequencer :
+   "resequence" expr=Expression SimplePattern
+   ;
+          
+WhenClause :
+   "when" expr=Expression "{"
+       (target+=ToTarget)+
+   "}"
+    ;
+
+OtherwiseClause :
+    "otherwise" "{" target=ToTarget "}"
+    ;
+           
+Expression :
+   lang=ID "(" value=STRING ")"
+   ;
+
+PropertiesBlock :
+    "properties" "{"
+       (properties+=PropertyDef)+
+   "}"
+   ;
+
+PropertyDef :
+   name=SCOPED_ID "=" value=STRING
+   ;
+            
+ToTarget :
+    To | ProcessExpr | Fault 
+    ;
+
+Fault :
+    "fault" STRING
+    ;
+    
+SCOPED_ID :
+    ID ("." ID)*
+    ;
+    
+//Native STRING :
+//    "'\'' ~('\''|'\n'|'\r')* '\'' "
+//    ;
+
+BEAN:  "bean";
