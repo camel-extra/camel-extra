@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xtext:XtextFile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xtext="http://www.openarchitectureware.org/xtext" name="spit" nsURI="http://activemq.apache.org/camel/spit">
+  <rules xsi:type="xtext:TypeRule" name="File">
+    <type alias="" name="File"/>
+    <content xsi:type="xtext:Group">
+      <children xsi:type="xtext:Assignment" cardinality="ANY" feature="imports" operator="ADD">
+        <token xsi:type="xtext:RuleName" name="Import"/>
+      </children>
+      <children xsi:type="xtext:Assignment" cardinality="ANY" feature="interceptorDecls" operator="ADD">
+        <token xsi:type="xtext:RuleName" name="GlobalInterceptorDecl"/>
+      </children>
+      <children xsi:type="xtext:Assignment" cardinality="ANY" feature="routes" operator="ADD">
+        <token xsi:type="xtext:RuleName" name="Route"/>
+      </children>
+      <children xsi:type="xtext:Assignment" cardinality="ANY" feature="interceptorDefs" operator="ADD">
+        <token xsi:type="xtext:RuleName" name="InterceptorChainDef"/>
+      </children>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="Route">
+    <type alias="" name="Route"/>
+    <content xsi:type="xtext:Group">
+      <children xsi:type="xtext:Keyword" value="route"/>
+      <children xsi:type="xtext:Assignment" feature="name" operator="ASSIGN">
+        <token xsi:type="xtext:RuleName" name="ID"/>
+      </children>
+      <children xsi:type="xtext:Assignment" feature="from" operator="ASSIGN">
+        <token xsi:type="xtext:RuleName" name="From"/>
+      </children>
+      <children xsi:type="xtext:RuleName" cardinality="OPTIONAL" name="Interceptors"/>
+      <children xsi:type="xtext:Keyword" value="{"/>
+      <children xsi:type="xtext:Assignment" feature="process" operator="ASSIGN">
+        <token xsi:type="xtext:RuleName" name="ProcessExpr"/>
+      </children>
+      <children xsi:type="xtext:Keyword" value="}"/>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="Import">
+    <type alias="" name="Import"/>
+    <content xsi:type="xtext:Group">
+      <children xsi:type="xtext:Keyword" value="import"/>
+      <children xsi:type="xtext:Assignment" feature="location" operator="ASSIGN">
+        <token xsi:type="xtext:FileRef"/>
+      </children>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="GlobalInterceptorDecl">
+    <type alias="" name="GlobalInterceptorDecl"/>
+    <content xsi:type="xtext:Group">
+      <children xsi:type="xtext:Keyword" value="global"/>
+      <children xsi:type="xtext:Keyword" value="interceptors"/>
+      <children xsi:type="xtext:Assignment" feature="interceptorName" operator="ASSIGN">
+        <token xsi:type="xtext:CrossReference">
+          <type alias="" name="InterceptorChainDef"/>
+        </token>
+      </children>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="InterceptorChainDef">
+    <type alias="" name="InterceptorChainDef"/>
+    <content xsi:type="xtext:Group">
+      <children xsi:type="xtext:Keyword" value="interceptor"/>
+      <children xsi:type="xtext:Assignment" feature="name" operator="ASSIGN">
+        <token xsi:type="xtext:RuleName" name="ID"/>
+      </children>
+      <children xsi:type="xtext:Keyword" value="{"/>
+      <children xsi:type="xtext:Assignment" cardinality="ONEORMORE" feature="chain" operator="ADD">
+        <token xsi:type="xtext:RuleName" name="BeanExpr"/>
+      </children>
+      <children xsi:type="xtext:Keyword" value="}"/>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="Interceptors">
+    <type alias="" name="Interceptors"/>
+    <content xsi:type="xtext:Group">
+      <children xsi:type="xtext:Keyword" value="interceptors"/>
+      <children xsi:type="xtext:Keyword" value="("/>
+      <children xsi:type="xtext:Assignment" cardinality="ONEORMORE" feature="interceptorName" operator="ADD">
+        <token xsi:type="xtext:CrossReference">
+          <type alias="" name="InterceptorChainDef"/>
+        </token>
+      </children>
+      <children xsi:type="xtext:Keyword" value=")"/>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="From">
+    <type alias="" name="From"/>
+    <content xsi:type="xtext:Group">
+      <children xsi:type="xtext:Keyword" value="from"/>
+      <children xsi:type="xtext:RuleName" name="Endpoint"/>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="To">
+    <type alias="" name="To"/>
+    <content xsi:type="xtext:Group">
+      <children xsi:type="xtext:Keyword" value="to"/>
+      <children xsi:type="xtext:RuleName" name="Endpoint"/>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="PatternExpr">
+    <type alias="" name="PatternExpr"/>
+    <content xsi:type="xtext:Alternatives">
+      <alternatives xsi:type="xtext:RuleName" name="Choice"/>
+      <alternatives xsi:type="xtext:RuleName" name="Recipients"/>
+      <alternatives xsi:type="xtext:RuleName" name="Pipeline"/>
+      <alternatives xsi:type="xtext:RuleName" name="Filter"/>
+      <alternatives xsi:type="xtext:RuleName" name="Splitter"/>
+      <alternatives xsi:type="xtext:RuleName" name="Resequencer"/>
+      <alternatives xsi:type="xtext:RuleName" name="Transformer"/>
+      <alternatives xsi:type="xtext:RuleName" name="DynamicRecipients"/>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="Endpoint">
+    <type alias="" name="Endpoint"/>
+    <content xsi:type="xtext:Assignment" feature="uri" operator="ASSIGN">
+      <token xsi:type="xtext:RuleName" name="STRING"/>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="ProcessExpr">
+    <type alias="" name="ProcessExpr"/>
+    <content xsi:type="xtext:RuleName" name="PatternOrBeanExpr"/>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="PatternOrBeanExpr">
+    <type alias="" name="PatternOrBeanExpr"/>
+    <content xsi:type="xtext:Alternatives">
+      <alternatives xsi:type="xtext:RuleName" name="BeanExpr"/>
+      <alternatives xsi:type="xtext:RuleName" name="PatternExpr"/>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="BeanExpr">
+    <type alias="" name="BeanExpr"/>
+    <content xsi:type="xtext:Group">
+      <children xsi:type="xtext:RuleName" name="BEAN"/>
+      <children xsi:type="xtext:Assignment" feature="id" operator="ASSIGN">
+        <token xsi:type="xtext:RuleName" name="ID"/>
+      </children>
+      <children xsi:type="xtext:Assignment" cardinality="OPTIONAL" feature="method" operator="ASSIGN">
+        <token xsi:type="xtext:RuleName" name="ID"/>
+      </children>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="SimplePattern">
+    <type alias="" name="SimplePattern"/>
+    <content xsi:type="xtext:Group">
+      <children xsi:type="xtext:RuleName" cardinality="OPTIONAL" name="Interceptors"/>
+      <children xsi:type="xtext:Keyword" value="{"/>
+      <children xsi:type="xtext:Assignment" cardinality="ONEORMORE" feature="targets" operator="ADD">
+        <token xsi:type="xtext:RuleName" name="ToTarget"/>
+      </children>
+      <children xsi:type="xtext:RuleName" cardinality="OPTIONAL" name="PropertiesBlock"/>
+      <children xsi:type="xtext:Keyword" value="}"/>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="Transformer">
+    <type alias="" name="Transformer"/>
+    <content xsi:type="xtext:Group">
+      <children xsi:type="xtext:Keyword" value="transformer"/>
+      <children xsi:type="xtext:RuleName" cardinality="OPTIONAL" name="Interceptors"/>
+      <children xsi:type="xtext:Keyword" value="{"/>
+      <children xsi:type="xtext:Assignment" feature="beanref" operator="ASSIGN">
+        <token xsi:type="xtext:RuleName" name="BeanExpr"/>
+      </children>
+      <children xsi:type="xtext:Assignment" cardinality="ONEORMORE" feature="target" operator="ADD">
+        <token xsi:type="xtext:RuleName" name="ToTarget"/>
+      </children>
+      <children xsi:type="xtext:Keyword" value="}"/>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="Choice">
+    <type alias="" name="Choice"/>
+    <content xsi:type="xtext:Group">
+      <children xsi:type="xtext:Keyword" value="choice"/>
+      <children xsi:type="xtext:RuleName" cardinality="OPTIONAL" name="Interceptors"/>
+      <children xsi:type="xtext:Keyword" value="{"/>
+      <children xsi:type="xtext:Assignment" cardinality="ANY" feature="when" operator="ADD">
+        <token xsi:type="xtext:RuleName" name="WhenClause"/>
+      </children>
+      <children xsi:type="xtext:Assignment" cardinality="OPTIONAL" feature="otherwise" operator="ASSIGN">
+        <token xsi:type="xtext:RuleName" name="OtherwiseClause"/>
+      </children>
+      <children xsi:type="xtext:Keyword" value="}"/>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="Recipients">
+    <type alias="" name="Recipients"/>
+    <content xsi:type="xtext:Group">
+      <children xsi:type="xtext:Keyword" value="recipients"/>
+      <children xsi:type="xtext:RuleName" name="SimplePattern"/>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="DynamicRecipients">
+    <type alias="" name="DynamicRecipients"/>
+    <content xsi:type="xtext:Group">
+      <children xsi:type="xtext:Keyword" value="dynamic"/>
+      <children xsi:type="xtext:Keyword" value="recipients"/>
+      <children xsi:type="xtext:RuleName" name="Expression"/>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="Pipeline">
+    <type alias="" name="Pipeline"/>
+    <content xsi:type="xtext:Group">
+      <children xsi:type="xtext:Keyword" value="pipeline"/>
+      <children xsi:type="xtext:RuleName" name="SimplePattern"/>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="Filter">
+    <type alias="" name="Filter"/>
+    <content xsi:type="xtext:Group">
+      <children xsi:type="xtext:Keyword" value="filter"/>
+      <children xsi:type="xtext:Assignment" feature="expr" operator="ASSIGN">
+        <token xsi:type="xtext:RuleName" name="Expression"/>
+      </children>
+      <children xsi:type="xtext:RuleName" name="SimplePattern"/>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="Splitter">
+    <type alias="" name="Splitter"/>
+    <content xsi:type="xtext:Group">
+      <children xsi:type="xtext:Keyword" value="splitter"/>
+      <children xsi:type="xtext:Assignment" feature="expr" operator="ASSIGN">
+        <token xsi:type="xtext:RuleName" name="Expression"/>
+      </children>
+      <children xsi:type="xtext:RuleName" name="SimplePattern"/>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="Resequencer">
+    <type alias="" name="Resequencer"/>
+    <content xsi:type="xtext:Group">
+      <children xsi:type="xtext:Keyword" value="resequence"/>
+      <children xsi:type="xtext:Assignment" feature="expr" operator="ASSIGN">
+        <token xsi:type="xtext:RuleName" name="Expression"/>
+      </children>
+      <children xsi:type="xtext:RuleName" name="SimplePattern"/>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="WhenClause">
+    <type alias="" name="WhenClause"/>
+    <content xsi:type="xtext:Group">
+      <children xsi:type="xtext:Keyword" value="when"/>
+      <children xsi:type="xtext:Assignment" feature="expr" operator="ASSIGN">
+        <token xsi:type="xtext:RuleName" name="Expression"/>
+      </children>
+      <children xsi:type="xtext:Keyword" value="{"/>
+      <children xsi:type="xtext:Assignment" cardinality="ONEORMORE" feature="target" operator="ADD">
+        <token xsi:type="xtext:RuleName" name="ToTarget"/>
+      </children>
+      <children xsi:type="xtext:Keyword" value="}"/>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="OtherwiseClause">
+    <type alias="" name="OtherwiseClause"/>
+    <content xsi:type="xtext:Group">
+      <children xsi:type="xtext:Keyword" value="otherwise"/>
+      <children xsi:type="xtext:Keyword" value="{"/>
+      <children xsi:type="xtext:Assignment" feature="target" operator="ASSIGN">
+        <token xsi:type="xtext:RuleName" name="ToTarget"/>
+      </children>
+      <children xsi:type="xtext:Keyword" value="}"/>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="Expression">
+    <type alias="" name="Expression"/>
+    <content xsi:type="xtext:Group">
+      <children xsi:type="xtext:Assignment" feature="lang" operator="ASSIGN">
+        <token xsi:type="xtext:RuleName" name="ID"/>
+      </children>
+      <children xsi:type="xtext:Keyword" value="("/>
+      <children xsi:type="xtext:Assignment" feature="value" operator="ASSIGN">
+        <token xsi:type="xtext:RuleName" name="STRING"/>
+      </children>
+      <children xsi:type="xtext:Keyword" value=")"/>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="PropertiesBlock">
+    <type alias="" name="PropertiesBlock"/>
+    <content xsi:type="xtext:Group">
+      <children xsi:type="xtext:Keyword" value="properties"/>
+      <children xsi:type="xtext:Keyword" value="{"/>
+      <children xsi:type="xtext:Assignment" cardinality="ONEORMORE" feature="properties" operator="ADD">
+        <token xsi:type="xtext:RuleName" name="PropertyDef"/>
+      </children>
+      <children xsi:type="xtext:Keyword" value="}"/>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="PropertyDef">
+    <type alias="" name="PropertyDef"/>
+    <content xsi:type="xtext:Group">
+      <children xsi:type="xtext:Assignment" feature="name" operator="ASSIGN">
+        <token xsi:type="xtext:RuleName" name="SCOPED_ID"/>
+      </children>
+      <children xsi:type="xtext:Keyword" value="="/>
+      <children xsi:type="xtext:Assignment" feature="value" operator="ASSIGN">
+        <token xsi:type="xtext:RuleName" name="STRING"/>
+      </children>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="ToTarget">
+    <type alias="" name="ToTarget"/>
+    <content xsi:type="xtext:Alternatives">
+      <alternatives xsi:type="xtext:RuleName" name="To"/>
+      <alternatives xsi:type="xtext:RuleName" name="ProcessExpr"/>
+      <alternatives xsi:type="xtext:RuleName" name="Fault"/>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="Fault">
+    <type alias="" name="Fault"/>
+    <content xsi:type="xtext:Group">
+      <children xsi:type="xtext:Keyword" value="fault"/>
+      <children xsi:type="xtext:RuleName" name="STRING"/>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="SCOPED_ID">
+    <type alias="" name="SCOPED_ID"/>
+    <content xsi:type="xtext:Group">
+      <children xsi:type="xtext:RuleName" name="ID"/>
+      <children xsi:type="xtext:Group" cardinality="ANY">
+        <children xsi:type="xtext:Keyword" value="."/>
+        <children xsi:type="xtext:RuleName" name="ID"/>
+      </children>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="BEAN">
+    <type alias="" name="BEAN"/>
+    <content xsi:type="xtext:Keyword" value="bean"/>
+  </rules>
+  <rules xsi:type="xtext:NativeLexerRule" name="ID"/>
+  <rules xsi:type="xtext:NativeLexerRule" name="STRING"/>
+  <rules xsi:type="xtext:NativeLexerRule" name="INT"/>
+  <rules xsi:type="xtext:NativeLexerRule" name="WS"/>
+  <rules xsi:type="xtext:NativeLexerRule" name="ML_COMMENT"/>
+  <rules xsi:type="xtext:NativeLexerRule" name="SL_COMMENT"/>
+</xtext:XtextFile>

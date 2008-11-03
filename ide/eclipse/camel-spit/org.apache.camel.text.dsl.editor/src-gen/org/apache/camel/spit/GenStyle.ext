@@ -1,0 +1,21 @@
+import scanning;
+import spit;
+
+FontStyle fontstyle(String keyword, Object ctx):
+	neverCheckAgainForThisTypeAndKeyword();
+	
+create FontStyle neverCheckAgainForThisTypeAndKeyword(): null;
+
+delayContextSensitiveStyling(): -1;
+	
+create FontStyle createFontStyle(boolean bold, boolean italic, boolean strikethrough, boolean underline, Color fg, Color bg):
+	setBold(bold)->
+	setItalic(italic)->
+	setStrikethrough(strikethrough)->
+	setUnderline(underline)->
+	setBackgroundColor(bg)->
+	setForgroundColor(fg);
+
+create Color createColor(Integer red, Integer green, Integer blue):
+	setR(red) -> setG(green) -> setB(blue);
+

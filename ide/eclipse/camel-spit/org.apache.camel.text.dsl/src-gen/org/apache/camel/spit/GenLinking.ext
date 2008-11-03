@@ -1,0 +1,33 @@
+
+extension org::apache::camel::spit::Extensions;
+extension org::openarchitectureware::xtext::parser::LinkerUtils;
+
+link(emf::EObject this) :
+	let all = allLocalElements() :
+		all.typeSelect(spit::GlobalInterceptorDecl).collect(e|e.link_interceptorName()) ->
+		all.typeSelect(spit::Interceptors).collect(e|e.link_interceptorName()) ->
+        null;
+
+
+
+
+Void link_interceptorName(spit::GlobalInterceptorDecl this) :
+	(let ents = this.allVisibleElements().typeSelect(spit::InterceptorChainDef) :
+
+		this.setInterceptorName(ents.select(e|e.id() == this.parsedString("interceptorName")).first())
+);
+
+
+
+
+Void link_interceptorName(spit::Interceptors this) :
+	(let ents = this.allVisibleElements().typeSelect(spit::InterceptorChainDef) :
+
+		this.interceptorName.addAll(
+			this.parsed("interceptorName").collect(f|
+				ents.select(e|e.id() == f).first()
+		).reject(e|e == null))
+);
+
+
+
