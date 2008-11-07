@@ -31,8 +31,8 @@ public class SpitUtilities extends AbstractLanguageUtilities {
 	List<String> r = new ArrayList<String>();
 	{
 		r.add("otherwise");
-		r.add("dynamic");
 		r.add("resequence");
+		r.add("dynamic");
 		r.add("when");
 		r.add("fault");
 		r.add("route");
@@ -43,9 +43,9 @@ public class SpitUtilities extends AbstractLanguageUtilities {
 		r.add("properties");
 		r.add("import");
 		r.add("global");
+		r.add("to");
 		r.add("filter");
 		r.add("pipeline");
-		r.add("to");
 		r.add("interceptor");
 		r.add("recipients");
 		r.add("interceptors");

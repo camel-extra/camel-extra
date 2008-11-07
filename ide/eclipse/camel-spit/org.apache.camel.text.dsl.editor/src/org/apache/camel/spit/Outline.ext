@@ -15,4 +15,3 @@ extension org::apache::camel::spit::GenOutline reexport;
  * For each given name there must be a 'outlineTree_NAME(emf::EObject model)' which is called then.
  * Whitespaces in the name are replaced by '_'
  */
-

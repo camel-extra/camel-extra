@@ -80,16 +80,30 @@ String label (BeanExpr this) :
 String image (BeanExpr this) :
      "bean_folder.gif";
         
-/* From rule is simply an endpoint */ 
+/* From rule has a little icon and a uri */ 
 String label (From this) :
      this.uri;
 
 String image (From this) :
      "MessageEndpoint.png";
 
+/* To rule has a little icon and a uri */
+String label (To this) :
+   this.uri;
+   
+String image (To this) :
+     "MessageEndpoint.png";
 
-/* The Endpoint rule is just a simple string, returning 
- * null prevents it from having its own node in the outline
- */    
-String label (Endpoint this) :
-     null;
+/* Expression */
+String label (Expression this) :
+    this.lang;
+    
+String image (Expression this) :
+    "expression.gif";
+
+String label (ExpressionValue this) :
+    this.value;
+
+/* These are all the rules that don't need to 
+   contribute anything to the outline view 
+ */

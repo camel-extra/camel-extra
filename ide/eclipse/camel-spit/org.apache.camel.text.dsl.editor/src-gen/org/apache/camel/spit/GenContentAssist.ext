@@ -7,13 +7,21 @@ extension org::apache::camel::spit::EditorExtensions;
 List[Proposal] completeRoute_name(emf::EObject ctx, String prefix) :
 	{newProposal("RouteName")};
 
+/* proposals for Feature From::uri */
+List[Proposal] completeFrom_uri(emf::EObject ctx, String prefix) :
+	{newProposal("FromUri")};
+
+/* proposals for Feature Expression::lang */
+List[Proposal] completeExpression_lang(emf::EObject ctx, String prefix) :
+	{newProposal("ExpressionLang")};
+
 /* proposals for Feature InterceptorChainDef::name */
 List[Proposal] completeInterceptorChainDef_name(emf::EObject ctx, String prefix) :
 	{newProposal("InterceptorChainDefName")};
 
-/* proposals for Feature Expression::value */
-List[Proposal] completeExpression_value(emf::EObject ctx, String prefix) :
-	{newProposal("ExpressionValue")};
+/* proposals for Feature ExpressionValue::value */
+List[Proposal] completeExpressionValue_value(emf::EObject ctx, String prefix) :
+	{newProposal("ExpressionValueValue")};
 
 /* proposals for Feature PropertyDef::value */
 List[Proposal] completePropertyDef_value(emf::EObject ctx, String prefix) :
@@ -23,17 +31,13 @@ List[Proposal] completePropertyDef_value(emf::EObject ctx, String prefix) :
 List[Proposal] completeBeanExpr_method(emf::EObject ctx, String prefix) :
 	{newProposal("BeanExprMethod")};
 
-/* proposals for Feature Endpoint::uri */
-List[Proposal] completeEndpoint_uri(emf::EObject ctx, String prefix) :
-	{newProposal("EndpointUri")};
+/* proposals for Feature To::uri */
+List[Proposal] completeTo_uri(emf::EObject ctx, String prefix) :
+	{newProposal("ToUri")};
 
 /* proposals for Feature BeanExpr::id */
 List[Proposal] completeBeanExpr_id(emf::EObject ctx, String prefix) :
 	{newProposal("BeanExprId")};
-
-/* proposals for Feature Expression::lang */
-List[Proposal] completeExpression_lang(emf::EObject ctx, String prefix) :
-	{newProposal("ExpressionLang")};
 
 
 
@@ -49,44 +53,52 @@ List[Proposal] completeFile_interceptorDecls(emf::EObject ctx, String prefix) :
 List[Proposal] completeRoute_from(emf::EObject ctx, String prefix) :
 	{};
 
-/* proposals for Feature Splitter::expr */
-List[Proposal] completeSplitter_expr(emf::EObject ctx, String prefix) :
+/* proposals for Feature DynamicRecipients::body */
+List[Proposal] completeDynamicRecipients_body(emf::EObject ctx, String prefix) :
 	{};
 
-/* proposals for Feature Resequencer::expr */
-List[Proposal] completeResequencer_expr(emf::EObject ctx, String prefix) :
-	{};
-
-/* proposals for Feature WhenClause::target */
-List[Proposal] completeWhenClause_target(emf::EObject ctx, String prefix) :
-	{};
-
-/* proposals for Feature Filter::expr */
-List[Proposal] completeFilter_expr(emf::EObject ctx, String prefix) :
+/* proposals for Feature Filter::body */
+List[Proposal] completeFilter_body(emf::EObject ctx, String prefix) :
 	{};
 
 /* proposals for Feature Choice::when */
 List[Proposal] completeChoice_when(emf::EObject ctx, String prefix) :
 	{};
 
+/* proposals for Feature PropertyDef::name */
+List[Proposal] completePropertyDef_name(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Splitter::expr */
+List[Proposal] completeSplitter_expr(emf::EObject ctx, String prefix) :
+	{};
+
 /* proposals for Feature SimplePattern::targets */
 List[Proposal] completeSimplePattern_targets(emf::EObject ctx, String prefix) :
 	{};
 
-/* proposals for Feature PropertyDef::name */
-List[Proposal] completePropertyDef_name(emf::EObject ctx, String prefix) :
+/* proposals for Feature PropertiesBlock::properties */
+List[Proposal] completePropertiesBlock_properties(emf::EObject ctx, String prefix) :
 	{};
 
 /* proposals for Feature Transformer::target */
 List[Proposal] completeTransformer_target(emf::EObject ctx, String prefix) :
 	{};
 
-/* proposals for Feature OtherwiseClause::target */
-List[Proposal] completeOtherwiseClause_target(emf::EObject ctx, String prefix) :
+/* proposals for Feature Splitter::body */
+List[Proposal] completeSplitter_body(emf::EObject ctx, String prefix) :
 	{};
 
-/* proposals for Feature WhenClause::expr */
-List[Proposal] completeWhenClause_expr(emf::EObject ctx, String prefix) :
+/* proposals for Feature Resequencer::body */
+List[Proposal] completeResequencer_body(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature WhenClause::target */
+List[Proposal] completeWhenClause_target(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Resequencer::expr */
+List[Proposal] completeResequencer_expr(emf::EObject ctx, String prefix) :
 	{};
 
 /* proposals for Feature File::interceptorDefs */
@@ -97,12 +109,24 @@ List[Proposal] completeFile_interceptorDefs(emf::EObject ctx, String prefix) :
 List[Proposal] completeTransformer_beanref(emf::EObject ctx, String prefix) :
 	{};
 
-/* proposals for Feature PropertiesBlock::properties */
-List[Proposal] completePropertiesBlock_properties(emf::EObject ctx, String prefix) :
+/* proposals for Feature WhenClause::expr */
+List[Proposal] completeWhenClause_expr(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Recipients::body */
+List[Proposal] completeRecipients_body(emf::EObject ctx, String prefix) :
 	{};
 
 /* proposals for Feature Choice::otherwise */
 List[Proposal] completeChoice_otherwise(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Filter::expr */
+List[Proposal] completeFilter_expr(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature OtherwiseClause::target */
+List[Proposal] completeOtherwiseClause_target(emf::EObject ctx, String prefix) :
 	{};
 
 /* proposals for Feature File::imports */
@@ -111,6 +135,10 @@ List[Proposal] completeFile_imports(emf::EObject ctx, String prefix) :
 
 /* proposals for Feature File::routes */
 List[Proposal] completeFile_routes(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Pipeline::body */
+List[Proposal] completePipeline_body(emf::EObject ctx, String prefix) :
 	{};
 
 /* proposals for Feature InterceptorChainDef::chain */
