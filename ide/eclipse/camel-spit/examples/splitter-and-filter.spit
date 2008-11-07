@@ -1,11 +1,3 @@
-/* These examples show ambiguity messages from the outline
- * construction. It's because SimplePattern is being used
- * as a rule for the bodies of the Splitter, Filter, Pipeline,
- * Recipients and Resequencer rules.
- *
- * I don't know how to resolve this at the moment
- */
-
 
 route SplitterTest from 'uri:someEndpoint' {
     splitter xpath('/woot') {
@@ -13,6 +5,12 @@ route SplitterTest from 'uri:someEndpoint' {
     }
 }
 
+
+/ * The outline view here still shows <unnamed> for the 
+  * block that holds the choice. I want to somehow cause
+  * that <unnamed> to be invisible
+  */
+  
 route FilterTest from 'mock:wibble' {
     filter xpath("/book[@category!='CHILDREN]'") {  
          choice {
