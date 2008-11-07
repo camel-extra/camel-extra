@@ -8,8 +8,88 @@ extension org::apache::camel::spit::GenEditorExtensions reexport;
  * extension for your model elements
  */
 
- String label(Splitter thing) : 
-     "splitter";
+/* Route */
 
-String label(PropertiesBlock pb) : "properties";
-String label(PropertyDef pd) : pd.name.toString() ;
+String label(Route this) : 
+     this.name;
+
+String image(Route this) :
+     "CamelIcon.png";
+
+
+/* Content based router */
+String label (Choice this) :
+     "choice";
+     
+String image (Choice this) :
+     "MessageRouterEIP.png";
+
+/* Recipient list */
+String label (Recipients this) :
+     "recipients";
+
+String image (Recipients this) :
+     "RecipientList.png";
+     
+/* Dynamic Recipient list */
+String label (DynamicRecipients this) :
+     "dynamic recipients";
+
+String image (DynamicRecipients this) :
+     "DynamicRouter.png";
+     
+/* Pipeline */
+String label (Pipeline this) :
+     "pipeline";
+     
+String image(Pipeline this) :
+     "Pipeline.png";
+
+/* Filter */
+String label (Filter this) :
+     "filter message";
+
+String image (Filter this) :
+     "MessageFilter.png";
+
+/* Splitter */
+String label (Splitter this) :
+     "split";
+
+String image (Splitter this) :
+     "Splitter.png";
+     
+/* Resequencer */
+String label (Resequencer this) :
+     "resequence";
+
+String image (Resequencer this) :
+     "Resequencer.png";
+
+/* Transformer */
+String label (Transformer this) :
+     "transform";
+
+String image (Transformer this) :
+     "MessageTranslator.png";
+        
+/* BeanExpr */
+String label (BeanExpr this) :
+     this.id + "." + this.method + "()";
+
+String image (BeanExpr this) :
+     "bean_folder.gif";
+        
+/* From rule is simply an endpoint */ 
+String label (From this) :
+     this.uri;
+
+String image (From this) :
+     "MessageEndpoint.png";
+
+
+/* The Endpoint rule is just a simple string, returning 
+ * null prevents it from having its own node in the outline
+ */    
+String label (Endpoint this) :
+     null;
