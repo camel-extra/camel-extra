@@ -83,27 +83,19 @@ ruleInterceptors  :
 ruleFrom  :
 (('from')
 
-(
-temp_Endpoint=ruleEndpoint {$result=temp_Endpoint;}
-)
+(temp_uri=RULE_STRING )
 )
 ;
 
 ruleTo  :
 (('to')
 
-(
-temp_Endpoint=ruleEndpoint {$result=temp_Endpoint;}
-)
+(temp_uri=RULE_STRING )
 )
 ;
 
 rulePatternExpr  :
         temp_choice=ruleChoice 	|        temp_recipients=ruleRecipients 	|        temp_pipeline=rulePipeline 	|        temp_filter=ruleFilter 	|        temp_splitter=ruleSplitter 	|        temp_resequencer=ruleResequencer 	|        temp_transformer=ruleTransformer 	|        temp_dynamicrecipients=ruleDynamicRecipients 	;
-
-ruleEndpoint  :
-(temp_uri=RULE_STRING )
-;
 
 ruleProcessExpr  :
         temp_patternorbeanexpr=rulePatternOrBeanExpr 	;
@@ -176,9 +168,7 @@ temp_Interceptors=ruleInterceptors {$result=temp_Interceptors;}
 ruleRecipients  :
 (('recipients')
 
-(
-temp_SimplePattern=ruleSimplePattern {$result=temp_SimplePattern;}
-)
+(temp_body=ruleSimplePattern )
 )
 ;
 
@@ -187,18 +177,14 @@ ruleDynamicRecipients  :
 
 ('recipients')
 
-(
-temp_Expression=ruleExpression {$result=temp_Expression;}
-)
+(temp_body=ruleExpression )
 )
 ;
 
 rulePipeline  :
 (('pipeline')
 
-(
-temp_SimplePattern=ruleSimplePattern {$result=temp_SimplePattern;}
-)
+(temp_body=ruleSimplePattern )
 )
 ;
 
@@ -207,9 +193,7 @@ ruleFilter  :
 
 (temp_expr=ruleExpression )
 
-(
-temp_SimplePattern=ruleSimplePattern {$result=temp_SimplePattern;}
-)
+(temp_body=ruleSimplePattern )
 )
 ;
 
@@ -218,9 +202,7 @@ ruleSplitter  :
 
 (temp_expr=ruleExpression )
 
-(
-temp_SimplePattern=ruleSimplePattern {$result=temp_SimplePattern;}
-)
+(temp_body=ruleSimplePattern )
 )
 ;
 
@@ -229,9 +211,7 @@ ruleResequencer  :
 
 (temp_expr=ruleExpression )
 
-(
-temp_SimplePattern=ruleSimplePattern {$result=temp_SimplePattern;}
-)
+(temp_body=ruleSimplePattern )
 )
 ;
 
@@ -264,10 +244,16 @@ ruleExpression  :
 
 ('(')
 
-(temp_value=RULE_STRING )
+(
+temp_ExpressionValue=ruleExpressionValue {$result=temp_ExpressionValue;}
+)
 
 (')')
 )
+;
+
+ruleExpressionValue  :
+(temp_value=RULE_STRING )
 ;
 
 rulePropertiesBlock  :

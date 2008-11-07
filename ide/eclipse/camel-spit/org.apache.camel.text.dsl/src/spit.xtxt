@@ -31,20 +31,16 @@ Interceptors :
     ;
     
 From :
-    "from" Endpoint
+    "from" uri=STRING
     ;
 
 To :
-    "to" Endpoint
+    "to" uri=STRING
     ;
 
 PatternExpr :
    Choice | Recipients | Pipeline | Filter | Splitter | Resequencer | Transformer | DynamicRecipients
    ;
-     
-Endpoint :
-    uri=STRING
-    ;
        
 ProcessExpr : 
    PatternOrBeanExpr
@@ -80,27 +76,27 @@ Choice :
    ;
     
 Recipients :
-    "recipients" SimplePattern
+    "recipients" body=SimplePattern
     ;
 
 DynamicRecipients :
-    "dynamic" "recipients" Expression
+    "dynamic" "recipients" body=Expression
     ;
 
 Pipeline :
-    "pipeline" SimplePattern
+    "pipeline" body=SimplePattern
     ;
   
 Filter :
-    "filter" expr=Expression SimplePattern
+    "filter" expr=Expression body=SimplePattern
     ;
 
 Splitter :
-   "splitter" expr=Expression SimplePattern
+   "splitter" expr=Expression body=SimplePattern
    ;
 
 Resequencer :
-   "resequence" expr=Expression SimplePattern
+   "resequence" expr=Expression body=SimplePattern
    ;
           
 WhenClause :
@@ -114,7 +110,11 @@ OtherwiseClause :
     ;
            
 Expression :
-   lang=ID "(" value=STRING ")"
+   lang=ID "(" ExpressionValue ")"
+   ;
+   
+ExpressionValue :
+    value=STRING
    ;
 
 PropertiesBlock :
