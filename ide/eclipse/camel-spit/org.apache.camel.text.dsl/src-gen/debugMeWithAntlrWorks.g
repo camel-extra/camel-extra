@@ -115,19 +115,74 @@ temp_BEAN=ruleBEAN {$result=temp_BEAN;}
 ;
 
 ruleSimplePattern  :
-((
-temp_Interceptors=ruleInterceptors {$result=temp_Interceptors;}
-)?
+((temp_interceptors=ruleInterceptors )?
 
 ('{')
 
+(temp_actions=ruleActionStatement )*
+
 (temp_targets=ruleToTarget )+
 
-(
-temp_PropertiesBlock=rulePropertiesBlock {$result=temp_PropertiesBlock;}
-)?
+(temp_properties=rulePropertiesBlock )?
 
 ('}')
+)
+;
+
+ruleActionStatement  :
+((
+temp_SetHeaderAction=ruleSetHeaderAction {$result=temp_SetHeaderAction;}
+)
+	|
+(
+temp_SetBodyAction=ruleSetBodyAction {$result=temp_SetBodyAction;}
+)
+	|
+(('convert')
+
+(
+temp_ConvertBodyAction=ruleConvertBodyAction {$result=temp_ConvertBodyAction;}
+)
+)
+)
+;
+
+ruleSetHeaderAction  :
+(('header')
+
+(temp_header=RULE_STRING )
+
+('=')
+
+(temp_value=ruleExpression )
+)
+;
+
+ruleSetBodyAction  :
+(('body')
+
+('=')
+
+(temp_value=ruleExpression )
+)
+;
+
+ruleConvertBodyAction  :
+        temp_convertbodywithaction=ruleConvertBodyWithAction 	|        temp_convertbodytoaction=ruleConvertBodyToAction 	;
+
+ruleConvertBodyWithAction  :
+(('with')
+
+(
+temp_BeanExpr=ruleBeanExpr {$result=temp_BeanExpr;}
+)
+)
+;
+
+ruleConvertBodyToAction  :
+(('to')
+
+(temp_type=RULE_STRING )
 )
 ;
 
@@ -240,7 +295,7 @@ ruleOtherwiseClause  :
 ;
 
 ruleExpression  :
-((temp_lang=RULE_ID )
+(((temp_lang=RULE_ID )
 
 ('(')
 
@@ -249,6 +304,9 @@ temp_ExpressionValue=ruleExpressionValue {$result=temp_ExpressionValue;}
 )
 
 (')')
+)
+	|
+(RULE_STRING)
 )
 ;
 

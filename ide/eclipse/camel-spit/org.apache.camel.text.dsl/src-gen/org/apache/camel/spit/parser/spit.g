@@ -286,20 +286,102 @@ ruleSimplePattern returns [EObject result] :
 				$result = factory.create("", "SimplePattern");
 				ptm.setModelElement($result);
 			 }
-(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(12)).eContents().get(1)).eContents().get(0)),line(),start());}
-temp_Interceptors=ruleInterceptors {$result=temp_Interceptors;}
-{ptm.ruleFinished(getLastToken(),end());})?
+(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(12)).eContents().get(1)).eContents().get(0)),line(),start());}temp_interceptors=ruleInterceptors {factory.set($result,"interceptors",convert(temp_interceptors),false); ptm.ruleFinished(temp_interceptors,end()); }
+)?
 
 ({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(12)).eContents().get(1)).eContents().get(1)),line(),start());}'{'{ptm.ruleFinished(getLastToken(),end());})
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(12)).eContents().get(1)).eContents().get(2)),line(),start());}temp_targets=ruleToTarget {factory.add($result,"targets",convert(temp_targets),false); ptm.ruleFinished(temp_targets,end()); }
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(12)).eContents().get(1)).eContents().get(2)),line(),start());}temp_actions=ruleActionStatement {factory.add($result,"actions",convert(temp_actions),false); ptm.ruleFinished(temp_actions,end()); }
+)*
+
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(12)).eContents().get(1)).eContents().get(3)),line(),start());}temp_targets=ruleToTarget {factory.add($result,"targets",convert(temp_targets),false); ptm.ruleFinished(temp_targets,end()); }
 )+
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(12)).eContents().get(1)).eContents().get(3)),line(),start());}
-temp_PropertiesBlock=rulePropertiesBlock {$result=temp_PropertiesBlock;}
-{ptm.ruleFinished(getLastToken(),end());})?
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(12)).eContents().get(1)).eContents().get(4)),line(),start());}temp_properties=rulePropertiesBlock {factory.set($result,"properties",convert(temp_properties),false); ptm.ruleFinished(temp_properties,end()); }
+)?
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(12)).eContents().get(1)).eContents().get(4)),line(),start());}'}'{ptm.ruleFinished(getLastToken(),end());})
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(12)).eContents().get(1)).eContents().get(5)),line(),start());}'}'{ptm.ruleFinished(getLastToken(),end());})
+)
+;
+
+ruleActionStatement returns [EObject result] :
+			{
+				$result = factory.create("", "ActionStatement");
+				ptm.setModelElement($result);
+			 }
+(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(13)).eContents().get(1)).eContents().get(0)),line(),start());}
+temp_SetHeaderAction=ruleSetHeaderAction {$result=temp_SetHeaderAction;}
+{ptm.ruleFinished(getLastToken(),end());})
+	|
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(13)).eContents().get(1)).eContents().get(1)),line(),start());}
+temp_SetBodyAction=ruleSetBodyAction {$result=temp_SetBodyAction;}
+{ptm.ruleFinished(getLastToken(),end());})
+	|
+(({ptm.invokeRule(((EObject)((EObject)((EObject)((EObject)xtextfile.eContents().get(13)).eContents().get(1)).eContents().get(2)).eContents().get(0)),line(),start());}'convert'{ptm.ruleFinished(getLastToken(),end());})
+
+({ptm.invokeRule(((EObject)((EObject)((EObject)((EObject)xtextfile.eContents().get(13)).eContents().get(1)).eContents().get(2)).eContents().get(1)),line(),start());}
+temp_ConvertBodyAction=ruleConvertBodyAction {$result=temp_ConvertBodyAction;}
+{ptm.ruleFinished(getLastToken(),end());})
+)
+)
+;
+
+ruleSetHeaderAction returns [EObject result] :
+			{
+				$result = factory.create("", "SetHeaderAction");
+				ptm.setModelElement($result);
+			 }
+(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(14)).eContents().get(1)).eContents().get(0)),line(),start());}'header'{ptm.ruleFinished(getLastToken(),end());})
+
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(14)).eContents().get(1)).eContents().get(1)),line(),start());}temp_header=RULE_STRING {factory.set($result,"header",convert(temp_header),false); ptm.ruleFinished(temp_header,end()); }
+)
+
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(14)).eContents().get(1)).eContents().get(2)),line(),start());}'='{ptm.ruleFinished(getLastToken(),end());})
+
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(14)).eContents().get(1)).eContents().get(3)),line(),start());}temp_value=ruleExpression {factory.set($result,"value",convert(temp_value),false); ptm.ruleFinished(temp_value,end()); }
+)
+)
+;
+
+ruleSetBodyAction returns [EObject result] :
+			{
+				$result = factory.create("", "SetBodyAction");
+				ptm.setModelElement($result);
+			 }
+(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(15)).eContents().get(1)).eContents().get(0)),line(),start());}'body'{ptm.ruleFinished(getLastToken(),end());})
+
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(15)).eContents().get(1)).eContents().get(1)),line(),start());}'='{ptm.ruleFinished(getLastToken(),end());})
+
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(15)).eContents().get(1)).eContents().get(2)),line(),start());}temp_value=ruleExpression {factory.set($result,"value",convert(temp_value),false); ptm.ruleFinished(temp_value,end()); }
+)
+)
+;
+
+ruleConvertBodyAction returns [EObject result] :
+        temp_convertbodywithaction=ruleConvertBodyWithAction {$result=temp_convertbodywithaction;}	|        temp_convertbodytoaction=ruleConvertBodyToAction {$result=temp_convertbodytoaction;}	;
+
+ruleConvertBodyWithAction returns [EObject result] :
+			{
+				$result = factory.create("", "ConvertBodyWithAction");
+				ptm.setModelElement($result);
+			 }
+(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(17)).eContents().get(1)).eContents().get(0)),line(),start());}'with'{ptm.ruleFinished(getLastToken(),end());})
+
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(17)).eContents().get(1)).eContents().get(1)),line(),start());}
+temp_BeanExpr=ruleBeanExpr {$result=temp_BeanExpr;}
+{ptm.ruleFinished(getLastToken(),end());})
+)
+;
+
+ruleConvertBodyToAction returns [EObject result] :
+			{
+				$result = factory.create("", "ConvertBodyToAction");
+				ptm.setModelElement($result);
+			 }
+(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(18)).eContents().get(1)).eContents().get(0)),line(),start());}'to'{ptm.ruleFinished(getLastToken(),end());})
+
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(18)).eContents().get(1)).eContents().get(1)),line(),start());}temp_type=RULE_STRING {factory.set($result,"type",convert(temp_type),false); ptm.ruleFinished(temp_type,end()); }
+)
 )
 ;
 
@@ -308,21 +390,21 @@ ruleTransformer returns [EObject result] :
 				$result = factory.create("", "Transformer");
 				ptm.setModelElement($result);
 			 }
-(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(13)).eContents().get(1)).eContents().get(0)),line(),start());}'transformer'{ptm.ruleFinished(getLastToken(),end());})
+(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(19)).eContents().get(1)).eContents().get(0)),line(),start());}'transformer'{ptm.ruleFinished(getLastToken(),end());})
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(13)).eContents().get(1)).eContents().get(1)),line(),start());}
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(19)).eContents().get(1)).eContents().get(1)),line(),start());}
 temp_Interceptors=ruleInterceptors {$result=temp_Interceptors;}
 {ptm.ruleFinished(getLastToken(),end());})?
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(13)).eContents().get(1)).eContents().get(2)),line(),start());}'{'{ptm.ruleFinished(getLastToken(),end());})
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(19)).eContents().get(1)).eContents().get(2)),line(),start());}'{'{ptm.ruleFinished(getLastToken(),end());})
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(13)).eContents().get(1)).eContents().get(3)),line(),start());}temp_beanref=ruleBeanExpr {factory.set($result,"beanref",convert(temp_beanref),false); ptm.ruleFinished(temp_beanref,end()); }
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(19)).eContents().get(1)).eContents().get(3)),line(),start());}temp_beanref=ruleBeanExpr {factory.set($result,"beanref",convert(temp_beanref),false); ptm.ruleFinished(temp_beanref,end()); }
 )
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(13)).eContents().get(1)).eContents().get(4)),line(),start());}temp_target=ruleToTarget {factory.add($result,"target",convert(temp_target),false); ptm.ruleFinished(temp_target,end()); }
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(19)).eContents().get(1)).eContents().get(4)),line(),start());}temp_target=ruleToTarget {factory.add($result,"target",convert(temp_target),false); ptm.ruleFinished(temp_target,end()); }
 )+
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(13)).eContents().get(1)).eContents().get(5)),line(),start());}'}'{ptm.ruleFinished(getLastToken(),end());})
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(19)).eContents().get(1)).eContents().get(5)),line(),start());}'}'{ptm.ruleFinished(getLastToken(),end());})
 )
 ;
 
@@ -331,21 +413,21 @@ ruleChoice returns [EObject result] :
 				$result = factory.create("", "Choice");
 				ptm.setModelElement($result);
 			 }
-(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(14)).eContents().get(1)).eContents().get(0)),line(),start());}'choice'{ptm.ruleFinished(getLastToken(),end());})
+(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(20)).eContents().get(1)).eContents().get(0)),line(),start());}'choice'{ptm.ruleFinished(getLastToken(),end());})
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(14)).eContents().get(1)).eContents().get(1)),line(),start());}
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(20)).eContents().get(1)).eContents().get(1)),line(),start());}
 temp_Interceptors=ruleInterceptors {$result=temp_Interceptors;}
 {ptm.ruleFinished(getLastToken(),end());})?
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(14)).eContents().get(1)).eContents().get(2)),line(),start());}'{'{ptm.ruleFinished(getLastToken(),end());})
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(20)).eContents().get(1)).eContents().get(2)),line(),start());}'{'{ptm.ruleFinished(getLastToken(),end());})
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(14)).eContents().get(1)).eContents().get(3)),line(),start());}temp_when=ruleWhenClause {factory.add($result,"when",convert(temp_when),false); ptm.ruleFinished(temp_when,end()); }
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(20)).eContents().get(1)).eContents().get(3)),line(),start());}temp_when=ruleWhenClause {factory.add($result,"when",convert(temp_when),false); ptm.ruleFinished(temp_when,end()); }
 )*
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(14)).eContents().get(1)).eContents().get(4)),line(),start());}temp_otherwise=ruleOtherwiseClause {factory.set($result,"otherwise",convert(temp_otherwise),false); ptm.ruleFinished(temp_otherwise,end()); }
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(20)).eContents().get(1)).eContents().get(4)),line(),start());}temp_otherwise=ruleOtherwiseClause {factory.set($result,"otherwise",convert(temp_otherwise),false); ptm.ruleFinished(temp_otherwise,end()); }
 )?
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(14)).eContents().get(1)).eContents().get(5)),line(),start());}'}'{ptm.ruleFinished(getLastToken(),end());})
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(20)).eContents().get(1)).eContents().get(5)),line(),start());}'}'{ptm.ruleFinished(getLastToken(),end());})
 )
 ;
 
@@ -354,9 +436,9 @@ ruleRecipients returns [EObject result] :
 				$result = factory.create("", "Recipients");
 				ptm.setModelElement($result);
 			 }
-(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(15)).eContents().get(1)).eContents().get(0)),line(),start());}'recipients'{ptm.ruleFinished(getLastToken(),end());})
+(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(21)).eContents().get(1)).eContents().get(0)),line(),start());}'recipients'{ptm.ruleFinished(getLastToken(),end());})
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(15)).eContents().get(1)).eContents().get(1)),line(),start());}temp_body=ruleSimplePattern {factory.set($result,"body",convert(temp_body),false); ptm.ruleFinished(temp_body,end()); }
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(21)).eContents().get(1)).eContents().get(1)),line(),start());}temp_body=ruleSimplePattern {factory.set($result,"body",convert(temp_body),false); ptm.ruleFinished(temp_body,end()); }
 )
 )
 ;
@@ -366,11 +448,11 @@ ruleDynamicRecipients returns [EObject result] :
 				$result = factory.create("", "DynamicRecipients");
 				ptm.setModelElement($result);
 			 }
-(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(16)).eContents().get(1)).eContents().get(0)),line(),start());}'dynamic'{ptm.ruleFinished(getLastToken(),end());})
+(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(22)).eContents().get(1)).eContents().get(0)),line(),start());}'dynamic'{ptm.ruleFinished(getLastToken(),end());})
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(16)).eContents().get(1)).eContents().get(1)),line(),start());}'recipients'{ptm.ruleFinished(getLastToken(),end());})
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(22)).eContents().get(1)).eContents().get(1)),line(),start());}'recipients'{ptm.ruleFinished(getLastToken(),end());})
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(16)).eContents().get(1)).eContents().get(2)),line(),start());}temp_body=ruleExpression {factory.set($result,"body",convert(temp_body),false); ptm.ruleFinished(temp_body,end()); }
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(22)).eContents().get(1)).eContents().get(2)),line(),start());}temp_body=ruleExpression {factory.set($result,"body",convert(temp_body),false); ptm.ruleFinished(temp_body,end()); }
 )
 )
 ;
@@ -380,9 +462,9 @@ rulePipeline returns [EObject result] :
 				$result = factory.create("", "Pipeline");
 				ptm.setModelElement($result);
 			 }
-(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(17)).eContents().get(1)).eContents().get(0)),line(),start());}'pipeline'{ptm.ruleFinished(getLastToken(),end());})
+(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(23)).eContents().get(1)).eContents().get(0)),line(),start());}'pipeline'{ptm.ruleFinished(getLastToken(),end());})
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(17)).eContents().get(1)).eContents().get(1)),line(),start());}temp_body=ruleSimplePattern {factory.set($result,"body",convert(temp_body),false); ptm.ruleFinished(temp_body,end()); }
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(23)).eContents().get(1)).eContents().get(1)),line(),start());}temp_body=ruleSimplePattern {factory.set($result,"body",convert(temp_body),false); ptm.ruleFinished(temp_body,end()); }
 )
 )
 ;
@@ -392,12 +474,12 @@ ruleFilter returns [EObject result] :
 				$result = factory.create("", "Filter");
 				ptm.setModelElement($result);
 			 }
-(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(18)).eContents().get(1)).eContents().get(0)),line(),start());}'filter'{ptm.ruleFinished(getLastToken(),end());})
+(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(24)).eContents().get(1)).eContents().get(0)),line(),start());}'filter'{ptm.ruleFinished(getLastToken(),end());})
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(18)).eContents().get(1)).eContents().get(1)),line(),start());}temp_expr=ruleExpression {factory.set($result,"expr",convert(temp_expr),false); ptm.ruleFinished(temp_expr,end()); }
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(24)).eContents().get(1)).eContents().get(1)),line(),start());}temp_expr=ruleExpression {factory.set($result,"expr",convert(temp_expr),false); ptm.ruleFinished(temp_expr,end()); }
 )
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(18)).eContents().get(1)).eContents().get(2)),line(),start());}temp_body=ruleSimplePattern {factory.set($result,"body",convert(temp_body),false); ptm.ruleFinished(temp_body,end()); }
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(24)).eContents().get(1)).eContents().get(2)),line(),start());}temp_body=ruleSimplePattern {factory.set($result,"body",convert(temp_body),false); ptm.ruleFinished(temp_body,end()); }
 )
 )
 ;
@@ -407,12 +489,12 @@ ruleSplitter returns [EObject result] :
 				$result = factory.create("", "Splitter");
 				ptm.setModelElement($result);
 			 }
-(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(19)).eContents().get(1)).eContents().get(0)),line(),start());}'splitter'{ptm.ruleFinished(getLastToken(),end());})
+(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(25)).eContents().get(1)).eContents().get(0)),line(),start());}'splitter'{ptm.ruleFinished(getLastToken(),end());})
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(19)).eContents().get(1)).eContents().get(1)),line(),start());}temp_expr=ruleExpression {factory.set($result,"expr",convert(temp_expr),false); ptm.ruleFinished(temp_expr,end()); }
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(25)).eContents().get(1)).eContents().get(1)),line(),start());}temp_expr=ruleExpression {factory.set($result,"expr",convert(temp_expr),false); ptm.ruleFinished(temp_expr,end()); }
 )
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(19)).eContents().get(1)).eContents().get(2)),line(),start());}temp_body=ruleSimplePattern {factory.set($result,"body",convert(temp_body),false); ptm.ruleFinished(temp_body,end()); }
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(25)).eContents().get(1)).eContents().get(2)),line(),start());}temp_body=ruleSimplePattern {factory.set($result,"body",convert(temp_body),false); ptm.ruleFinished(temp_body,end()); }
 )
 )
 ;
@@ -422,12 +504,12 @@ ruleResequencer returns [EObject result] :
 				$result = factory.create("", "Resequencer");
 				ptm.setModelElement($result);
 			 }
-(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(20)).eContents().get(1)).eContents().get(0)),line(),start());}'resequence'{ptm.ruleFinished(getLastToken(),end());})
+(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(26)).eContents().get(1)).eContents().get(0)),line(),start());}'resequence'{ptm.ruleFinished(getLastToken(),end());})
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(20)).eContents().get(1)).eContents().get(1)),line(),start());}temp_expr=ruleExpression {factory.set($result,"expr",convert(temp_expr),false); ptm.ruleFinished(temp_expr,end()); }
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(26)).eContents().get(1)).eContents().get(1)),line(),start());}temp_expr=ruleExpression {factory.set($result,"expr",convert(temp_expr),false); ptm.ruleFinished(temp_expr,end()); }
 )
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(20)).eContents().get(1)).eContents().get(2)),line(),start());}temp_body=ruleSimplePattern {factory.set($result,"body",convert(temp_body),false); ptm.ruleFinished(temp_body,end()); }
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(26)).eContents().get(1)).eContents().get(2)),line(),start());}temp_body=ruleSimplePattern {factory.set($result,"body",convert(temp_body),false); ptm.ruleFinished(temp_body,end()); }
 )
 )
 ;
@@ -437,17 +519,17 @@ ruleWhenClause returns [EObject result] :
 				$result = factory.create("", "WhenClause");
 				ptm.setModelElement($result);
 			 }
-(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(21)).eContents().get(1)).eContents().get(0)),line(),start());}'when'{ptm.ruleFinished(getLastToken(),end());})
+(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(27)).eContents().get(1)).eContents().get(0)),line(),start());}'when'{ptm.ruleFinished(getLastToken(),end());})
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(21)).eContents().get(1)).eContents().get(1)),line(),start());}temp_expr=ruleExpression {factory.set($result,"expr",convert(temp_expr),false); ptm.ruleFinished(temp_expr,end()); }
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(27)).eContents().get(1)).eContents().get(1)),line(),start());}temp_expr=ruleExpression {factory.set($result,"expr",convert(temp_expr),false); ptm.ruleFinished(temp_expr,end()); }
 )
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(21)).eContents().get(1)).eContents().get(2)),line(),start());}'{'{ptm.ruleFinished(getLastToken(),end());})
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(27)).eContents().get(1)).eContents().get(2)),line(),start());}'{'{ptm.ruleFinished(getLastToken(),end());})
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(21)).eContents().get(1)).eContents().get(3)),line(),start());}temp_target=ruleToTarget {factory.add($result,"target",convert(temp_target),false); ptm.ruleFinished(temp_target,end()); }
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(27)).eContents().get(1)).eContents().get(3)),line(),start());}temp_target=ruleToTarget {factory.add($result,"target",convert(temp_target),false); ptm.ruleFinished(temp_target,end()); }
 )+
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(21)).eContents().get(1)).eContents().get(4)),line(),start());}'}'{ptm.ruleFinished(getLastToken(),end());})
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(27)).eContents().get(1)).eContents().get(4)),line(),start());}'}'{ptm.ruleFinished(getLastToken(),end());})
 )
 ;
 
@@ -456,14 +538,14 @@ ruleOtherwiseClause returns [EObject result] :
 				$result = factory.create("", "OtherwiseClause");
 				ptm.setModelElement($result);
 			 }
-(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(22)).eContents().get(1)).eContents().get(0)),line(),start());}'otherwise'{ptm.ruleFinished(getLastToken(),end());})
+(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(28)).eContents().get(1)).eContents().get(0)),line(),start());}'otherwise'{ptm.ruleFinished(getLastToken(),end());})
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(22)).eContents().get(1)).eContents().get(1)),line(),start());}'{'{ptm.ruleFinished(getLastToken(),end());})
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(28)).eContents().get(1)).eContents().get(1)),line(),start());}'{'{ptm.ruleFinished(getLastToken(),end());})
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(22)).eContents().get(1)).eContents().get(2)),line(),start());}temp_target=ruleToTarget {factory.set($result,"target",convert(temp_target),false); ptm.ruleFinished(temp_target,end()); }
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(28)).eContents().get(1)).eContents().get(2)),line(),start());}temp_target=ruleToTarget {factory.set($result,"target",convert(temp_target),false); ptm.ruleFinished(temp_target,end()); }
 )
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(22)).eContents().get(1)).eContents().get(3)),line(),start());}'}'{ptm.ruleFinished(getLastToken(),end());})
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(28)).eContents().get(1)).eContents().get(3)),line(),start());}'}'{ptm.ruleFinished(getLastToken(),end());})
 )
 ;
 
@@ -472,16 +554,19 @@ ruleExpression returns [EObject result] :
 				$result = factory.create("", "Expression");
 				ptm.setModelElement($result);
 			 }
-(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(23)).eContents().get(1)).eContents().get(0)),line(),start());}temp_lang=RULE_ID {factory.set($result,"lang",convert(temp_lang),false); ptm.ruleFinished(temp_lang,end()); }
+((({ptm.invokeRule(((EObject)((EObject)((EObject)((EObject)xtextfile.eContents().get(29)).eContents().get(1)).eContents().get(0)).eContents().get(0)),line(),start());}temp_lang=RULE_ID {factory.set($result,"lang",convert(temp_lang),false); ptm.ruleFinished(temp_lang,end()); }
 )
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(23)).eContents().get(1)).eContents().get(1)),line(),start());}'('{ptm.ruleFinished(getLastToken(),end());})
+({ptm.invokeRule(((EObject)((EObject)((EObject)((EObject)xtextfile.eContents().get(29)).eContents().get(1)).eContents().get(0)).eContents().get(1)),line(),start());}'('{ptm.ruleFinished(getLastToken(),end());})
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(23)).eContents().get(1)).eContents().get(2)),line(),start());}
+({ptm.invokeRule(((EObject)((EObject)((EObject)((EObject)xtextfile.eContents().get(29)).eContents().get(1)).eContents().get(0)).eContents().get(2)),line(),start());}
 temp_ExpressionValue=ruleExpressionValue {$result=temp_ExpressionValue;}
 {ptm.ruleFinished(getLastToken(),end());})
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(23)).eContents().get(1)).eContents().get(3)),line(),start());}')'{ptm.ruleFinished(getLastToken(),end());})
+({ptm.invokeRule(((EObject)((EObject)((EObject)((EObject)xtextfile.eContents().get(29)).eContents().get(1)).eContents().get(0)).eContents().get(3)),line(),start());}')'{ptm.ruleFinished(getLastToken(),end());})
+)
+	|
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(29)).eContents().get(1)).eContents().get(1)),line(),start());}RULE_STRING{ptm.ruleFinished(getLastToken(),end());})
 )
 ;
 
@@ -490,7 +575,7 @@ ruleExpressionValue returns [EObject result] :
 				$result = factory.create("", "ExpressionValue");
 				ptm.setModelElement($result);
 			 }
-({ptm.invokeRule(((EObject)((EObject)xtextfile.eContents().get(24)).eContents().get(1)),line(),start());}temp_value=RULE_STRING {factory.set($result,"value",convert(temp_value),false); ptm.ruleFinished(temp_value,end()); }
+({ptm.invokeRule(((EObject)((EObject)xtextfile.eContents().get(30)).eContents().get(1)),line(),start());}temp_value=RULE_STRING {factory.set($result,"value",convert(temp_value),false); ptm.ruleFinished(temp_value,end()); }
 )
 ;
 
@@ -499,14 +584,14 @@ rulePropertiesBlock returns [EObject result] :
 				$result = factory.create("", "PropertiesBlock");
 				ptm.setModelElement($result);
 			 }
-(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(25)).eContents().get(1)).eContents().get(0)),line(),start());}'properties'{ptm.ruleFinished(getLastToken(),end());})
+(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(31)).eContents().get(1)).eContents().get(0)),line(),start());}'properties'{ptm.ruleFinished(getLastToken(),end());})
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(25)).eContents().get(1)).eContents().get(1)),line(),start());}'{'{ptm.ruleFinished(getLastToken(),end());})
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(31)).eContents().get(1)).eContents().get(1)),line(),start());}'{'{ptm.ruleFinished(getLastToken(),end());})
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(25)).eContents().get(1)).eContents().get(2)),line(),start());}temp_properties=rulePropertyDef {factory.add($result,"properties",convert(temp_properties),false); ptm.ruleFinished(temp_properties,end()); }
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(31)).eContents().get(1)).eContents().get(2)),line(),start());}temp_properties=rulePropertyDef {factory.add($result,"properties",convert(temp_properties),false); ptm.ruleFinished(temp_properties,end()); }
 )+
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(25)).eContents().get(1)).eContents().get(3)),line(),start());}'}'{ptm.ruleFinished(getLastToken(),end());})
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(31)).eContents().get(1)).eContents().get(3)),line(),start());}'}'{ptm.ruleFinished(getLastToken(),end());})
 )
 ;
 
@@ -515,12 +600,12 @@ rulePropertyDef returns [EObject result] :
 				$result = factory.create("", "PropertyDef");
 				ptm.setModelElement($result);
 			 }
-(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(26)).eContents().get(1)).eContents().get(0)),line(),start());}temp_name=ruleSCOPED_ID {factory.set($result,"name",convert(temp_name),false); ptm.ruleFinished(temp_name,end()); }
+(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(32)).eContents().get(1)).eContents().get(0)),line(),start());}temp_name=ruleSCOPED_ID {factory.set($result,"name",convert(temp_name),false); ptm.ruleFinished(temp_name,end()); }
 )
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(26)).eContents().get(1)).eContents().get(1)),line(),start());}'='{ptm.ruleFinished(getLastToken(),end());})
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(32)).eContents().get(1)).eContents().get(1)),line(),start());}'='{ptm.ruleFinished(getLastToken(),end());})
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(26)).eContents().get(1)).eContents().get(2)),line(),start());}temp_value=RULE_STRING {factory.set($result,"value",convert(temp_value),false); ptm.ruleFinished(temp_value,end()); }
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(32)).eContents().get(1)).eContents().get(2)),line(),start());}temp_value=RULE_STRING {factory.set($result,"value",convert(temp_value),false); ptm.ruleFinished(temp_value,end()); }
 )
 )
 ;
@@ -533,9 +618,9 @@ ruleFault returns [EObject result] :
 				$result = factory.create("", "Fault");
 				ptm.setModelElement($result);
 			 }
-(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(28)).eContents().get(1)).eContents().get(0)),line(),start());}'fault'{ptm.ruleFinished(getLastToken(),end());})
+(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(34)).eContents().get(1)).eContents().get(0)),line(),start());}'fault'{ptm.ruleFinished(getLastToken(),end());})
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(28)).eContents().get(1)).eContents().get(1)),line(),start());}RULE_STRING{ptm.ruleFinished(getLastToken(),end());})
+({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(34)).eContents().get(1)).eContents().get(1)),line(),start());}RULE_STRING{ptm.ruleFinished(getLastToken(),end());})
 )
 ;
 
@@ -544,11 +629,11 @@ ruleSCOPED_ID returns [EObject result] :
 				$result = factory.create("", "SCOPED_ID");
 				ptm.setModelElement($result);
 			 }
-(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(29)).eContents().get(1)).eContents().get(0)),line(),start());}RULE_ID{ptm.ruleFinished(getLastToken(),end());})
+(({ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(35)).eContents().get(1)).eContents().get(0)),line(),start());}RULE_ID{ptm.ruleFinished(getLastToken(),end());})
 
-(({ptm.invokeRule(((EObject)((EObject)((EObject)((EObject)xtextfile.eContents().get(29)).eContents().get(1)).eContents().get(1)).eContents().get(0)),line(),start());}'.'{ptm.ruleFinished(getLastToken(),end());})
+(({ptm.invokeRule(((EObject)((EObject)((EObject)((EObject)xtextfile.eContents().get(35)).eContents().get(1)).eContents().get(1)).eContents().get(0)),line(),start());}'.'{ptm.ruleFinished(getLastToken(),end());})
 
-({ptm.invokeRule(((EObject)((EObject)((EObject)((EObject)xtextfile.eContents().get(29)).eContents().get(1)).eContents().get(1)).eContents().get(1)),line(),start());}RULE_ID{ptm.ruleFinished(getLastToken(),end());})
+({ptm.invokeRule(((EObject)((EObject)((EObject)((EObject)xtextfile.eContents().get(35)).eContents().get(1)).eContents().get(1)).eContents().get(1)),line(),start());}RULE_ID{ptm.ruleFinished(getLastToken(),end());})
 )*
 )
 ;
@@ -558,7 +643,7 @@ ruleBEAN returns [EObject result] :
 				$result = factory.create("", "BEAN");
 				ptm.setModelElement($result);
 			 }
-({ptm.invokeRule(((EObject)((EObject)xtextfile.eContents().get(30)).eContents().get(1)),line(),start());}'bean'{ptm.ruleFinished(getLastToken(),end());})
+({ptm.invokeRule(((EObject)((EObject)xtextfile.eContents().get(36)).eContents().get(1)),line(),start());}'bean'{ptm.ruleFinished(getLastToken(),end());})
 ;
 
 RULE_ID :

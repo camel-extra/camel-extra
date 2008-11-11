@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="ASCII"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="spit" nsURI="http://activemq.apache.org/camel/spit" nsPrefix="spit">
   <eClassifiers xsi:type="ecore:EClass" name="File">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="routes" upperBound="-1" eType="//Route" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="interceptorDefs" upperBound="-1" eType="//InterceptorChainDef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="imports" upperBound="-1" eType="//Import" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="routes" upperBound="-1" eType="//Route" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="interceptorDecls" upperBound="-1" eType="//GlobalInterceptorDecl" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="interceptorDefs" upperBound="-1" eType="//InterceptorChainDef" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Route">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="process" eType="//ProcessExpr" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="from" eType="//From" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="process" eType="//ProcessExpr" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" ordered="false" unique="false">
       <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eStructuralFeatures>
@@ -27,7 +27,7 @@
       <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Interceptors" eSuperTypes="//Transformer //Route //SimplePattern //Choice"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Interceptors" eSuperTypes="//Transformer //Route //Choice"/>
   <eClassifiers xsi:type="ecore:EClass" name="From">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="uri" ordered="false" unique="false">
       <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -41,7 +41,25 @@
   <eClassifiers xsi:type="ecore:EClass" name="PatternExpr" abstract="true" eSuperTypes="//PatternOrBeanExpr"/>
   <eClassifiers xsi:type="ecore:EClass" name="ProcessExpr" abstract="true" eSuperTypes="//ToTarget"/>
   <eClassifiers xsi:type="ecore:EClass" name="PatternOrBeanExpr" abstract="true" eSuperTypes="//ProcessExpr"/>
-  <eClassifiers xsi:type="ecore:EClass" name="BeanExpr" eSuperTypes="//PatternOrBeanExpr">
+  <eClassifiers xsi:type="ecore:EClass" name="BeanExpr" eSuperTypes="//PatternOrBeanExpr //ConvertBodyWithAction"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SimplePattern">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="actions" upperBound="-1" eType="//ActionStatement" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="properties" eType="//PropertiesBlock" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="targets" upperBound="-1" eType="//ToTarget" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="interceptors" eType="//Interceptors" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ActionStatement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SetHeaderAction" eSuperTypes="//ActionStatement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="//Expression" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="header" ordered="false" unique="false">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SetBodyAction" eSuperTypes="//ActionStatement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="//Expression" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ConvertBodyAction" abstract="true" eSuperTypes="//ActionStatement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ConvertBodyWithAction" eSuperTypes="//ConvertBodyAction">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" ordered="false" unique="false">
       <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eStructuralFeatures>
@@ -49,16 +67,18 @@
       <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eStructuralFeatures>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SimplePattern">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="targets" upperBound="-1" eType="//ToTarget" containment="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ConvertBodyToAction" eSuperTypes="//ConvertBodyAction">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" ordered="false" unique="false">
+      <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Transformer" eSuperTypes="//PatternExpr">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="beanref" eType="//BeanExpr" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="target" upperBound="-1" eType="//ToTarget" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="beanref" eType="//BeanExpr" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Choice" eSuperTypes="//PatternExpr">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="when" upperBound="-1" eType="//WhenClause" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="otherwise" eType="//OtherwiseClause" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="when" upperBound="-1" eType="//WhenClause" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="interceptorName" upperBound="-1" eType="//InterceptorChainDef"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Recipients" eSuperTypes="//PatternExpr">
@@ -71,16 +91,16 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="//SimplePattern" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Filter" eSuperTypes="//PatternExpr">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="//SimplePattern" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="//Expression" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="//SimplePattern" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Splitter" eSuperTypes="//PatternExpr">
     <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="//Expression" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="//SimplePattern" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Resequencer" eSuperTypes="//PatternExpr">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="//Expression" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="body" eType="//SimplePattern" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expr" eType="//Expression" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="WhenClause">
     <eStructuralFeatures xsi:type="ecore:EReference" name="target" upperBound="-1" eType="//ToTarget" containment="true"/>
@@ -98,14 +118,14 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ExpressionValue" eSuperTypes="//Expression"/>
-  <eClassifiers xsi:type="ecore:EClass" name="PropertiesBlock" eSuperTypes="//SimplePattern">
+  <eClassifiers xsi:type="ecore:EClass" name="PropertiesBlock">
     <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1" eType="//PropertyDef" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PropertyDef">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="//SCOPED_ID" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" ordered="false" unique="false">
       <eType xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="name" eType="//SCOPED_ID" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ToTarget" abstract="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="Fault" eSuperTypes="//ToTarget"/>

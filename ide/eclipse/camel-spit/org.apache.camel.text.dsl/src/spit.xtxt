@@ -55,12 +55,37 @@ BeanExpr :
    ;
 
 SimplePattern : 
-    (Interceptors)? "{"
+    (interceptors=Interceptors)? "{"
+        (actions+=ActionStatement)*
         (targets+=ToTarget)+
-        (PropertiesBlock)?
+        (properties=PropertiesBlock)?
     "}"
     ;
+
+ActionStatement :
+    SetHeaderAction | SetBodyAction | "convert" ConvertBodyAction
+    ;
     
+SetHeaderAction :
+    "header" header=STRING "=" (value=Expression)
+    ;
+    
+SetBodyAction :
+    "body" "=" (value=Expression)
+    ;
+
+ConvertBodyAction :
+    ConvertBodyWithAction | ConvertBodyToAction
+    ;
+    
+ConvertBodyWithAction :
+    "with" BeanExpr
+    ;
+
+ConvertBodyToAction :
+    "to" (type=STRING) 
+    ;
+      
 Transformer :
    "transformer" (Interceptors)? "{"
        beanref=BeanExpr
@@ -110,7 +135,7 @@ OtherwiseClause :
     ;
            
 Expression :
-   lang=ID "(" ExpressionValue ")"
+   lang=ID "(" ExpressionValue ")" | STRING
    ;
    
 ExpressionValue :
@@ -138,9 +163,5 @@ Fault :
 SCOPED_ID :
     ID ("." ID)*
     ;
-    
-//Native STRING :
-//    "'\'' ~('\''|'\n'|'\r')* '\'' "
-//    ;
 
 BEAN:  "bean";

@@ -140,13 +140,77 @@
   <rules xsi:type="xtext:TypeRule" name="SimplePattern">
     <type alias="" name="SimplePattern"/>
     <content xsi:type="xtext:Group">
-      <children xsi:type="xtext:RuleName" cardinality="OPTIONAL" name="Interceptors"/>
+      <children xsi:type="xtext:Assignment" cardinality="OPTIONAL" feature="interceptors" operator="ASSIGN">
+        <token xsi:type="xtext:RuleName" name="Interceptors"/>
+      </children>
       <children xsi:type="xtext:Keyword" value="{"/>
+      <children xsi:type="xtext:Assignment" cardinality="ANY" feature="actions" operator="ADD">
+        <token xsi:type="xtext:RuleName" name="ActionStatement"/>
+      </children>
       <children xsi:type="xtext:Assignment" cardinality="ONEORMORE" feature="targets" operator="ADD">
         <token xsi:type="xtext:RuleName" name="ToTarget"/>
       </children>
-      <children xsi:type="xtext:RuleName" cardinality="OPTIONAL" name="PropertiesBlock"/>
+      <children xsi:type="xtext:Assignment" cardinality="OPTIONAL" feature="properties" operator="ASSIGN">
+        <token xsi:type="xtext:RuleName" name="PropertiesBlock"/>
+      </children>
       <children xsi:type="xtext:Keyword" value="}"/>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="ActionStatement">
+    <type alias="" name="ActionStatement"/>
+    <content xsi:type="xtext:Alternatives">
+      <alternatives xsi:type="xtext:RuleName" name="SetHeaderAction"/>
+      <alternatives xsi:type="xtext:RuleName" name="SetBodyAction"/>
+      <alternatives xsi:type="xtext:Group">
+        <children xsi:type="xtext:Keyword" value="convert"/>
+        <children xsi:type="xtext:RuleName" name="ConvertBodyAction"/>
+      </alternatives>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="SetHeaderAction">
+    <type alias="" name="SetHeaderAction"/>
+    <content xsi:type="xtext:Group">
+      <children xsi:type="xtext:Keyword" value="header"/>
+      <children xsi:type="xtext:Assignment" feature="header" operator="ASSIGN">
+        <token xsi:type="xtext:RuleName" name="STRING"/>
+      </children>
+      <children xsi:type="xtext:Keyword" value="="/>
+      <children xsi:type="xtext:Assignment" feature="value" operator="ASSIGN">
+        <token xsi:type="xtext:RuleName" name="Expression"/>
+      </children>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="SetBodyAction">
+    <type alias="" name="SetBodyAction"/>
+    <content xsi:type="xtext:Group">
+      <children xsi:type="xtext:Keyword" value="body"/>
+      <children xsi:type="xtext:Keyword" value="="/>
+      <children xsi:type="xtext:Assignment" feature="value" operator="ASSIGN">
+        <token xsi:type="xtext:RuleName" name="Expression"/>
+      </children>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="ConvertBodyAction">
+    <type alias="" name="ConvertBodyAction"/>
+    <content xsi:type="xtext:Alternatives">
+      <alternatives xsi:type="xtext:RuleName" name="ConvertBodyWithAction"/>
+      <alternatives xsi:type="xtext:RuleName" name="ConvertBodyToAction"/>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="ConvertBodyWithAction">
+    <type alias="" name="ConvertBodyWithAction"/>
+    <content xsi:type="xtext:Group">
+      <children xsi:type="xtext:Keyword" value="with"/>
+      <children xsi:type="xtext:RuleName" name="BeanExpr"/>
+    </content>
+  </rules>
+  <rules xsi:type="xtext:TypeRule" name="ConvertBodyToAction">
+    <type alias="" name="ConvertBodyToAction"/>
+    <content xsi:type="xtext:Group">
+      <children xsi:type="xtext:Keyword" value="to"/>
+      <children xsi:type="xtext:Assignment" feature="type" operator="ASSIGN">
+        <token xsi:type="xtext:RuleName" name="STRING"/>
+      </children>
     </content>
   </rules>
   <rules xsi:type="xtext:TypeRule" name="Transformer">
@@ -270,13 +334,16 @@
   </rules>
   <rules xsi:type="xtext:TypeRule" name="Expression">
     <type alias="" name="Expression"/>
-    <content xsi:type="xtext:Group">
-      <children xsi:type="xtext:Assignment" feature="lang" operator="ASSIGN">
-        <token xsi:type="xtext:RuleName" name="ID"/>
-      </children>
-      <children xsi:type="xtext:Keyword" value="("/>
-      <children xsi:type="xtext:RuleName" name="ExpressionValue"/>
-      <children xsi:type="xtext:Keyword" value=")"/>
+    <content xsi:type="xtext:Alternatives">
+      <alternatives xsi:type="xtext:Group">
+        <children xsi:type="xtext:Assignment" feature="lang" operator="ASSIGN">
+          <token xsi:type="xtext:RuleName" name="ID"/>
+        </children>
+        <children xsi:type="xtext:Keyword" value="("/>
+        <children xsi:type="xtext:RuleName" name="ExpressionValue"/>
+        <children xsi:type="xtext:Keyword" value=")"/>
+      </alternatives>
+      <alternatives xsi:type="xtext:RuleName" name="STRING"/>
     </content>
   </rules>
   <rules xsi:type="xtext:TypeRule" name="ExpressionValue">

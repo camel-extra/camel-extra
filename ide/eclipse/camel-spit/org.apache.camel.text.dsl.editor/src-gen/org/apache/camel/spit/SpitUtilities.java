@@ -30,25 +30,29 @@ public class SpitUtilities extends AbstractLanguageUtilities {
 
 	List<String> r = new ArrayList<String>();
 	{
-		r.add("otherwise");
 		r.add("resequence");
+		r.add("otherwise");
 		r.add("dynamic");
+		r.add("convert");
 		r.add("when");
-		r.add("fault");
 		r.add("route");
 		r.add("choice");
-		r.add("from");
 		r.add("transformer");
-		r.add("bean");
 		r.add("properties");
-		r.add("import");
 		r.add("global");
-		r.add("to");
-		r.add("filter");
+		r.add("import");
 		r.add("pipeline");
-		r.add("interceptor");
+		r.add("filter");
 		r.add("recipients");
 		r.add("interceptors");
+		r.add("body");
+		r.add("fault");
+		r.add("header");
+		r.add("from");
+		r.add("with");
+		r.add("bean");
+		r.add("to");
+		r.add("interceptor");
 		r.add("splitter");
 	}
 	public List<String> allKeywords() {

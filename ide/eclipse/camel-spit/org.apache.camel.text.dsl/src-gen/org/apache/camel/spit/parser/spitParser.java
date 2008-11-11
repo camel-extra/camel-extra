@@ -1,4 +1,4 @@
-// $ANTLR 3.0 ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g 2008-11-07 14:56:34
+// $ANTLR 3.0 ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g 2008-11-11 16:35:01
 
 package org.apache.camel.spit.parser;
 
@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.HashMap;
 public class spitParser extends Parser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_INT", "RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "'route'", "'{'", "'}'", "'import'", "'global'", "'interceptors'", "'interceptor'", "'('", "')'", "'from'", "'to'", "'transformer'", "'choice'", "'recipients'", "'dynamic'", "'pipeline'", "'filter'", "'splitter'", "'resequence'", "'when'", "'otherwise'", "'properties'", "'='", "'fault'", "'.'", "'bean'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_INT", "RULE_WS", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "'route'", "'{'", "'}'", "'import'", "'global'", "'interceptors'", "'interceptor'", "'('", "')'", "'from'", "'to'", "'convert'", "'header'", "'='", "'body'", "'with'", "'transformer'", "'choice'", "'recipients'", "'dynamic'", "'pipeline'", "'filter'", "'splitter'", "'resequence'", "'when'", "'otherwise'", "'properties'", "'fault'", "'.'", "'bean'"
     };
     public static final int RULE_ML_COMMENT=8;
     public static final int RULE_ID=4;
@@ -35,7 +35,7 @@ public class spitParser extends Parser {
 
         public spitParser(TokenStream input) {
             super(input);
-            ruleMemo = new HashMap[61+1];
+            ruleMemo = new HashMap[72+1];
          }
         
 
@@ -721,7 +721,7 @@ public class spitParser extends Parser {
                 int alt6=2;
                 int LA6_0 = input.LA(1);
 
-                if ( (LA6_0==35) ) {
+                if ( (LA6_0==39) ) {
                     alt6=1;
                 }
 
@@ -1064,42 +1064,42 @@ public class spitParser extends Parser {
             // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:259:9: (temp_choice= ruleChoice | temp_recipients= ruleRecipients | temp_pipeline= rulePipeline | temp_filter= ruleFilter | temp_splitter= ruleSplitter | temp_resequencer= ruleResequencer | temp_transformer= ruleTransformer | temp_dynamicrecipients= ruleDynamicRecipients )
             int alt8=8;
             switch ( input.LA(1) ) {
-            case 22:
+            case 27:
                 {
                 alt8=1;
                 }
                 break;
-            case 23:
+            case 28:
                 {
                 alt8=2;
                 }
                 break;
-            case 25:
+            case 30:
                 {
                 alt8=3;
                 }
                 break;
-            case 26:
+            case 31:
                 {
                 alt8=4;
                 }
                 break;
-            case 27:
+            case 32:
                 {
                 alt8=5;
                 }
                 break;
-            case 28:
+            case 33:
                 {
                 alt8=6;
                 }
                 break;
-            case 21:
+            case 26:
                 {
                 alt8=7;
                 }
                 break;
-            case 24:
+            case 29:
                 {
                 alt8=8;
                 }
@@ -1284,10 +1284,10 @@ public class spitParser extends Parser {
             int alt9=2;
             int LA9_0 = input.LA(1);
 
-            if ( (LA9_0==35) ) {
+            if ( (LA9_0==39) ) {
                 alt9=1;
             }
-            else if ( ((LA9_0>=21 && LA9_0<=28)) ) {
+            else if ( ((LA9_0>=26 && LA9_0<=33)) ) {
                 alt9=2;
             }
             else {
@@ -1441,21 +1441,23 @@ public class spitParser extends Parser {
 
 
     // $ANTLR start ruleSimplePattern
-    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:284:1: ruleSimplePattern returns [EObject result] : ( (temp_Interceptors= ruleInterceptors )? ( '{' ) (temp_targets= ruleToTarget )+ (temp_PropertiesBlock= rulePropertiesBlock )? ( '}' ) ) ;
+    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:284:1: ruleSimplePattern returns [EObject result] : ( (temp_interceptors= ruleInterceptors )? ( '{' ) (temp_actions= ruleActionStatement )* (temp_targets= ruleToTarget )+ (temp_properties= rulePropertiesBlock )? ( '}' ) ) ;
     public EObject ruleSimplePattern() throws RecognitionException {
         EObject result = null;
         int ruleSimplePattern_StartIndex = input.index();
-        EObject temp_Interceptors = null;
+        EObject temp_interceptors = null;
+
+        EObject temp_actions = null;
 
         EObject temp_targets = null;
 
-        EObject temp_PropertiesBlock = null;
+        EObject temp_properties = null;
 
 
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 14) ) { return result; }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:285:4: ( ( (temp_Interceptors= ruleInterceptors )? ( '{' ) (temp_targets= ruleToTarget )+ (temp_PropertiesBlock= rulePropertiesBlock )? ( '}' ) ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:285:4: ( (temp_Interceptors= ruleInterceptors )? ( '{' ) (temp_targets= ruleToTarget )+ (temp_PropertiesBlock= rulePropertiesBlock )? ( '}' ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:285:4: ( ( (temp_interceptors= ruleInterceptors )? ( '{' ) (temp_actions= ruleActionStatement )* (temp_targets= ruleToTarget )+ (temp_properties= rulePropertiesBlock )? ( '}' ) ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:285:4: ( (temp_interceptors= ruleInterceptors )? ( '{' ) (temp_actions= ruleActionStatement )* (temp_targets= ruleToTarget )+ (temp_properties= rulePropertiesBlock )? ( '}' ) )
             {
             if ( backtracking==0 ) {
 
@@ -1463,10 +1465,10 @@ public class spitParser extends Parser {
               				ptm.setModelElement(result);
               			 
             }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:289:1: ( (temp_Interceptors= ruleInterceptors )? ( '{' ) (temp_targets= ruleToTarget )+ (temp_PropertiesBlock= rulePropertiesBlock )? ( '}' ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:289:2: (temp_Interceptors= ruleInterceptors )? ( '{' ) (temp_targets= ruleToTarget )+ (temp_PropertiesBlock= rulePropertiesBlock )? ( '}' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:289:1: ( (temp_interceptors= ruleInterceptors )? ( '{' ) (temp_actions= ruleActionStatement )* (temp_targets= ruleToTarget )+ (temp_properties= rulePropertiesBlock )? ( '}' ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:289:2: (temp_interceptors= ruleInterceptors )? ( '{' ) (temp_actions= ruleActionStatement )* (temp_targets= ruleToTarget )+ (temp_properties= rulePropertiesBlock )? ( '}' )
             {
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:289:2: (temp_Interceptors= ruleInterceptors )?
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:289:2: (temp_interceptors= ruleInterceptors )?
             int alt11=2;
             int LA11_0 = input.LA(1);
 
@@ -1475,20 +1477,17 @@ public class spitParser extends Parser {
             }
             switch (alt11) {
                 case 1 :
-                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:289:3: temp_Interceptors= ruleInterceptors
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:289:3: temp_interceptors= ruleInterceptors
                     {
                     if ( backtracking==0 ) {
                       ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(12)).eContents().get(1)).eContents().get(0)),line(),start());
                     }
-                    pushFollow(FOLLOW_ruleInterceptors_in_ruleSimplePattern763);
-                    temp_Interceptors=ruleInterceptors();
+                    pushFollow(FOLLOW_ruleInterceptors_in_ruleSimplePattern762);
+                    temp_interceptors=ruleInterceptors();
                     _fsp--;
                     if (failed) return result;
                     if ( backtracking==0 ) {
-                      result =temp_Interceptors;
-                    }
-                    if ( backtracking==0 ) {
-                      ptm.ruleFinished(getLastToken(),end());
+                      factory.set(result,"interceptors",convert(temp_interceptors),false); ptm.ruleFinished(temp_interceptors,end()); 
                     }
 
                     }
@@ -1496,39 +1495,73 @@ public class spitParser extends Parser {
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:293:1: ( '{' )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:293:2: '{'
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:292:1: ( '{' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:292:2: '{'
             {
             if ( backtracking==0 ) {
               ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(12)).eContents().get(1)).eContents().get(1)),line(),start());
             }
-            match(input,11,FOLLOW_11_in_ruleSimplePattern774); if (failed) return result;
+            match(input,11,FOLLOW_11_in_ruleSimplePattern772); if (failed) return result;
             if ( backtracking==0 ) {
               ptm.ruleFinished(getLastToken(),end());
             }
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:295:1: (temp_targets= ruleToTarget )+
-            int cnt12=0;
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:294:1: (temp_actions= ruleActionStatement )*
             loop12:
             do {
                 int alt12=2;
                 int LA12_0 = input.LA(1);
 
-                if ( ((LA12_0>=20 && LA12_0<=28)||LA12_0==33||LA12_0==35) ) {
+                if ( ((LA12_0>=21 && LA12_0<=22)||LA12_0==24) ) {
                     alt12=1;
                 }
 
 
                 switch (alt12) {
             	case 1 :
-            	    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:295:2: temp_targets= ruleToTarget
+            	    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:294:2: temp_actions= ruleActionStatement
             	    {
             	    if ( backtracking==0 ) {
             	      ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(12)).eContents().get(1)).eContents().get(2)),line(),start());
             	    }
-            	    pushFollow(FOLLOW_ruleToTarget_in_ruleSimplePattern783);
+            	    pushFollow(FOLLOW_ruleActionStatement_in_ruleSimplePattern781);
+            	    temp_actions=ruleActionStatement();
+            	    _fsp--;
+            	    if (failed) return result;
+            	    if ( backtracking==0 ) {
+            	      factory.add(result,"actions",convert(temp_actions),false); ptm.ruleFinished(temp_actions,end()); 
+            	    }
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop12;
+                }
+            } while (true);
+
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:297:1: (temp_targets= ruleToTarget )+
+            int cnt13=0;
+            loop13:
+            do {
+                int alt13=2;
+                int LA13_0 = input.LA(1);
+
+                if ( (LA13_0==20||(LA13_0>=26 && LA13_0<=33)||LA13_0==37||LA13_0==39) ) {
+                    alt13=1;
+                }
+
+
+                switch (alt13) {
+            	case 1 :
+            	    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:297:2: temp_targets= ruleToTarget
+            	    {
+            	    if ( backtracking==0 ) {
+            	      ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(12)).eContents().get(1)).eContents().get(3)),line(),start());
+            	    }
+            	    pushFollow(FOLLOW_ruleToTarget_in_ruleSimplePattern793);
             	    temp_targets=ruleToTarget();
             	    _fsp--;
             	    if (failed) return result;
@@ -1540,38 +1573,35 @@ public class spitParser extends Parser {
             	    break;
 
             	default :
-            	    if ( cnt12 >= 1 ) break loop12;
+            	    if ( cnt13 >= 1 ) break loop13;
             	    if (backtracking>0) {failed=true; return result;}
                         EarlyExitException eee =
-                            new EarlyExitException(12, input);
+                            new EarlyExitException(13, input);
                         throw eee;
                 }
-                cnt12++;
+                cnt13++;
             } while (true);
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:298:1: (temp_PropertiesBlock= rulePropertiesBlock )?
-            int alt13=2;
-            int LA13_0 = input.LA(1);
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:300:1: (temp_properties= rulePropertiesBlock )?
+            int alt14=2;
+            int LA14_0 = input.LA(1);
 
-            if ( (LA13_0==31) ) {
-                alt13=1;
+            if ( (LA14_0==36) ) {
+                alt14=1;
             }
-            switch (alt13) {
+            switch (alt14) {
                 case 1 :
-                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:298:2: temp_PropertiesBlock= rulePropertiesBlock
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:300:2: temp_properties= rulePropertiesBlock
                     {
                     if ( backtracking==0 ) {
-                      ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(12)).eContents().get(1)).eContents().get(3)),line(),start());
+                      ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(12)).eContents().get(1)).eContents().get(4)),line(),start());
                     }
-                    pushFollow(FOLLOW_rulePropertiesBlock_in_ruleSimplePattern796);
-                    temp_PropertiesBlock=rulePropertiesBlock();
+                    pushFollow(FOLLOW_rulePropertiesBlock_in_ruleSimplePattern805);
+                    temp_properties=rulePropertiesBlock();
                     _fsp--;
                     if (failed) return result;
                     if ( backtracking==0 ) {
-                      result =temp_PropertiesBlock;
-                    }
-                    if ( backtracking==0 ) {
-                      ptm.ruleFinished(getLastToken(),end());
+                      factory.set(result,"properties",convert(temp_properties),false); ptm.ruleFinished(temp_properties,end()); 
                     }
 
                     }
@@ -1579,13 +1609,13 @@ public class spitParser extends Parser {
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:302:1: ( '}' )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:302:2: '}'
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:303:1: ( '}' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:303:2: '}'
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(12)).eContents().get(1)).eContents().get(4)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(12)).eContents().get(1)).eContents().get(5)),line(),start());
             }
-            match(input,12,FOLLOW_12_in_ruleSimplePattern807); if (failed) return result;
+            match(input,12,FOLLOW_12_in_ruleSimplePattern815); if (failed) return result;
             if ( backtracking==0 ) {
               ptm.ruleFinished(getLastToken(),end());
             }
@@ -1611,151 +1641,469 @@ public class spitParser extends Parser {
     // $ANTLR end ruleSimplePattern
 
 
-    // $ANTLR start ruleTransformer
-    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:306:1: ruleTransformer returns [EObject result] : ( ( 'transformer' ) (temp_Interceptors= ruleInterceptors )? ( '{' ) (temp_beanref= ruleBeanExpr ) (temp_target= ruleToTarget )+ ( '}' ) ) ;
-    public EObject ruleTransformer() throws RecognitionException {
+    // $ANTLR start ruleActionStatement
+    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:307:1: ruleActionStatement returns [EObject result] : ( (temp_SetHeaderAction= ruleSetHeaderAction ) | (temp_SetBodyAction= ruleSetBodyAction ) | ( ( 'convert' ) (temp_ConvertBodyAction= ruleConvertBodyAction ) ) ) ;
+    public EObject ruleActionStatement() throws RecognitionException {
         EObject result = null;
-        int ruleTransformer_StartIndex = input.index();
-        EObject temp_Interceptors = null;
+        int ruleActionStatement_StartIndex = input.index();
+        EObject temp_SetHeaderAction = null;
 
-        EObject temp_beanref = null;
+        EObject temp_SetBodyAction = null;
 
-        EObject temp_target = null;
+        EObject temp_ConvertBodyAction = null;
 
 
         try {
             if ( backtracking>0 && alreadyParsedRule(input, 15) ) { return result; }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:307:4: ( ( ( 'transformer' ) (temp_Interceptors= ruleInterceptors )? ( '{' ) (temp_beanref= ruleBeanExpr ) (temp_target= ruleToTarget )+ ( '}' ) ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:307:4: ( ( 'transformer' ) (temp_Interceptors= ruleInterceptors )? ( '{' ) (temp_beanref= ruleBeanExpr ) (temp_target= ruleToTarget )+ ( '}' ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:308:4: ( ( (temp_SetHeaderAction= ruleSetHeaderAction ) | (temp_SetBodyAction= ruleSetBodyAction ) | ( ( 'convert' ) (temp_ConvertBodyAction= ruleConvertBodyAction ) ) ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:308:4: ( (temp_SetHeaderAction= ruleSetHeaderAction ) | (temp_SetBodyAction= ruleSetBodyAction ) | ( ( 'convert' ) (temp_ConvertBodyAction= ruleConvertBodyAction ) ) )
             {
             if ( backtracking==0 ) {
 
-              				result = factory.create("", "Transformer");
+              				result = factory.create("", "ActionStatement");
               				ptm.setModelElement(result);
               			 
             }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:311:1: ( ( 'transformer' ) (temp_Interceptors= ruleInterceptors )? ( '{' ) (temp_beanref= ruleBeanExpr ) (temp_target= ruleToTarget )+ ( '}' ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:311:2: ( 'transformer' ) (temp_Interceptors= ruleInterceptors )? ( '{' ) (temp_beanref= ruleBeanExpr ) (temp_target= ruleToTarget )+ ( '}' )
-            {
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:311:2: ( 'transformer' )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:311:3: 'transformer'
-            {
-            if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(13)).eContents().get(1)).eContents().get(0)),line(),start());
-            }
-            match(input,21,FOLLOW_21_in_ruleTransformer832); if (failed) return result;
-            if ( backtracking==0 ) {
-              ptm.ruleFinished(getLastToken(),end());
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:312:1: ( (temp_SetHeaderAction= ruleSetHeaderAction ) | (temp_SetBodyAction= ruleSetBodyAction ) | ( ( 'convert' ) (temp_ConvertBodyAction= ruleConvertBodyAction ) ) )
+            int alt15=3;
+            switch ( input.LA(1) ) {
+            case 22:
+                {
+                alt15=1;
+                }
+                break;
+            case 24:
+                {
+                alt15=2;
+                }
+                break;
+            case 21:
+                {
+                alt15=3;
+                }
+                break;
+            default:
+                if (backtracking>0) {failed=true; return result;}
+                NoViableAltException nvae =
+                    new NoViableAltException("312:1: ( (temp_SetHeaderAction= ruleSetHeaderAction ) | (temp_SetBodyAction= ruleSetBodyAction ) | ( ( 'convert' ) (temp_ConvertBodyAction= ruleConvertBodyAction ) ) )", 15, 0, input);
+
+                throw nvae;
             }
 
-            }
-
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:313:1: (temp_Interceptors= ruleInterceptors )?
-            int alt14=2;
-            int LA14_0 = input.LA(1);
-
-            if ( (LA14_0==15) ) {
-                alt14=1;
-            }
-            switch (alt14) {
+            switch (alt15) {
                 case 1 :
-                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:313:2: temp_Interceptors= ruleInterceptors
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:312:2: (temp_SetHeaderAction= ruleSetHeaderAction )
+                    {
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:312:2: (temp_SetHeaderAction= ruleSetHeaderAction )
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:312:3: temp_SetHeaderAction= ruleSetHeaderAction
                     {
                     if ( backtracking==0 ) {
-                      ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(13)).eContents().get(1)).eContents().get(1)),line(),start());
+                      ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(13)).eContents().get(1)).eContents().get(0)),line(),start());
                     }
-                    pushFollow(FOLLOW_ruleInterceptors_in_ruleTransformer842);
-                    temp_Interceptors=ruleInterceptors();
+                    pushFollow(FOLLOW_ruleSetHeaderAction_in_ruleActionStatement843);
+                    temp_SetHeaderAction=ruleSetHeaderAction();
                     _fsp--;
                     if (failed) return result;
                     if ( backtracking==0 ) {
-                      result =temp_Interceptors;
+                      result =temp_SetHeaderAction;
                     }
                     if ( backtracking==0 ) {
                       ptm.ruleFinished(getLastToken(),end());
                     }
 
                     }
+
+
+                    }
+                    break;
+                case 2 :
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:316:1: (temp_SetBodyAction= ruleSetBodyAction )
+                    {
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:316:1: (temp_SetBodyAction= ruleSetBodyAction )
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:316:2: temp_SetBodyAction= ruleSetBodyAction
+                    {
+                    if ( backtracking==0 ) {
+                      ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(13)).eContents().get(1)).eContents().get(1)),line(),start());
+                    }
+                    pushFollow(FOLLOW_ruleSetBodyAction_in_ruleActionStatement858);
+                    temp_SetBodyAction=ruleSetBodyAction();
+                    _fsp--;
+                    if (failed) return result;
+                    if ( backtracking==0 ) {
+                      result =temp_SetBodyAction;
+                    }
+                    if ( backtracking==0 ) {
+                      ptm.ruleFinished(getLastToken(),end());
+                    }
+
+                    }
+
+
+                    }
+                    break;
+                case 3 :
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:320:1: ( ( 'convert' ) (temp_ConvertBodyAction= ruleConvertBodyAction ) )
+                    {
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:320:1: ( ( 'convert' ) (temp_ConvertBodyAction= ruleConvertBodyAction ) )
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:320:2: ( 'convert' ) (temp_ConvertBodyAction= ruleConvertBodyAction )
+                    {
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:320:2: ( 'convert' )
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:320:3: 'convert'
+                    {
+                    if ( backtracking==0 ) {
+                      ptm.invokeRule(((EObject)((EObject)((EObject)((EObject)xtextfile.eContents().get(13)).eContents().get(1)).eContents().get(2)).eContents().get(0)),line(),start());
+                    }
+                    match(input,21,FOLLOW_21_in_ruleActionStatement871); if (failed) return result;
+                    if ( backtracking==0 ) {
+                      ptm.ruleFinished(getLastToken(),end());
+                    }
+
+                    }
+
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:322:1: (temp_ConvertBodyAction= ruleConvertBodyAction )
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:322:2: temp_ConvertBodyAction= ruleConvertBodyAction
+                    {
+                    if ( backtracking==0 ) {
+                      ptm.invokeRule(((EObject)((EObject)((EObject)((EObject)xtextfile.eContents().get(13)).eContents().get(1)).eContents().get(2)).eContents().get(1)),line(),start());
+                    }
+                    pushFollow(FOLLOW_ruleConvertBodyAction_in_ruleActionStatement881);
+                    temp_ConvertBodyAction=ruleConvertBodyAction();
+                    _fsp--;
+                    if (failed) return result;
+                    if ( backtracking==0 ) {
+                      result =temp_ConvertBodyAction;
+                    }
+                    if ( backtracking==0 ) {
+                      ptm.ruleFinished(getLastToken(),end());
+                    }
+
+                    }
+
+
+                    }
+
+
+                    }
                     break;
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:317:1: ( '{' )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:317:2: '{'
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+            if ( backtracking>0 ) { memoize(input, 15, ruleActionStatement_StartIndex); }
+        }
+        return result;
+    }
+    // $ANTLR end ruleActionStatement
+
+
+    // $ANTLR start ruleSetHeaderAction
+    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:329:1: ruleSetHeaderAction returns [EObject result] : ( ( 'header' ) (temp_header= RULE_STRING ) ( '=' ) (temp_value= ruleExpression ) ) ;
+    public EObject ruleSetHeaderAction() throws RecognitionException {
+        EObject result = null;
+        int ruleSetHeaderAction_StartIndex = input.index();
+        Token temp_header=null;
+        EObject temp_value = null;
+
+
+        try {
+            if ( backtracking>0 && alreadyParsedRule(input, 16) ) { return result; }
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:330:4: ( ( ( 'header' ) (temp_header= RULE_STRING ) ( '=' ) (temp_value= ruleExpression ) ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:330:4: ( ( 'header' ) (temp_header= RULE_STRING ) ( '=' ) (temp_value= ruleExpression ) )
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(13)).eContents().get(1)).eContents().get(2)),line(),start());
+
+              				result = factory.create("", "SetHeaderAction");
+              				ptm.setModelElement(result);
+              			 
             }
-            match(input,11,FOLLOW_11_in_ruleTransformer853); if (failed) return result;
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:334:1: ( ( 'header' ) (temp_header= RULE_STRING ) ( '=' ) (temp_value= ruleExpression ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:334:2: ( 'header' ) (temp_header= RULE_STRING ) ( '=' ) (temp_value= ruleExpression )
+            {
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:334:2: ( 'header' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:334:3: 'header'
+            {
+            if ( backtracking==0 ) {
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(14)).eContents().get(1)).eContents().get(0)),line(),start());
+            }
+            match(input,22,FOLLOW_22_in_ruleSetHeaderAction911); if (failed) return result;
             if ( backtracking==0 ) {
               ptm.ruleFinished(getLastToken(),end());
             }
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:319:1: (temp_beanref= ruleBeanExpr )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:319:2: temp_beanref= ruleBeanExpr
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:336:1: (temp_header= RULE_STRING )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:336:2: temp_header= RULE_STRING
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(13)).eContents().get(1)).eContents().get(3)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(14)).eContents().get(1)).eContents().get(1)),line(),start());
             }
-            pushFollow(FOLLOW_ruleBeanExpr_in_ruleTransformer862);
-            temp_beanref=ruleBeanExpr();
+            temp_header=(Token)input.LT(1);
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleSetHeaderAction920); if (failed) return result;
+            if ( backtracking==0 ) {
+              factory.set(result,"header",convert(temp_header),false); ptm.ruleFinished(temp_header,end()); 
+            }
+
+            }
+
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:339:1: ( '=' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:339:2: '='
+            {
+            if ( backtracking==0 ) {
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(14)).eContents().get(1)).eContents().get(2)),line(),start());
+            }
+            match(input,23,FOLLOW_23_in_ruleSetHeaderAction929); if (failed) return result;
+            if ( backtracking==0 ) {
+              ptm.ruleFinished(getLastToken(),end());
+            }
+
+            }
+
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:341:1: (temp_value= ruleExpression )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:341:2: temp_value= ruleExpression
+            {
+            if ( backtracking==0 ) {
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(14)).eContents().get(1)).eContents().get(3)),line(),start());
+            }
+            pushFollow(FOLLOW_ruleExpression_in_ruleSetHeaderAction938);
+            temp_value=ruleExpression();
             _fsp--;
             if (failed) return result;
             if ( backtracking==0 ) {
-              factory.set(result,"beanref",convert(temp_beanref),false); ptm.ruleFinished(temp_beanref,end()); 
+              factory.set(result,"value",convert(temp_value),false); ptm.ruleFinished(temp_value,end()); 
             }
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:322:1: (temp_target= ruleToTarget )+
-            int cnt15=0;
-            loop15:
-            do {
-                int alt15=2;
-                int LA15_0 = input.LA(1);
 
-                if ( ((LA15_0>=20 && LA15_0<=28)||LA15_0==33||LA15_0==35) ) {
-                    alt15=1;
-                }
+            }
 
 
-                switch (alt15) {
-            	case 1 :
-            	    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:322:2: temp_target= ruleToTarget
-            	    {
-            	    if ( backtracking==0 ) {
-            	      ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(13)).eContents().get(1)).eContents().get(4)),line(),start());
-            	    }
-            	    pushFollow(FOLLOW_ruleToTarget_in_ruleTransformer873);
-            	    temp_target=ruleToTarget();
-            	    _fsp--;
-            	    if (failed) return result;
-            	    if ( backtracking==0 ) {
-            	      factory.add(result,"target",convert(temp_target),false); ptm.ruleFinished(temp_target,end()); 
-            	    }
+            }
 
-            	    }
-            	    break;
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+            if ( backtracking>0 ) { memoize(input, 16, ruleSetHeaderAction_StartIndex); }
+        }
+        return result;
+    }
+    // $ANTLR end ruleSetHeaderAction
 
-            	default :
-            	    if ( cnt15 >= 1 ) break loop15;
-            	    if (backtracking>0) {failed=true; return result;}
-                        EarlyExitException eee =
-                            new EarlyExitException(15, input);
-                        throw eee;
-                }
-                cnt15++;
-            } while (true);
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:325:1: ( '}' )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:325:2: '}'
+    // $ANTLR start ruleSetBodyAction
+    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:346:1: ruleSetBodyAction returns [EObject result] : ( ( 'body' ) ( '=' ) (temp_value= ruleExpression ) ) ;
+    public EObject ruleSetBodyAction() throws RecognitionException {
+        EObject result = null;
+        int ruleSetBodyAction_StartIndex = input.index();
+        EObject temp_value = null;
+
+
+        try {
+            if ( backtracking>0 && alreadyParsedRule(input, 17) ) { return result; }
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:347:4: ( ( ( 'body' ) ( '=' ) (temp_value= ruleExpression ) ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:347:4: ( ( 'body' ) ( '=' ) (temp_value= ruleExpression ) )
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(13)).eContents().get(1)).eContents().get(5)),line(),start());
+
+              				result = factory.create("", "SetBodyAction");
+              				ptm.setModelElement(result);
+              			 
             }
-            match(input,12,FOLLOW_12_in_ruleTransformer883); if (failed) return result;
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:351:1: ( ( 'body' ) ( '=' ) (temp_value= ruleExpression ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:351:2: ( 'body' ) ( '=' ) (temp_value= ruleExpression )
+            {
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:351:2: ( 'body' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:351:3: 'body'
+            {
+            if ( backtracking==0 ) {
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(15)).eContents().get(1)).eContents().get(0)),line(),start());
+            }
+            match(input,24,FOLLOW_24_in_ruleSetBodyAction965); if (failed) return result;
+            if ( backtracking==0 ) {
+              ptm.ruleFinished(getLastToken(),end());
+            }
+
+            }
+
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:353:1: ( '=' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:353:2: '='
+            {
+            if ( backtracking==0 ) {
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(15)).eContents().get(1)).eContents().get(1)),line(),start());
+            }
+            match(input,23,FOLLOW_23_in_ruleSetBodyAction972); if (failed) return result;
+            if ( backtracking==0 ) {
+              ptm.ruleFinished(getLastToken(),end());
+            }
+
+            }
+
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:355:1: (temp_value= ruleExpression )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:355:2: temp_value= ruleExpression
+            {
+            if ( backtracking==0 ) {
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(15)).eContents().get(1)).eContents().get(2)),line(),start());
+            }
+            pushFollow(FOLLOW_ruleExpression_in_ruleSetBodyAction981);
+            temp_value=ruleExpression();
+            _fsp--;
+            if (failed) return result;
+            if ( backtracking==0 ) {
+              factory.set(result,"value",convert(temp_value),false); ptm.ruleFinished(temp_value,end()); 
+            }
+
+            }
+
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+            if ( backtracking>0 ) { memoize(input, 17, ruleSetBodyAction_StartIndex); }
+        }
+        return result;
+    }
+    // $ANTLR end ruleSetBodyAction
+
+
+    // $ANTLR start ruleConvertBodyAction
+    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:360:1: ruleConvertBodyAction returns [EObject result] : (temp_convertbodywithaction= ruleConvertBodyWithAction | temp_convertbodytoaction= ruleConvertBodyToAction );
+    public EObject ruleConvertBodyAction() throws RecognitionException {
+        EObject result = null;
+        int ruleConvertBodyAction_StartIndex = input.index();
+        EObject temp_convertbodywithaction = null;
+
+        EObject temp_convertbodytoaction = null;
+
+
+        try {
+            if ( backtracking>0 && alreadyParsedRule(input, 18) ) { return result; }
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:361:9: (temp_convertbodywithaction= ruleConvertBodyWithAction | temp_convertbodytoaction= ruleConvertBodyToAction )
+            int alt16=2;
+            int LA16_0 = input.LA(1);
+
+            if ( (LA16_0==25) ) {
+                alt16=1;
+            }
+            else if ( (LA16_0==20) ) {
+                alt16=2;
+            }
+            else {
+                if (backtracking>0) {failed=true; return result;}
+                NoViableAltException nvae =
+                    new NoViableAltException("360:1: ruleConvertBodyAction returns [EObject result] : (temp_convertbodywithaction= ruleConvertBodyWithAction | temp_convertbodytoaction= ruleConvertBodyToAction );", 16, 0, input);
+
+                throw nvae;
+            }
+            switch (alt16) {
+                case 1 :
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:361:9: temp_convertbodywithaction= ruleConvertBodyWithAction
+                    {
+                    pushFollow(FOLLOW_ruleConvertBodyWithAction_in_ruleConvertBodyAction1010);
+                    temp_convertbodywithaction=ruleConvertBodyWithAction();
+                    _fsp--;
+                    if (failed) return result;
+                    if ( backtracking==0 ) {
+                      result =temp_convertbodywithaction;
+                    }
+
+                    }
+                    break;
+                case 2 :
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:361:109: temp_convertbodytoaction= ruleConvertBodyToAction
+                    {
+                    pushFollow(FOLLOW_ruleConvertBodyToAction_in_ruleConvertBodyAction1025);
+                    temp_convertbodytoaction=ruleConvertBodyToAction();
+                    _fsp--;
+                    if (failed) return result;
+                    if ( backtracking==0 ) {
+                      result =temp_convertbodytoaction;
+                    }
+
+                    }
+                    break;
+
+            }
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+            if ( backtracking>0 ) { memoize(input, 18, ruleConvertBodyAction_StartIndex); }
+        }
+        return result;
+    }
+    // $ANTLR end ruleConvertBodyAction
+
+
+    // $ANTLR start ruleConvertBodyWithAction
+    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:363:1: ruleConvertBodyWithAction returns [EObject result] : ( ( 'with' ) (temp_BeanExpr= ruleBeanExpr ) ) ;
+    public EObject ruleConvertBodyWithAction() throws RecognitionException {
+        EObject result = null;
+        int ruleConvertBodyWithAction_StartIndex = input.index();
+        EObject temp_BeanExpr = null;
+
+
+        try {
+            if ( backtracking>0 && alreadyParsedRule(input, 19) ) { return result; }
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:364:4: ( ( ( 'with' ) (temp_BeanExpr= ruleBeanExpr ) ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:364:4: ( ( 'with' ) (temp_BeanExpr= ruleBeanExpr ) )
+            {
+            if ( backtracking==0 ) {
+
+              				result = factory.create("", "ConvertBodyWithAction");
+              				ptm.setModelElement(result);
+              			 
+            }
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:368:1: ( ( 'with' ) (temp_BeanExpr= ruleBeanExpr ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:368:2: ( 'with' ) (temp_BeanExpr= ruleBeanExpr )
+            {
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:368:2: ( 'with' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:368:3: 'with'
+            {
+            if ( backtracking==0 ) {
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(17)).eContents().get(1)).eContents().get(0)),line(),start());
+            }
+            match(input,25,FOLLOW_25_in_ruleConvertBodyWithAction1048); if (failed) return result;
+            if ( backtracking==0 ) {
+              ptm.ruleFinished(getLastToken(),end());
+            }
+
+            }
+
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:370:1: (temp_BeanExpr= ruleBeanExpr )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:370:2: temp_BeanExpr= ruleBeanExpr
+            {
+            if ( backtracking==0 ) {
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(17)).eContents().get(1)).eContents().get(1)),line(),start());
+            }
+            pushFollow(FOLLOW_ruleBeanExpr_in_ruleConvertBodyWithAction1058);
+            temp_BeanExpr=ruleBeanExpr();
+            _fsp--;
+            if (failed) return result;
+            if ( backtracking==0 ) {
+              result =temp_BeanExpr;
+            }
             if ( backtracking==0 ) {
               ptm.ruleFinished(getLastToken(),end());
             }
@@ -1774,67 +2122,134 @@ public class spitParser extends Parser {
             recover(input,re);
         }
         finally {
-            if ( backtracking>0 ) { memoize(input, 15, ruleTransformer_StartIndex); }
+            if ( backtracking>0 ) { memoize(input, 19, ruleConvertBodyWithAction_StartIndex); }
         }
         return result;
     }
-    // $ANTLR end ruleTransformer
+    // $ANTLR end ruleConvertBodyWithAction
 
 
-    // $ANTLR start ruleChoice
-    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:329:1: ruleChoice returns [EObject result] : ( ( 'choice' ) (temp_Interceptors= ruleInterceptors )? ( '{' ) (temp_when= ruleWhenClause )* (temp_otherwise= ruleOtherwiseClause )? ( '}' ) ) ;
-    public EObject ruleChoice() throws RecognitionException {
+    // $ANTLR start ruleConvertBodyToAction
+    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:376:1: ruleConvertBodyToAction returns [EObject result] : ( ( 'to' ) (temp_type= RULE_STRING ) ) ;
+    public EObject ruleConvertBodyToAction() throws RecognitionException {
         EObject result = null;
-        int ruleChoice_StartIndex = input.index();
-        EObject temp_Interceptors = null;
-
-        EObject temp_when = null;
-
-        EObject temp_otherwise = null;
-
+        int ruleConvertBodyToAction_StartIndex = input.index();
+        Token temp_type=null;
 
         try {
-            if ( backtracking>0 && alreadyParsedRule(input, 16) ) { return result; }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:330:4: ( ( ( 'choice' ) (temp_Interceptors= ruleInterceptors )? ( '{' ) (temp_when= ruleWhenClause )* (temp_otherwise= ruleOtherwiseClause )? ( '}' ) ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:330:4: ( ( 'choice' ) (temp_Interceptors= ruleInterceptors )? ( '{' ) (temp_when= ruleWhenClause )* (temp_otherwise= ruleOtherwiseClause )? ( '}' ) )
+            if ( backtracking>0 && alreadyParsedRule(input, 20) ) { return result; }
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:377:4: ( ( ( 'to' ) (temp_type= RULE_STRING ) ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:377:4: ( ( 'to' ) (temp_type= RULE_STRING ) )
             {
             if ( backtracking==0 ) {
 
-              				result = factory.create("", "Choice");
+              				result = factory.create("", "ConvertBodyToAction");
               				ptm.setModelElement(result);
               			 
             }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:334:1: ( ( 'choice' ) (temp_Interceptors= ruleInterceptors )? ( '{' ) (temp_when= ruleWhenClause )* (temp_otherwise= ruleOtherwiseClause )? ( '}' ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:334:2: ( 'choice' ) (temp_Interceptors= ruleInterceptors )? ( '{' ) (temp_when= ruleWhenClause )* (temp_otherwise= ruleOtherwiseClause )? ( '}' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:381:1: ( ( 'to' ) (temp_type= RULE_STRING ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:381:2: ( 'to' ) (temp_type= RULE_STRING )
             {
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:334:2: ( 'choice' )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:334:3: 'choice'
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:381:2: ( 'to' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:381:3: 'to'
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(14)).eContents().get(1)).eContents().get(0)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(18)).eContents().get(1)).eContents().get(0)),line(),start());
             }
-            match(input,22,FOLLOW_22_in_ruleChoice908); if (failed) return result;
+            match(input,20,FOLLOW_20_in_ruleConvertBodyToAction1086); if (failed) return result;
             if ( backtracking==0 ) {
               ptm.ruleFinished(getLastToken(),end());
             }
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:336:1: (temp_Interceptors= ruleInterceptors )?
-            int alt16=2;
-            int LA16_0 = input.LA(1);
-
-            if ( (LA16_0==15) ) {
-                alt16=1;
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:383:1: (temp_type= RULE_STRING )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:383:2: temp_type= RULE_STRING
+            {
+            if ( backtracking==0 ) {
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(18)).eContents().get(1)).eContents().get(1)),line(),start());
             }
-            switch (alt16) {
+            temp_type=(Token)input.LT(1);
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleConvertBodyToAction1095); if (failed) return result;
+            if ( backtracking==0 ) {
+              factory.set(result,"type",convert(temp_type),false); ptm.ruleFinished(temp_type,end()); 
+            }
+
+            }
+
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+            if ( backtracking>0 ) { memoize(input, 20, ruleConvertBodyToAction_StartIndex); }
+        }
+        return result;
+    }
+    // $ANTLR end ruleConvertBodyToAction
+
+
+    // $ANTLR start ruleTransformer
+    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:388:1: ruleTransformer returns [EObject result] : ( ( 'transformer' ) (temp_Interceptors= ruleInterceptors )? ( '{' ) (temp_beanref= ruleBeanExpr ) (temp_target= ruleToTarget )+ ( '}' ) ) ;
+    public EObject ruleTransformer() throws RecognitionException {
+        EObject result = null;
+        int ruleTransformer_StartIndex = input.index();
+        EObject temp_Interceptors = null;
+
+        EObject temp_beanref = null;
+
+        EObject temp_target = null;
+
+
+        try {
+            if ( backtracking>0 && alreadyParsedRule(input, 21) ) { return result; }
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:389:4: ( ( ( 'transformer' ) (temp_Interceptors= ruleInterceptors )? ( '{' ) (temp_beanref= ruleBeanExpr ) (temp_target= ruleToTarget )+ ( '}' ) ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:389:4: ( ( 'transformer' ) (temp_Interceptors= ruleInterceptors )? ( '{' ) (temp_beanref= ruleBeanExpr ) (temp_target= ruleToTarget )+ ( '}' ) )
+            {
+            if ( backtracking==0 ) {
+
+              				result = factory.create("", "Transformer");
+              				ptm.setModelElement(result);
+              			 
+            }
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:393:1: ( ( 'transformer' ) (temp_Interceptors= ruleInterceptors )? ( '{' ) (temp_beanref= ruleBeanExpr ) (temp_target= ruleToTarget )+ ( '}' ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:393:2: ( 'transformer' ) (temp_Interceptors= ruleInterceptors )? ( '{' ) (temp_beanref= ruleBeanExpr ) (temp_target= ruleToTarget )+ ( '}' )
+            {
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:393:2: ( 'transformer' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:393:3: 'transformer'
+            {
+            if ( backtracking==0 ) {
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(19)).eContents().get(1)).eContents().get(0)),line(),start());
+            }
+            match(input,26,FOLLOW_26_in_ruleTransformer1122); if (failed) return result;
+            if ( backtracking==0 ) {
+              ptm.ruleFinished(getLastToken(),end());
+            }
+
+            }
+
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:395:1: (temp_Interceptors= ruleInterceptors )?
+            int alt17=2;
+            int LA17_0 = input.LA(1);
+
+            if ( (LA17_0==15) ) {
+                alt17=1;
+            }
+            switch (alt17) {
                 case 1 :
-                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:336:2: temp_Interceptors= ruleInterceptors
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:395:2: temp_Interceptors= ruleInterceptors
                     {
                     if ( backtracking==0 ) {
-                      ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(14)).eContents().get(1)).eContents().get(1)),line(),start());
+                      ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(19)).eContents().get(1)).eContents().get(1)),line(),start());
                     }
-                    pushFollow(FOLLOW_ruleInterceptors_in_ruleChoice918);
+                    pushFollow(FOLLOW_ruleInterceptors_in_ruleTransformer1132);
                     temp_Interceptors=ruleInterceptors();
                     _fsp--;
                     if (failed) return result;
@@ -1850,38 +2265,208 @@ public class spitParser extends Parser {
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:340:1: ( '{' )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:340:2: '{'
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:399:1: ( '{' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:399:2: '{'
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(14)).eContents().get(1)).eContents().get(2)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(19)).eContents().get(1)).eContents().get(2)),line(),start());
             }
-            match(input,11,FOLLOW_11_in_ruleChoice929); if (failed) return result;
+            match(input,11,FOLLOW_11_in_ruleTransformer1143); if (failed) return result;
             if ( backtracking==0 ) {
               ptm.ruleFinished(getLastToken(),end());
             }
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:342:1: (temp_when= ruleWhenClause )*
-            loop17:
-            do {
-                int alt17=2;
-                int LA17_0 = input.LA(1);
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:401:1: (temp_beanref= ruleBeanExpr )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:401:2: temp_beanref= ruleBeanExpr
+            {
+            if ( backtracking==0 ) {
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(19)).eContents().get(1)).eContents().get(3)),line(),start());
+            }
+            pushFollow(FOLLOW_ruleBeanExpr_in_ruleTransformer1152);
+            temp_beanref=ruleBeanExpr();
+            _fsp--;
+            if (failed) return result;
+            if ( backtracking==0 ) {
+              factory.set(result,"beanref",convert(temp_beanref),false); ptm.ruleFinished(temp_beanref,end()); 
+            }
 
-                if ( (LA17_0==29) ) {
-                    alt17=1;
+            }
+
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:404:1: (temp_target= ruleToTarget )+
+            int cnt18=0;
+            loop18:
+            do {
+                int alt18=2;
+                int LA18_0 = input.LA(1);
+
+                if ( (LA18_0==20||(LA18_0>=26 && LA18_0<=33)||LA18_0==37||LA18_0==39) ) {
+                    alt18=1;
                 }
 
 
-                switch (alt17) {
+                switch (alt18) {
             	case 1 :
-            	    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:342:2: temp_when= ruleWhenClause
+            	    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:404:2: temp_target= ruleToTarget
             	    {
             	    if ( backtracking==0 ) {
-            	      ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(14)).eContents().get(1)).eContents().get(3)),line(),start());
+            	      ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(19)).eContents().get(1)).eContents().get(4)),line(),start());
             	    }
-            	    pushFollow(FOLLOW_ruleWhenClause_in_ruleChoice938);
+            	    pushFollow(FOLLOW_ruleToTarget_in_ruleTransformer1163);
+            	    temp_target=ruleToTarget();
+            	    _fsp--;
+            	    if (failed) return result;
+            	    if ( backtracking==0 ) {
+            	      factory.add(result,"target",convert(temp_target),false); ptm.ruleFinished(temp_target,end()); 
+            	    }
+
+            	    }
+            	    break;
+
+            	default :
+            	    if ( cnt18 >= 1 ) break loop18;
+            	    if (backtracking>0) {failed=true; return result;}
+                        EarlyExitException eee =
+                            new EarlyExitException(18, input);
+                        throw eee;
+                }
+                cnt18++;
+            } while (true);
+
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:407:1: ( '}' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:407:2: '}'
+            {
+            if ( backtracking==0 ) {
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(19)).eContents().get(1)).eContents().get(5)),line(),start());
+            }
+            match(input,12,FOLLOW_12_in_ruleTransformer1173); if (failed) return result;
+            if ( backtracking==0 ) {
+              ptm.ruleFinished(getLastToken(),end());
+            }
+
+            }
+
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+            if ( backtracking>0 ) { memoize(input, 21, ruleTransformer_StartIndex); }
+        }
+        return result;
+    }
+    // $ANTLR end ruleTransformer
+
+
+    // $ANTLR start ruleChoice
+    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:411:1: ruleChoice returns [EObject result] : ( ( 'choice' ) (temp_Interceptors= ruleInterceptors )? ( '{' ) (temp_when= ruleWhenClause )* (temp_otherwise= ruleOtherwiseClause )? ( '}' ) ) ;
+    public EObject ruleChoice() throws RecognitionException {
+        EObject result = null;
+        int ruleChoice_StartIndex = input.index();
+        EObject temp_Interceptors = null;
+
+        EObject temp_when = null;
+
+        EObject temp_otherwise = null;
+
+
+        try {
+            if ( backtracking>0 && alreadyParsedRule(input, 22) ) { return result; }
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:412:4: ( ( ( 'choice' ) (temp_Interceptors= ruleInterceptors )? ( '{' ) (temp_when= ruleWhenClause )* (temp_otherwise= ruleOtherwiseClause )? ( '}' ) ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:412:4: ( ( 'choice' ) (temp_Interceptors= ruleInterceptors )? ( '{' ) (temp_when= ruleWhenClause )* (temp_otherwise= ruleOtherwiseClause )? ( '}' ) )
+            {
+            if ( backtracking==0 ) {
+
+              				result = factory.create("", "Choice");
+              				ptm.setModelElement(result);
+              			 
+            }
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:416:1: ( ( 'choice' ) (temp_Interceptors= ruleInterceptors )? ( '{' ) (temp_when= ruleWhenClause )* (temp_otherwise= ruleOtherwiseClause )? ( '}' ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:416:2: ( 'choice' ) (temp_Interceptors= ruleInterceptors )? ( '{' ) (temp_when= ruleWhenClause )* (temp_otherwise= ruleOtherwiseClause )? ( '}' )
+            {
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:416:2: ( 'choice' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:416:3: 'choice'
+            {
+            if ( backtracking==0 ) {
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(20)).eContents().get(1)).eContents().get(0)),line(),start());
+            }
+            match(input,27,FOLLOW_27_in_ruleChoice1198); if (failed) return result;
+            if ( backtracking==0 ) {
+              ptm.ruleFinished(getLastToken(),end());
+            }
+
+            }
+
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:418:1: (temp_Interceptors= ruleInterceptors )?
+            int alt19=2;
+            int LA19_0 = input.LA(1);
+
+            if ( (LA19_0==15) ) {
+                alt19=1;
+            }
+            switch (alt19) {
+                case 1 :
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:418:2: temp_Interceptors= ruleInterceptors
+                    {
+                    if ( backtracking==0 ) {
+                      ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(20)).eContents().get(1)).eContents().get(1)),line(),start());
+                    }
+                    pushFollow(FOLLOW_ruleInterceptors_in_ruleChoice1208);
+                    temp_Interceptors=ruleInterceptors();
+                    _fsp--;
+                    if (failed) return result;
+                    if ( backtracking==0 ) {
+                      result =temp_Interceptors;
+                    }
+                    if ( backtracking==0 ) {
+                      ptm.ruleFinished(getLastToken(),end());
+                    }
+
+                    }
+                    break;
+
+            }
+
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:422:1: ( '{' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:422:2: '{'
+            {
+            if ( backtracking==0 ) {
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(20)).eContents().get(1)).eContents().get(2)),line(),start());
+            }
+            match(input,11,FOLLOW_11_in_ruleChoice1219); if (failed) return result;
+            if ( backtracking==0 ) {
+              ptm.ruleFinished(getLastToken(),end());
+            }
+
+            }
+
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:424:1: (temp_when= ruleWhenClause )*
+            loop20:
+            do {
+                int alt20=2;
+                int LA20_0 = input.LA(1);
+
+                if ( (LA20_0==34) ) {
+                    alt20=1;
+                }
+
+
+                switch (alt20) {
+            	case 1 :
+            	    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:424:2: temp_when= ruleWhenClause
+            	    {
+            	    if ( backtracking==0 ) {
+            	      ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(20)).eContents().get(1)).eContents().get(3)),line(),start());
+            	    }
+            	    pushFollow(FOLLOW_ruleWhenClause_in_ruleChoice1228);
             	    temp_when=ruleWhenClause();
             	    _fsp--;
             	    if (failed) return result;
@@ -1893,25 +2478,25 @@ public class spitParser extends Parser {
             	    break;
 
             	default :
-            	    break loop17;
+            	    break loop20;
                 }
             } while (true);
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:345:1: (temp_otherwise= ruleOtherwiseClause )?
-            int alt18=2;
-            int LA18_0 = input.LA(1);
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:427:1: (temp_otherwise= ruleOtherwiseClause )?
+            int alt21=2;
+            int LA21_0 = input.LA(1);
 
-            if ( (LA18_0==30) ) {
-                alt18=1;
+            if ( (LA21_0==35) ) {
+                alt21=1;
             }
-            switch (alt18) {
+            switch (alt21) {
                 case 1 :
-                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:345:2: temp_otherwise= ruleOtherwiseClause
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:427:2: temp_otherwise= ruleOtherwiseClause
                     {
                     if ( backtracking==0 ) {
-                      ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(14)).eContents().get(1)).eContents().get(4)),line(),start());
+                      ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(20)).eContents().get(1)).eContents().get(4)),line(),start());
                     }
-                    pushFollow(FOLLOW_ruleOtherwiseClause_in_ruleChoice950);
+                    pushFollow(FOLLOW_ruleOtherwiseClause_in_ruleChoice1240);
                     temp_otherwise=ruleOtherwiseClause();
                     _fsp--;
                     if (failed) return result;
@@ -1924,13 +2509,13 @@ public class spitParser extends Parser {
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:348:1: ( '}' )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:348:2: '}'
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:430:1: ( '}' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:430:2: '}'
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(14)).eContents().get(1)).eContents().get(5)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(20)).eContents().get(1)).eContents().get(5)),line(),start());
             }
-            match(input,12,FOLLOW_12_in_ruleChoice960); if (failed) return result;
+            match(input,12,FOLLOW_12_in_ruleChoice1250); if (failed) return result;
             if ( backtracking==0 ) {
               ptm.ruleFinished(getLastToken(),end());
             }
@@ -1949,7 +2534,7 @@ public class spitParser extends Parser {
             recover(input,re);
         }
         finally {
-            if ( backtracking>0 ) { memoize(input, 16, ruleChoice_StartIndex); }
+            if ( backtracking>0 ) { memoize(input, 22, ruleChoice_StartIndex); }
         }
         return result;
     }
@@ -1957,7 +2542,7 @@ public class spitParser extends Parser {
 
 
     // $ANTLR start ruleRecipients
-    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:352:1: ruleRecipients returns [EObject result] : ( ( 'recipients' ) (temp_body= ruleSimplePattern ) ) ;
+    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:434:1: ruleRecipients returns [EObject result] : ( ( 'recipients' ) (temp_body= ruleSimplePattern ) ) ;
     public EObject ruleRecipients() throws RecognitionException {
         EObject result = null;
         int ruleRecipients_StartIndex = input.index();
@@ -1965,9 +2550,9 @@ public class spitParser extends Parser {
 
 
         try {
-            if ( backtracking>0 && alreadyParsedRule(input, 17) ) { return result; }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:353:4: ( ( ( 'recipients' ) (temp_body= ruleSimplePattern ) ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:353:4: ( ( 'recipients' ) (temp_body= ruleSimplePattern ) )
+            if ( backtracking>0 && alreadyParsedRule(input, 23) ) { return result; }
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:435:4: ( ( ( 'recipients' ) (temp_body= ruleSimplePattern ) ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:435:4: ( ( 'recipients' ) (temp_body= ruleSimplePattern ) )
             {
             if ( backtracking==0 ) {
 
@@ -1975,29 +2560,29 @@ public class spitParser extends Parser {
               				ptm.setModelElement(result);
               			 
             }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:357:1: ( ( 'recipients' ) (temp_body= ruleSimplePattern ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:357:2: ( 'recipients' ) (temp_body= ruleSimplePattern )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:439:1: ( ( 'recipients' ) (temp_body= ruleSimplePattern ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:439:2: ( 'recipients' ) (temp_body= ruleSimplePattern )
             {
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:357:2: ( 'recipients' )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:357:3: 'recipients'
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:439:2: ( 'recipients' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:439:3: 'recipients'
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(15)).eContents().get(1)).eContents().get(0)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(21)).eContents().get(1)).eContents().get(0)),line(),start());
             }
-            match(input,23,FOLLOW_23_in_ruleRecipients985); if (failed) return result;
+            match(input,28,FOLLOW_28_in_ruleRecipients1275); if (failed) return result;
             if ( backtracking==0 ) {
               ptm.ruleFinished(getLastToken(),end());
             }
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:359:1: (temp_body= ruleSimplePattern )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:359:2: temp_body= ruleSimplePattern
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:441:1: (temp_body= ruleSimplePattern )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:441:2: temp_body= ruleSimplePattern
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(15)).eContents().get(1)).eContents().get(1)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(21)).eContents().get(1)).eContents().get(1)),line(),start());
             }
-            pushFollow(FOLLOW_ruleSimplePattern_in_ruleRecipients994);
+            pushFollow(FOLLOW_ruleSimplePattern_in_ruleRecipients1284);
             temp_body=ruleSimplePattern();
             _fsp--;
             if (failed) return result;
@@ -2019,7 +2604,7 @@ public class spitParser extends Parser {
             recover(input,re);
         }
         finally {
-            if ( backtracking>0 ) { memoize(input, 17, ruleRecipients_StartIndex); }
+            if ( backtracking>0 ) { memoize(input, 23, ruleRecipients_StartIndex); }
         }
         return result;
     }
@@ -2027,7 +2612,7 @@ public class spitParser extends Parser {
 
 
     // $ANTLR start ruleDynamicRecipients
-    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:364:1: ruleDynamicRecipients returns [EObject result] : ( ( 'dynamic' ) ( 'recipients' ) (temp_body= ruleExpression ) ) ;
+    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:446:1: ruleDynamicRecipients returns [EObject result] : ( ( 'dynamic' ) ( 'recipients' ) (temp_body= ruleExpression ) ) ;
     public EObject ruleDynamicRecipients() throws RecognitionException {
         EObject result = null;
         int ruleDynamicRecipients_StartIndex = input.index();
@@ -2035,9 +2620,9 @@ public class spitParser extends Parser {
 
 
         try {
-            if ( backtracking>0 && alreadyParsedRule(input, 18) ) { return result; }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:365:4: ( ( ( 'dynamic' ) ( 'recipients' ) (temp_body= ruleExpression ) ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:365:4: ( ( 'dynamic' ) ( 'recipients' ) (temp_body= ruleExpression ) )
+            if ( backtracking>0 && alreadyParsedRule(input, 24) ) { return result; }
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:447:4: ( ( ( 'dynamic' ) ( 'recipients' ) (temp_body= ruleExpression ) ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:447:4: ( ( 'dynamic' ) ( 'recipients' ) (temp_body= ruleExpression ) )
             {
             if ( backtracking==0 ) {
 
@@ -2045,42 +2630,42 @@ public class spitParser extends Parser {
               				ptm.setModelElement(result);
               			 
             }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:369:1: ( ( 'dynamic' ) ( 'recipients' ) (temp_body= ruleExpression ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:369:2: ( 'dynamic' ) ( 'recipients' ) (temp_body= ruleExpression )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:451:1: ( ( 'dynamic' ) ( 'recipients' ) (temp_body= ruleExpression ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:451:2: ( 'dynamic' ) ( 'recipients' ) (temp_body= ruleExpression )
             {
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:369:2: ( 'dynamic' )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:369:3: 'dynamic'
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:451:2: ( 'dynamic' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:451:3: 'dynamic'
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(16)).eContents().get(1)).eContents().get(0)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(22)).eContents().get(1)).eContents().get(0)),line(),start());
             }
-            match(input,24,FOLLOW_24_in_ruleDynamicRecipients1021); if (failed) return result;
+            match(input,29,FOLLOW_29_in_ruleDynamicRecipients1311); if (failed) return result;
             if ( backtracking==0 ) {
               ptm.ruleFinished(getLastToken(),end());
             }
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:371:1: ( 'recipients' )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:371:2: 'recipients'
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:453:1: ( 'recipients' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:453:2: 'recipients'
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(16)).eContents().get(1)).eContents().get(1)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(22)).eContents().get(1)).eContents().get(1)),line(),start());
             }
-            match(input,23,FOLLOW_23_in_ruleDynamicRecipients1028); if (failed) return result;
+            match(input,28,FOLLOW_28_in_ruleDynamicRecipients1318); if (failed) return result;
             if ( backtracking==0 ) {
               ptm.ruleFinished(getLastToken(),end());
             }
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:373:1: (temp_body= ruleExpression )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:373:2: temp_body= ruleExpression
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:455:1: (temp_body= ruleExpression )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:455:2: temp_body= ruleExpression
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(16)).eContents().get(1)).eContents().get(2)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(22)).eContents().get(1)).eContents().get(2)),line(),start());
             }
-            pushFollow(FOLLOW_ruleExpression_in_ruleDynamicRecipients1037);
+            pushFollow(FOLLOW_ruleExpression_in_ruleDynamicRecipients1327);
             temp_body=ruleExpression();
             _fsp--;
             if (failed) return result;
@@ -2102,7 +2687,7 @@ public class spitParser extends Parser {
             recover(input,re);
         }
         finally {
-            if ( backtracking>0 ) { memoize(input, 18, ruleDynamicRecipients_StartIndex); }
+            if ( backtracking>0 ) { memoize(input, 24, ruleDynamicRecipients_StartIndex); }
         }
         return result;
     }
@@ -2110,7 +2695,7 @@ public class spitParser extends Parser {
 
 
     // $ANTLR start rulePipeline
-    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:378:1: rulePipeline returns [EObject result] : ( ( 'pipeline' ) (temp_body= ruleSimplePattern ) ) ;
+    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:460:1: rulePipeline returns [EObject result] : ( ( 'pipeline' ) (temp_body= ruleSimplePattern ) ) ;
     public EObject rulePipeline() throws RecognitionException {
         EObject result = null;
         int rulePipeline_StartIndex = input.index();
@@ -2118,9 +2703,9 @@ public class spitParser extends Parser {
 
 
         try {
-            if ( backtracking>0 && alreadyParsedRule(input, 19) ) { return result; }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:379:4: ( ( ( 'pipeline' ) (temp_body= ruleSimplePattern ) ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:379:4: ( ( 'pipeline' ) (temp_body= ruleSimplePattern ) )
+            if ( backtracking>0 && alreadyParsedRule(input, 25) ) { return result; }
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:461:4: ( ( ( 'pipeline' ) (temp_body= ruleSimplePattern ) ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:461:4: ( ( 'pipeline' ) (temp_body= ruleSimplePattern ) )
             {
             if ( backtracking==0 ) {
 
@@ -2128,29 +2713,29 @@ public class spitParser extends Parser {
               				ptm.setModelElement(result);
               			 
             }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:383:1: ( ( 'pipeline' ) (temp_body= ruleSimplePattern ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:383:2: ( 'pipeline' ) (temp_body= ruleSimplePattern )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:465:1: ( ( 'pipeline' ) (temp_body= ruleSimplePattern ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:465:2: ( 'pipeline' ) (temp_body= ruleSimplePattern )
             {
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:383:2: ( 'pipeline' )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:383:3: 'pipeline'
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:465:2: ( 'pipeline' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:465:3: 'pipeline'
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(17)).eContents().get(1)).eContents().get(0)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(23)).eContents().get(1)).eContents().get(0)),line(),start());
             }
-            match(input,25,FOLLOW_25_in_rulePipeline1064); if (failed) return result;
+            match(input,30,FOLLOW_30_in_rulePipeline1354); if (failed) return result;
             if ( backtracking==0 ) {
               ptm.ruleFinished(getLastToken(),end());
             }
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:385:1: (temp_body= ruleSimplePattern )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:385:2: temp_body= ruleSimplePattern
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:467:1: (temp_body= ruleSimplePattern )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:467:2: temp_body= ruleSimplePattern
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(17)).eContents().get(1)).eContents().get(1)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(23)).eContents().get(1)).eContents().get(1)),line(),start());
             }
-            pushFollow(FOLLOW_ruleSimplePattern_in_rulePipeline1073);
+            pushFollow(FOLLOW_ruleSimplePattern_in_rulePipeline1363);
             temp_body=ruleSimplePattern();
             _fsp--;
             if (failed) return result;
@@ -2172,7 +2757,7 @@ public class spitParser extends Parser {
             recover(input,re);
         }
         finally {
-            if ( backtracking>0 ) { memoize(input, 19, rulePipeline_StartIndex); }
+            if ( backtracking>0 ) { memoize(input, 25, rulePipeline_StartIndex); }
         }
         return result;
     }
@@ -2180,7 +2765,7 @@ public class spitParser extends Parser {
 
 
     // $ANTLR start ruleFilter
-    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:390:1: ruleFilter returns [EObject result] : ( ( 'filter' ) (temp_expr= ruleExpression ) (temp_body= ruleSimplePattern ) ) ;
+    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:472:1: ruleFilter returns [EObject result] : ( ( 'filter' ) (temp_expr= ruleExpression ) (temp_body= ruleSimplePattern ) ) ;
     public EObject ruleFilter() throws RecognitionException {
         EObject result = null;
         int ruleFilter_StartIndex = input.index();
@@ -2190,9 +2775,9 @@ public class spitParser extends Parser {
 
 
         try {
-            if ( backtracking>0 && alreadyParsedRule(input, 20) ) { return result; }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:391:4: ( ( ( 'filter' ) (temp_expr= ruleExpression ) (temp_body= ruleSimplePattern ) ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:391:4: ( ( 'filter' ) (temp_expr= ruleExpression ) (temp_body= ruleSimplePattern ) )
+            if ( backtracking>0 && alreadyParsedRule(input, 26) ) { return result; }
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:473:4: ( ( ( 'filter' ) (temp_expr= ruleExpression ) (temp_body= ruleSimplePattern ) ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:473:4: ( ( 'filter' ) (temp_expr= ruleExpression ) (temp_body= ruleSimplePattern ) )
             {
             if ( backtracking==0 ) {
 
@@ -2200,29 +2785,29 @@ public class spitParser extends Parser {
               				ptm.setModelElement(result);
               			 
             }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:395:1: ( ( 'filter' ) (temp_expr= ruleExpression ) (temp_body= ruleSimplePattern ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:395:2: ( 'filter' ) (temp_expr= ruleExpression ) (temp_body= ruleSimplePattern )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:477:1: ( ( 'filter' ) (temp_expr= ruleExpression ) (temp_body= ruleSimplePattern ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:477:2: ( 'filter' ) (temp_expr= ruleExpression ) (temp_body= ruleSimplePattern )
             {
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:395:2: ( 'filter' )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:395:3: 'filter'
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:477:2: ( 'filter' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:477:3: 'filter'
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(18)).eContents().get(1)).eContents().get(0)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(24)).eContents().get(1)).eContents().get(0)),line(),start());
             }
-            match(input,26,FOLLOW_26_in_ruleFilter1100); if (failed) return result;
+            match(input,31,FOLLOW_31_in_ruleFilter1390); if (failed) return result;
             if ( backtracking==0 ) {
               ptm.ruleFinished(getLastToken(),end());
             }
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:397:1: (temp_expr= ruleExpression )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:397:2: temp_expr= ruleExpression
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:479:1: (temp_expr= ruleExpression )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:479:2: temp_expr= ruleExpression
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(18)).eContents().get(1)).eContents().get(1)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(24)).eContents().get(1)).eContents().get(1)),line(),start());
             }
-            pushFollow(FOLLOW_ruleExpression_in_ruleFilter1109);
+            pushFollow(FOLLOW_ruleExpression_in_ruleFilter1399);
             temp_expr=ruleExpression();
             _fsp--;
             if (failed) return result;
@@ -2232,13 +2817,13 @@ public class spitParser extends Parser {
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:400:1: (temp_body= ruleSimplePattern )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:400:2: temp_body= ruleSimplePattern
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:482:1: (temp_body= ruleSimplePattern )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:482:2: temp_body= ruleSimplePattern
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(18)).eContents().get(1)).eContents().get(2)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(24)).eContents().get(1)).eContents().get(2)),line(),start());
             }
-            pushFollow(FOLLOW_ruleSimplePattern_in_ruleFilter1120);
+            pushFollow(FOLLOW_ruleSimplePattern_in_ruleFilter1410);
             temp_body=ruleSimplePattern();
             _fsp--;
             if (failed) return result;
@@ -2260,7 +2845,7 @@ public class spitParser extends Parser {
             recover(input,re);
         }
         finally {
-            if ( backtracking>0 ) { memoize(input, 20, ruleFilter_StartIndex); }
+            if ( backtracking>0 ) { memoize(input, 26, ruleFilter_StartIndex); }
         }
         return result;
     }
@@ -2268,7 +2853,7 @@ public class spitParser extends Parser {
 
 
     // $ANTLR start ruleSplitter
-    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:405:1: ruleSplitter returns [EObject result] : ( ( 'splitter' ) (temp_expr= ruleExpression ) (temp_body= ruleSimplePattern ) ) ;
+    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:487:1: ruleSplitter returns [EObject result] : ( ( 'splitter' ) (temp_expr= ruleExpression ) (temp_body= ruleSimplePattern ) ) ;
     public EObject ruleSplitter() throws RecognitionException {
         EObject result = null;
         int ruleSplitter_StartIndex = input.index();
@@ -2278,9 +2863,9 @@ public class spitParser extends Parser {
 
 
         try {
-            if ( backtracking>0 && alreadyParsedRule(input, 21) ) { return result; }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:406:4: ( ( ( 'splitter' ) (temp_expr= ruleExpression ) (temp_body= ruleSimplePattern ) ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:406:4: ( ( 'splitter' ) (temp_expr= ruleExpression ) (temp_body= ruleSimplePattern ) )
+            if ( backtracking>0 && alreadyParsedRule(input, 27) ) { return result; }
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:488:4: ( ( ( 'splitter' ) (temp_expr= ruleExpression ) (temp_body= ruleSimplePattern ) ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:488:4: ( ( 'splitter' ) (temp_expr= ruleExpression ) (temp_body= ruleSimplePattern ) )
             {
             if ( backtracking==0 ) {
 
@@ -2288,29 +2873,29 @@ public class spitParser extends Parser {
               				ptm.setModelElement(result);
               			 
             }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:410:1: ( ( 'splitter' ) (temp_expr= ruleExpression ) (temp_body= ruleSimplePattern ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:410:2: ( 'splitter' ) (temp_expr= ruleExpression ) (temp_body= ruleSimplePattern )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:492:1: ( ( 'splitter' ) (temp_expr= ruleExpression ) (temp_body= ruleSimplePattern ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:492:2: ( 'splitter' ) (temp_expr= ruleExpression ) (temp_body= ruleSimplePattern )
             {
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:410:2: ( 'splitter' )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:410:3: 'splitter'
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:492:2: ( 'splitter' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:492:3: 'splitter'
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(19)).eContents().get(1)).eContents().get(0)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(25)).eContents().get(1)).eContents().get(0)),line(),start());
             }
-            match(input,27,FOLLOW_27_in_ruleSplitter1147); if (failed) return result;
+            match(input,32,FOLLOW_32_in_ruleSplitter1437); if (failed) return result;
             if ( backtracking==0 ) {
               ptm.ruleFinished(getLastToken(),end());
             }
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:412:1: (temp_expr= ruleExpression )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:412:2: temp_expr= ruleExpression
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:494:1: (temp_expr= ruleExpression )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:494:2: temp_expr= ruleExpression
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(19)).eContents().get(1)).eContents().get(1)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(25)).eContents().get(1)).eContents().get(1)),line(),start());
             }
-            pushFollow(FOLLOW_ruleExpression_in_ruleSplitter1156);
+            pushFollow(FOLLOW_ruleExpression_in_ruleSplitter1446);
             temp_expr=ruleExpression();
             _fsp--;
             if (failed) return result;
@@ -2320,13 +2905,13 @@ public class spitParser extends Parser {
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:415:1: (temp_body= ruleSimplePattern )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:415:2: temp_body= ruleSimplePattern
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:497:1: (temp_body= ruleSimplePattern )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:497:2: temp_body= ruleSimplePattern
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(19)).eContents().get(1)).eContents().get(2)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(25)).eContents().get(1)).eContents().get(2)),line(),start());
             }
-            pushFollow(FOLLOW_ruleSimplePattern_in_ruleSplitter1167);
+            pushFollow(FOLLOW_ruleSimplePattern_in_ruleSplitter1457);
             temp_body=ruleSimplePattern();
             _fsp--;
             if (failed) return result;
@@ -2348,7 +2933,7 @@ public class spitParser extends Parser {
             recover(input,re);
         }
         finally {
-            if ( backtracking>0 ) { memoize(input, 21, ruleSplitter_StartIndex); }
+            if ( backtracking>0 ) { memoize(input, 27, ruleSplitter_StartIndex); }
         }
         return result;
     }
@@ -2356,7 +2941,7 @@ public class spitParser extends Parser {
 
 
     // $ANTLR start ruleResequencer
-    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:420:1: ruleResequencer returns [EObject result] : ( ( 'resequence' ) (temp_expr= ruleExpression ) (temp_body= ruleSimplePattern ) ) ;
+    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:502:1: ruleResequencer returns [EObject result] : ( ( 'resequence' ) (temp_expr= ruleExpression ) (temp_body= ruleSimplePattern ) ) ;
     public EObject ruleResequencer() throws RecognitionException {
         EObject result = null;
         int ruleResequencer_StartIndex = input.index();
@@ -2366,9 +2951,9 @@ public class spitParser extends Parser {
 
 
         try {
-            if ( backtracking>0 && alreadyParsedRule(input, 22) ) { return result; }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:421:4: ( ( ( 'resequence' ) (temp_expr= ruleExpression ) (temp_body= ruleSimplePattern ) ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:421:4: ( ( 'resequence' ) (temp_expr= ruleExpression ) (temp_body= ruleSimplePattern ) )
+            if ( backtracking>0 && alreadyParsedRule(input, 28) ) { return result; }
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:503:4: ( ( ( 'resequence' ) (temp_expr= ruleExpression ) (temp_body= ruleSimplePattern ) ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:503:4: ( ( 'resequence' ) (temp_expr= ruleExpression ) (temp_body= ruleSimplePattern ) )
             {
             if ( backtracking==0 ) {
 
@@ -2376,29 +2961,29 @@ public class spitParser extends Parser {
               				ptm.setModelElement(result);
               			 
             }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:425:1: ( ( 'resequence' ) (temp_expr= ruleExpression ) (temp_body= ruleSimplePattern ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:425:2: ( 'resequence' ) (temp_expr= ruleExpression ) (temp_body= ruleSimplePattern )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:507:1: ( ( 'resequence' ) (temp_expr= ruleExpression ) (temp_body= ruleSimplePattern ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:507:2: ( 'resequence' ) (temp_expr= ruleExpression ) (temp_body= ruleSimplePattern )
             {
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:425:2: ( 'resequence' )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:425:3: 'resequence'
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:507:2: ( 'resequence' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:507:3: 'resequence'
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(20)).eContents().get(1)).eContents().get(0)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(26)).eContents().get(1)).eContents().get(0)),line(),start());
             }
-            match(input,28,FOLLOW_28_in_ruleResequencer1194); if (failed) return result;
+            match(input,33,FOLLOW_33_in_ruleResequencer1484); if (failed) return result;
             if ( backtracking==0 ) {
               ptm.ruleFinished(getLastToken(),end());
             }
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:427:1: (temp_expr= ruleExpression )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:427:2: temp_expr= ruleExpression
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:509:1: (temp_expr= ruleExpression )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:509:2: temp_expr= ruleExpression
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(20)).eContents().get(1)).eContents().get(1)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(26)).eContents().get(1)).eContents().get(1)),line(),start());
             }
-            pushFollow(FOLLOW_ruleExpression_in_ruleResequencer1203);
+            pushFollow(FOLLOW_ruleExpression_in_ruleResequencer1493);
             temp_expr=ruleExpression();
             _fsp--;
             if (failed) return result;
@@ -2408,13 +2993,13 @@ public class spitParser extends Parser {
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:430:1: (temp_body= ruleSimplePattern )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:430:2: temp_body= ruleSimplePattern
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:512:1: (temp_body= ruleSimplePattern )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:512:2: temp_body= ruleSimplePattern
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(20)).eContents().get(1)).eContents().get(2)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(26)).eContents().get(1)).eContents().get(2)),line(),start());
             }
-            pushFollow(FOLLOW_ruleSimplePattern_in_ruleResequencer1214);
+            pushFollow(FOLLOW_ruleSimplePattern_in_ruleResequencer1504);
             temp_body=ruleSimplePattern();
             _fsp--;
             if (failed) return result;
@@ -2436,7 +3021,7 @@ public class spitParser extends Parser {
             recover(input,re);
         }
         finally {
-            if ( backtracking>0 ) { memoize(input, 22, ruleResequencer_StartIndex); }
+            if ( backtracking>0 ) { memoize(input, 28, ruleResequencer_StartIndex); }
         }
         return result;
     }
@@ -2444,7 +3029,7 @@ public class spitParser extends Parser {
 
 
     // $ANTLR start ruleWhenClause
-    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:435:1: ruleWhenClause returns [EObject result] : ( ( 'when' ) (temp_expr= ruleExpression ) ( '{' ) (temp_target= ruleToTarget )+ ( '}' ) ) ;
+    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:517:1: ruleWhenClause returns [EObject result] : ( ( 'when' ) (temp_expr= ruleExpression ) ( '{' ) (temp_target= ruleToTarget )+ ( '}' ) ) ;
     public EObject ruleWhenClause() throws RecognitionException {
         EObject result = null;
         int ruleWhenClause_StartIndex = input.index();
@@ -2454,9 +3039,9 @@ public class spitParser extends Parser {
 
 
         try {
-            if ( backtracking>0 && alreadyParsedRule(input, 23) ) { return result; }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:436:4: ( ( ( 'when' ) (temp_expr= ruleExpression ) ( '{' ) (temp_target= ruleToTarget )+ ( '}' ) ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:436:4: ( ( 'when' ) (temp_expr= ruleExpression ) ( '{' ) (temp_target= ruleToTarget )+ ( '}' ) )
+            if ( backtracking>0 && alreadyParsedRule(input, 29) ) { return result; }
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:518:4: ( ( ( 'when' ) (temp_expr= ruleExpression ) ( '{' ) (temp_target= ruleToTarget )+ ( '}' ) ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:518:4: ( ( 'when' ) (temp_expr= ruleExpression ) ( '{' ) (temp_target= ruleToTarget )+ ( '}' ) )
             {
             if ( backtracking==0 ) {
 
@@ -2464,29 +3049,29 @@ public class spitParser extends Parser {
               				ptm.setModelElement(result);
               			 
             }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:440:1: ( ( 'when' ) (temp_expr= ruleExpression ) ( '{' ) (temp_target= ruleToTarget )+ ( '}' ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:440:2: ( 'when' ) (temp_expr= ruleExpression ) ( '{' ) (temp_target= ruleToTarget )+ ( '}' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:522:1: ( ( 'when' ) (temp_expr= ruleExpression ) ( '{' ) (temp_target= ruleToTarget )+ ( '}' ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:522:2: ( 'when' ) (temp_expr= ruleExpression ) ( '{' ) (temp_target= ruleToTarget )+ ( '}' )
             {
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:440:2: ( 'when' )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:440:3: 'when'
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:522:2: ( 'when' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:522:3: 'when'
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(21)).eContents().get(1)).eContents().get(0)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(27)).eContents().get(1)).eContents().get(0)),line(),start());
             }
-            match(input,29,FOLLOW_29_in_ruleWhenClause1241); if (failed) return result;
+            match(input,34,FOLLOW_34_in_ruleWhenClause1531); if (failed) return result;
             if ( backtracking==0 ) {
               ptm.ruleFinished(getLastToken(),end());
             }
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:442:1: (temp_expr= ruleExpression )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:442:2: temp_expr= ruleExpression
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:524:1: (temp_expr= ruleExpression )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:524:2: temp_expr= ruleExpression
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(21)).eContents().get(1)).eContents().get(1)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(27)).eContents().get(1)).eContents().get(1)),line(),start());
             }
-            pushFollow(FOLLOW_ruleExpression_in_ruleWhenClause1250);
+            pushFollow(FOLLOW_ruleExpression_in_ruleWhenClause1540);
             temp_expr=ruleExpression();
             _fsp--;
             if (failed) return result;
@@ -2496,39 +3081,39 @@ public class spitParser extends Parser {
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:445:1: ( '{' )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:445:2: '{'
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:527:1: ( '{' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:527:2: '{'
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(21)).eContents().get(1)).eContents().get(2)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(27)).eContents().get(1)).eContents().get(2)),line(),start());
             }
-            match(input,11,FOLLOW_11_in_ruleWhenClause1259); if (failed) return result;
+            match(input,11,FOLLOW_11_in_ruleWhenClause1549); if (failed) return result;
             if ( backtracking==0 ) {
               ptm.ruleFinished(getLastToken(),end());
             }
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:447:1: (temp_target= ruleToTarget )+
-            int cnt19=0;
-            loop19:
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:529:1: (temp_target= ruleToTarget )+
+            int cnt22=0;
+            loop22:
             do {
-                int alt19=2;
-                int LA19_0 = input.LA(1);
+                int alt22=2;
+                int LA22_0 = input.LA(1);
 
-                if ( ((LA19_0>=20 && LA19_0<=28)||LA19_0==33||LA19_0==35) ) {
-                    alt19=1;
+                if ( (LA22_0==20||(LA22_0>=26 && LA22_0<=33)||LA22_0==37||LA22_0==39) ) {
+                    alt22=1;
                 }
 
 
-                switch (alt19) {
+                switch (alt22) {
             	case 1 :
-            	    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:447:2: temp_target= ruleToTarget
+            	    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:529:2: temp_target= ruleToTarget
             	    {
             	    if ( backtracking==0 ) {
-            	      ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(21)).eContents().get(1)).eContents().get(3)),line(),start());
+            	      ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(27)).eContents().get(1)).eContents().get(3)),line(),start());
             	    }
-            	    pushFollow(FOLLOW_ruleToTarget_in_ruleWhenClause1268);
+            	    pushFollow(FOLLOW_ruleToTarget_in_ruleWhenClause1558);
             	    temp_target=ruleToTarget();
             	    _fsp--;
             	    if (failed) return result;
@@ -2540,22 +3125,22 @@ public class spitParser extends Parser {
             	    break;
 
             	default :
-            	    if ( cnt19 >= 1 ) break loop19;
+            	    if ( cnt22 >= 1 ) break loop22;
             	    if (backtracking>0) {failed=true; return result;}
                         EarlyExitException eee =
-                            new EarlyExitException(19, input);
+                            new EarlyExitException(22, input);
                         throw eee;
                 }
-                cnt19++;
+                cnt22++;
             } while (true);
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:450:1: ( '}' )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:450:2: '}'
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:532:1: ( '}' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:532:2: '}'
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(21)).eContents().get(1)).eContents().get(4)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(27)).eContents().get(1)).eContents().get(4)),line(),start());
             }
-            match(input,12,FOLLOW_12_in_ruleWhenClause1278); if (failed) return result;
+            match(input,12,FOLLOW_12_in_ruleWhenClause1568); if (failed) return result;
             if ( backtracking==0 ) {
               ptm.ruleFinished(getLastToken(),end());
             }
@@ -2574,7 +3159,7 @@ public class spitParser extends Parser {
             recover(input,re);
         }
         finally {
-            if ( backtracking>0 ) { memoize(input, 23, ruleWhenClause_StartIndex); }
+            if ( backtracking>0 ) { memoize(input, 29, ruleWhenClause_StartIndex); }
         }
         return result;
     }
@@ -2582,7 +3167,7 @@ public class spitParser extends Parser {
 
 
     // $ANTLR start ruleOtherwiseClause
-    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:454:1: ruleOtherwiseClause returns [EObject result] : ( ( 'otherwise' ) ( '{' ) (temp_target= ruleToTarget ) ( '}' ) ) ;
+    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:536:1: ruleOtherwiseClause returns [EObject result] : ( ( 'otherwise' ) ( '{' ) (temp_target= ruleToTarget ) ( '}' ) ) ;
     public EObject ruleOtherwiseClause() throws RecognitionException {
         EObject result = null;
         int ruleOtherwiseClause_StartIndex = input.index();
@@ -2590,9 +3175,9 @@ public class spitParser extends Parser {
 
 
         try {
-            if ( backtracking>0 && alreadyParsedRule(input, 24) ) { return result; }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:455:4: ( ( ( 'otherwise' ) ( '{' ) (temp_target= ruleToTarget ) ( '}' ) ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:455:4: ( ( 'otherwise' ) ( '{' ) (temp_target= ruleToTarget ) ( '}' ) )
+            if ( backtracking>0 && alreadyParsedRule(input, 30) ) { return result; }
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:537:4: ( ( ( 'otherwise' ) ( '{' ) (temp_target= ruleToTarget ) ( '}' ) ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:537:4: ( ( 'otherwise' ) ( '{' ) (temp_target= ruleToTarget ) ( '}' ) )
             {
             if ( backtracking==0 ) {
 
@@ -2600,42 +3185,42 @@ public class spitParser extends Parser {
               				ptm.setModelElement(result);
               			 
             }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:459:1: ( ( 'otherwise' ) ( '{' ) (temp_target= ruleToTarget ) ( '}' ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:459:2: ( 'otherwise' ) ( '{' ) (temp_target= ruleToTarget ) ( '}' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:541:1: ( ( 'otherwise' ) ( '{' ) (temp_target= ruleToTarget ) ( '}' ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:541:2: ( 'otherwise' ) ( '{' ) (temp_target= ruleToTarget ) ( '}' )
             {
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:459:2: ( 'otherwise' )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:459:3: 'otherwise'
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:541:2: ( 'otherwise' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:541:3: 'otherwise'
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(22)).eContents().get(1)).eContents().get(0)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(28)).eContents().get(1)).eContents().get(0)),line(),start());
             }
-            match(input,30,FOLLOW_30_in_ruleOtherwiseClause1303); if (failed) return result;
+            match(input,35,FOLLOW_35_in_ruleOtherwiseClause1593); if (failed) return result;
             if ( backtracking==0 ) {
               ptm.ruleFinished(getLastToken(),end());
             }
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:461:1: ( '{' )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:461:2: '{'
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:543:1: ( '{' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:543:2: '{'
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(22)).eContents().get(1)).eContents().get(1)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(28)).eContents().get(1)).eContents().get(1)),line(),start());
             }
-            match(input,11,FOLLOW_11_in_ruleOtherwiseClause1310); if (failed) return result;
+            match(input,11,FOLLOW_11_in_ruleOtherwiseClause1600); if (failed) return result;
             if ( backtracking==0 ) {
               ptm.ruleFinished(getLastToken(),end());
             }
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:463:1: (temp_target= ruleToTarget )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:463:2: temp_target= ruleToTarget
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:545:1: (temp_target= ruleToTarget )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:545:2: temp_target= ruleToTarget
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(22)).eContents().get(1)).eContents().get(2)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(28)).eContents().get(1)).eContents().get(2)),line(),start());
             }
-            pushFollow(FOLLOW_ruleToTarget_in_ruleOtherwiseClause1319);
+            pushFollow(FOLLOW_ruleToTarget_in_ruleOtherwiseClause1609);
             temp_target=ruleToTarget();
             _fsp--;
             if (failed) return result;
@@ -2645,13 +3230,13 @@ public class spitParser extends Parser {
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:466:1: ( '}' )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:466:2: '}'
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:548:1: ( '}' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:548:2: '}'
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(22)).eContents().get(1)).eContents().get(3)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(28)).eContents().get(1)).eContents().get(3)),line(),start());
             }
-            match(input,12,FOLLOW_12_in_ruleOtherwiseClause1328); if (failed) return result;
+            match(input,12,FOLLOW_12_in_ruleOtherwiseClause1618); if (failed) return result;
             if ( backtracking==0 ) {
               ptm.ruleFinished(getLastToken(),end());
             }
@@ -2670,7 +3255,7 @@ public class spitParser extends Parser {
             recover(input,re);
         }
         finally {
-            if ( backtracking>0 ) { memoize(input, 24, ruleOtherwiseClause_StartIndex); }
+            if ( backtracking>0 ) { memoize(input, 30, ruleOtherwiseClause_StartIndex); }
         }
         return result;
     }
@@ -2678,7 +3263,7 @@ public class spitParser extends Parser {
 
 
     // $ANTLR start ruleExpression
-    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:470:1: ruleExpression returns [EObject result] : ( (temp_lang= RULE_ID ) ( '(' ) (temp_ExpressionValue= ruleExpressionValue ) ( ')' ) ) ;
+    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:552:1: ruleExpression returns [EObject result] : ( ( (temp_lang= RULE_ID ) ( '(' ) (temp_ExpressionValue= ruleExpressionValue ) ( ')' ) ) | ( RULE_STRING ) ) ;
     public EObject ruleExpression() throws RecognitionException {
         EObject result = null;
         int ruleExpression_StartIndex = input.index();
@@ -2687,9 +3272,9 @@ public class spitParser extends Parser {
 
 
         try {
-            if ( backtracking>0 && alreadyParsedRule(input, 25) ) { return result; }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:471:4: ( ( (temp_lang= RULE_ID ) ( '(' ) (temp_ExpressionValue= ruleExpressionValue ) ( ')' ) ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:471:4: ( (temp_lang= RULE_ID ) ( '(' ) (temp_ExpressionValue= ruleExpressionValue ) ( ')' ) )
+            if ( backtracking>0 && alreadyParsedRule(input, 31) ) { return result; }
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:553:4: ( ( ( (temp_lang= RULE_ID ) ( '(' ) (temp_ExpressionValue= ruleExpressionValue ) ( ')' ) ) | ( RULE_STRING ) ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:553:4: ( ( (temp_lang= RULE_ID ) ( '(' ) (temp_ExpressionValue= ruleExpressionValue ) ( ')' ) ) | ( RULE_STRING ) )
             {
             if ( backtracking==0 ) {
 
@@ -2697,68 +3282,114 @@ public class spitParser extends Parser {
               				ptm.setModelElement(result);
               			 
             }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:475:1: ( (temp_lang= RULE_ID ) ( '(' ) (temp_ExpressionValue= ruleExpressionValue ) ( ')' ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:475:2: (temp_lang= RULE_ID ) ( '(' ) (temp_ExpressionValue= ruleExpressionValue ) ( ')' )
-            {
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:475:2: (temp_lang= RULE_ID )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:475:3: temp_lang= RULE_ID
-            {
-            if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(23)).eContents().get(1)).eContents().get(0)),line(),start());
-            }
-            temp_lang=(Token)input.LT(1);
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleExpression1355); if (failed) return result;
-            if ( backtracking==0 ) {
-              factory.set(result,"lang",convert(temp_lang),false); ptm.ruleFinished(temp_lang,end()); 
-            }
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:557:1: ( ( (temp_lang= RULE_ID ) ( '(' ) (temp_ExpressionValue= ruleExpressionValue ) ( ')' ) ) | ( RULE_STRING ) )
+            int alt23=2;
+            int LA23_0 = input.LA(1);
 
+            if ( (LA23_0==RULE_ID) ) {
+                alt23=1;
             }
+            else if ( (LA23_0==RULE_STRING) ) {
+                alt23=2;
+            }
+            else {
+                if (backtracking>0) {failed=true; return result;}
+                NoViableAltException nvae =
+                    new NoViableAltException("557:1: ( ( (temp_lang= RULE_ID ) ( '(' ) (temp_ExpressionValue= ruleExpressionValue ) ( ')' ) ) | ( RULE_STRING ) )", 23, 0, input);
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:478:1: ( '(' )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:478:2: '('
-            {
-            if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(23)).eContents().get(1)).eContents().get(1)),line(),start());
+                throw nvae;
             }
-            match(input,17,FOLLOW_17_in_ruleExpression1364); if (failed) return result;
-            if ( backtracking==0 ) {
-              ptm.ruleFinished(getLastToken(),end());
-            }
+            switch (alt23) {
+                case 1 :
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:557:2: ( (temp_lang= RULE_ID ) ( '(' ) (temp_ExpressionValue= ruleExpressionValue ) ( ')' ) )
+                    {
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:557:2: ( (temp_lang= RULE_ID ) ( '(' ) (temp_ExpressionValue= ruleExpressionValue ) ( ')' ) )
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:557:3: (temp_lang= RULE_ID ) ( '(' ) (temp_ExpressionValue= ruleExpressionValue ) ( ')' )
+                    {
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:557:3: (temp_lang= RULE_ID )
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:557:4: temp_lang= RULE_ID
+                    {
+                    if ( backtracking==0 ) {
+                      ptm.invokeRule(((EObject)((EObject)((EObject)((EObject)xtextfile.eContents().get(29)).eContents().get(1)).eContents().get(0)).eContents().get(0)),line(),start());
+                    }
+                    temp_lang=(Token)input.LT(1);
+                    match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleExpression1646); if (failed) return result;
+                    if ( backtracking==0 ) {
+                      factory.set(result,"lang",convert(temp_lang),false); ptm.ruleFinished(temp_lang,end()); 
+                    }
 
-            }
+                    }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:480:1: (temp_ExpressionValue= ruleExpressionValue )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:480:2: temp_ExpressionValue= ruleExpressionValue
-            {
-            if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(23)).eContents().get(1)).eContents().get(2)),line(),start());
-            }
-            pushFollow(FOLLOW_ruleExpressionValue_in_ruleExpression1374);
-            temp_ExpressionValue=ruleExpressionValue();
-            _fsp--;
-            if (failed) return result;
-            if ( backtracking==0 ) {
-              result =temp_ExpressionValue;
-            }
-            if ( backtracking==0 ) {
-              ptm.ruleFinished(getLastToken(),end());
-            }
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:560:1: ( '(' )
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:560:2: '('
+                    {
+                    if ( backtracking==0 ) {
+                      ptm.invokeRule(((EObject)((EObject)((EObject)((EObject)xtextfile.eContents().get(29)).eContents().get(1)).eContents().get(0)).eContents().get(1)),line(),start());
+                    }
+                    match(input,17,FOLLOW_17_in_ruleExpression1655); if (failed) return result;
+                    if ( backtracking==0 ) {
+                      ptm.ruleFinished(getLastToken(),end());
+                    }
 
-            }
+                    }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:484:1: ( ')' )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:484:2: ')'
-            {
-            if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(23)).eContents().get(1)).eContents().get(3)),line(),start());
-            }
-            match(input,18,FOLLOW_18_in_ruleExpression1384); if (failed) return result;
-            if ( backtracking==0 ) {
-              ptm.ruleFinished(getLastToken(),end());
-            }
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:562:1: (temp_ExpressionValue= ruleExpressionValue )
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:562:2: temp_ExpressionValue= ruleExpressionValue
+                    {
+                    if ( backtracking==0 ) {
+                      ptm.invokeRule(((EObject)((EObject)((EObject)((EObject)xtextfile.eContents().get(29)).eContents().get(1)).eContents().get(0)).eContents().get(2)),line(),start());
+                    }
+                    pushFollow(FOLLOW_ruleExpressionValue_in_ruleExpression1665);
+                    temp_ExpressionValue=ruleExpressionValue();
+                    _fsp--;
+                    if (failed) return result;
+                    if ( backtracking==0 ) {
+                      result =temp_ExpressionValue;
+                    }
+                    if ( backtracking==0 ) {
+                      ptm.ruleFinished(getLastToken(),end());
+                    }
 
-            }
+                    }
 
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:566:1: ( ')' )
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:566:2: ')'
+                    {
+                    if ( backtracking==0 ) {
+                      ptm.invokeRule(((EObject)((EObject)((EObject)((EObject)xtextfile.eContents().get(29)).eContents().get(1)).eContents().get(0)).eContents().get(3)),line(),start());
+                    }
+                    match(input,18,FOLLOW_18_in_ruleExpression1675); if (failed) return result;
+                    if ( backtracking==0 ) {
+                      ptm.ruleFinished(getLastToken(),end());
+                    }
+
+                    }
+
+
+                    }
+
+
+                    }
+                    break;
+                case 2 :
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:569:1: ( RULE_STRING )
+                    {
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:569:1: ( RULE_STRING )
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:569:2: RULE_STRING
+                    {
+                    if ( backtracking==0 ) {
+                      ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(29)).eContents().get(1)).eContents().get(1)),line(),start());
+                    }
+                    match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleExpression1686); if (failed) return result;
+                    if ( backtracking==0 ) {
+                      ptm.ruleFinished(getLastToken(),end());
+                    }
+
+                    }
+
+
+                    }
+                    break;
 
             }
 
@@ -2771,7 +3402,7 @@ public class spitParser extends Parser {
             recover(input,re);
         }
         finally {
-            if ( backtracking>0 ) { memoize(input, 25, ruleExpression_StartIndex); }
+            if ( backtracking>0 ) { memoize(input, 31, ruleExpression_StartIndex); }
         }
         return result;
     }
@@ -2779,16 +3410,16 @@ public class spitParser extends Parser {
 
 
     // $ANTLR start ruleExpressionValue
-    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:488:1: ruleExpressionValue returns [EObject result] : (temp_value= RULE_STRING ) ;
+    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:573:1: ruleExpressionValue returns [EObject result] : (temp_value= RULE_STRING ) ;
     public EObject ruleExpressionValue() throws RecognitionException {
         EObject result = null;
         int ruleExpressionValue_StartIndex = input.index();
         Token temp_value=null;
 
         try {
-            if ( backtracking>0 && alreadyParsedRule(input, 26) ) { return result; }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:489:4: ( (temp_value= RULE_STRING ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:489:4: (temp_value= RULE_STRING )
+            if ( backtracking>0 && alreadyParsedRule(input, 32) ) { return result; }
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:574:4: ( (temp_value= RULE_STRING ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:574:4: (temp_value= RULE_STRING )
             {
             if ( backtracking==0 ) {
 
@@ -2796,14 +3427,14 @@ public class spitParser extends Parser {
               				ptm.setModelElement(result);
               			 
             }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:493:1: (temp_value= RULE_STRING )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:493:2: temp_value= RULE_STRING
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:578:1: (temp_value= RULE_STRING )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:578:2: temp_value= RULE_STRING
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)xtextfile.eContents().get(24)).eContents().get(1)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)xtextfile.eContents().get(30)).eContents().get(1)),line(),start());
             }
             temp_value=(Token)input.LT(1);
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleExpressionValue1410); if (failed) return result;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleExpressionValue1712); if (failed) return result;
             if ( backtracking==0 ) {
               factory.set(result,"value",convert(temp_value),false); ptm.ruleFinished(temp_value,end()); 
             }
@@ -2819,7 +3450,7 @@ public class spitParser extends Parser {
             recover(input,re);
         }
         finally {
-            if ( backtracking>0 ) { memoize(input, 26, ruleExpressionValue_StartIndex); }
+            if ( backtracking>0 ) { memoize(input, 32, ruleExpressionValue_StartIndex); }
         }
         return result;
     }
@@ -2827,7 +3458,7 @@ public class spitParser extends Parser {
 
 
     // $ANTLR start rulePropertiesBlock
-    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:497:1: rulePropertiesBlock returns [EObject result] : ( ( 'properties' ) ( '{' ) (temp_properties= rulePropertyDef )+ ( '}' ) ) ;
+    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:582:1: rulePropertiesBlock returns [EObject result] : ( ( 'properties' ) ( '{' ) (temp_properties= rulePropertyDef )+ ( '}' ) ) ;
     public EObject rulePropertiesBlock() throws RecognitionException {
         EObject result = null;
         int rulePropertiesBlock_StartIndex = input.index();
@@ -2835,9 +3466,9 @@ public class spitParser extends Parser {
 
 
         try {
-            if ( backtracking>0 && alreadyParsedRule(input, 27) ) { return result; }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:498:4: ( ( ( 'properties' ) ( '{' ) (temp_properties= rulePropertyDef )+ ( '}' ) ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:498:4: ( ( 'properties' ) ( '{' ) (temp_properties= rulePropertyDef )+ ( '}' ) )
+            if ( backtracking>0 && alreadyParsedRule(input, 33) ) { return result; }
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:583:4: ( ( ( 'properties' ) ( '{' ) (temp_properties= rulePropertyDef )+ ( '}' ) ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:583:4: ( ( 'properties' ) ( '{' ) (temp_properties= rulePropertyDef )+ ( '}' ) )
             {
             if ( backtracking==0 ) {
 
@@ -2845,55 +3476,55 @@ public class spitParser extends Parser {
               				ptm.setModelElement(result);
               			 
             }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:502:1: ( ( 'properties' ) ( '{' ) (temp_properties= rulePropertyDef )+ ( '}' ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:502:2: ( 'properties' ) ( '{' ) (temp_properties= rulePropertyDef )+ ( '}' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:587:1: ( ( 'properties' ) ( '{' ) (temp_properties= rulePropertyDef )+ ( '}' ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:587:2: ( 'properties' ) ( '{' ) (temp_properties= rulePropertyDef )+ ( '}' )
             {
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:502:2: ( 'properties' )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:502:3: 'properties'
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:587:2: ( 'properties' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:587:3: 'properties'
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(25)).eContents().get(1)).eContents().get(0)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(31)).eContents().get(1)).eContents().get(0)),line(),start());
             }
-            match(input,31,FOLLOW_31_in_rulePropertiesBlock1435); if (failed) return result;
+            match(input,36,FOLLOW_36_in_rulePropertiesBlock1737); if (failed) return result;
             if ( backtracking==0 ) {
               ptm.ruleFinished(getLastToken(),end());
             }
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:504:1: ( '{' )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:504:2: '{'
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:589:1: ( '{' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:589:2: '{'
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(25)).eContents().get(1)).eContents().get(1)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(31)).eContents().get(1)).eContents().get(1)),line(),start());
             }
-            match(input,11,FOLLOW_11_in_rulePropertiesBlock1442); if (failed) return result;
+            match(input,11,FOLLOW_11_in_rulePropertiesBlock1744); if (failed) return result;
             if ( backtracking==0 ) {
               ptm.ruleFinished(getLastToken(),end());
             }
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:506:1: (temp_properties= rulePropertyDef )+
-            int cnt20=0;
-            loop20:
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:591:1: (temp_properties= rulePropertyDef )+
+            int cnt24=0;
+            loop24:
             do {
-                int alt20=2;
-                int LA20_0 = input.LA(1);
+                int alt24=2;
+                int LA24_0 = input.LA(1);
 
-                if ( (LA20_0==RULE_ID) ) {
-                    alt20=1;
+                if ( (LA24_0==RULE_ID) ) {
+                    alt24=1;
                 }
 
 
-                switch (alt20) {
+                switch (alt24) {
             	case 1 :
-            	    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:506:2: temp_properties= rulePropertyDef
+            	    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:591:2: temp_properties= rulePropertyDef
             	    {
             	    if ( backtracking==0 ) {
-            	      ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(25)).eContents().get(1)).eContents().get(2)),line(),start());
+            	      ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(31)).eContents().get(1)).eContents().get(2)),line(),start());
             	    }
-            	    pushFollow(FOLLOW_rulePropertyDef_in_rulePropertiesBlock1451);
+            	    pushFollow(FOLLOW_rulePropertyDef_in_rulePropertiesBlock1753);
             	    temp_properties=rulePropertyDef();
             	    _fsp--;
             	    if (failed) return result;
@@ -2905,22 +3536,22 @@ public class spitParser extends Parser {
             	    break;
 
             	default :
-            	    if ( cnt20 >= 1 ) break loop20;
+            	    if ( cnt24 >= 1 ) break loop24;
             	    if (backtracking>0) {failed=true; return result;}
                         EarlyExitException eee =
-                            new EarlyExitException(20, input);
+                            new EarlyExitException(24, input);
                         throw eee;
                 }
-                cnt20++;
+                cnt24++;
             } while (true);
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:509:1: ( '}' )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:509:2: '}'
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:594:1: ( '}' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:594:2: '}'
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(25)).eContents().get(1)).eContents().get(3)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(31)).eContents().get(1)).eContents().get(3)),line(),start());
             }
-            match(input,12,FOLLOW_12_in_rulePropertiesBlock1461); if (failed) return result;
+            match(input,12,FOLLOW_12_in_rulePropertiesBlock1763); if (failed) return result;
             if ( backtracking==0 ) {
               ptm.ruleFinished(getLastToken(),end());
             }
@@ -2939,7 +3570,7 @@ public class spitParser extends Parser {
             recover(input,re);
         }
         finally {
-            if ( backtracking>0 ) { memoize(input, 27, rulePropertiesBlock_StartIndex); }
+            if ( backtracking>0 ) { memoize(input, 33, rulePropertiesBlock_StartIndex); }
         }
         return result;
     }
@@ -2947,7 +3578,7 @@ public class spitParser extends Parser {
 
 
     // $ANTLR start rulePropertyDef
-    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:513:1: rulePropertyDef returns [EObject result] : ( (temp_name= ruleSCOPED_ID ) ( '=' ) (temp_value= RULE_STRING ) ) ;
+    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:598:1: rulePropertyDef returns [EObject result] : ( (temp_name= ruleSCOPED_ID ) ( '=' ) (temp_value= RULE_STRING ) ) ;
     public EObject rulePropertyDef() throws RecognitionException {
         EObject result = null;
         int rulePropertyDef_StartIndex = input.index();
@@ -2956,9 +3587,9 @@ public class spitParser extends Parser {
 
 
         try {
-            if ( backtracking>0 && alreadyParsedRule(input, 28) ) { return result; }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:514:4: ( ( (temp_name= ruleSCOPED_ID ) ( '=' ) (temp_value= RULE_STRING ) ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:514:4: ( (temp_name= ruleSCOPED_ID ) ( '=' ) (temp_value= RULE_STRING ) )
+            if ( backtracking>0 && alreadyParsedRule(input, 34) ) { return result; }
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:599:4: ( ( (temp_name= ruleSCOPED_ID ) ( '=' ) (temp_value= RULE_STRING ) ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:599:4: ( (temp_name= ruleSCOPED_ID ) ( '=' ) (temp_value= RULE_STRING ) )
             {
             if ( backtracking==0 ) {
 
@@ -2966,16 +3597,16 @@ public class spitParser extends Parser {
               				ptm.setModelElement(result);
               			 
             }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:518:1: ( (temp_name= ruleSCOPED_ID ) ( '=' ) (temp_value= RULE_STRING ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:518:2: (temp_name= ruleSCOPED_ID ) ( '=' ) (temp_value= RULE_STRING )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:603:1: ( (temp_name= ruleSCOPED_ID ) ( '=' ) (temp_value= RULE_STRING ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:603:2: (temp_name= ruleSCOPED_ID ) ( '=' ) (temp_value= RULE_STRING )
             {
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:518:2: (temp_name= ruleSCOPED_ID )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:518:3: temp_name= ruleSCOPED_ID
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:603:2: (temp_name= ruleSCOPED_ID )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:603:3: temp_name= ruleSCOPED_ID
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(26)).eContents().get(1)).eContents().get(0)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(32)).eContents().get(1)).eContents().get(0)),line(),start());
             }
-            pushFollow(FOLLOW_ruleSCOPED_ID_in_rulePropertyDef1488);
+            pushFollow(FOLLOW_ruleSCOPED_ID_in_rulePropertyDef1790);
             temp_name=ruleSCOPED_ID();
             _fsp--;
             if (failed) return result;
@@ -2985,27 +3616,27 @@ public class spitParser extends Parser {
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:521:1: ( '=' )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:521:2: '='
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:606:1: ( '=' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:606:2: '='
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(26)).eContents().get(1)).eContents().get(1)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(32)).eContents().get(1)).eContents().get(1)),line(),start());
             }
-            match(input,32,FOLLOW_32_in_rulePropertyDef1497); if (failed) return result;
+            match(input,23,FOLLOW_23_in_rulePropertyDef1799); if (failed) return result;
             if ( backtracking==0 ) {
               ptm.ruleFinished(getLastToken(),end());
             }
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:523:1: (temp_value= RULE_STRING )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:523:2: temp_value= RULE_STRING
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:608:1: (temp_value= RULE_STRING )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:608:2: temp_value= RULE_STRING
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(26)).eContents().get(1)).eContents().get(2)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(32)).eContents().get(1)).eContents().get(2)),line(),start());
             }
             temp_value=(Token)input.LT(1);
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rulePropertyDef1506); if (failed) return result;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_rulePropertyDef1808); if (failed) return result;
             if ( backtracking==0 ) {
               factory.set(result,"value",convert(temp_value),false); ptm.ruleFinished(temp_value,end()); 
             }
@@ -3024,7 +3655,7 @@ public class spitParser extends Parser {
             recover(input,re);
         }
         finally {
-            if ( backtracking>0 ) { memoize(input, 28, rulePropertyDef_StartIndex); }
+            if ( backtracking>0 ) { memoize(input, 34, rulePropertyDef_StartIndex); }
         }
         return result;
     }
@@ -3032,7 +3663,7 @@ public class spitParser extends Parser {
 
 
     // $ANTLR start ruleToTarget
-    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:528:1: ruleToTarget returns [EObject result] : (temp_to= ruleTo | temp_processexpr= ruleProcessExpr | temp_fault= ruleFault );
+    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:613:1: ruleToTarget returns [EObject result] : (temp_to= ruleTo | temp_processexpr= ruleProcessExpr | temp_fault= ruleFault );
     public EObject ruleToTarget() throws RecognitionException {
         EObject result = null;
         int ruleToTarget_StartIndex = input.index();
@@ -3044,46 +3675,46 @@ public class spitParser extends Parser {
 
 
         try {
-            if ( backtracking>0 && alreadyParsedRule(input, 29) ) { return result; }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:529:9: (temp_to= ruleTo | temp_processexpr= ruleProcessExpr | temp_fault= ruleFault )
-            int alt21=3;
+            if ( backtracking>0 && alreadyParsedRule(input, 35) ) { return result; }
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:614:9: (temp_to= ruleTo | temp_processexpr= ruleProcessExpr | temp_fault= ruleFault )
+            int alt25=3;
             switch ( input.LA(1) ) {
             case 20:
                 {
-                alt21=1;
+                alt25=1;
                 }
                 break;
-            case 21:
-            case 22:
-            case 23:
-            case 24:
-            case 25:
             case 26:
             case 27:
             case 28:
-            case 35:
+            case 29:
+            case 30:
+            case 31:
+            case 32:
+            case 33:
+            case 39:
                 {
-                alt21=2;
+                alt25=2;
                 }
                 break;
-            case 33:
+            case 37:
                 {
-                alt21=3;
+                alt25=3;
                 }
                 break;
             default:
                 if (backtracking>0) {failed=true; return result;}
                 NoViableAltException nvae =
-                    new NoViableAltException("528:1: ruleToTarget returns [EObject result] : (temp_to= ruleTo | temp_processexpr= ruleProcessExpr | temp_fault= ruleFault );", 21, 0, input);
+                    new NoViableAltException("613:1: ruleToTarget returns [EObject result] : (temp_to= ruleTo | temp_processexpr= ruleProcessExpr | temp_fault= ruleFault );", 25, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt21) {
+            switch (alt25) {
                 case 1 :
-                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:529:9: temp_to= ruleTo
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:614:9: temp_to= ruleTo
                     {
-                    pushFollow(FOLLOW_ruleTo_in_ruleToTarget1535);
+                    pushFollow(FOLLOW_ruleTo_in_ruleToTarget1837);
                     temp_to=ruleTo();
                     _fsp--;
                     if (failed) return result;
@@ -3094,9 +3725,9 @@ public class spitParser extends Parser {
                     }
                     break;
                 case 2 :
-                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:529:52: temp_processexpr= ruleProcessExpr
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:614:52: temp_processexpr= ruleProcessExpr
                     {
-                    pushFollow(FOLLOW_ruleProcessExpr_in_ruleToTarget1550);
+                    pushFollow(FOLLOW_ruleProcessExpr_in_ruleToTarget1852);
                     temp_processexpr=ruleProcessExpr();
                     _fsp--;
                     if (failed) return result;
@@ -3107,9 +3738,9 @@ public class spitParser extends Parser {
                     }
                     break;
                 case 3 :
-                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:529:122: temp_fault= ruleFault
+                    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:614:122: temp_fault= ruleFault
                     {
-                    pushFollow(FOLLOW_ruleFault_in_ruleToTarget1565);
+                    pushFollow(FOLLOW_ruleFault_in_ruleToTarget1867);
                     temp_fault=ruleFault();
                     _fsp--;
                     if (failed) return result;
@@ -3127,7 +3758,7 @@ public class spitParser extends Parser {
             recover(input,re);
         }
         finally {
-            if ( backtracking>0 ) { memoize(input, 29, ruleToTarget_StartIndex); }
+            if ( backtracking>0 ) { memoize(input, 35, ruleToTarget_StartIndex); }
         }
         return result;
     }
@@ -3135,14 +3766,14 @@ public class spitParser extends Parser {
 
 
     // $ANTLR start ruleFault
-    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:531:1: ruleFault returns [EObject result] : ( ( 'fault' ) ( RULE_STRING ) ) ;
+    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:616:1: ruleFault returns [EObject result] : ( ( 'fault' ) ( RULE_STRING ) ) ;
     public EObject ruleFault() throws RecognitionException {
         EObject result = null;
         int ruleFault_StartIndex = input.index();
         try {
-            if ( backtracking>0 && alreadyParsedRule(input, 30) ) { return result; }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:532:4: ( ( ( 'fault' ) ( RULE_STRING ) ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:532:4: ( ( 'fault' ) ( RULE_STRING ) )
+            if ( backtracking>0 && alreadyParsedRule(input, 36) ) { return result; }
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:617:4: ( ( ( 'fault' ) ( RULE_STRING ) ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:617:4: ( ( 'fault' ) ( RULE_STRING ) )
             {
             if ( backtracking==0 ) {
 
@@ -3150,29 +3781,29 @@ public class spitParser extends Parser {
               				ptm.setModelElement(result);
               			 
             }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:536:1: ( ( 'fault' ) ( RULE_STRING ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:536:2: ( 'fault' ) ( RULE_STRING )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:621:1: ( ( 'fault' ) ( RULE_STRING ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:621:2: ( 'fault' ) ( RULE_STRING )
             {
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:536:2: ( 'fault' )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:536:3: 'fault'
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:621:2: ( 'fault' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:621:3: 'fault'
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(28)).eContents().get(1)).eContents().get(0)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(34)).eContents().get(1)).eContents().get(0)),line(),start());
             }
-            match(input,33,FOLLOW_33_in_ruleFault1588); if (failed) return result;
+            match(input,37,FOLLOW_37_in_ruleFault1890); if (failed) return result;
             if ( backtracking==0 ) {
               ptm.ruleFinished(getLastToken(),end());
             }
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:538:1: ( RULE_STRING )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:538:2: RULE_STRING
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:623:1: ( RULE_STRING )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:623:2: RULE_STRING
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(28)).eContents().get(1)).eContents().get(1)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(34)).eContents().get(1)).eContents().get(1)),line(),start());
             }
-            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleFault1595); if (failed) return result;
+            match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleFault1897); if (failed) return result;
             if ( backtracking==0 ) {
               ptm.ruleFinished(getLastToken(),end());
             }
@@ -3191,7 +3822,7 @@ public class spitParser extends Parser {
             recover(input,re);
         }
         finally {
-            if ( backtracking>0 ) { memoize(input, 30, ruleFault_StartIndex); }
+            if ( backtracking>0 ) { memoize(input, 36, ruleFault_StartIndex); }
         }
         return result;
     }
@@ -3199,14 +3830,14 @@ public class spitParser extends Parser {
 
 
     // $ANTLR start ruleSCOPED_ID
-    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:542:1: ruleSCOPED_ID returns [EObject result] : ( ( RULE_ID ) ( ( '.' ) ( RULE_ID ) )* ) ;
+    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:627:1: ruleSCOPED_ID returns [EObject result] : ( ( RULE_ID ) ( ( '.' ) ( RULE_ID ) )* ) ;
     public EObject ruleSCOPED_ID() throws RecognitionException {
         EObject result = null;
         int ruleSCOPED_ID_StartIndex = input.index();
         try {
-            if ( backtracking>0 && alreadyParsedRule(input, 31) ) { return result; }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:543:4: ( ( ( RULE_ID ) ( ( '.' ) ( RULE_ID ) )* ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:543:4: ( ( RULE_ID ) ( ( '.' ) ( RULE_ID ) )* )
+            if ( backtracking>0 && alreadyParsedRule(input, 37) ) { return result; }
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:628:4: ( ( ( RULE_ID ) ( ( '.' ) ( RULE_ID ) )* ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:628:4: ( ( RULE_ID ) ( ( '.' ) ( RULE_ID ) )* )
             {
             if ( backtracking==0 ) {
 
@@ -3214,57 +3845,57 @@ public class spitParser extends Parser {
               				ptm.setModelElement(result);
               			 
             }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:547:1: ( ( RULE_ID ) ( ( '.' ) ( RULE_ID ) )* )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:547:2: ( RULE_ID ) ( ( '.' ) ( RULE_ID ) )*
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:632:1: ( ( RULE_ID ) ( ( '.' ) ( RULE_ID ) )* )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:632:2: ( RULE_ID ) ( ( '.' ) ( RULE_ID ) )*
             {
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:547:2: ( RULE_ID )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:547:3: RULE_ID
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:632:2: ( RULE_ID )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:632:3: RULE_ID
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(29)).eContents().get(1)).eContents().get(0)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)((EObject)xtextfile.eContents().get(35)).eContents().get(1)).eContents().get(0)),line(),start());
             }
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleSCOPED_ID1620); if (failed) return result;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleSCOPED_ID1922); if (failed) return result;
             if ( backtracking==0 ) {
               ptm.ruleFinished(getLastToken(),end());
             }
 
             }
 
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:549:1: ( ( '.' ) ( RULE_ID ) )*
-            loop22:
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:634:1: ( ( '.' ) ( RULE_ID ) )*
+            loop26:
             do {
-                int alt22=2;
-                int LA22_0 = input.LA(1);
+                int alt26=2;
+                int LA26_0 = input.LA(1);
 
-                if ( (LA22_0==34) ) {
-                    alt22=1;
+                if ( (LA26_0==38) ) {
+                    alt26=1;
                 }
 
 
-                switch (alt22) {
+                switch (alt26) {
             	case 1 :
-            	    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:549:2: ( '.' ) ( RULE_ID )
+            	    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:634:2: ( '.' ) ( RULE_ID )
             	    {
-            	    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:549:2: ( '.' )
-            	    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:549:3: '.'
+            	    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:634:2: ( '.' )
+            	    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:634:3: '.'
             	    {
             	    if ( backtracking==0 ) {
-            	      ptm.invokeRule(((EObject)((EObject)((EObject)((EObject)xtextfile.eContents().get(29)).eContents().get(1)).eContents().get(1)).eContents().get(0)),line(),start());
+            	      ptm.invokeRule(((EObject)((EObject)((EObject)((EObject)xtextfile.eContents().get(35)).eContents().get(1)).eContents().get(1)).eContents().get(0)),line(),start());
             	    }
-            	    match(input,34,FOLLOW_34_in_ruleSCOPED_ID1628); if (failed) return result;
+            	    match(input,38,FOLLOW_38_in_ruleSCOPED_ID1930); if (failed) return result;
             	    if ( backtracking==0 ) {
             	      ptm.ruleFinished(getLastToken(),end());
             	    }
 
             	    }
 
-            	    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:551:1: ( RULE_ID )
-            	    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:551:2: RULE_ID
+            	    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:636:1: ( RULE_ID )
+            	    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:636:2: RULE_ID
             	    {
             	    if ( backtracking==0 ) {
-            	      ptm.invokeRule(((EObject)((EObject)((EObject)((EObject)xtextfile.eContents().get(29)).eContents().get(1)).eContents().get(1)).eContents().get(1)),line(),start());
+            	      ptm.invokeRule(((EObject)((EObject)((EObject)((EObject)xtextfile.eContents().get(35)).eContents().get(1)).eContents().get(1)).eContents().get(1)),line(),start());
             	    }
-            	    match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleSCOPED_ID1635); if (failed) return result;
+            	    match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleSCOPED_ID1937); if (failed) return result;
             	    if ( backtracking==0 ) {
             	      ptm.ruleFinished(getLastToken(),end());
             	    }
@@ -3276,7 +3907,7 @@ public class spitParser extends Parser {
             	    break;
 
             	default :
-            	    break loop22;
+            	    break loop26;
                 }
             } while (true);
 
@@ -3292,7 +3923,7 @@ public class spitParser extends Parser {
             recover(input,re);
         }
         finally {
-            if ( backtracking>0 ) { memoize(input, 31, ruleSCOPED_ID_StartIndex); }
+            if ( backtracking>0 ) { memoize(input, 37, ruleSCOPED_ID_StartIndex); }
         }
         return result;
     }
@@ -3300,14 +3931,14 @@ public class spitParser extends Parser {
 
 
     // $ANTLR start ruleBEAN
-    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:556:1: ruleBEAN returns [EObject result] : ( 'bean' ) ;
+    // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:641:1: ruleBEAN returns [EObject result] : ( 'bean' ) ;
     public EObject ruleBEAN() throws RecognitionException {
         EObject result = null;
         int ruleBEAN_StartIndex = input.index();
         try {
-            if ( backtracking>0 && alreadyParsedRule(input, 32) ) { return result; }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:557:4: ( ( 'bean' ) )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:557:4: ( 'bean' )
+            if ( backtracking>0 && alreadyParsedRule(input, 38) ) { return result; }
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:642:4: ( ( 'bean' ) )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:642:4: ( 'bean' )
             {
             if ( backtracking==0 ) {
 
@@ -3315,13 +3946,13 @@ public class spitParser extends Parser {
               				ptm.setModelElement(result);
               			 
             }
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:561:1: ( 'bean' )
-            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:561:2: 'bean'
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:646:1: ( 'bean' )
+            // ..//org.apache.camel.text.dsl/src-gen//org/apache/camel/spit/parser/spit.g:646:2: 'bean'
             {
             if ( backtracking==0 ) {
-              ptm.invokeRule(((EObject)((EObject)xtextfile.eContents().get(30)).eContents().get(1)),line(),start());
+              ptm.invokeRule(((EObject)((EObject)xtextfile.eContents().get(36)).eContents().get(1)),line(),start());
             }
-            match(input,35,FOLLOW_35_in_ruleBEAN1662); if (failed) return result;
+            match(input,39,FOLLOW_39_in_ruleBEAN1964); if (failed) return result;
             if ( backtracking==0 ) {
               ptm.ruleFinished(getLastToken(),end());
             }
@@ -3337,7 +3968,7 @@ public class spitParser extends Parser {
             recover(input,re);
         }
         finally {
-            if ( backtracking>0 ) { memoize(input, 32, ruleBEAN_StartIndex); }
+            if ( backtracking>0 ) { memoize(input, 38, ruleBEAN_StartIndex); }
         }
         return result;
     }
@@ -3356,7 +3987,7 @@ public class spitParser extends Parser {
     public static final BitSet FOLLOW_RULE_ID_in_ruleRoute166 = new BitSet(new long[]{0x0000000000080000L});
     public static final BitSet FOLLOW_ruleFrom_in_ruleRoute177 = new BitSet(new long[]{0x0000000000008800L});
     public static final BitSet FOLLOW_ruleInterceptors_in_ruleRoute189 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_11_in_ruleRoute200 = new BitSet(new long[]{0x000000081FE00000L});
+    public static final BitSet FOLLOW_11_in_ruleRoute200 = new BitSet(new long[]{0x00000083FC000000L});
     public static final BitSet FOLLOW_ruleProcessExpr_in_ruleRoute209 = new BitSet(new long[]{0x0000000000001000L});
     public static final BitSet FOLLOW_12_in_ruleRoute218 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_13_in_ruleImport243 = new BitSet(new long[]{0x0000000000000020L});
@@ -3366,8 +3997,8 @@ public class spitParser extends Parser {
     public static final BitSet FOLLOW_RULE_ID_in_ruleGlobalInterceptorDecl297 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_16_in_ruleInterceptorChainDef325 = new BitSet(new long[]{0x0000000000000010L});
     public static final BitSet FOLLOW_RULE_ID_in_ruleInterceptorChainDef334 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_11_in_ruleInterceptorChainDef343 = new BitSet(new long[]{0x0000000800000000L});
-    public static final BitSet FOLLOW_ruleBeanExpr_in_ruleInterceptorChainDef352 = new BitSet(new long[]{0x0000000800001000L});
+    public static final BitSet FOLLOW_11_in_ruleInterceptorChainDef343 = new BitSet(new long[]{0x0000008000000000L});
+    public static final BitSet FOLLOW_ruleBeanExpr_in_ruleInterceptorChainDef352 = new BitSet(new long[]{0x0000008000001000L});
     public static final BitSet FOLLOW_12_in_ruleInterceptorChainDef362 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_15_in_ruleInterceptors387 = new BitSet(new long[]{0x0000000000020000L});
     public static final BitSet FOLLOW_17_in_ruleInterceptors394 = new BitSet(new long[]{0x0000000000000010L});
@@ -3391,68 +4022,87 @@ public class spitParser extends Parser {
     public static final BitSet FOLLOW_ruleBEAN_in_ruleBeanExpr709 = new BitSet(new long[]{0x0000000000000010L});
     public static final BitSet FOLLOW_RULE_ID_in_ruleBeanExpr721 = new BitSet(new long[]{0x0000000000000012L});
     public static final BitSet FOLLOW_RULE_ID_in_ruleBeanExpr732 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleInterceptors_in_ruleSimplePattern763 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_11_in_ruleSimplePattern774 = new BitSet(new long[]{0x0000000A1FF00000L});
-    public static final BitSet FOLLOW_ruleToTarget_in_ruleSimplePattern783 = new BitSet(new long[]{0x0000000A9FF01000L});
-    public static final BitSet FOLLOW_rulePropertiesBlock_in_ruleSimplePattern796 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_ruleSimplePattern807 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_21_in_ruleTransformer832 = new BitSet(new long[]{0x0000000000008800L});
-    public static final BitSet FOLLOW_ruleInterceptors_in_ruleTransformer842 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_11_in_ruleTransformer853 = new BitSet(new long[]{0x0000000800000000L});
-    public static final BitSet FOLLOW_ruleBeanExpr_in_ruleTransformer862 = new BitSet(new long[]{0x0000000A1FF00000L});
-    public static final BitSet FOLLOW_ruleToTarget_in_ruleTransformer873 = new BitSet(new long[]{0x0000000A1FF01000L});
-    public static final BitSet FOLLOW_12_in_ruleTransformer883 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_22_in_ruleChoice908 = new BitSet(new long[]{0x0000000000008800L});
-    public static final BitSet FOLLOW_ruleInterceptors_in_ruleChoice918 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_11_in_ruleChoice929 = new BitSet(new long[]{0x0000000060001000L});
-    public static final BitSet FOLLOW_ruleWhenClause_in_ruleChoice938 = new BitSet(new long[]{0x0000000060001000L});
-    public static final BitSet FOLLOW_ruleOtherwiseClause_in_ruleChoice950 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_ruleChoice960 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_23_in_ruleRecipients985 = new BitSet(new long[]{0x0000000000008800L});
-    public static final BitSet FOLLOW_ruleSimplePattern_in_ruleRecipients994 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_24_in_ruleDynamicRecipients1021 = new BitSet(new long[]{0x0000000000800000L});
-    public static final BitSet FOLLOW_23_in_ruleDynamicRecipients1028 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleDynamicRecipients1037 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_25_in_rulePipeline1064 = new BitSet(new long[]{0x0000000000008800L});
-    public static final BitSet FOLLOW_ruleSimplePattern_in_rulePipeline1073 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_26_in_ruleFilter1100 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleFilter1109 = new BitSet(new long[]{0x0000000000008800L});
-    public static final BitSet FOLLOW_ruleSimplePattern_in_ruleFilter1120 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_27_in_ruleSplitter1147 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleSplitter1156 = new BitSet(new long[]{0x0000000000008800L});
-    public static final BitSet FOLLOW_ruleSimplePattern_in_ruleSplitter1167 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_28_in_ruleResequencer1194 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleResequencer1203 = new BitSet(new long[]{0x0000000000008800L});
-    public static final BitSet FOLLOW_ruleSimplePattern_in_ruleResequencer1214 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_29_in_ruleWhenClause1241 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_ruleExpression_in_ruleWhenClause1250 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_11_in_ruleWhenClause1259 = new BitSet(new long[]{0x0000000A1FF00000L});
-    public static final BitSet FOLLOW_ruleToTarget_in_ruleWhenClause1268 = new BitSet(new long[]{0x0000000A1FF01000L});
-    public static final BitSet FOLLOW_12_in_ruleWhenClause1278 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_30_in_ruleOtherwiseClause1303 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_11_in_ruleOtherwiseClause1310 = new BitSet(new long[]{0x0000000A1FF00000L});
-    public static final BitSet FOLLOW_ruleToTarget_in_ruleOtherwiseClause1319 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_ruleOtherwiseClause1328 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleExpression1355 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_17_in_ruleExpression1364 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_ruleExpressionValue_in_ruleExpression1374 = new BitSet(new long[]{0x0000000000040000L});
-    public static final BitSet FOLLOW_18_in_ruleExpression1384 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleExpressionValue1410 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_31_in_rulePropertiesBlock1435 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_11_in_rulePropertiesBlock1442 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_rulePropertyDef_in_rulePropertiesBlock1451 = new BitSet(new long[]{0x0000000000001010L});
-    public static final BitSet FOLLOW_12_in_rulePropertiesBlock1461 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleSCOPED_ID_in_rulePropertyDef1488 = new BitSet(new long[]{0x0000000100000000L});
-    public static final BitSet FOLLOW_32_in_rulePropertyDef1497 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_RULE_STRING_in_rulePropertyDef1506 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleTo_in_ruleToTarget1535 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleProcessExpr_in_ruleToTarget1550 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleFault_in_ruleToTarget1565 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_33_in_ruleFault1588 = new BitSet(new long[]{0x0000000000000020L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleFault1595 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleSCOPED_ID1620 = new BitSet(new long[]{0x0000000400000002L});
-    public static final BitSet FOLLOW_34_in_ruleSCOPED_ID1628 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleSCOPED_ID1635 = new BitSet(new long[]{0x0000000400000002L});
-    public static final BitSet FOLLOW_35_in_ruleBEAN1662 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleInterceptors_in_ruleSimplePattern762 = new BitSet(new long[]{0x0000000000000800L});
+    public static final BitSet FOLLOW_11_in_ruleSimplePattern772 = new BitSet(new long[]{0x000000A3FD700000L});
+    public static final BitSet FOLLOW_ruleActionStatement_in_ruleSimplePattern781 = new BitSet(new long[]{0x000000A3FD700000L});
+    public static final BitSet FOLLOW_ruleToTarget_in_ruleSimplePattern793 = new BitSet(new long[]{0x000000B3FC101000L});
+    public static final BitSet FOLLOW_rulePropertiesBlock_in_ruleSimplePattern805 = new BitSet(new long[]{0x0000000000001000L});
+    public static final BitSet FOLLOW_12_in_ruleSimplePattern815 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSetHeaderAction_in_ruleActionStatement843 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSetBodyAction_in_ruleActionStatement858 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_21_in_ruleActionStatement871 = new BitSet(new long[]{0x0000000002100000L});
+    public static final BitSet FOLLOW_ruleConvertBodyAction_in_ruleActionStatement881 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_22_in_ruleSetHeaderAction911 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleSetHeaderAction920 = new BitSet(new long[]{0x0000000000800000L});
+    public static final BitSet FOLLOW_23_in_ruleSetHeaderAction929 = new BitSet(new long[]{0x0000000000000030L});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleSetHeaderAction938 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_24_in_ruleSetBodyAction965 = new BitSet(new long[]{0x0000000000800000L});
+    public static final BitSet FOLLOW_23_in_ruleSetBodyAction972 = new BitSet(new long[]{0x0000000000000030L});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleSetBodyAction981 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleConvertBodyWithAction_in_ruleConvertBodyAction1010 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleConvertBodyToAction_in_ruleConvertBodyAction1025 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_25_in_ruleConvertBodyWithAction1048 = new BitSet(new long[]{0x0000008000000000L});
+    public static final BitSet FOLLOW_ruleBeanExpr_in_ruleConvertBodyWithAction1058 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_20_in_ruleConvertBodyToAction1086 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleConvertBodyToAction1095 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_26_in_ruleTransformer1122 = new BitSet(new long[]{0x0000000000008800L});
+    public static final BitSet FOLLOW_ruleInterceptors_in_ruleTransformer1132 = new BitSet(new long[]{0x0000000000000800L});
+    public static final BitSet FOLLOW_11_in_ruleTransformer1143 = new BitSet(new long[]{0x0000008000000000L});
+    public static final BitSet FOLLOW_ruleBeanExpr_in_ruleTransformer1152 = new BitSet(new long[]{0x000000A3FC100000L});
+    public static final BitSet FOLLOW_ruleToTarget_in_ruleTransformer1163 = new BitSet(new long[]{0x000000A3FC101000L});
+    public static final BitSet FOLLOW_12_in_ruleTransformer1173 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_27_in_ruleChoice1198 = new BitSet(new long[]{0x0000000000008800L});
+    public static final BitSet FOLLOW_ruleInterceptors_in_ruleChoice1208 = new BitSet(new long[]{0x0000000000000800L});
+    public static final BitSet FOLLOW_11_in_ruleChoice1219 = new BitSet(new long[]{0x0000000C00001000L});
+    public static final BitSet FOLLOW_ruleWhenClause_in_ruleChoice1228 = new BitSet(new long[]{0x0000000C00001000L});
+    public static final BitSet FOLLOW_ruleOtherwiseClause_in_ruleChoice1240 = new BitSet(new long[]{0x0000000000001000L});
+    public static final BitSet FOLLOW_12_in_ruleChoice1250 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_28_in_ruleRecipients1275 = new BitSet(new long[]{0x0000000000008800L});
+    public static final BitSet FOLLOW_ruleSimplePattern_in_ruleRecipients1284 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_29_in_ruleDynamicRecipients1311 = new BitSet(new long[]{0x0000000010000000L});
+    public static final BitSet FOLLOW_28_in_ruleDynamicRecipients1318 = new BitSet(new long[]{0x0000000000000030L});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleDynamicRecipients1327 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_30_in_rulePipeline1354 = new BitSet(new long[]{0x0000000000008800L});
+    public static final BitSet FOLLOW_ruleSimplePattern_in_rulePipeline1363 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_31_in_ruleFilter1390 = new BitSet(new long[]{0x0000000000000030L});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleFilter1399 = new BitSet(new long[]{0x0000000000008800L});
+    public static final BitSet FOLLOW_ruleSimplePattern_in_ruleFilter1410 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_32_in_ruleSplitter1437 = new BitSet(new long[]{0x0000000000000030L});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleSplitter1446 = new BitSet(new long[]{0x0000000000008800L});
+    public static final BitSet FOLLOW_ruleSimplePattern_in_ruleSplitter1457 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_33_in_ruleResequencer1484 = new BitSet(new long[]{0x0000000000000030L});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleResequencer1493 = new BitSet(new long[]{0x0000000000008800L});
+    public static final BitSet FOLLOW_ruleSimplePattern_in_ruleResequencer1504 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_34_in_ruleWhenClause1531 = new BitSet(new long[]{0x0000000000000030L});
+    public static final BitSet FOLLOW_ruleExpression_in_ruleWhenClause1540 = new BitSet(new long[]{0x0000000000000800L});
+    public static final BitSet FOLLOW_11_in_ruleWhenClause1549 = new BitSet(new long[]{0x000000A3FC100000L});
+    public static final BitSet FOLLOW_ruleToTarget_in_ruleWhenClause1558 = new BitSet(new long[]{0x000000A3FC101000L});
+    public static final BitSet FOLLOW_12_in_ruleWhenClause1568 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_35_in_ruleOtherwiseClause1593 = new BitSet(new long[]{0x0000000000000800L});
+    public static final BitSet FOLLOW_11_in_ruleOtherwiseClause1600 = new BitSet(new long[]{0x000000A3FC100000L});
+    public static final BitSet FOLLOW_ruleToTarget_in_ruleOtherwiseClause1609 = new BitSet(new long[]{0x0000000000001000L});
+    public static final BitSet FOLLOW_12_in_ruleOtherwiseClause1618 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleExpression1646 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_17_in_ruleExpression1655 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_ruleExpressionValue_in_ruleExpression1665 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_18_in_ruleExpression1675 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleExpression1686 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleExpressionValue1712 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_36_in_rulePropertiesBlock1737 = new BitSet(new long[]{0x0000000000000800L});
+    public static final BitSet FOLLOW_11_in_rulePropertiesBlock1744 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_rulePropertyDef_in_rulePropertiesBlock1753 = new BitSet(new long[]{0x0000000000001010L});
+    public static final BitSet FOLLOW_12_in_rulePropertiesBlock1763 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleSCOPED_ID_in_rulePropertyDef1790 = new BitSet(new long[]{0x0000000000800000L});
+    public static final BitSet FOLLOW_23_in_rulePropertyDef1799 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_STRING_in_rulePropertyDef1808 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleTo_in_ruleToTarget1837 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleProcessExpr_in_ruleToTarget1852 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleFault_in_ruleToTarget1867 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_37_in_ruleFault1890 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleFault1897 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleSCOPED_ID1922 = new BitSet(new long[]{0x0000004000000002L});
+    public static final BitSet FOLLOW_38_in_ruleSCOPED_ID1930 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleSCOPED_ID1937 = new BitSet(new long[]{0x0000004000000002L});
+    public static final BitSet FOLLOW_39_in_ruleBEAN1964 = new BitSet(new long[]{0x0000000000000002L});
 
 }

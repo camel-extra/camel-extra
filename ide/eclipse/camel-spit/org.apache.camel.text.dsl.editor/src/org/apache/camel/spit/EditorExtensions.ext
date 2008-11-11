@@ -23,7 +23,14 @@ String label (Choice this) :
      
 String image (Choice this) :
      "MessageRouterEIP.png";
+     
+/* When clause for the CBR */
+String label (WhenClause this) :
+     this.expr.value;
 
+String image(WhenClause this) :
+     "whencond.gif";
+     
 /* Recipient list */
 String label (Recipients this) :
      "recipients";
@@ -72,14 +79,21 @@ String label (Transformer this) :
 
 String image (Transformer this) :
      "MessageTranslator.png";
-        
+
+/* Pipeline */
+String label (Pipeline this) :
+    "pipeline";
+    
+String image (Pipeline this) :
+    "Pipeline.png";
+    
 /* BeanExpr */
 String label (BeanExpr this) :
      this.id + "." + this.method + "()";
 
 String image (BeanExpr this) :
      "bean_folder.gif";
-        
+       
 /* From rule has a little icon and a uri */ 
 String label (From this) :
      this.uri;
@@ -87,6 +101,21 @@ String label (From this) :
 String image (From this) :
      "MessageEndpoint.png";
 
+
+/* SetHeader */
+String label (SetHeaderAction this) :
+     this.header + "=" + this.value;
+
+String image (SetHeaderAction this) :
+     "expression.gif";
+
+/* SetBody */
+String label (SetBodyAction this) :
+     "body=" + this.value;
+
+String image (SetBodyAction this) :
+     "expression.gif";
+     
 /* To rule has a little icon and a uri */
 String label (To this) :
    this.uri;
@@ -104,6 +133,13 @@ String image (Expression this) :
 String label (ExpressionValue this) :
     this.value;
 
+/* Convert */
+String label (ConvertBodyToAction this) :
+    "convert to " + this.type;
+
+String label (ConvertBodyWithAction this) :
+    "convert with " + this.id + "." + this.method;
+    
 /* These are all the rules that don't need to 
    contribute anything to the outline view 
  */
