@@ -1,0 +1,15 @@
+route testingSetBody from 'uri:tst' {
+    pipeline {
+       set body 'w00t'
+       to 'uri:1'
+       to 'uri:2'
+    }
+}
+
+route testingSetHeader from 'uri:tst' {
+    pipeline {
+       set header 'boo' 'w00t'
+       to 'uri:1'
+       to 'uri:2'
+    }
+}

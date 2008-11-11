@@ -6,7 +6,7 @@ route SplitterTest from 'uri:someEndpoint' {
 }
 
 
-/ * The outline view here still shows <unnamed> for the 
+/* The outline view here still shows <unnamed> for the 
   * block that holds the choice. I want to somehow cause
   * that <unnamed> to be invisible
   */
