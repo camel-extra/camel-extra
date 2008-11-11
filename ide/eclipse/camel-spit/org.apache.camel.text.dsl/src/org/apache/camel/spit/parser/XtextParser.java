@@ -19,6 +19,7 @@ public class XtextParser extends GenParser {
 		for (Iterator<ErrorMsg> iterator = parseErrors.iterator(); iterator
 				.hasNext();) {
 			ErrorMsg errorMsg = (ErrorMsg) iterator.next();
+			// Funky style replacement of parser errors...
 			if (errorMsg.getMsg().indexOf("RULE_ID") >= 0) {
 				newErrors.add(new ErrorMsg("Identifier expected!", errorMsg
 						.getStart(), errorMsg.getLength(), errorMsg.getLine()));
