@@ -5,11 +5,6 @@ route SplitterTest from 'uri:someEndpoint' {
     }
 }
 
-
-/* The outline view here still shows <unnamed> for the 
-  * block that holds the choice. I want to somehow cause
-  * that <unnamed> to be invisible
-  */
   
 route FilterTest from 'mock:wibble' {
     filter xpath("/book[@category!='CHILDREN]'") {  
