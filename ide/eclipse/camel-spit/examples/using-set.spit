@@ -1,6 +1,6 @@
 route testingSetBody from 'uri:tst' {
     pipeline {
-       set body 'w00t'
+       body = 'w00t'
        to 'uri:1'
        to 'uri:2'
     }
@@ -8,8 +8,30 @@ route testingSetBody from 'uri:tst' {
 
 route testingSetHeader from 'uri:tst' {
     pipeline {
-       set header 'boo' 'w00t'
+       header 'boo' = 'w00t'
        to 'uri:1'
        to 'uri:2'
     }
 }
+
+route testingSetWithExprHeader from 'uri:tst' {
+    pipeline {
+       header 'boo' = groovy('in.headers.wibble')
+       to 'uri:1'
+       to 'uri:2'
+    }
+}
+
+route testingConvertBody from 'mock:a' {
+    recipients {
+       convert to 'java.lang.String'
+       to 'mock:b'
+    }
+}
+
+route testingConvertWith from 'mock:a' {
+    recipients {
+       convert with bean myBean methodName
+       to 'mock:b'
+    }
+}    
