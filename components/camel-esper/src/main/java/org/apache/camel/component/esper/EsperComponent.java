@@ -9,9 +9,11 @@ package org.apache.camel.component.esper;
 
 import java.util.Map;
 
-import net.esper.client.EPRuntime;
-import net.esper.client.EPServiceProvider;
-import net.esper.client.EPServiceProviderManager;
+
+import com.espertech.esper.client.EPRuntime;
+import com.espertech.esper.client.EPServiceProvider;
+import com.espertech.esper.client.EPServiceProviderManager;
+
 import org.apache.camel.Endpoint;
 import org.apache.camel.Exchange;
 import org.apache.camel.impl.DefaultComponent;

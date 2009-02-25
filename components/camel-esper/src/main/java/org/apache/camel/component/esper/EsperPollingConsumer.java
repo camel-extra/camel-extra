@@ -11,11 +11,12 @@ import java.util.Iterator;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-import net.esper.client.EPStatement;
-import net.esper.client.UpdateListener;
-import net.esper.event.EventBean;
 import org.apache.camel.Exchange;
 import org.apache.camel.impl.PollingConsumerSupport;
+
+import com.espertech.esper.client.EPStatement;
+import com.espertech.esper.client.EventBean;
+import com.espertech.esper.client.UpdateListener;
 
 /**
  * @version $Revision: 1.1 $

@@ -32,9 +32,9 @@
       <artifactId>camel-core</artifactId>
     </dependency>
     <dependency>
-      <groupId>esper</groupId>
+      <groupId>com.espertech</groupId>
       <artifactId>esper</artifactId>
-      <version>1.11.0</version>
+      <version>3.0.0</version>
     </dependency>
 
     <!-- testing -->
@@ -66,6 +66,12 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+    	<groupId>org.ow2.wildcat</groupId>
+    	<artifactId>wildcat-core</artifactId>
+    	<version>2.1.1</version>
+    	<classifier>embedded</classifier>
     </dependency>
   </dependencies>
 </project>

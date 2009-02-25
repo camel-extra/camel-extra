@@ -10,10 +10,11 @@ package org.apache.camel.component.esper;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.esper.client.EPRuntime;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.impl.DefaultProducer;
+
+import com.espertech.esper.client.EPRuntime;
 
 /**
  * @version $Revision: 1.1 $

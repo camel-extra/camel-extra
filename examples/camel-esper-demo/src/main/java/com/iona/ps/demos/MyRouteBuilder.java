@@ -22,7 +22,7 @@ public class MyRouteBuilder extends RouteBuilder {
 				.process(new Processor() {
 					@SuppressWarnings("unchecked")
 					public void process(Exchange arg0) throws Exception {
-						net.esper.event.MapEventBean ev = (net.esper.event.MapEventBean) arg0
+						com.espertech.esper.event.map.MapEventBean ev = (com.espertech.esper.event.map.MapEventBean) arg0
 								.getIn().getBody();
 						Map map = (Map) ev.getUnderlying();
 						System.out.println(map);

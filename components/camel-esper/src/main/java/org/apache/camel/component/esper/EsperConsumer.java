@@ -7,13 +7,14 @@
  **************************************************************************************/
 package org.apache.camel.component.esper;
 
-import net.esper.client.EPStatement;
-import net.esper.client.UpdateListener;
-import net.esper.event.EventBean;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.RuntimeExchangeException;
 import org.apache.camel.impl.DefaultConsumer;
+
+import com.espertech.esper.client.EPStatement;
+import com.espertech.esper.client.EventBean;
+import com.espertech.esper.client.UpdateListener;
 
 /**
  * @version $Revision: 1.1 $
@@ -55,4 +56,5 @@ public class EsperConsumer extends DefaultConsumer<Exchange> implements UpdateLi
 	        }
 		  }
     }
+
 }
