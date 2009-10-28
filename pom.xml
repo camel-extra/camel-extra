@@ -24,6 +24,9 @@
     <!--    <felix-version>1.2.0</felix-version>
         <spring-version>2.5.5</spring-version>
     -->
+    <commons-dbcp-version>1.2.2</commons-dbcp-version>
+    <commons-collections-version>3.2.1</commons-collections-version>
+
     <release-repo-url>scpexe://people.apache.org/www/people.apache.org/repo/m2-ibiblio-rsync-repository
     </release-repo-url>
     <site-repo-url>scpexe://people.apache.org/www/activemq.apache.org/camel/maven/</site-repo-url>

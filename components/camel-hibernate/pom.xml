@@ -69,11 +69,13 @@
     <dependency>
       <groupId>commons-dbcp</groupId>
       <artifactId>commons-dbcp</artifactId>
+      <version>${commons-dbcp-version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>commons-collections</groupId>
       <artifactId>commons-collections</artifactId>
+      <version>${commons-collections-version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
