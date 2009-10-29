@@ -20,7 +20,7 @@
   </prerequisites>
 
   <properties>
-    <camel-version>1.5.0</camel-version>
+    <camel-version>1.6.1</camel-version>
     <!--    <felix-version>1.2.0</felix-version>
         <spring-version>2.5.5</spring-version>
     -->
