@@ -5,12 +5,12 @@
   <parent>
     <groupId>org.apache.camel</groupId>
     <artifactId>camel-parent</artifactId>
-    <version>2.0-SNAPSHOT</version>
+    <version>1.6.2</version>
   </parent>
 
   <groupId>org.apache.camel.extra</groupId>
   <artifactId>camel-parent</artifactId>
-  <version>1.0</version>
+  <version>1.6.2</version>
   <packaging>pom</packaging>
   <name>Camel Extra</name>
   <description>Camel Extra Parent POM</description>
@@ -20,7 +20,7 @@
   </prerequisites>
 
   <properties>
-    <camel-version>1.6.1</camel-version>
+    <camel-version>1.6.2</camel-version>
     <!--    <felix-version>1.2.0</felix-version>
         <spring-version>2.5.5</spring-version>
     -->
@@ -241,7 +241,6 @@
 
     <pluginManagement>
       <plugins>
-
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
@@ -252,7 +251,6 @@
             <maxmem>256M</maxmem>
           </configuration>
         </plugin>
-
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-idea-plugin</artifactId>
@@ -261,8 +259,6 @@
             <downloadJavadocs>true</downloadJavadocs>
           </configuration>
         </plugin>
-
-
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-release-plugin</artifactId>
@@ -275,7 +271,22 @@
             <autoVersionSubmodules>true</autoVersionSubmodules>
           </configuration>
         </plugin>
-
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <executions>
+            <execution>
+              <id>validate</id>
+              <phase>validate</phase>
+              <configuration>
+                <failsOnError>false</failsOnError>
+              </configuration>
+              <goals>
+                <goal>checkstyle</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
       </plugins>
     </pluginManagement>
 

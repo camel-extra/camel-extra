@@ -6,13 +6,12 @@
 	<parent>
 		<groupId>org.apache.camel.extra</groupId>
 		<artifactId>camel-parent</artifactId>
-		<version>1.0</version>
+		<version>1.6.2</version>
 	</parent>
 
 	<groupId>com.iona.ps.demos</groupId>
 	<artifactId>camel-esper-demo</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0</version>
 
 	<name>Camel Extra :: Component Examples :: A Camel Esper Demo</name>
 
@@ -43,7 +42,7 @@
 		<dependency>
 			<groupId>org.apache.camel.extra</groupId>
 			<artifactId>camel-esper</artifactId>
-			<version>1.0</version>
+			<version>${camel-version}</version>
 		</dependency>
 	</dependencies>
 	<build>
