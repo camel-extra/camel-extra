@@ -16,29 +16,22 @@
  */
 package org.apache.camel.component.hibernate;
 
-import org.apache.camel.CamelContext;
-import org.apache.camel.Component;
+import java.util.Map;
+
 import org.apache.camel.Endpoint;
-import org.apache.camel.Exchange;
 import org.apache.camel.impl.DefaultComponent;
 import org.apache.camel.util.ObjectHelper;
-import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.hibernate.SessionFactory;
-
-import java.util.Map;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 
 /**
  * A Hibernate Component
  *
  * @version $Revision: 630591 $
  */
-public class HibernateComponent extends DefaultComponent<Exchange> {
+public class HibernateComponent extends DefaultComponent {
     private HibernateTemplate template;
     private SessionFactory sessionFactory;
-
-    public Component resolveComponent(CamelContext container, String uri) throws Exception {
-        return null;
-    }
 
     // Properties
     //-------------------------------------------------------------------------
@@ -67,7 +60,7 @@ public class HibernateComponent extends DefaultComponent<Exchange> {
     //-------------------------------------------------------------------------
 
     @Override
-    protected Endpoint<Exchange> createEndpoint(String uri, String path, Map options) throws Exception {
+    protected Endpoint createEndpoint(String uri, String path, Map options) throws Exception {
         HibernateEndpoint endpoint = new HibernateEndpoint(uri, this);
 
         // lets interpret the next string as a class

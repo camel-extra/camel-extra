@@ -44,7 +44,7 @@ import org.w3c.dom.Document;
  * Supports these options:
  * <ul>
  *   <li>mappingModel - filename of the smooks edimap mapping file to use</li>
- *   <li>smooksConfig - filename of the smooks configuraiton file</li>
+ *   <li>smooksConfig - filename of the smooks configuration file</li>
  * </ul>
  * Either the mappingModel or the smooksConfig options should be set. Setting the mapping model will use a default
  * smooks configuration file.

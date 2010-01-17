@@ -26,7 +26,7 @@ import org.xmldb.api.base.XMLDBException;
 /**
  * @version $Revision: 1.1 $
  */
-public class ExistPollingConsumer extends PollingConsumerSupport<Exchange> {
+public class ExistPollingConsumer extends PollingConsumerSupport {
     private ExistEndpoint endpoint;
     private ResourceIterator iterator;
 
@@ -43,8 +43,7 @@ public class ExistPollingConsumer extends PollingConsumerSupport<Exchange> {
             if (iterator.hasMoreResources()) {
                 Resource resource = iterator.nextResource();
                 return endpoint.createExchange(resource);
-            }
-            else {
+            } else {
                 iterator = null;
                 return null;
             }

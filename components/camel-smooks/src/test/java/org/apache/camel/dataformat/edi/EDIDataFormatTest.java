@@ -17,8 +17,8 @@
 package org.apache.camel.dataformat.edi;
 
 import org.apache.camel.ContextTestSupport;
-import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.mock.MockEndpoint;
 import org.w3c.dom.Document;
 
 /**
@@ -30,9 +30,9 @@ public class EDIDataFormatTest extends ContextTestSupport {
         MockEndpoint mock = getMockEndpoint("mock:unmarshal");
         mock.expectedMessageCount(1);
         mock.message(0).body().isInstanceOf(Document.class);
-        mock.message(0).bodyAs(String.class).contains("Pulp Fiction");
+        mock.message(0).body(String.class).contains("Pulp Fiction");
 
-        assertMockEndpointsSatisifed();
+        assertMockEndpointsSatisfied();
     }
 
     protected RouteBuilder createRouteBuilder() throws Exception {
@@ -41,7 +41,7 @@ public class EDIDataFormatTest extends ContextTestSupport {
                 EDIDataFormat edi = new EDIDataFormat();
                 edi.setMappingModel("edi-order-mapping.xml");
 
-                from("file://src/test/data/order.edi?noop=true").unmarshal(edi).to("mock:unmarshal");
+                from("file://src/test/data?noop=true").unmarshal(edi).to("mock:unmarshal");
             }
         };
     }

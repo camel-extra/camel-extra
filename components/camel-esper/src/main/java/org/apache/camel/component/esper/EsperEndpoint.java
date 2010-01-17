@@ -9,6 +9,11 @@ package org.apache.camel.component.esper;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import com.espertech.esper.client.EPAdministrator;
+import com.espertech.esper.client.EPRuntime;
+import com.espertech.esper.client.EPServiceProvider;
+import com.espertech.esper.client.EPStatement;
+import com.espertech.esper.client.EventBean;
 import org.apache.camel.Exchange;
 import org.apache.camel.ExchangePattern;
 import org.apache.camel.Message;
@@ -17,19 +22,12 @@ import org.apache.camel.Processor;
 import org.apache.camel.impl.DefaultEndpoint;
 import org.apache.camel.util.ObjectHelper;
 
-import com.espertech.esper.client.EPAdministrator;
-import com.espertech.esper.client.EPRuntime;
-import com.espertech.esper.client.EPServiceProvider;
-import com.espertech.esper.client.EPStatement;
-import com.espertech.esper.client.EventBean;
-import com.espertech.esper.client.EPAdministrator;
-
 /**
  * An endpoint for working with <a href="http//esper.codehaus.org/">Esper</a>
  *
  * @version $Revision: 1.1 $
  */
-public class EsperEndpoint extends DefaultEndpoint<Exchange> {
+public class EsperEndpoint extends DefaultEndpoint {
     private EsperComponent component;
     private String name;
     private boolean mapEvents;
@@ -59,7 +57,7 @@ public class EsperEndpoint extends DefaultEndpoint<Exchange> {
     }
 
     @Override
-    public PollingConsumer<Exchange> createPollingConsumer() throws Exception {
+    public PollingConsumer createPollingConsumer() throws Exception {
         EPStatement stat = getStatement();
         consumers.incrementAndGet();
         return new EsperPollingConsumer(this, statement);

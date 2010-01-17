@@ -9,13 +9,10 @@ package org.apache.camel.component.esper;
 
 import java.util.Map;
 
-
 import com.espertech.esper.client.EPRuntime;
 import com.espertech.esper.client.EPServiceProvider;
 import com.espertech.esper.client.EPServiceProviderManager;
-
 import org.apache.camel.Endpoint;
-import org.apache.camel.Exchange;
 import org.apache.camel.impl.DefaultComponent;
 
 /**
@@ -23,11 +20,11 @@ import org.apache.camel.impl.DefaultComponent;
  *
  * @version $Revision: 1.1 $
  */
-public class EsperComponent extends DefaultComponent<Exchange> {
+public class EsperComponent extends DefaultComponent {
     private EPServiceProvider esperService;
     private EPRuntime esperRuntime;
 
-    protected Endpoint<Exchange> createEndpoint(String uri, String remaining, Map parameters) throws Exception {
+    protected Endpoint createEndpoint(String uri, String remaining, Map parameters) throws Exception {
         return new EsperEndpoint(uri, this, remaining);
     }
 
@@ -57,10 +54,4 @@ public class EsperComponent extends DefaultComponent<Exchange> {
         getEsperRuntime();
     }
 
-    @Override
-    protected void doStop() throws Exception {
-        super.doStop();
-
-        // TODO anything we can do here?
-    }
 }

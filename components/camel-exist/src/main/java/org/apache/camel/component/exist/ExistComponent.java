@@ -20,7 +20,6 @@ package org.apache.camel.component.exist;
 import java.util.Map;
 
 import org.apache.camel.Endpoint;
-import org.apache.camel.Exchange;
 import org.apache.camel.impl.DefaultComponent;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.Collection;
@@ -29,18 +28,16 @@ import org.xmldb.api.base.Database;
 /**
  * @version $Revision: 1.1 $
  */
-public class ExistComponent extends DefaultComponent<Exchange> {
+public class ExistComponent extends DefaultComponent {
     private Database database;
     private String username;
     private String password;
 
-    protected Endpoint<Exchange> createEndpoint(String uri, String remaining, Map parameters) throws Exception {
-        System.out.println("Attempting to lookup collectin: " + uri);
+    protected Endpoint createEndpoint(String uri, String remaining, Map parameters) throws Exception {
         Collection collection;
         if (database != null) {
             collection = database.getCollection(remaining, username, password);
-        }
-        else {
+        } else {
             collection = DatabaseManager.getCollection(uri);
         }
         return new ExistEndpoint(uri, this, collection);

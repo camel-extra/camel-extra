@@ -7,21 +7,19 @@
  **************************************************************************************/
 package org.apache.camel.component.esper;
 
-import java.util.Iterator;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
-
-import org.apache.camel.Exchange;
-import org.apache.camel.impl.PollingConsumerSupport;
 
 import com.espertech.esper.client.EPStatement;
 import com.espertech.esper.client.EventBean;
 import com.espertech.esper.client.UpdateListener;
+import org.apache.camel.Exchange;
+import org.apache.camel.impl.PollingConsumerSupport;
 
 /**
  * @version $Revision: 1.1 $
  */
-public class EsperPollingConsumer extends PollingConsumerSupport<Exchange> implements UpdateListener {
+public class EsperPollingConsumer extends PollingConsumerSupport implements UpdateListener {
     private EsperEndpoint endpoint;
     private EPStatement statement;
     private LinkedBlockingQueue<EventBean> beanForwardQueue = new LinkedBlockingQueue<EventBean>();
@@ -75,7 +73,7 @@ public class EsperPollingConsumer extends PollingConsumerSupport<Exchange> imple
     }
 
     public Exchange receive(long timeout) {
-        EventBean bean = null;
+        EventBean bean;
         try {
             bean = beanForwardQueue.poll(timeout, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {

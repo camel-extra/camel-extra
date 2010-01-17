@@ -16,22 +16,26 @@
  */
 package org.apache.camel.component.hibernate;
 
-import org.apache.camel.*;
+import org.apache.camel.Component;
+import org.apache.camel.Consumer;
+import org.apache.camel.Exchange;
+import org.apache.camel.Expression;
+import org.apache.camel.NoTypeConversionAvailableException;
+import org.apache.camel.Processor;
+import org.apache.camel.Producer;
 import org.apache.camel.builder.ExpressionBuilder;
 import org.apache.camel.impl.ScheduledPollEndpoint;
 import org.apache.camel.util.ObjectHelper;
 import org.springframework.orm.hibernate3.HibernateTemplate;
-import org.hibernate.SessionFactory;
-import org.hibernate.impl.SessionFactoryImpl;
 
 /**
  * A Hibernate endpoint
  * 
  * @version $Revision: 655516 $
  */
-public class HibernateEndpoint extends ScheduledPollEndpoint<Exchange> {
+public class HibernateEndpoint extends ScheduledPollEndpoint {
     private HibernateTemplate template;
-    private Expression<Exchange> producerExpression;
+    private Expression producerExpression;
     private int maximumResults = -1;
     private Class<?> entityType;
     private boolean consumeDelete = true;
@@ -53,12 +57,12 @@ public class HibernateEndpoint extends ScheduledPollEndpoint<Exchange> {
         super(endpointUri);
     }
 
-    public Producer<Exchange> createProducer() throws Exception {
+    public Producer createProducer() throws Exception {
         validate();
         return new HibernateProducer(this, getProducerExpression());
     }
 
-    public Consumer<Exchange> createConsumer(Processor processor) throws Exception {
+    public Consumer createConsumer(Processor processor) throws Exception {
         validate();
         HibernateConsumer consumer = new HibernateConsumer(this, processor);
         configureConsumer(consumer);
@@ -87,14 +91,14 @@ public class HibernateEndpoint extends ScheduledPollEndpoint<Exchange> {
         this.template = template;
     }
 
-    public Expression<Exchange> getProducerExpression() {
+    public Expression getProducerExpression() {
         if (producerExpression == null) {
             producerExpression = createProducerExpression();
         }
         return producerExpression;
     }
 
-    public void setProducerExpression(Expression<Exchange> producerExpression) {
+    public void setProducerExpression(Expression producerExpression) {
         this.producerExpression = producerExpression;
     }
 
@@ -156,18 +160,18 @@ public class HibernateEndpoint extends ScheduledPollEndpoint<Exchange> {
         return DefaultTransactionStrategy.newInstance(getTemplate());
     }
 
-    protected Expression<Exchange> createProducerExpression() {
+    protected Expression createProducerExpression() {
         final Class<?> type = getEntityType();
         if (type == null) {
             return ExpressionBuilder.bodyExpression();
         } else {
-            return new Expression<Exchange>() {
-                public Object evaluate(Exchange exchange) {
+            return new Expression() {
+                public Object evaluate(Exchange exchange, Class asType) {
                     Object answer = exchange.getIn().getBody(type);
                     if (answer == null) {
                         Object defaultValue = exchange.getIn().getBody();
                         if (defaultValue != null) {
-                            throw new NoTypeConversionAvailableException(defaultValue, type);
+                            throw ObjectHelper.wrapRuntimeCamelException(new NoTypeConversionAvailableException(defaultValue, type));
                         }
 
                         // if we don't have a body then

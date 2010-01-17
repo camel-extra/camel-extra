@@ -10,16 +10,15 @@ package org.apache.camel.component.esper;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.espertech.esper.client.EPRuntime;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.impl.DefaultProducer;
 
-import com.espertech.esper.client.EPRuntime;
-
 /**
  * @version $Revision: 1.1 $
  */
-public class EsperProducer extends DefaultProducer<Exchange> {
+public class EsperProducer extends DefaultProducer {
     private EsperEndpoint endpoint;
 
     public EsperProducer(EsperEndpoint endpoint) {
@@ -27,6 +26,7 @@ public class EsperProducer extends DefaultProducer<Exchange> {
         this.endpoint = endpoint;
     }
 
+    @SuppressWarnings("unchecked")
     public void process(Exchange exchange) throws Exception {
         Message in = exchange.getIn();
         Object body = in.getBody();

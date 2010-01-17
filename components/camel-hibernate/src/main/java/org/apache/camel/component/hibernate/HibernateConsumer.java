@@ -36,7 +36,7 @@ import java.util.List;
 /**
  * @version $Revision: 630591 $
  */
-public class HibernateConsumer extends ScheduledPollConsumer<Exchange> {
+public class HibernateConsumer extends ScheduledPollConsumer {
     private static final transient Log LOG = LogFactory.getLog(HibernateConsumer.class);
     private final HibernateEndpoint endpoint;
     private final TransactionStrategy template;

@@ -42,7 +42,7 @@ public class ExistRouteTest extends ContextTestSupport {
 
         String[] expectedFoos = {"b", "d"};
 
-        assertMockEndpointsSatisifed();
+        assertMockEndpointsSatisfied();
         List<Exchange> list = endpoint.getReceivedExchanges();
         int counter = 0;
         for (Exchange exchange : list) {

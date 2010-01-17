@@ -26,7 +26,7 @@ import org.xmldb.api.modules.XMLResource;
 /**
  * @version $Revision: 1.1 $
  */
-public class ExistProducer extends DefaultProducer<Exchange> {
+public class ExistProducer extends DefaultProducer {
     private ExistEndpoint endpoint;
 
     public ExistProducer(ExistEndpoint endpoint) {
@@ -40,8 +40,7 @@ public class ExistProducer extends DefaultProducer<Exchange> {
         Object body = exchange.getIn().getBody();
         if (body instanceof Node) {
             document.setContentAsDOM((Node) body);
-        }
-        else {
+        } else {
             document.setContent(body);
         }
         collection.storeResource(document);

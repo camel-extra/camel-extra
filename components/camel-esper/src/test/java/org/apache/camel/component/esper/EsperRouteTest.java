@@ -19,17 +19,17 @@ package org.apache.camel.component.esper;
 
 import java.util.List;
 
+import com.espertech.esper.client.EventBean;
 import org.apache.camel.ContextTestSupport;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 
-import com.espertech.esper.client.EventBean;
-
 /**
  * @version $Revision: 1.1 $
  */
 public class EsperRouteTest extends ContextTestSupport {
+
     @SuppressWarnings("deprecation")
 	public void testSendMessagesIntoEsper() throws Exception {
         MockEndpoint endpoint = getMockEndpoint("mock:results");
@@ -42,7 +42,7 @@ public class EsperRouteTest extends ContextTestSupport {
 
         String[] expectedFoos = {"b", "d"};
 
-        assertMockEndpointsSatisifed();
+        assertMockEndpointsSatisfied();
         List<Exchange> list = endpoint.getReceivedExchanges();
         int counter = 0;
         for (Exchange exchange : list) {

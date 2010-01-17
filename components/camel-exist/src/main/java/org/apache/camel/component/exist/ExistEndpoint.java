@@ -33,7 +33,7 @@ import org.xmldb.api.modules.XPathQueryService;
 /**
  * @version $Revision: 1.1 $
  */
-public class ExistEndpoint extends DefaultPollingEndpoint<Exchange> {
+public class ExistEndpoint extends DefaultPollingEndpoint {
     private Collection collection;
     private String xpath;
 
@@ -51,7 +51,7 @@ public class ExistEndpoint extends DefaultPollingEndpoint<Exchange> {
     }
 
     @Override
-    public PollingConsumer<Exchange> createPollingConsumer() throws Exception {
+    public PollingConsumer createPollingConsumer() throws Exception {
         return new ExistPollingConsumer(this);
     }
 
@@ -67,8 +67,7 @@ public class ExistEndpoint extends DefaultPollingEndpoint<Exchange> {
 
             ResourceSet result = service.query(xpath);
             return result.getIterator();
-        }
-        else {
+        } else {
             ObjectHelper.notNull(xpath, "xpath");
             return null;
         }

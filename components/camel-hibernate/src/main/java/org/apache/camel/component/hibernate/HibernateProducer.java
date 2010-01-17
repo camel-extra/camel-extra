@@ -30,12 +30,12 @@ import java.util.Iterator;
 /**
  * @version $Revision: 630591 $
  */
-public class HibernateProducer extends DefaultProducer<Exchange> {
+public class HibernateProducer extends DefaultProducer {
     private final TransactionStrategy template;
     private final HibernateEndpoint endpoint;
-    private final Expression<Exchange> expression;
+    private final Expression expression;
 
-    public HibernateProducer(HibernateEndpoint endpoint, Expression<Exchange> expression) {
+    public HibernateProducer(HibernateEndpoint endpoint, Expression expression) {
         super(endpoint);
         this.endpoint = endpoint;
         this.expression = expression;
@@ -43,7 +43,7 @@ public class HibernateProducer extends DefaultProducer<Exchange> {
     }
 
     public void process(Exchange exchange) {
-        final Object values = expression.evaluate(exchange);
+        final Object values = expression.evaluate(exchange, Object.class);
         if (values != null) {
             template.execute(new HibernateCallback() {
                 public Object doInHibernate(Session session) throws HibernateException, SQLException {
