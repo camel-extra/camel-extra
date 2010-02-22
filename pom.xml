@@ -5,12 +5,12 @@
   <parent>
     <groupId>org.apache.camel</groupId>
     <artifactId>camel-parent</artifactId>
-    <version>2.1.0</version>
+    <version>2.2.0</version>
   </parent>
 
   <groupId>org.apache.camel.extra</groupId>
   <artifactId>camel-parent</artifactId>
-  <version>2.1.0</version>
+  <version>2.2.0</version>
   <packaging>pom</packaging>
   <name>Camel Extra</name>
   <description>Camel Extra Parent POM</description>
@@ -20,7 +20,7 @@
   </prerequisites>
 
   <properties>
-    <camel-version>2.1.0</camel-version>
+    <camel-version>2.2.0</camel-version>
     <!--    <felix-version>1.2.0</felix-version>
         <spring-version>2.5.5</spring-version>
     -->
@@ -93,9 +93,9 @@
       </releases>
     </repository>
     <repository>
-      <id>open.iona.m2-all</id>
-      <name>IONA Open Source Community Dependency Repository</name>
-      <url>http://repo.open.iona.com/maven2-all</url>
+	  <id>fusesource.m2-all</id>
+      <name>Fusesource Dependency Repository</name>
+      <url>http://repo.fusesource.com/maven2-all</url>
       <snapshots>
         <enabled>true</enabled>
       </snapshots>
@@ -130,9 +130,9 @@
       <url>http://repository.codehaus.org/</url>
     </pluginRepository>
     <pluginRepository>
-      <id>open.iona.m2-all</id>
-      <name>IONA Open Source Community Dependency Repository</name>
-      <url>http://repo.open.iona.com/maven2-all</url>
+      <id>fusesource.m2-all</id>
+      <name>Fusesource Dependency Repository</name>
+      <url>http://repo.fusesource.com/maven2-all</url>
       <snapshots>
         <enabled>true</enabled>
       </snapshots>
@@ -198,7 +198,7 @@
       <dependency>
         <groupId>log4j</groupId>
         <artifactId>log4j</artifactId>
-        <version>1.2.12</version>
+        <version>1.2.14</version>
       </dependency>
 
       <dependency>
@@ -206,7 +206,6 @@
         <artifactId>spring-test</artifactId>
         <version>${spring-version}</version>
       </dependency>
-
 
       <dependency>
         <groupId>junit</groupId>
