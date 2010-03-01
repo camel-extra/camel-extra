@@ -66,7 +66,14 @@ public class JBossPackageScanClassResolver extends DefaultPackageScanClassResolv
         public void visit(VirtualFile file) {
             if (file.getName().endsWith(".class")) {
                 String fqn = file.getPathName();
-                addIfMatching(filter, fqn.substring(fqn.indexOf("/") + 1), classes);
+                String qn;
+                if (fqn.indexOf("jar/") != -1) {
+                    qn = fqn.substring(fqn.indexOf("jar/") + 4);
+                } else {
+                    qn = fqn.substring(fqn.indexOf("/") + 1);
+                }
+
+                addIfMatching(filter, qn, classes);
             }
         }
     }
