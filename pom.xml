@@ -5,12 +5,12 @@
   <parent>
     <groupId>org.apache.camel</groupId>
     <artifactId>camel-parent</artifactId>
-    <version>2.3.0</version>
+    <version>2.4-SNAPSHOT</version>
   </parent>
 
   <groupId>org.apache.camel.extra</groupId>
   <artifactId>camel-parent</artifactId>
-  <version>2.3.0</version>
+  <version>2.4-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Camel Extra</name>
   <description>Camel Extra Parent POM</description>
@@ -20,7 +20,7 @@
   </prerequisites>
 
   <properties>
-    <camel-version>2.3.0</camel-version>
+    <camel-version>2.4-SNAPSHOT</camel-version>
     <!--    <felix-version>1.2.0</felix-version>
         <spring-version>2.5.5</spring-version>
     -->
@@ -79,6 +79,17 @@
   </mailingLists>
 
   <repositories>
+    <repository>
+      <id>apache.content.snapshots</id>
+      <name>Apache Development Snapshot Repository</name>
+      <url>https://repository.apache.org/content/repositories/snapshots/</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
     <repository>
       <id>apache.incubating.releases</id>
       <name>Apache Incubating Release Distribution Repository</name>
