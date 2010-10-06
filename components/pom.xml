@@ -20,6 +20,7 @@
     <module>camel-smooks</module>
     <!--<module>camel-vtdxml</module>-->
     <module>camel-jboss</module>
+    <module>camel-db4o</module>
   </modules>
 
 </project>
