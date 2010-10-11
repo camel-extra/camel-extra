@@ -11,7 +11,7 @@
 
     <artifactId>camel-smooks</artifactId>
     <packaging>bundle</packaging>
-    <name>Camel :: Smoks</name>
+    <name>Camel :: Smooks</name>
     <description>Camel Smooks support</description>
 
     <properties>
