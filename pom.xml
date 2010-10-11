@@ -114,6 +114,11 @@
         <enabled>true</enabled>
       </releases>
     </repository>
+    <repository>
+      <id>camel.extra.others</id>
+      <name>Camel Extra - 3rd parties dependencies</name>
+      <url>http://camel-extra.googlecode.com/svn/maven2/others</url>
+    </repository>
   </repositories>
 
   <pluginRepositories>
