@@ -58,4 +58,12 @@ public class EntityBeanManager {
     }
 
 
+    public void setTemplate(HibernateTemplate template) {
+        this.template = template;
+    }
+
+    public void setEntityType(Class entityType) {
+        this.entityType = entityType;
+    }
+
 }
