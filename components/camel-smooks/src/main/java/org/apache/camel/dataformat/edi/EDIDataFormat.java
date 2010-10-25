@@ -48,7 +48,11 @@ import org.w3c.dom.Document;
  * </ul>
  * Either the mappingModel or the smooksConfig options should be set. Setting the mapping model will use a default
  * smooks configuration file.
+ *
+ * @deprecated Smooks component will be removed from Camel. Please use official Camel support from
+ * Smooks - http://blog.smooks.org/2010/09/23/smooks-camel-integration-revisited
  */
+@Deprecated
 public class EDIDataFormat implements DataFormat {
 
     private String mappingModel;
