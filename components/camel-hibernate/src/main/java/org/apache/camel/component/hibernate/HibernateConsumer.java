@@ -52,7 +52,7 @@ public class HibernateConsumer extends ScheduledPollConsumer {
         this.template = endpoint.createTransactionStrategy();
     }
 
-    protected void poll() throws Exception {
+    protected int poll() throws Exception {
         template.execute(new HibernateCallback() {
             public Object doInHibernate(Session session) throws HibernateException, SQLException {
                 Query query = getQueryFactory().createQuery(session);
@@ -72,9 +72,10 @@ public class HibernateConsumer extends ScheduledPollConsumer {
                     }
                 }
                 session.flush();
-                return null;
+                return results.size();
             }
         });
+        return 0;
     }
 
     protected void processResult(Object result) {

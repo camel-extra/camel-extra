@@ -20,6 +20,8 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.impl.ScheduledPollConsumer;
 
+import java.util.Collection;
+
 public class Db4oConsumer extends ScheduledPollConsumer {
 
     private final Db4oEndpoint endpoint;
@@ -31,15 +33,17 @@ public class Db4oConsumer extends ScheduledPollConsumer {
 
     @Override
     @SuppressWarnings("unchecked")
-    protected void poll() throws Exception {
+    protected int poll() throws Exception {
         try {
-            for (Object polledInstance : endpoint.getObjectContainer().query(endpoint.getStoredClass())) {
+            Collection polledInstances = endpoint.getObjectContainer().query(endpoint.getStoredClass());
+            for (Object polledInstance : polledInstances) {
                 getProcessor().process(createExchange(polledInstance));
                 if (endpoint.isConsumeDelete()) {
                     endpoint.getObjectContainer().delete(polledInstance);
                     endpoint.getObjectContainer().commit();
                 }
             }
+            return polledInstances.size();
         } catch (Exception e) {
             endpoint.getObjectContainer().rollback();
             throw e;
