@@ -23,8 +23,8 @@ import org.apache.camel.Exchange;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.examples.SendEmail;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit38.AbstractJUnit38SpringContextTests;
@@ -36,7 +36,7 @@ import java.util.List;
  */
 @ContextConfiguration
 public class HibernateSpringTest extends AbstractJUnit38SpringContextTests {
-    private static final transient Log LOG = LogFactory.getLog(HibernateSpringTest.class);
+    private static final transient Logger LOG = LoggerFactory.getLogger(HibernateSpringTest.class);
 
     @EndpointInject(uri = "mock:result")
     protected MockEndpoint resultEndpoint;

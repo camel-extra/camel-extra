@@ -12,12 +12,12 @@ import javax.jms.Session;
 
 import org.apache.activemq.ActiveMQConnection;
 import org.apache.activemq.ActiveMQConnectionFactory;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MarketDataSendRunnable implements Runnable
 {
-    private static final Log log = LogFactory.getLog(MarketDataSendRunnable.class);
+    private static final Logger log = LoggerFactory.getLogger(MarketDataSendRunnable.class);
 
     private volatile FeedEnum rateDropOffFeed;
     private volatile boolean isShutdown;

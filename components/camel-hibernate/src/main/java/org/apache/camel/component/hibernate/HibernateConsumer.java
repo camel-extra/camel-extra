@@ -21,12 +21,12 @@ import org.apache.camel.Processor;
 import org.apache.camel.impl.ScheduledPollConsumer;
 import org.apache.camel.util.ObjectHelper;
 import org.apache.camel.RuntimeCamelException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.hibernate.HibernateException;
 import org.hibernate.LockMode;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.orm.hibernate3.HibernateCallback;
 
 import java.lang.reflect.Method;
@@ -37,7 +37,7 @@ import java.util.List;
  * @version $Revision: 630591 $
  */
 public class HibernateConsumer extends ScheduledPollConsumer {
-    private static final transient Log LOG = LogFactory.getLog(HibernateConsumer.class);
+    private static final transient Logger LOG = LoggerFactory.getLogger(HibernateConsumer.class);
     private final HibernateEndpoint endpoint;
     private final TransactionStrategy template;
     private QueryFactory queryFactory;

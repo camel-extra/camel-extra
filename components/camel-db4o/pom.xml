@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.apache.camel.extra</groupId>
         <artifactId>components</artifactId>
-        <version>2.6.0</version>
+        <version>2.7-SNAPSHOT</version>
     </parent>
 
     <artifactId>camel-db4o</artifactId>
@@ -41,6 +41,11 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-simple</artifactId>
+          <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>
