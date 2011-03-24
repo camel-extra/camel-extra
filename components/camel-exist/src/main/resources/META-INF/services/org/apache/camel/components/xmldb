@@ -15,4 +15,4 @@
 # limitations under the License.
 #
 
-class=org.apache.camel.component.exist.ExistComponent
+class=org.apachextras.camel.component.exist.ExistComponent

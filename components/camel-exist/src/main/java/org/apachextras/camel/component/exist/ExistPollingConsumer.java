@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.camel.component.exist;
+package org.apachextras.camel.component.exist;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.impl.PollingConsumerSupport;
