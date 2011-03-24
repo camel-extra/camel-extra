@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.camel.component.db4o;
+package org.apachextras.camel.component.db4o;
 
 import org.apache.camel.EndpointInject;
 import org.apache.camel.ProducerTemplate;

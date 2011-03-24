@@ -21,17 +21,17 @@
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
-    <bean id="db4o" class="org.apache.camel.component.db4o.Db4oComponent">
+    <bean id="db4o" class="org.apachextras.camel.component.db4o.Db4oComponent">
         <property name="objectContainer" ref="objectContainer"/>
     </bean>
 
-    <bean id="objectContainer" class="org.apache.camel.component.db4o.TestObjectContainerFactoryBean"/>
+    <bean id="objectContainer" class="org.apachextras.camel.component.db4o.TestObjectContainerFactoryBean"/>
 
     <camelContext xmlns="http://camel.apache.org/schema/spring">
-        <template id="template" defaultEndpoint="db4o://org.apache.camel.component.db4o.PersonToStore"/>
+        <template id="template" defaultEndpoint="db4o://org.apachextras.camel.component.db4o.PersonToStore"/>
 
         <route>
-            <from uri="db4o://org.apache.camel.component.db4o.PersonToStore"/>
+            <from uri="db4o://org.apachextras.camel.component.db4o.PersonToStore"/>
             <to uri="mock:result"/>
         </route>
 

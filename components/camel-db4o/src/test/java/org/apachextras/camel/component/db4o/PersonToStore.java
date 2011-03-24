@@ -14,34 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.camel.component.db4o;
-
-import java.util.Map;
-
-import com.db4o.ObjectContainer;
-import org.apache.camel.Endpoint;
-import org.apache.camel.impl.DefaultComponent;
-import org.apache.camel.util.ObjectHelper;
+package org.apachextras.camel.component.db4o;
 
 /**
  * @version $Revision$
  */
-public class Db4oComponent extends DefaultComponent {
+public class PersonToStore {
 
-    private ObjectContainer objectContainer;
+    public String name;
 
-    @Override
-    protected Endpoint createEndpoint(String uri, String path, Map options) throws Exception {
-        Db4oEndpoint endpoint = new Db4oEndpoint(uri, ObjectHelper.loadClass(path), this);
-        return endpoint;
-    }
-
-    public ObjectContainer getObjectContainer() {
-        return objectContainer;
-    }
-
-    public void setObjectContainer(ObjectContainer objectContainer) {
-        this.objectContainer = objectContainer;
+    public PersonToStore(String name) {
+        this.name = name;
     }
 
 }

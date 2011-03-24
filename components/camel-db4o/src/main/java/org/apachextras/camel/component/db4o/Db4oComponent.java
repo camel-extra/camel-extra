@@ -14,34 +14,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.camel.component.db4o;
+package org.apachextras.camel.component.db4o;
 
-import org.apache.camel.Exchange;
-import org.apache.camel.impl.DefaultProducer;
+import java.util.Map;
+
+import com.db4o.ObjectContainer;
+import org.apache.camel.Endpoint;
+import org.apache.camel.impl.DefaultComponent;
 import org.apache.camel.util.ObjectHelper;
 
 /**
  * @version $Revision$
  */
-public class Db4oProducer extends DefaultProducer {
+public class Db4oComponent extends DefaultComponent {
 
-    private final Db4oEndpoint endpoint;
+    private ObjectContainer objectContainer;
 
-    public Db4oProducer(Db4oEndpoint endpoint) {
-        super(endpoint);
-        this.endpoint = endpoint;
+    @Override
+    protected Endpoint createEndpoint(String uri, String path, Map options) throws Exception {
+        Db4oEndpoint endpoint = new Db4oEndpoint(uri, ObjectHelper.loadClass(path), this);
+        return endpoint;
     }
 
-    public void process(Exchange exchange) {
-        Object msgObject = exchange.getIn().getBody();
-        ObjectHelper.isAssignableFrom(msgObject.getClass(), this.endpoint.getStoredClass());
-        try {
-            endpoint.getObjectContainer().store(msgObject);
-            endpoint.getObjectContainer().commit();
-        } catch (Exception e) {
-            endpoint.getObjectContainer().rollback();
-            throw new RuntimeException(e);
-        }
+    public ObjectContainer getObjectContainer() {
+        return objectContainer;
+    }
+
+    public void setObjectContainer(ObjectContainer objectContainer) {
+        this.objectContainer = objectContainer;
     }
 
 }
