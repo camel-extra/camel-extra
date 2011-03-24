@@ -15,4 +15,4 @@
 # limitations under the License.
 #
 
-class=org.apache.camel.component.db4o.Db4oComponent
+class=org.apachextras.camel.component.db4o.Db4oComponent
