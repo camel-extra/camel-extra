@@ -1,4 +1,4 @@
-package org.apache.camel.jboss;
+package org.apachextras.camel.jboss;
 
 import java.io.IOException;
 import java.net.URL;
