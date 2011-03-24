@@ -5,7 +5,7 @@
  * The software in this package is published under the terms of the GPL license       *
  * a copy of which has been included with this distribution in the license.txt file.  *
  **************************************************************************************/
-package org.apache.camel.component.esper;
+package org.apachextras.camel.component.esper;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

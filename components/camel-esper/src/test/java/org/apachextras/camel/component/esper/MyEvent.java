@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.camel.component.esper;
+package org.apachextras.camel.component.esper;
 
 /**
  * @version $Revision: 1.1 $

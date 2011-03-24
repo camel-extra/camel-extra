@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.camel.component.esper;
+package org.apachextras.camel.component.esper;
 
 import java.util.List;
 
@@ -62,7 +62,7 @@ public class EsperRouteTest extends ContextTestSupport {
             public void configure() throws Exception {
                 from("direct:start").to("esper://cheese");
 
-                from("esper://cheese?pattern=every event=org.apache.camel.component.esper.MyEvent(bar=5)").to("mock:results");
+                from("esper://cheese?pattern=every event=org.apachextras.camel.component.esper.MyEvent(bar=5)").to("mock:results");
             }
         };
     }
