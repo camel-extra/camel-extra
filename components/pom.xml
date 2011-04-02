@@ -18,7 +18,6 @@
     <module>camel-esper</module>
     <module>camel-exist</module>
     <module>camel-hibernate</module>
-    <module>camel-smooks</module>
     <module>camel-jboss6</module>
     <module>camel-jboss</module>
     <module>camel-db4o</module>
