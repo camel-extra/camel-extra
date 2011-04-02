@@ -21,9 +21,6 @@
 
   <properties>
     <camel-version>2.8-SNAPSHOT</camel-version>
-    <!--    <felix-version>1.2.0</felix-version>
-        <spring-version>2.5.5</spring-version>
-    -->
     <commons-dbcp-version>1.2.2</commons-dbcp-version>
     <commons-collections-version>3.2.1</commons-collections-version>
 
@@ -59,21 +56,21 @@
   <mailingLists>
     <mailingList>
       <name>Development List</name>
-      <subscribe>camel-dev@activemq.apache.org</subscribe>
-      <unsubscribe>camel-dev@activemq.apache.org</unsubscribe>
-      <post>camel-dev@activemq.apache.org</post>
+      <subscribe>dev-subscribe@camel.apache.org</subscribe>
+      <unsubscribe>dev-unsubscribe@camel.apache.org</unsubscribe>
+      <post>dev@camel.apache.org</post>
     </mailingList>
     <mailingList>
       <name>User List</name>
-      <subscribe>camel-user@activemq.apache.org</subscribe>
-      <unsubscribe>camel-user@activemq.apache.org</unsubscribe>
-      <post>camel-user@activemq.apache.org</post>
+      <subscribe>users-subscribe@camel.apache.org</subscribe>
+      <unsubscribe>users-unsubscribe@camel.apache.org</unsubscribe>
+      <post>users@camel.apache.org</post>
     </mailingList>
     <mailingList>
       <name>Commits List</name>
-      <subscribe>camel-commits@activemq.apache.org</subscribe>
-      <unsubscribe>camel-commits@activemq.apache.org</unsubscribe>
-      <post>camel-commits@activemq.apache.org</post>
+      <subscribe>commits-subscribe@camel.apache.org</subscribe>
+      <unsubscribe>commits-unsubscribe@camel.apache.org</unsubscribe>
+      <post>commits@camel.apache.org</post>
     </mailingList>
   </mailingLists>
 
@@ -88,11 +85,6 @@
       <snapshots>
         <enabled>true</enabled>
       </snapshots>
-    </repository>
-    <repository>
-      <id>apache.incubating.releases</id>
-      <name>Apache Incubating Release Distribution Repository</name>
-      <url>http://people.apache.org/repo/m2-incubating-repository</url>
     </repository>
     <repository>
       <id>apache.snapshots</id>
@@ -121,11 +113,6 @@
   </repositories>
 
   <pluginRepositories>
-    <pluginRepository>
-      <id>apache.incubating.releases</id>
-      <name>Apache Incubating Release Distribution Repository</name>
-      <url>http://people.apache.org/repo/m2-incubating-repository</url>
-    </pluginRepository>
     <pluginRepository>
       <id>apache.snapshots</id>
       <name>Apache Development Snapshot Repository</name>
@@ -212,17 +199,6 @@
         <version>${spring-version}</version>
       </dependency>
       <dependency>
-        <groupId>org.testng</groupId>
-        <artifactId>testng</artifactId>
-        <version>5.7</version>
-        <classifier>jdk15</classifier>
-      </dependency>
-      <dependency>
-        <groupId>org.hamcrest</groupId>
-        <artifactId>hamcrest-library</artifactId>
-        <version>1.1</version>
-      </dependency>
-      <dependency>
         <groupId>org.easymock</groupId>
         <artifactId>easymockclassextension</artifactId>
         <version>2.2.1</version>
@@ -238,19 +214,11 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>2.0.2</version>
+          <version>2.3.2</version>
           <configuration>
             <source>1.6</source>
             <target>1.6</target>
             <maxmem>256M</maxmem>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-idea-plugin</artifactId>
-          <configuration>
-            <downloadSources>true</downloadSources>
-            <downloadJavadocs>true</downloadJavadocs>
           </configuration>
         </plugin>
         <plugin>
@@ -304,4 +272,5 @@
       </plugin>
     </plugins>
   </build>
+
 </project>
