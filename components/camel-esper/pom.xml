@@ -28,7 +28,7 @@
   </licenses>
 
   <properties>
-    <camel.osgi.export.pkg>org.apache.camel.component.esper*</camel.osgi.export.pkg>
+    <camel.osgi.export.pkg>org.apachextras.camel.component.esper*</camel.osgi.export.pkg>
   </properties>
 
   <dependencies>

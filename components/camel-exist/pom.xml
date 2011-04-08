@@ -15,7 +15,7 @@
   <description>Camel Exist support</description>
 
   <properties>
-    <camel.osgi.export.pkg>org.apache.camel.component.exist*</camel.osgi.export.pkg>
+    <camel.osgi.export.pkg>org.apachextras.camel.component.exist*</camel.osgi.export.pkg>
   </properties>
 
   <dependencies>
