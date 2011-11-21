@@ -36,7 +36,7 @@
 		<dependency>
 			<groupId>org.jboss</groupId>
 			<artifactId>jboss-vfs</artifactId>
-			<version>2.2.0.GA</version>
+			<version>2.2.0.SP1</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>

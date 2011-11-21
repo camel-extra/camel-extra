@@ -1,6 +1,8 @@
 package org.apachextras.camel.jboss;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.Set;
@@ -54,6 +56,8 @@ public class JBossPackageScanClassResolver extends DefaultPackageScanClassResolv
     }
 
     private class MatchingClassVisitor extends AbstractVirtualFileVisitor {
+        private static final String PREFIX_JAR = "jar/";
+        private static final String PREFIX_CLASSES = "classes/";
         private PackageScanFilter filter;
         private Set<Class<?>> classes;
 
@@ -65,14 +69,33 @@ public class JBossPackageScanClassResolver extends DefaultPackageScanClassResolv
 
         public void visit(VirtualFile file) {
             if (file.getName().endsWith(".class")) {
-                String fqn = file.getPathName();
+                String pathName = null;
+                try {
+                    pathName = file.toURI().toString();
+                    // vfszip:/C:/prj/bin/jboss-5.0.0.GA/server/default/deploy/fpu.war/WEB-INF/lib/camel-ftp-2.4.0.jar/org/apache/camel/component/file/remote/FtpComponent.class
+                } catch (MalformedURLException e) {
+                    if (log.isWarnEnabled()) {
+                        log.warn("Error while trying resolving uri for resource " + file.getName()
+                        + "\nContinuing resource resolving throug simple name.", e);
+                    }
+                    pathName = file.getPathName();
+                } catch (URISyntaxException e) {
+                    if (log.isWarnEnabled()) {
+                        log.warn("Error while trying resolving uri for resource " + file.getName()
+                        + "\nContinuing resource resolving throug simple name.", e);
+                    }
+                    pathName = file.getPathName();
+                }
+
+                String fqn = pathName;
                 String qn;
-                if (fqn.indexOf("jar/") != -1) {
-                    qn = fqn.substring(fqn.indexOf("jar/") + 4);
+                if (fqn.indexOf(PREFIX_JAR) != -1) {
+                    qn = fqn.substring(fqn.indexOf(PREFIX_JAR) + PREFIX_JAR.length());
+                } else if (fqn.indexOf(PREFIX_CLASSES) != -1) {
+                    qn = fqn.substring(fqn.indexOf(PREFIX_CLASSES) + PREFIX_CLASSES.length());
                 } else {
                     qn = fqn.substring(fqn.indexOf("/") + 1);
                 }
-
                 addIfMatching(filter, qn, classes);
             }
         }
