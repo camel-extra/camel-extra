@@ -10,7 +10,7 @@
 
   <groupId>org.apache.camel.extra</groupId>
   <artifactId>camel-parent</artifactId>
-  <version>2.6.1</version>
+  <version>2.6.2-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Camel Extra</name>
   <description>Camel Extra Parent POM</description>
@@ -173,9 +173,9 @@
   </distributionManagement>
 
   <scm>
-    <connection>scm:svn:http://svn.codespot.com/a/apache-extras.org/camel-extra/tags/camel-extra</connection>
-    <developerConnection>scm:svn:https://svn.codespot.com/a/apache-extras.org/camel-extra/tags/camel-extra</developerConnection>
-    <url>http://svn.codespot.com/a/apache-extras.org/camel-extra/tags/camel-extra</url>
+    <connection>scm:svn:http://svn.codespot.com/a/apache-extras.org/camel-extra/branches/2.6.x</connection>
+    <developerConnection>scm:svn:https://svn.codespot.com/a/apache-extras.org/camel-extra/branches/2.6.x</developerConnection>
+    <url>http://svn.codespot.com/a/apache-extras.org/camel-extra/branches/2.6.x</url>
   </scm>
 
   <modules>
