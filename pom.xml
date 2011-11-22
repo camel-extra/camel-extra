@@ -95,17 +95,6 @@
       </releases>
     </repository>
     <repository>
-	  <id>fusesource.m2-all</id>
-      <name>Fusesource Dependency Repository</name>
-      <url>http://repo.fusesource.com/maven2-all</url>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-    </repository>
-    <repository>
       <id>camel.extra.others</id>
       <name>Camel Extra - 3rd parties dependencies</name>
       <url>http://camel-extra.googlecode.com/svn/maven2/others</url>
@@ -122,25 +111,9 @@
       </releases>
     </pluginRepository>
     <pluginRepository>
-      <id>maven2-repository.dev.java.net</id>
-      <name>Java.net Repository for Maven</name>
-      <url>http://download.java.net/maven/2</url>
-    </pluginRepository>
-    <pluginRepository>
       <id>codehaus.repo</id>
       <name>Codehaus Repository</name>
       <url>http://repository.codehaus.org/</url>
-    </pluginRepository>
-    <pluginRepository>
-      <id>fusesource.m2-all</id>
-      <name>Fusesource Dependency Repository</name>
-      <url>http://repo.fusesource.com/maven2-all</url>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
     </pluginRepository>
   </pluginRepositories>
 
