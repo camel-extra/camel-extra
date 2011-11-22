@@ -10,7 +10,7 @@
 
   <groupId>org.apache.camel.extra</groupId>
   <artifactId>camel-parent</artifactId>
-  <version>2.6.x-SNAPSHOT</version>
+  <version>2.6.1-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Camel Extra</name>
   <description>Camel Extra Parent POM</description>
