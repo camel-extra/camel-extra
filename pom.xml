@@ -148,20 +148,20 @@
     <repository>
       <id>camel-extra-release</id>
       <name>Camel Extra Maven repository of releases</name>
-      <url>dav:https://camel-extra.googlecode.com/svn/maven2/releases</url>
+      <url>dav:https://svn.codespot.com/a/apache-extras.org/camel-extra/maven2/releases</url>
     </repository>
     <snapshotRepository>
       <id>camel-extra-snapshot</id>
       <name>Camel Extra Maven repository of snapshots</name>
-      <url>dav:https://camel-extra.googlecode.com/svn/maven2/snapshots</url>
+      <url>dav:https://svn.codespot.com/a/apache-extras.org/camel-extra/maven2/snapshots</url>
       <uniqueVersion>false</uniqueVersion>
     </snapshotRepository>
   </distributionManagement>
 
   <scm>
-    <connection>scm:svn:http://camel-extra.googlecode.com/svn/tags/camel-parent-1.0</connection>
-    <developerConnection>scm:svn:https://camel-extra.googlecode.com/svn/tags/camel-parent-1.0</developerConnection>
-    <url>http://camel-extra.googlecode.com/svn/tags/camel-parent-1.0</url>
+    <connection>scm:svn:http://svn.codespot.com/a/apache-extras.org/camel-extra/trunk</connection>
+    <developerConnection>scm:svn:https://svn.codespot.com/a/apache-extras.org/camel-extra/trunk</developerConnection>
+    <url>http://svn.codespot.com/a/apache-extras.org/camel-extra/trunk</url>
   </scm>
 
   <modules>
@@ -225,7 +225,7 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-release-plugin</artifactId>
           <configuration>
-            <tagBase>https://camel-extra.googlecode.com/svn/tags</tagBase>
+            <tagBase>https://svn.codespot.com/a/apache-extras.org/camel-extra/tags/</tagBase>
             <useReleaseProfile>false</useReleaseProfile>
             <preparationGoals>clean install</preparationGoals>
             <goals>deploy</goals>
