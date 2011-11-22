@@ -42,7 +42,7 @@
 		<dependency>
 			<groupId>org.apache.camel.extra</groupId>
 			<artifactId>camel-esper</artifactId>
-			<version>${camel-version}</version>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 	<build>
