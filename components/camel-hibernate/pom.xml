@@ -5,7 +5,7 @@
   <parent>
       <groupId>org.apache-extras.camel-extra</groupId>
       <artifactId>components</artifactId>
-      <version>2.9-SNAPSHOT</version>
+      <version>2.9.0</version>
       <relativePath>..</relativePath>
   </parent>
 
@@ -50,12 +50,12 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-test</artifactId>
-      <!--<version>${spring-version}</version>-->
       <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>hsqldb</groupId>
+      <groupId>org.hsqldb</groupId>
       <artifactId>hsqldb</artifactId>
+      <version>${hsqldb-version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -77,7 +77,7 @@
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-simple</artifactId>
+      <artifactId>slf4j-log4j12</artifactId>
       <scope>test</scope>
     </dependency>
     <dependency>
