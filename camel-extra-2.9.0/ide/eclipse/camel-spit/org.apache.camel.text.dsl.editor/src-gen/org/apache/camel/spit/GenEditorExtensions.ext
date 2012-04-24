@@ -1,8 +1,0 @@
-String label(emf::EObject this) :
-	metaType.getProperty("name")!=null && 
-	String.isAssignableFrom(metaType.getProperty("name").returnType) ? 
-		metaType.getProperty("name").get(this) : 
-		"<unnamed>";
-			
-String image(emf::EObject this) :
-	"default.gif";
