@@ -1,0 +1,43 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.apache-extras.camel-extra</groupId>
+        <artifactId>components</artifactId>
+        <version>2.9.0</version>
+        <relativePath>..</relativePath>
+    </parent>
+
+    <artifactId>camel-jboss6</artifactId>
+    <packaging>bundle</packaging>
+    <name>Camel :: JBoss 6.x</name>
+    <description>Camel JBoss 6.x support</description>
+
+    <properties>
+        <camel.osgi.export.pkg>org.apachextras.camel.jboss</camel.osgi.export.pkg>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>jboss</id>
+            <url>http://repository.jboss.org/nexus/content/groups/public-jboss/</url>
+        </repository>
+    </repositories>
+
+  	<dependencies>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-core</artifactId>
+			<version>${camel-version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jboss</groupId>
+			<artifactId>jboss-vfs</artifactId>
+			<version>3.0.0.GA</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
+
+</project>

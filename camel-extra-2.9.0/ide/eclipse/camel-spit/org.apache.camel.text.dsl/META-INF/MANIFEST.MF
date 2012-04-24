@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: spit Plug-in
+Bundle-SymbolicName: org.apache.camel.text.dsl;singleton:=true
+Bundle-Version: 1.0.0
+Require-Bundle: org.openarchitectureware.dependencies;visibility:=reexport,
+ org.antlr;visibility:=reexport,
+ org.openarchitectureware.xtext.core.base;visibility:=reexport,
+ org.openarchitectureware.xtext.generator
+Eclipse-LazyStart: true
+Export-Package: org.apache.camel.spit,
+                org.apache.camel.spit.parser
+

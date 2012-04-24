@@ -1,0 +1,10 @@
+import spit;
+
+extension org::apache::camel::spit::Extensions;
+extension org::apache::camel::spit::GenNavigation reexport;
+/*
+ * overwrite the extensions
+ * ''emf::EObject findDeclaration(String,Object,Object)''
+ * ''List[emf::EObject] findReferences(String,Object,Object)''
+ * from org::apache::camel::spit::GenNavigation.ext to control the construction of the findReferences / findDeclaration actions
+ */

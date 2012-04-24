@@ -1,0 +1,20 @@
+
+route SplitterTest from 'uri:someEndpoint' {
+    splitter xpath('/woot') {
+    	to 'uri:anotherEndpoint'
+    }
+}
+
+  
+route FilterTest from 'mock:wibble' {
+    filter xpath("/book[@category!='CHILDREN]'") {  
+         choice {
+             when xpath('/book[price<=30]') {
+                 to 'uri:cheapie'
+             }
+             when xpath('/book[price>30]') {
+                 to 'uri:expensivo'
+             }
+         }         
+    }
+}

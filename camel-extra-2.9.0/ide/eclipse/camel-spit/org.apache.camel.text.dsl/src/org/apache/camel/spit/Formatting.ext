@@ -1,0 +1,14 @@
+import spit;
+
+extension org::apache::camel::spit::Extensions;
+extension org::apache::camel::spit::GenFormatting;
+
+/*
+ * This file is intended to define the standard serialization
+ * for resources. By default, the resource implementation throws
+ * an exception if doSave() is called.
+ *
+ * To implement serialization, override the 
+ *   String format(List[emf::EObject] this)
+ * function for your metamodel classes.   
+ */

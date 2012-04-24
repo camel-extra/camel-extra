@@ -1,0 +1,18 @@
+import spit;
+
+extension org::openarchitectureware::xtext::parser::LinkerUtils;
+
+extension org::apache::camel::spit::Extensions;
+
+/* TODO: how do I actually override the  GenChecks.chk elements??? */
+
+context GlobalInterceptorDecl ERROR "Interceptor '"+this.parsedString("interceptorName")+"' has not been defined" :
+	this.parsedString("interceptorName")!=null ? interceptorName!=null : true;
+
+context Interceptors ERROR "Interceptor '"+this.parsedString("interceptorName")+"' has not been defined" :
+	interceptorName.size==this.parsed("interceptorName").size;
+
+context Import if location!=null ERROR "Couldn't resolve referenced artifact '"+location+"'" :
+	!location().isEmpty;
+
+	
