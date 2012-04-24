@@ -1,0 +1,9 @@
+import spit;
+
+extension org::apache::camel::spit::Extensions;
+extension org::apache::camel::spit::GenLinking reexport;
+
+/*
+ * If you need more sophisticated linking semantic just overwrite the linking extensions here and add your own logic.
+ * Have a look at the generated org::apache::camel::spit::GenLinking (typically located in src-gen)
+ */

@@ -1,0 +1,44 @@
+
+import spit;
+import tree;
+
+extension org::apache::camel::spit::EditorExtensions;
+
+extension org::openarchitectureware::xtext::parser::LinkerUtils;
+
+/*
+ * finds the declaration for the given element
+ * the string is the hyperlinked identifier
+ */
+emf::EObject findDeclaration(String s, Object grammarelement, Object element) : null;
+
+findDeclaration(String s,xtext::Assignment ass, GlobalInterceptorDecl ele) :
+	switch (ass.feature) {
+       case "interceptorName" : ele.interceptorName
+		default : null
+	};
+findDeclaration(String s,xtext::Assignment ass, Interceptors ele) :
+	switch (ass.feature) {
+       case "interceptorName" : ele.interceptorName.select(e|(e != null) && (e.id()==s)).first()
+		default : null
+	};
+/*
+ * finds the declaration for the given element
+ * the string is the hyperlinked identifier
+ */
+List[UIContentNode] findReferences(String s, Object grammarelement, Object element) : null;
+
+
+private cached List[emf::EObject] el() : {};
+List[UIContentNode] findReferences(String s,xtext::Assignment rule, spit::InterceptorChainDef ele) :
+	el().union(allVisibleElements(ele).typeSelect(spit::Interceptors).select(e|e.parsedString("interceptorName")==s))
+.union(allVisibleElements(ele).typeSelect(spit::GlobalInterceptorDecl).select(e|e.parsedString("interceptorName")==s))
+		.collect(e|e.createContentNode(e.label(),e.image()));
+
+/*
+ * UIContentNode creator
+ */
+create UIContentNode createContentNode(emf::EObject ctx, String label, String image) :
+	setLabel(label)->
+	setImage(image)->
+	setContext(ctx);

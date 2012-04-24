@@ -1,0 +1,83 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.apache-extras.camel-extra</groupId>
+        <artifactId>examples</artifactId>
+        <version>2.9.1</version>
+        <relativePath>..</relativePath>
+    </parent>
+
+	<groupId>com.iona.ps.demos</groupId>
+	<artifactId>camel-esper-demo</artifactId>
+	<packaging>jar</packaging>
+
+	<name>Camel Extra :: Component Examples :: A Camel Esper Demo</name>
+
+	<properties>
+		<activemq-version>5.3.2</activemq-version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-spring</artifactId>
+			<version>${camel-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-jms</artifactId>
+			<version>${camel-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.activemq</groupId>
+			<artifactId>activemq-core</artifactId>
+			<version>${activemq-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.xbean</groupId>
+			<artifactId>xbean-spring</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache-extras.camel-extra</groupId>
+			<artifactId>camel-esper</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<defaultGoal>install</defaultGoal>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+				</configuration>
+			</plugin>
+
+			<!-- allows the route to be ran via 'mvn camel:run' -->
+			<!-- plugin>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-maven-plugin</artifactId>
+				<version>${camel-version}</version>
+			</plugin -->
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.iona.ps.demos.FeedSimMain</mainClass>
+					<includePluginDependencies>false</includePluginDependencies>
+					<arguments>
+						<argument>10</argument>
+						<argument>50</argument>
+						<argument>240</argument>
+					</arguments>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+</project>
