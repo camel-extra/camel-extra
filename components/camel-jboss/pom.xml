@@ -4,14 +4,14 @@
     <parent>
         <groupId>org.apache-extras.camel-extra</groupId>
         <artifactId>components</artifactId>
-        <version>2.9.3-SNAPSHOT</version>
+        <version>2.9.0</version>
         <relativePath>..</relativePath>
     </parent>
 
-    <artifactId>camel-jboss6</artifactId>
+    <artifactId>camel-jboss</artifactId>
     <packaging>bundle</packaging>
-    <name>Camel :: JBoss 6.x</name>
-    <description>Camel JBoss 6.x support</description>
+    <name>Camel :: JBoss</name>
+    <description>Camel JBoss support</description>
 
     <properties>
         <camel.osgi.export.pkg>org.apachextras.camel.jboss</camel.osgi.export.pkg>
@@ -35,7 +35,7 @@
 		<dependency>
 			<groupId>org.jboss</groupId>
 			<artifactId>jboss-vfs</artifactId>
-			<version>3.0.0.GA</version>
+			<version>2.2.0.SP1</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
