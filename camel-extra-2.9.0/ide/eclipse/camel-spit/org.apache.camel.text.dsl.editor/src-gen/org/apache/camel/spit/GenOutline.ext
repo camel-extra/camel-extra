@@ -1,0 +1,23 @@
+import tree;
+
+extension org::apache::camel::spit::EditorExtensions;
+
+/*
+ * this extension is called when the outline view needs to be updated.
+ * The root element of the parsed model is passed and 
+ * the root element of the outline tree is expected.
+ */
+create UIContentNode outlineTree(emf::EObject model) :
+	setLabel(model.label()) ->
+	setImage(model.image()) ->
+	setContext(model)->
+	model.eContents.collect(e|
+		e.label()!=null ? 
+			children.add(e.outlineTree()) :
+			null);
+			
+List[String] viewpoints() :
+	null;
+	
+String viewpointIcon(String vpName) : null;
+

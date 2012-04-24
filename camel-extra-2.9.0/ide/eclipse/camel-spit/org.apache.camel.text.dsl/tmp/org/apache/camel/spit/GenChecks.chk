@@ -1,0 +1,20 @@
+import spit;
+
+extension org::openarchitectureware::xtext::parser::LinkerUtils;
+
+extension org::apache::camel::spit::Extensions;
+
+/*
+ * check linking
+ */
+context GlobalInterceptorDecl ERROR "Couldn't resolve reference to '"+this.parsedString("interceptorName")+"'" :
+	this.parsedString("interceptorName")!=null ? interceptorName!=null : true;
+context Interceptors ERROR "Couldn't resolve reference to '"+this.parsedString("interceptorName")+"'" :
+	interceptorName.size==this.parsed("interceptorName").size;
+
+
+
+context Import if location!=null ERROR "Couldn't resolve referenced artifact '"+location+"'" :
+	!location().isEmpty;
+
+

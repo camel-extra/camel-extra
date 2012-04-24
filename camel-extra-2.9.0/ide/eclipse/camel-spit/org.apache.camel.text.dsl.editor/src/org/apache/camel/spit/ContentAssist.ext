@@ -1,0 +1,17 @@
+import spit;
+import codeassist;
+
+extension org::apache::camel::spit::Extensions;
+extension org::apache::camel::spit::GenContentAssist reexport;
+
+/*
+ * There are two types of extensions one can define
+ *
+ * completeMetaType_feature(ModelElement ele, String prefix)
+ * This one is called for assignments only. It gets the underlying Modelelement and the current prefix passed in.
+ *
+ * Note that only proposals with 'Proposal.toInsert.toLowerCase().startsWith(prefix.toLowerCase())' will be proposed in the editor
+ * 
+ * you can sort and/or filter the proposals by overwriting 'List[Proposal] sortProposals(List[Proposal] proposalsToSort)'
+ */
+

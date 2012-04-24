@@ -1,0 +1,211 @@
+import spit;
+import codeassist;
+
+extension org::apache::camel::spit::EditorExtensions;
+
+/* proposals for Feature Expression::lang */
+List[Proposal] completeExpression_lang(emf::EObject ctx, String prefix) :
+	{newProposal("ExpressionLang")};
+
+/* proposals for Feature BeanExpr::method */
+List[Proposal] completeBeanExpr_method(emf::EObject ctx, String prefix) :
+	{newProposal("BeanExprMethod")};
+
+/* proposals for Feature ConvertBodyToAction::type */
+List[Proposal] completeConvertBodyToAction_type(emf::EObject ctx, String prefix) :
+	{newProposal("ConvertBodyToActionType")};
+
+/* proposals for Feature From::uri */
+List[Proposal] completeFrom_uri(emf::EObject ctx, String prefix) :
+	{newProposal("FromUri")};
+
+/* proposals for Feature BeanExpr::id */
+List[Proposal] completeBeanExpr_id(emf::EObject ctx, String prefix) :
+	{newProposal("BeanExprId")};
+
+/* proposals for Feature SetHeaderAction::header */
+List[Proposal] completeSetHeaderAction_header(emf::EObject ctx, String prefix) :
+	{newProposal("SetHeaderActionHeader")};
+
+/* proposals for Feature PropertyDef::value */
+List[Proposal] completePropertyDef_value(emf::EObject ctx, String prefix) :
+	{newProposal("PropertyDefValue")};
+
+/* proposals for Feature To::uri */
+List[Proposal] completeTo_uri(emf::EObject ctx, String prefix) :
+	{newProposal("ToUri")};
+
+/* proposals for Feature ExpressionValue::value */
+List[Proposal] completeExpressionValue_value(emf::EObject ctx, String prefix) :
+	{newProposal("ExpressionValueValue")};
+
+/* proposals for Feature Route::name */
+List[Proposal] completeRoute_name(emf::EObject ctx, String prefix) :
+	{newProposal("RouteName")};
+
+/* proposals for Feature InterceptorChainDef::name */
+List[Proposal] completeInterceptorChainDef_name(emf::EObject ctx, String prefix) :
+	{newProposal("InterceptorChainDefName")};
+
+
+
+/* proposals for Feature SimplePattern::actions */
+List[Proposal] completeSimplePattern_actions(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature WhenClause::expr */
+List[Proposal] completeWhenClause_expr(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature File::interceptorDecls */
+List[Proposal] completeFile_interceptorDecls(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Filter::body */
+List[Proposal] completeFilter_body(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Resequencer::body */
+List[Proposal] completeResequencer_body(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature PropertyDef::name */
+List[Proposal] completePropertyDef_name(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature SetBodyAction::value */
+List[Proposal] completeSetBodyAction_value(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature File::routes */
+List[Proposal] completeFile_routes(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature SetHeaderAction::value */
+List[Proposal] completeSetHeaderAction_value(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Pipeline::body */
+List[Proposal] completePipeline_body(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Transformer::target */
+List[Proposal] completeTransformer_target(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Filter::expr */
+List[Proposal] completeFilter_expr(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature InterceptorChainDef::chain */
+List[Proposal] completeInterceptorChainDef_chain(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Recipients::body */
+List[Proposal] completeRecipients_body(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature OtherwiseClause::target */
+List[Proposal] completeOtherwiseClause_target(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature SimplePattern::properties */
+List[Proposal] completeSimplePattern_properties(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Splitter::expr */
+List[Proposal] completeSplitter_expr(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Resequencer::expr */
+List[Proposal] completeResequencer_expr(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature SimplePattern::interceptors */
+List[Proposal] completeSimplePattern_interceptors(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Route::process */
+List[Proposal] completeRoute_process(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature SimplePattern::targets */
+List[Proposal] completeSimplePattern_targets(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Choice::when */
+List[Proposal] completeChoice_when(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature PropertiesBlock::properties */
+List[Proposal] completePropertiesBlock_properties(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Splitter::body */
+List[Proposal] completeSplitter_body(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature File::interceptorDefs */
+List[Proposal] completeFile_interceptorDefs(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature WhenClause::target */
+List[Proposal] completeWhenClause_target(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Route::from */
+List[Proposal] completeRoute_from(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Choice::otherwise */
+List[Proposal] completeChoice_otherwise(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature File::imports */
+List[Proposal] completeFile_imports(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature DynamicRecipients::body */
+List[Proposal] completeDynamicRecipients_body(emf::EObject ctx, String prefix) :
+	{};
+
+/* proposals for Feature Transformer::beanref */
+List[Proposal] completeTransformer_beanref(emf::EObject ctx, String prefix) :
+	{};
+
+
+
+
+
+/* proposals for Interceptors::interceptorName */
+List[Proposal] completeInterceptors_interceptorName(emf::EObject ctx, String prefix) :
+	ctx.allVisibleElements().typeSelect(spit::InterceptorChainDef).collect(x|newProposal(x.label(),x.id(),x.image()));
+
+/* proposals for GlobalInterceptorDecl::interceptorName */
+List[Proposal] completeGlobalInterceptorDecl_interceptorName(emf::EObject ctx, String prefix) :
+	ctx.allVisibleElements().typeSelect(spit::InterceptorChainDef).collect(x|newProposal(x.label(),x.id(),x.image()));
+
+
+List[Proposal] sortProposals(List[Proposal] proposalsToSort):
+	proposalsToSort;
+
+isKeywordProposal(Proposal this):
+	type == codeassist::Type::KEYWORD;
+
+isAssignmentProposal(Proposal this):
+	type == codeassist::Type::ASSIGNMENT;
+	
+isEnumProposal(Proposal this):
+	type == codeassist::Type::ENUM_LITERAL;
+
+// create extensions
+Proposal newProposal(String proposal) :
+	newProposal(proposal,proposal);
+	
+Proposal newProposal(String label, String toReplace) :
+	newProposal(label,toReplace,"default.gif");
+	
+create Proposal newProposal(String label, String replace, String image) :
+	setLabel(label==null?"ERROR":label)->
+	setToInsert(replace==null?"ERROR":replace)->
+	setImage(image);

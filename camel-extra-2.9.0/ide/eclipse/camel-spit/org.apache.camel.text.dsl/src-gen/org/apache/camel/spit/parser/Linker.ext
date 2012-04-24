@@ -1,0 +1,20 @@
+
+extension org::apache::camel::spit::Extensions;
+extension org::apache::camel::spit::Linking;
+
+link(emf::EObject this) :
+	this.allVisibleElements().internalLink();
+
+private Void internalLink(emf::EObject this) :
+	null;
+
+
+private Void internalLink(spit::GlobalInterceptorDecl this) :
+	this.link_interceptorName()
+;
+
+private Void internalLink(spit::Interceptors this) :
+	this.link_interceptorName()
+;
+
+

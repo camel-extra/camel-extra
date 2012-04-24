@@ -1,0 +1,27 @@
+/* These examples show ambiguity messages from the outline
+ * construction. It's because SimplePattern is being used
+ * as a rule for the bodies of the Splitter, Filter, Pipeline,
+ * Recipients and Resequencer rules.
+ *
+ * I don't know how to resolve this at the moment
+ */
+
+
+route SplitterTest from 'uri:someEndpoint' {
+    splitter xpath('/woot') {
+    	to 'uri:anotherEndpoint'
+    }
+}
+
+route FilterTest from 'mock:wibble' {
+    filter xpath("/book[@category!='CHILDREN]'") {  
+         choice {
+             when xpath('/book[price<=30]') {
+                 to 'uri:cheapie'
+             }
+             when xpath('/book[price>30]') {
+                 to 'uri:expensivo'
+             }
+         }         
+    }
+}
