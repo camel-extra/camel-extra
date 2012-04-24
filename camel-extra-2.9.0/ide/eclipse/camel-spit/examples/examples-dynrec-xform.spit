@@ -1,0 +1,10 @@
+route MyRoute from 'uri:wibble' {
+    dynamic recipients xpath('boo')
+}
+
+route MyOtherRoute from 'uri:too' {
+    transformer {
+        bean MyBean foobar
+        to 'uri:somewhere'  /* This does not appear in the outline view */
+    }
+}

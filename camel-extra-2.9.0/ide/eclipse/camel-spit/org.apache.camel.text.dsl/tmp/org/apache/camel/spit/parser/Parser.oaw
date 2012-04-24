@@ -1,0 +1,17 @@
+<workflow>
+    <property name="doCheck" value="true"/>
+    <bean class="org.eclipse.mwe.emf.StandaloneSetup"/>
+    <bean class="org.apache.camel.spit.MetaModelRegistration"/>
+	<component id="spit-parser" class="org.apache.camel.spit.parser.ParserComponent">
+		<modelFile value="${modelFile}"/>
+		<outputSlot value="${outputSlot}"/>
+	</component>
+	<if cond="${doCheck}">
+		<component id="spit-checker" class="oaw.check.CheckComponent">
+	       <metaModel id="mm" class="org.eclipse.m2t.type.emf.EmfRegistryMetaModel"/>
+	       <expression value="${outputSlot}.eAllContents.union({${outputSlot}})"/>
+		   <checkFile value="org::apache::camel::spit::GenChecks"/>
+		   <checkFile value="org::apache::camel::spit::Checks"/>
+		</component>
+	</if>
+</workflow>
