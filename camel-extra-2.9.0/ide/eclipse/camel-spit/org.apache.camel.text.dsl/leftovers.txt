@@ -1,0 +1,7 @@
+- errorHandlers
+- outline view from the model - wtf with this name thing?
+- Xpand templates
+- actions : conversions, set, beans; what patterns use actions?
+- splitter needs work
+- can use enumerations to work the processor types?
+- xtext parser error messages are terrible - override seems not to work as expected hmm.

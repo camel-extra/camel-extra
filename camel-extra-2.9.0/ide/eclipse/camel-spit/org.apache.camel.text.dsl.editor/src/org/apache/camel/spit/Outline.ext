@@ -1,0 +1,38 @@
+import spit;
+import tree;
+
+extension org::apache::camel::spit::EditorExtensions;
+extension org::apache::camel::spit::GenOutline reexport;
+
+/*
+ * overwrite the extension
+ * ''create UIContentNode outlineTree(emf::EObject model)''
+ * from org::apache::camel::spit::GenOutline.ext in order to control the construction of the default outline tree
+ *
+ * overwrite the extension
+ * 'List[String] viewpoints()'
+ * from org::apache::camel::spit::GenOutline.ext in order to add other viewPoints to your Outline. 
+ * For each given name there must be a 'outlineTree_NAME(emf::EObject model)' which is called then.
+ * Whitespaces in the name are replaced by '_'
+ */
+ create UIContentNode outlineTree(emf::EObject model) :
+    setLabel(model.label()) ->
+    setImage(model.image()) ->
+    setContext(model)->
+    addNonSimplePatternNodesToTree(this, model);
+
+            
+UIContentNode addNonSimplePatternNodesToTree(tree::UIContentNode uinode, emf::EObject simpleP) :
+   simpleP.eContents.collect(e|
+           e.label()!=null 
+          ? 
+            (e.metaType != spit::SimplePattern
+               ?
+                 uinode.children.add(e.outlineTree()) 
+               :
+                 addNonSimplePatternNodesToTree(uinode, e)
+             )
+          :
+            null);
+
+    

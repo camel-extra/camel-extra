@@ -1,0 +1,167 @@
+//specify your DSL grammar rules here ...
+//IMPORTANT: You should change the property 'overwrite.pluginresources=true' in the properties file to 'overwrite.pluginresources=false' AFTER first generation
+
+File :
+    (imports+=Import)*
+    (interceptorDecls+=GlobalInterceptorDecl)*
+    (routes+=Route)*
+    (interceptorDefs+=InterceptorChainDef)*
+    ;
+    
+Route :
+    "route" name=ID from=From (Interceptors)? "{" process=ProcessExpr "}"
+    ;
+ 
+Import : 
+    "import" (location=URI)
+    ;
+    
+GlobalInterceptorDecl :
+    "global" "interceptors" (interceptorName=[InterceptorChainDef])
+    ;
+    
+InterceptorChainDef :
+    "interceptor" name=ID "{"
+       (chain+=BeanExpr)+
+     "}"
+     ;
+
+Interceptors :
+    "interceptors" "(" (interceptorName+=[InterceptorChainDef])+ ")"
+    ;
+    
+From :
+    "from" uri=STRING
+    ;
+
+To :
+    "to" uri=STRING
+    ;
+
+PatternExpr :
+   Choice | Recipients | Pipeline | Filter | Splitter | Resequencer | Transformer | DynamicRecipients
+   ;
+       
+ProcessExpr : 
+   PatternOrBeanExpr
+   ;
+   
+PatternOrBeanExpr :
+   BeanExpr | PatternExpr
+   ;
+   
+BeanExpr :
+   BEAN id=ID (method=ID)?
+   ;
+
+SimplePattern : 
+    (interceptors=Interceptors)? "{"
+        (actions+=ActionStatement)*
+        (targets+=ToTarget)+
+        (properties=PropertiesBlock)?
+    "}"
+    ;
+
+ActionStatement :
+    SetHeaderAction | SetBodyAction | "convert" ConvertBodyAction
+    ;
+    
+SetHeaderAction :
+    "header" header=STRING "=" (value=Expression)
+    ;
+    
+SetBodyAction :
+    "body" "=" (value=Expression)
+    ;
+
+ConvertBodyAction :
+    ConvertBodyWithAction | ConvertBodyToAction
+    ;
+    
+ConvertBodyWithAction :
+    "with" BeanExpr
+    ;
+
+ConvertBodyToAction :
+    "to" (type=STRING) 
+    ;
+      
+Transformer :
+   "transformer" (Interceptors)? "{"
+       beanref=BeanExpr
+       (target+=ToTarget)+
+   "}"
+    ;
+    
+Choice :
+   "choice" (Interceptors)? "{"
+      (when+=WhenClause)*
+      (otherwise=OtherwiseClause)?
+    "}"
+   ;
+    
+Recipients :
+    "recipients" body=SimplePattern
+    ;
+
+DynamicRecipients :
+    "dynamic" "recipients" body=Expression
+    ;
+
+Pipeline :
+    "pipeline" body=SimplePattern
+    ;
+  
+Filter :
+    "filter" expr=Expression body=SimplePattern
+    ;
+
+Splitter :
+   "splitter" expr=Expression body=SimplePattern
+   ;
+
+Resequencer :
+   "resequence" expr=Expression body=SimplePattern
+   ;
+          
+WhenClause :
+   "when" expr=Expression "{"
+       (target+=ToTarget)+
+   "}"
+    ;
+
+OtherwiseClause :
+    "otherwise" "{" target=ToTarget "}"
+    ;
+           
+Expression :
+   lang=ID "(" ExpressionValue ")" | STRING
+   ;
+   
+ExpressionValue :
+    value=STRING
+   ;
+
+PropertiesBlock :
+    "properties" "{"
+       (properties+=PropertyDef)+
+   "}"
+   ;
+
+PropertyDef :
+   name=SCOPED_ID "=" value=STRING
+   ;
+            
+ToTarget :
+    To | ProcessExpr | Fault 
+    ;
+
+Fault :
+    "fault" STRING
+    ;
+    
+SCOPED_ID :
+    ID ("." ID)*
+    ;
+
+BEAN:  "bean";

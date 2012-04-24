@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="org.apache.camel.spit.editor.SpitEditor"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            extensions="spit"
+            icon="icons/CamelIcon.gif"
+            id="org.apache.camel.spit.editor.SpitEditor"
+            name="Spit File">
+      </editor>
+   </extension>
+
+   <extension
+         point="org.eclipse.ui.newWizards">
+         
+         
+		<wizard
+			category="org.openarchitectureware.xtext.wizards"
+			class="org.apache.camel.spit.wizards.NewSpitFileWizard"
+			icon="icons/CamelIcon.gif"
+			id="org.apache.camel.spit.wizards.NewSpitFileWizard"
+			name="Spit File">
+		</wizard>
+	</extension>
+</plugin>
