@@ -1,3 +1,10 @@
+/**************************************************************************************
+ * Copyright (C) 2008 - 2012 Camel Extra Team. All rights reserved.                   *
+ * http://code.google.com/a/apache-extras.org/p/camel-extra/                          *
+ * ---------------------------------------------------------------------------------- *
+ * The software in this package is published under the terms of the GPL license       *
+ * a copy of which has been included with this distribution in the license.txt file.  *
+ **************************************************************************************/
 package com.iona.ps.demos;
 
 import java.util.Random;
@@ -15,8 +22,7 @@ import org.apache.activemq.ActiveMQConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MarketDataSendRunnable implements Runnable
-{
+public class MarketDataSendRunnable implements Runnable {
     private static final Logger log = LoggerFactory.getLogger(MarketDataSendRunnable.class);
 
     private volatile FeedEnum rateDropOffFeed;
@@ -29,16 +35,13 @@ public class MarketDataSendRunnable implements Runnable
     private String subject = "EventStreamQueue";
     private boolean persistent = true;
     
-    public MarketDataSendRunnable()
-    {
+    public MarketDataSendRunnable()     {
     }
 
-    public void run()
-    {
+    public void run()     {
         log.info(".call Thread " + Thread.currentThread() + " starting");
      
-        try
-        {
+        try         {
             Connection connection = null;
             Destination destination = null;
             ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(user, password, url);
@@ -50,12 +53,10 @@ public class MarketDataSendRunnable implements Runnable
             if (persistent) {
                 producer.setDeliveryMode(DeliveryMode.PERSISTENT);
             }
-            while(!isShutdown)
-            {
+            while(!isShutdown)             {
                 int nextFeed = Math.abs(random.nextInt() % 2);
                 FeedEnum feed = FeedEnum.values()[nextFeed];
-                if (rateDropOffFeed != feed)
-                {
+                if (rateDropOffFeed != feed)                 {
                 	ObjectMessage message = session.createObjectMessage();
                 	message.setObject(new MarketDataEvent("SYM", feed));
            			producer.send(message);
@@ -64,9 +65,7 @@ public class MarketDataSendRunnable implements Runnable
             producer.close();
             session.close();
             connection.close();
-        }
-        catch (RuntimeException ex)
-        {
+        } catch (RuntimeException ex)         {
             log.error("Error in send loop", ex);
         } catch (JMSException e) {
 			e.printStackTrace();
@@ -75,13 +74,11 @@ public class MarketDataSendRunnable implements Runnable
         log.info(".call Thread " + Thread.currentThread() + " done");
     }
 
-    public void setRateDropOffFeed(FeedEnum feedToDrop)
-    {
+    public void setRateDropOffFeed(FeedEnum feedToDrop) {
         rateDropOffFeed = feedToDrop;
     }
 
-    public void setShutdown()
-    {
+    public void setShutdown() {
         isShutdown = true;
     }
 }

@@ -1,3 +1,10 @@
+/**************************************************************************************
+ * Copyright (C) 2008 - 2012 Camel Extra Team. All rights reserved.                   *
+ * http://code.google.com/a/apache-extras.org/p/camel-extra/                          *
+ * ---------------------------------------------------------------------------------- *
+ * The software in this package is published under the terms of the GPL license       *
+ * a copy of which has been included with this distribution in the license.txt file.  *
+ **************************************************************************************/
 package com.iona.ps.demos;
 
 import org.slf4j.Logger;
@@ -60,20 +67,17 @@ public class FeedSimMain {
     private double dropProbability;
     private int numSeconds;
 
-    public FeedSimMain(int numberOfThreads, double dropProbability, int numSeconds, boolean isWaitKeypress)
-    {
+    public FeedSimMain(int numberOfThreads, double dropProbability, int numSeconds, boolean isWaitKeypress) {
         this.numberOfThreads = numberOfThreads;
         this.dropProbability = dropProbability;
         this.numSeconds = numSeconds;
     }
 
-    public void run() throws IOException, InterruptedException
-    {
+    public void run() throws IOException, InterruptedException {
     	// Send events
         ExecutorService threadPool = Executors.newFixedThreadPool(numberOfThreads);
         MarketDataSendRunnable runnables[] = new MarketDataSendRunnable[numberOfThreads];
-        for (int i = 0; i < numberOfThreads; i++)
-        {
+        for (int i = 0; i < numberOfThreads; i++) {
             runnables[i] = new MarketDataSendRunnable();
             threadPool.submit(runnables[i]);
         }
@@ -85,29 +89,23 @@ public class FeedSimMain {
             Thread.sleep(1000);
 
             FeedEnum feedToDropOff;
-            if (random.nextDouble() * 100 < dropProbability)
-            {
+            if (random.nextDouble() * 100 < dropProbability) {
                 feedToDropOff = FeedEnum.FEED_A;
-                if (random.nextBoolean())
-                {
+                if (random.nextBoolean()) {
                     feedToDropOff = FeedEnum.FEED_B;
                 }
                 log.info("Setting drop-off for feed " + feedToDropOff);
                 
-            }
-            else
-            {
+            } else {
                 feedToDropOff = null;
             }
-            for (int i = 0; i < runnables.length; i++)
-            {
+            for (int i = 0; i < runnables.length; i++) {
                 runnables[i].setRateDropOffFeed(feedToDropOff);
             }
         }
 
         log.info("Shutting down threadpool");
-        for (int i = 0; i < runnables.length; i++)
-        {
+        for (int i = 0; i < runnables.length; i++) {
             runnables[i].setShutdown();
         }
         threadPool.shutdown();

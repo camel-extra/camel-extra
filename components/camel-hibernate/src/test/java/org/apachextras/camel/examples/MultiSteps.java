@@ -1,19 +1,10 @@
-/**
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+/**************************************************************************************
+ * Copyright (C) 2008 - 2012 Camel Extra Team. All rights reserved.                   *
+ * http://code.google.com/a/apache-extras.org/p/camel-extra/                          *
+ * ---------------------------------------------------------------------------------- *
+ * The software in this package is published under the terms of the GPL license       *
+ * a copy of which has been included with this distribution in the license.txt file.  *
+ **************************************************************************************/
 package org.apachextras.camel.examples;
 
 import org.apachextras.camel.component.hibernate.Consumed;
@@ -25,7 +16,6 @@ import org.slf4j.LoggerFactory;
  * with the method annotated with {@link @Consumed} being invoked when the Camel consumer
  * has processed the entity bean
  *
- * @version $Revision: 630591 $
  */
 //@NamedQuery(name = "step1", query = "select x from MultiSteps x where x.step = 1")
 public class MultiSteps {
