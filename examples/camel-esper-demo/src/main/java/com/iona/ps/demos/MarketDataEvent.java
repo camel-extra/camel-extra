@@ -11,11 +11,8 @@ import java.io.Serializable;
 
 public class MarketDataEvent implements Serializable {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 5171705971847030315L;
-	private String symbol;
+    private static final long serialVersionUID = 5171705971847030315L;
+    private String symbol;
     private FeedEnum feed;
 
     public MarketDataEvent(String symbol, FeedEnum feed) {
