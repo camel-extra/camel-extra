@@ -1,5 +1,5 @@
 /**************************************************************************************
- http://code.google.com/a/apache-extras.org/p/camel-extra/
+ http://code.google.com/a/apache-extras.org/p/camel-extra
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU General Public License
