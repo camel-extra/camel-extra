@@ -253,19 +253,6 @@
                 <familyName>camel-extra</familyName>
               </licenseFamily>
             </licenseFamilies>
-            <excludeSubProjects>false</excludeSubProjects>
-              <excludes>
-              <!-- Generated -->
-              <exclude>**/target/**/*</exclude>
-              <!-- Hidden -->
-              <exclude>**/.*</exclude>
-              <!-- Git -->
-              <exclude>.gitignore</exclude>
-              <exclude>.git/**/*</exclude>
-              <!-- IntelliJ IDEA -->
-              <exclude>**/*.iml</exclude>
-              <exclude>.idea/**/*</exclude>
-            </excludes>
           </configuration>
         </plugin>
       </plugins>
