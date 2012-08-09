@@ -253,12 +253,7 @@
                 <licenseFamilyCategory>GNU</licenseFamilyCategory>
                 <licenseFamilyName>camel-extra</licenseFamilyName>
                 <patterns>
-                  <!-- For now we're looking for the pattern below in order to find the "long"
-                  version of Christian's license:
-                  http://camel.465427.n5.nabble.com/Camel-Extra-2-10-release-tp5714887p5715582.html -->
-                  <pattern>You should have received a copy of the GNU General Public License</pattern>
-                  <!-- After we fix all the files, we will switch to the more descriptive pattern below: -->
-                  <!--<pattern>Copyright (C) 2008 - 2012 Camel Extra Team. All rights reserved.</pattern>-->
+                  <pattern>http://www.gnu.org/licenses/gpl-2.0-standalone.html</pattern>
                 </patterns>
               </license>
             </licenses>
