@@ -56,6 +56,8 @@
     <camel.osgi.export.version>${project.version}</camel.osgi.export.version>
     <camel.osgi.import>${camel.osgi.import.pkg}</camel.osgi.import>
     <camel.osgi.symbolic.name>${project.groupId}.${project.artifactId}</camel.osgi.symbolic.name>
+
+    <db4o-version>8.0</db4o-version>
   </properties>
 
   <url>http://code.google.com/a/apache-extras.org/p/camel-extra</url>
