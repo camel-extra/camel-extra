@@ -58,6 +58,7 @@
     <camel.osgi.symbolic.name>${project.groupId}.${project.artifactId}</camel.osgi.symbolic.name>
 
     <db4o-version>8.0</db4o-version>
+    <jgroups-version>3.0.10.Final</jgroups-version>
   </properties>
 
   <url>http://code.google.com/a/apache-extras.org/p/camel-extra</url>
