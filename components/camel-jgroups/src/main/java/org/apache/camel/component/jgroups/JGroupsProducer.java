@@ -24,6 +24,7 @@ package org.apache.camel.component.jgroups;
 import org.apache.camel.Endpoint;
 import org.apache.camel.Exchange;
 import org.apache.camel.impl.DefaultProducer;
+import org.jgroups.Address;
 import org.jgroups.Channel;
 import org.jgroups.Message;
 
@@ -55,8 +56,18 @@ public class JGroupsProducer extends DefaultProducer {
     public void process(Exchange exchange) throws Exception {
         Object body = exchange.getIn().getBody();
         if (body != null) {
+            Address destinationAddress = exchange.getIn().getHeader(JGroupsEndpoint.HEADER_JGROUPS_DEST, Address.class);
+            Address sourceAddress = exchange.getIn().getHeader(JGroupsEndpoint.HEADER_JGROUPS_SRC, Address.class);
+
             log.debug("Posting: {} to cluster: {}", body, clusterName);
-            channel.send(new Message(null, null, body));
+            if (destinationAddress != null) {
+               log.debug("Posting to custom destination address: {}", destinationAddress);
+            }
+            if (sourceAddress != null) {
+                log.debug("Posting from custom source address: {}", sourceAddress);
+            }
+
+            channel.send(new Message(destinationAddress, sourceAddress, body));
         } else {
             log.debug("Body is null, cannot post to channel.");
         }
