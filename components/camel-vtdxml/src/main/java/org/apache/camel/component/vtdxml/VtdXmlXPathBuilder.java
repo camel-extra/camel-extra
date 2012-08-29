@@ -122,7 +122,7 @@ public class VtdXmlXPathBuilder implements Expression, Predicate, NamespaceAware
         vg.parseFile(file.getAbsolutePath(), true);
         VTDNav vn = vg.getNav();
         AutoPilot ap = new AutoPilot(vn);
-        ap.selectXPath(text);
+        configureXPath(ap);
         return ap.evalXPathToBoolean();
     }
 
@@ -132,7 +132,7 @@ public class VtdXmlXPathBuilder implements Expression, Predicate, NamespaceAware
         vg.parse(true);
         VTDNav vn = vg.getNav();
         AutoPilot ap = new AutoPilot(vn);
-        ap.selectXPath(text);
+        configureXPath(ap);
         return ap.evalXPathToBoolean();
     }
 

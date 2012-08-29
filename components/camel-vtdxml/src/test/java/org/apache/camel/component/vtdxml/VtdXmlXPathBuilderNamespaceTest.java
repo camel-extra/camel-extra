@@ -54,13 +54,12 @@ public class VtdXmlXPathBuilderNamespaceTest extends ExchangeTestSupport {
     }
 
     @Test
-    @Ignore("Fix me")
     public void testVtdXmlXPathBuilderMatches() throws Exception {
         String data = context.getTypeConverter().convertTo(String.class, new File("src/test/data/persons.xml"));
         exchange.getIn().setBody(data);
 
-        VtdXmlXPathBuilder xpath = new VtdXmlXPathBuilder("acme:/persons/person/name = 'James Strachan'");
-        xpath.namespace("acme", "http://acme.com");
+        VtdXmlXPathBuilder xpath = new VtdXmlXPathBuilder("//ns1:*/person/name = 'James Strachan'");
+        xpath.namespace("ns1", "http://acme.com");
         boolean matches = xpath.matches(exchange);
         assertTrue("Should match", matches);
 
