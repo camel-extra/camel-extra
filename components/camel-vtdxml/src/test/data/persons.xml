@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persons xmlns="http://acme.com">
+
+  <person>
+    <id>1</id>
+    <name>Claus Ibsen</name>
+  </person>
+  <person>
+    <id>2</id>
+    <name>James Strachan</name>
+  </person>
+  <person>
+    <id>3</id>
+    <name>Jonathan Anstey</name>
+  </person>
+
+</persons>
