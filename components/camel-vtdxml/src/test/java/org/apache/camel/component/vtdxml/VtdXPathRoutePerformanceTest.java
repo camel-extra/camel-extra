@@ -29,6 +29,7 @@ import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.apache.camel.util.StopWatch;
 import org.apache.camel.util.TimeUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -50,6 +51,7 @@ public class VtdXPathRoutePerformanceTest extends CamelTestSupport {
     }
 
     @Test
+    @Ignore("This is a manual test")
     public void testVtdXPatPerformanceRoute() throws Exception {
         NotifyBuilder notify = new NotifyBuilder(context).whenDone(size).create();
 

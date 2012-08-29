@@ -51,7 +51,7 @@ public class XPathRoutePerformanceTest extends CamelTestSupport {
     }
 
     @Test
-    @Ignore("Fix me")
+    @Ignore("This is a manual test")
     public void testXPatPerformanceRoute() throws Exception {
         NotifyBuilder notify = new NotifyBuilder(context).whenDone(size).create();
 

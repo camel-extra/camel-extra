@@ -63,6 +63,14 @@
 			<scope>test</scope>
 		</dependency>
 
+		<!-- use saxon to make regular xpath go faster -->
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-saxon</artifactId>
+			<version>${camel-version}</version>
+			<scope>test</scope>
+		</dependency>
+
 		<!-- logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
