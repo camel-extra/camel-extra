@@ -73,7 +73,7 @@ public class VtdXPathRoutePerformanceTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return PerformanceHelper.createRouteBuilder("vtdxpath", watch, tiny, small, med, large);
+        return PerformanceHelper.createRouteBuilder("vtdxml", watch, tiny, small, med, large);
     }
 
 }

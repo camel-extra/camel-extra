@@ -22,21 +22,11 @@
 package org.apache.camel.component.vtdxml;
 
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.test.junit4.CamelTestSupport;
-import org.junit.Test;
 
 /**
  *
  */
-public class VtdXPathRouteTest extends CamelTestSupport {
-
-    @Test
-    public void testVtdXPathRoute() throws Exception {
-        getMockEndpoint("mock:james").expectedMessageCount(1);
-        getMockEndpoint("mock:other").expectedMessageCount(2);
-
-        assertMockEndpointsSatisfied();
-    }
+public class VtdXPathRouteDslTest extends VtdXPathRouteTest {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
@@ -45,10 +35,10 @@ public class VtdXPathRouteTest extends CamelTestSupport {
             public void configure() throws Exception {
                 from("file:src/test/data?noop=true")
                     .split()
-                        .language("vtdxml", "/persons/person")
+                        .vtdxml("/persons/person")
                         .to("log:line")
                         .choice()
-                            .when().language("vtdxml", "/person/name = 'James Strachan'")
+                            .when().vtdxml("/person/name = 'James Strachan'")
                                 .to("mock:james")
                             .otherwise()
                                 .to("mock:other")
