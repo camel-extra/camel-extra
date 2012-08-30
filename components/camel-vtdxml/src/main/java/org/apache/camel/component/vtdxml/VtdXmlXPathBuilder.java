@@ -154,8 +154,11 @@ public class VtdXmlXPathBuilder implements Expression, Predicate, NamespaceAware
                     InputStream is = exchange.getIn().getMandatoryBody(InputStream.class);
                     ByteArrayOutputStream bos = new ByteArrayOutputStream();
                     IOHelper.copyAndCloseInput(is, bos);
-                    bytes = bos.toByteArray();
-                    IOHelper.close(bos);
+                    try {
+                        bytes = bos.toByteArray();
+                    } finally {
+                        IOHelper.close(bos, "vtdxml", LOG);
+                    }
                 }
                 result = evaluateBody(exchange, bytes);
             }
