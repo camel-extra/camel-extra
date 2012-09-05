@@ -24,14 +24,15 @@ package org.apachextras.camel.component.esper;
 import java.util.List;
 
 import com.espertech.esper.client.EventBean;
-import org.apache.camel.ContextTestSupport;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
+import org.apache.camel.test.junit4.CamelTestSupport;
+import org.junit.Test;
 
-public class EsperRouteTest extends ContextTestSupport {
+public class EsperRouteTest extends CamelTestSupport {
 
-    @SuppressWarnings("deprecation")
+    @Test
 	public void testSendMessagesIntoEsper() throws Exception {
         MockEndpoint endpoint = getMockEndpoint("mock:results");
         endpoint.expectedMessageCount(2);
