@@ -35,10 +35,10 @@ public class VtdXPathRouteDslTest extends VtdXPathRouteTest {
             public void configure() throws Exception {
                 from("file:src/test/data?noop=true")
                     .split()
-                        .vtdxml("/persons/person")
+                        .language("vtdxml", "/persons/person")
                         .to("log:line")
                         .choice()
-                            .when().vtdxml("/person/name = 'James Strachan'")
+                            .when().language("vtdxml", "/person/name = 'James Strachan'")
                                 .to("mock:james")
                             .otherwise()
                                 .to("mock:other")
