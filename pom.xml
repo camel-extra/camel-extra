@@ -58,6 +58,7 @@
     <camel.osgi.symbolic.name>${project.groupId}.${project.artifactId}</camel.osgi.symbolic.name>
 
     <db4o-version>8.0</db4o-version>
+    <javassist-bundle-version>3.12.1.GA_3</javassist-bundle-version>
     <jgroups-version>3.0.10.Final</jgroups-version>
   </properties>
 
