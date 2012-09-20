@@ -21,6 +21,10 @@
  ***************************************************************************************/
 package org.apachextras.camel.component.hibernate;
 
-public interface Callback<R, P> {
-    R callback(P parameter);
+import org.hibernate.Session;
+
+public interface TransactionCallback<T> {
+
+    T doInTransaction(Session session);
+
 }

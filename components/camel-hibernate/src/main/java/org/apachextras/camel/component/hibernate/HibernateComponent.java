@@ -27,30 +27,25 @@ import org.apache.camel.Endpoint;
 import org.apache.camel.impl.DefaultComponent;
 import org.apache.camel.util.ObjectHelper;
 import org.hibernate.SessionFactory;
-import org.springframework.orm.hibernate3.HibernateTemplate;
 
 /**
  * A Hibernate Component
  *
  */
 public class HibernateComponent extends DefaultComponent {
-    private HibernateTemplate template;
     private SessionFactory sessionFactory;
+    private TransactionStrategy transactionStrategy;
+
+    @Override
+    protected void doStart() throws Exception {
+        super.doStart();
+        if(transactionStrategy == null) {
+            transactionStrategy = resolveTransactionStrategy();
+        }
+    }
 
     // Properties
     //-------------------------------------------------------------------------
-    public HibernateTemplate getTemplate() {
-        if (template == null) {
-            SessionFactory factory = getSessionFactory();
-            ObjectHelper.notNull(factory, "sessionFactory");
-            template = new HibernateTemplate(factory);
-        }
-        return template;
-    }
-
-    public void setTemplate(HibernateTemplate template) {
-        this.template = template;
-    }
 
     public SessionFactory getSessionFactory() {
         return sessionFactory;
@@ -58,6 +53,20 @@ public class HibernateComponent extends DefaultComponent {
 
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
+    }
+
+    public TransactionStrategy getTransactionStrategy() {
+        return transactionStrategy;
+    }
+
+    public void setTransactionStrategy(TransactionStrategy transactionStrategy) {
+        this.transactionStrategy = transactionStrategy;
+    }
+
+    // Property resolvers
+
+    private TransactionStrategy resolveTransactionStrategy() {
+        return new DefaultTransactionStrategy(sessionFactory);
     }
 
     // Implementation methods
@@ -76,4 +85,5 @@ public class HibernateComponent extends DefaultComponent {
         }
         return endpoint;
     }
+
 }

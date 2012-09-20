@@ -22,8 +22,9 @@
 package org.apachextras.camel.component.hibernate;
 
 import org.apache.camel.Service;
-import org.springframework.orm.hibernate3.HibernateCallback;
 
 public interface TransactionStrategy extends Service {
-    Object execute(HibernateCallback callback);
+
+    <T> T execute(TransactionCallback<T> callback);
+
 }

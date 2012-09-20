@@ -25,7 +25,13 @@
 
   <bean id="hibernate" class="org.apachextras.camel.component.hibernate.HibernateComponent">
     <property name="sessionFactory" ref="sessionFactory"/>
+    <property name="transactionStrategy" ref="springTransactionStrategy"/>
   </bean>
+
+    <bean id="springTransactionStrategy" class="org.apachextras.camel.component.hibernate.SpringTransactionStrategy">
+        <constructor-arg ref="sessionFactory"/>
+        <constructor-arg ref="transactionTemplate"/>
+    </bean>
 
   <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
     <property name="sessionFactory" ref="sessionFactory"/>

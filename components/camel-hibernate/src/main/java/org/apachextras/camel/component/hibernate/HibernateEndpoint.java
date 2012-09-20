@@ -31,14 +31,15 @@ import org.apache.camel.Producer;
 import org.apache.camel.builder.ExpressionBuilder;
 import org.apache.camel.impl.ScheduledPollEndpoint;
 import org.apache.camel.util.ObjectHelper;
-import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.hibernate.SessionFactory;
 
 /**
  * A Hibernate endpoint
  * 
  */
 public class HibernateEndpoint extends ScheduledPollEndpoint {
-    private HibernateTemplate template;
+    private SessionFactory sessionFactory;
+    private TransactionStrategy transactionStrategy;
     private Expression producerExpression;
     private int maximumResults = -1;
     private Class<?> entityType;
@@ -49,25 +50,15 @@ public class HibernateEndpoint extends ScheduledPollEndpoint {
 
     public HibernateEndpoint(String uri, HibernateComponent component) {
         super(uri, component);
-        template = component.getTemplate();
-    }
-
-    public HibernateEndpoint(String uri, HibernateTemplate template) {
-        super(uri);
-        this.template = template;
-    }
-
-    public HibernateEndpoint(String endpointUri) {
-        super(endpointUri);
+        sessionFactory = component.getSessionFactory();
+        this.transactionStrategy = component.getTransactionStrategy();
     }
 
     public Producer createProducer() throws Exception {
-        validate();
         return new HibernateProducer(this, getProducerExpression());
     }
 
     public Consumer createConsumer(Processor processor) throws Exception {
-        validate();
         HibernateConsumer consumer = new HibernateConsumer(this, processor);
         configureConsumer(consumer);
         return consumer;
@@ -79,21 +70,6 @@ public class HibernateEndpoint extends ScheduledPollEndpoint {
 
     // Properties
     // -------------------------------------------------------------------------
-    public HibernateTemplate getTemplate() {
-        if (template == null) {
-            Component component = getComponent();
-            if (component instanceof HibernateComponent) {
-                HibernateComponent hibernateComponent = (HibernateComponent) component;
-                template = hibernateComponent.getTemplate();
-
-            }
-        }
-        return template;
-    }
-
-    public void setTemplate(HibernateTemplate template) {
-        this.template = template;
-    }
 
     public Expression getProducerExpression() {
         if (producerExpression == null) {
@@ -154,15 +130,24 @@ public class HibernateEndpoint extends ScheduledPollEndpoint {
         this.deleteFirstOnConsume = deleteFirstOnConsume;
     }
 
-    // Implementation methods
-    // -------------------------------------------------------------------------
-    protected void validate() {
-        ObjectHelper.notNull(getTemplate(), "template property");
+    public SessionFactory getSessionFactory() {
+        return sessionFactory;
     }
 
-    protected TransactionStrategy createTransactionStrategy() {
-        return DefaultTransactionStrategy.newInstance(getTemplate());
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
+
+    public TransactionStrategy getTransactionStrategy() {
+        return transactionStrategy;
+    }
+
+    public void setTransactionStrategy(TransactionStrategy transactionStrategy) {
+        this.transactionStrategy = transactionStrategy;
+    }
+
+    // Implementation methods
+    // -------------------------------------------------------------------------
 
     protected Expression createProducerExpression() {
         final Class<?> type = getEntityType();
@@ -187,4 +172,5 @@ public class HibernateEndpoint extends ScheduledPollEndpoint {
             };
         }
     }
+
 }

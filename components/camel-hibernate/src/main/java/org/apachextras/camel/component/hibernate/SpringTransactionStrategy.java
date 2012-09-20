@@ -22,33 +22,27 @@
 package org.apachextras.camel.component.hibernate;
 
 import org.apache.camel.impl.ServiceSupport;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionTemplate;
 
-public class DefaultTransactionStrategy extends ServiceSupport implements TransactionStrategy {
+public class SpringTransactionStrategy extends ServiceSupport implements TransactionStrategy {
+
     private final SessionFactory sessionFactory;
+    private final TransactionTemplate transactionTemplate;
 
-    public DefaultTransactionStrategy(SessionFactory sessionFactory) {
+    public SpringTransactionStrategy(SessionFactory sessionFactory, TransactionTemplate transactionTemplate) {
         this.sessionFactory = sessionFactory;
+        this.transactionTemplate = transactionTemplate;
     }
 
-    public <T> T execute(TransactionCallback<T> callback) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            T result = callback.doInTransaction(session);
-            transaction.commit();
-            return result;
-        } catch (Exception e) {
-            if(transaction != null) {
-                transaction.rollback();
+    public <T> T execute(final TransactionCallback<T> callback) {
+        return transactionTemplate.execute(new org.springframework.transaction.support.TransactionCallback<T>() {
+            @Override
+            public T doInTransaction(TransactionStatus transactionStatus) {
+                return callback.doInTransaction(sessionFactory.getCurrentSession());
             }
-            throw new RuntimeException(e);
-        } finally {
-            session.close();
-        }
+        });
     }
 
     protected void doStart() throws Exception {

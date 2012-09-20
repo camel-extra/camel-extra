@@ -26,22 +26,19 @@ import org.apache.camel.Processor;
 import org.apache.camel.impl.ScheduledPollConsumer;
 import org.apache.camel.util.ObjectHelper;
 import org.apache.camel.RuntimeCamelException;
-import org.hibernate.HibernateException;
 import org.hibernate.LockMode;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.orm.hibernate3.HibernateCallback;
 
 import java.lang.reflect.Method;
-import java.sql.SQLException;
 import java.util.List;
 
 public class HibernateConsumer extends ScheduledPollConsumer {
     private static final transient Logger LOG = LoggerFactory.getLogger(HibernateConsumer.class);
     private final HibernateEndpoint endpoint;
-    private final TransactionStrategy template;
+    private final TransactionStrategy transactionStrategy;
     private QueryFactory queryFactory;
     private DeleteHandler<Object> deleteHandler;
     private String query;
@@ -51,12 +48,13 @@ public class HibernateConsumer extends ScheduledPollConsumer {
     public HibernateConsumer(HibernateEndpoint endpoint, Processor processor) {
         super(endpoint, processor);
         this.endpoint = endpoint;
-        this.template = endpoint.createTransactionStrategy();
+        this.transactionStrategy = endpoint.getTransactionStrategy();
     }
 
     protected int poll() throws Exception {
-        template.execute(new HibernateCallback() {
-            public Object doInHibernate(Session session) throws HibernateException, SQLException {
+        transactionStrategy.execute(new TransactionCallback() {
+            @Override
+            public Object doInTransaction(Session session) {
                 Query query = getQueryFactory().createQuery(session);
                 configureParameters(query);
                 List results = query.list();

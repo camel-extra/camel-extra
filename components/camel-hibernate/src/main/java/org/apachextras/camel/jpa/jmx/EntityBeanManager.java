@@ -21,7 +21,7 @@
  ***************************************************************************************/
 package org.apachextras.camel.jpa.jmx;
 
-import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.hibernate.SessionFactory;
 
 import javax.management.openmbean.CompositeData;
 import javax.management.openmbean.OpenDataException;
@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EntityBeanManager {
-    private HibernateTemplate template;
+    private SessionFactory sessionFactory;
     private Class entityType;
     private int maximumRows = 1000;
 
@@ -39,7 +39,7 @@ public class EntityBeanManager {
     }
 
     public List getEntities() {
-        return template.find("select x from " + entityType.getName() + " ");
+        return sessionFactory.getCurrentSession().find("select x from " + entityType.getName() + " ");
     }
 
     public CompositeData[] browse(String selector) throws OpenDataException {
@@ -58,13 +58,12 @@ public class EntityBeanManager {
         return rc;
     }
 
-
-    public void setTemplate(HibernateTemplate template) {
-        this.template = template;
-    }
-
     public void setEntityType(Class entityType) {
         this.entityType = entityType;
+    }
+
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
 }

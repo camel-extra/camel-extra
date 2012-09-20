@@ -27,7 +27,6 @@ import org.apache.camel.converter.ObjectConverter;
 import org.apache.camel.impl.DefaultProducer;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.springframework.orm.hibernate3.HibernateCallback;
 
 import java.sql.SQLException;
 import java.util.Iterator;
@@ -41,14 +40,14 @@ public class HibernateProducer extends DefaultProducer {
         super(endpoint);
         this.endpoint = endpoint;
         this.expression = expression;
-        this.template = endpoint.createTransactionStrategy();
+        this.template = endpoint.getTransactionStrategy();
     }
 
     public void process(Exchange exchange) {
         final Object values = expression.evaluate(exchange, Object.class);
         if (values != null) {
-            template.execute(new HibernateCallback() {
-                public Object doInHibernate(Session session) throws HibernateException, SQLException {
+            template.execute(new TransactionCallback<Object>() {
+                public Object doInTransaction(Session session) {
                     Iterator iter = ObjectConverter.iterator(values);
                     while (iter.hasNext()) {
                         Object value = iter.next();
