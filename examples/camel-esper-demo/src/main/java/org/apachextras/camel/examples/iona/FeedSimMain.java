@@ -19,7 +19,7 @@
 
  http://www.gnu.org/licenses/gpl-2.0-standalone.html
  ***************************************************************************************/
-package com.iona.ps.demos;
+package org.apachextras.camel.examples.iona;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
