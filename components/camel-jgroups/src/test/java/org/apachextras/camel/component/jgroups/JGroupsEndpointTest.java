@@ -19,23 +19,18 @@
 
  http://www.gnu.org/licenses/gpl-2.0-standalone.html
  ***************************************************************************************/
-package org.apache.camel.component.jgroups;
+package org.apachextras.camel.component.jgroups;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.test.junit4.CamelTestSupport;
-import org.jgroups.JChannel;
-import org.jgroups.Message;
+import org.apachextras.camel.component.jgroups.JGroupsEndpoint;
 import org.junit.Test;
 
-public class JGroupsConsumerTest extends CamelTestSupport {
+public class JGroupsEndpointTest extends CamelTestSupport {
+
+    // Constants
 
     static final String CLUSTER_NAME = "CLUSTER_NAME";
-
-    static final String MESSAGE = "MESSAGE";
-
-    // Fixtures
-
-    JChannel channel;
 
     // Routes fixture
 
@@ -49,30 +44,24 @@ public class JGroupsConsumerTest extends CamelTestSupport {
         };
     }
 
-    // Fixture setup
+    // Tests
 
-    @Override
-    protected void doPreSetup() throws Exception {
-        super.doPreSetup();
-        channel = new JChannel();
-        channel.connect(CLUSTER_NAME);
-    }
+    @Test
+    public void shouldSetClusterName() throws Exception {
+        // When
+        JGroupsEndpoint endpoint = getMandatoryEndpoint("jgroups:" + CLUSTER_NAME, JGroupsEndpoint.class);
 
-    @Override
-    public void tearDown() throws Exception {
-        channel.close();
-        super.tearDown();
+        // Then
+        assertEquals(CLUSTER_NAME, endpoint.getClusterName());
     }
 
     @Test
-    public void shouldConsumeMulticastedMessage() throws Exception {
+    public void shouldSetChannel() throws Exception {
         // When
-        channel.send(new Message(null, null, MESSAGE));
+        JGroupsEndpoint endpoint = getMandatoryEndpoint("jgroups:" + CLUSTER_NAME, JGroupsEndpoint.class);
 
         // Then
-        getMockEndpoint("mock:test").setExpectedMessageCount(1);
-        getMockEndpoint("mock:test").expectedBodiesReceived(MESSAGE);
-        getMockEndpoint("mock:test").assertIsSatisfied();
+        assertNotNull(endpoint.getChannel());
     }
 
 }

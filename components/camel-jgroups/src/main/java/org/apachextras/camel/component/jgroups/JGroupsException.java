@@ -19,7 +19,7 @@
 
  http://www.gnu.org/licenses/gpl-2.0-standalone.html
  ***************************************************************************************/
-package org.apache.camel.component.jgroups;
+package org.apachextras.camel.component.jgroups;
 
 public class JGroupsException extends RuntimeException {
 

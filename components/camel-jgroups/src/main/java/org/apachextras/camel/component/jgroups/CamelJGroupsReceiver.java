@@ -19,7 +19,7 @@
 
  http://www.gnu.org/licenses/gpl-2.0-standalone.html
  ***************************************************************************************/
-package org.apache.camel.component.jgroups;
+package org.apachextras.camel.component.jgroups;
 
 import org.apache.camel.AsyncCallback;
 import org.apache.camel.AsyncProcessor;
@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of JGroups message receiver ({@code org.jgroups.Receiver}) wrapping incoming messages into Camel
- * exchanges. Used by {@link org.apache.camel.component.jgroups.JGroupsConsumer}.
+ * exchanges. Used by {@link JGroupsConsumer}.
  */
 public class CamelJGroupsReceiver extends ReceiverAdapter {
 

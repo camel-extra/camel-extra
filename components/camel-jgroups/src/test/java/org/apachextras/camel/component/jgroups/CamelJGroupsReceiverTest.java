@@ -19,10 +19,13 @@
 
  http://www.gnu.org/licenses/gpl-2.0-standalone.html
  ***************************************************************************************/
-package org.apache.camel.component.jgroups;
+package org.apachextras.camel.component.jgroups;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
+import org.apachextras.camel.component.jgroups.CamelJGroupsReceiver;
+import org.apachextras.camel.component.jgroups.JGroupsEndpoint;
+import org.apachextras.camel.component.jgroups.JGroupsException;
 import org.jgroups.Message;
 import org.junit.Test;
 import org.junit.runner.RunWith;

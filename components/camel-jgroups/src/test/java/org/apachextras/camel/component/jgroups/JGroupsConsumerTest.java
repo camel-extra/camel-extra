@@ -19,18 +19,15 @@
 
  http://www.gnu.org/licenses/gpl-2.0-standalone.html
  ***************************************************************************************/
-package org.apache.camel.component.jgroups;
-
-import java.util.concurrent.TimeUnit;
+package org.apachextras.camel.component.jgroups;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.jgroups.JChannel;
 import org.jgroups.Message;
-import org.jgroups.ReceiverAdapter;
 import org.junit.Test;
 
-public class JGroupsProducerTest extends CamelTestSupport {
+public class JGroupsConsumerTest extends CamelTestSupport {
 
     static final String CLUSTER_NAME = "CLUSTER_NAME";
 
@@ -40,8 +37,6 @@ public class JGroupsProducerTest extends CamelTestSupport {
 
     JChannel channel;
 
-    Object messageReceived;
-
     // Routes fixture
 
     @Override
@@ -49,7 +44,7 @@ public class JGroupsProducerTest extends CamelTestSupport {
         return new RouteBuilder() {
             @Override
             public void configure() throws Exception {
-                from("direct:start").to("jgroups:" + CLUSTER_NAME);
+                from("jgroups:" + CLUSTER_NAME).to("mock:test");
             }
         };
     }
@@ -60,12 +55,6 @@ public class JGroupsProducerTest extends CamelTestSupport {
     protected void doPreSetup() throws Exception {
         super.doPreSetup();
         channel = new JChannel();
-        channel.setReceiver(new ReceiverAdapter() {
-            @Override
-            public void receive(Message msg) {
-                messageReceived = msg.getObject();
-            }
-        });
         channel.connect(CLUSTER_NAME);
     }
 
@@ -76,32 +65,14 @@ public class JGroupsProducerTest extends CamelTestSupport {
     }
 
     @Test
-    public void shouldReceiveMulticastedBody() throws Exception {
+    public void shouldConsumeMulticastedMessage() throws Exception {
         // When
-        sendBody("direct:start", MESSAGE);
+        channel.send(new Message(null, null, MESSAGE));
 
         // Then
-        waitForMulticastChannel(5);
-        assertEquals(MESSAGE, messageReceived);
-    }
-
-    @Test
-    public void shouldNotSendNullMessage() throws Exception {
-        // When
-        sendBody("direct:start", null);
-
-        // Then
-        waitForMulticastChannel(2);
-        assertNull(messageReceived);
-    }
-
-    // Helpers
-
-    private void waitForMulticastChannel(int attempts) throws InterruptedException {
-        while (messageReceived == null && attempts > 0) {
-            TimeUnit.SECONDS.sleep(1);
-            attempts--;
-        }
+        getMockEndpoint("mock:test").setExpectedMessageCount(1);
+        getMockEndpoint("mock:test").expectedBodiesReceived(MESSAGE);
+        getMockEndpoint("mock:test").assertIsSatisfied();
     }
 
 }

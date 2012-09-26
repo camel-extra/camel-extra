@@ -19,11 +19,13 @@
 
  http://www.gnu.org/licenses/gpl-2.0-standalone.html
  ***************************************************************************************/
-package org.apache.camel.component.jgroups;
+package org.apachextras.camel.component.jgroups;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
+import org.apachextras.camel.component.jgroups.JGroupsComponent;
+import org.apachextras.camel.component.jgroups.JGroupsEndpoint;
 import org.jgroups.JChannel;
 import org.jgroups.Message;
 import org.junit.Test;

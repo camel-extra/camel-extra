@@ -19,58 +19,39 @@
 
  http://www.gnu.org/licenses/gpl-2.0-standalone.html
  ***************************************************************************************/
-package org.apache.camel.component.jgroups;
+package org.apachextras.camel.component.jgroups;
 
-import org.apache.camel.Endpoint;
-import org.apache.camel.Exchange;
-import org.apache.camel.impl.DefaultProducer;
-import org.jgroups.Address;
+import org.apache.camel.Processor;
+import org.apache.camel.impl.DefaultConsumer;
 import org.jgroups.Channel;
-import org.jgroups.Message;
 
-public class JGroupsProducer extends DefaultProducer {
+public class JGroupsConsumer extends DefaultConsumer {
 
     private final Channel channel;
-
     private final String clusterName;
 
-    public JGroupsProducer(Endpoint endpoint, Channel channel, String clusterName) {
-        super(endpoint);
+    private final CamelJGroupsReceiver receiver;
+
+    public JGroupsConsumer(JGroupsEndpoint endpoint, Processor processor, Channel channel, String clusterName) {
+        super(endpoint, processor);
         this.channel = channel;
         this.clusterName = clusterName;
+
+        this.receiver = new CamelJGroupsReceiver(endpoint, processor);
     }
 
     @Override
     protected void doStart() throws Exception {
         super.doStart();
+        log.debug("Connecting receiver: {} to the cluster: {}.", receiver, clusterName);
+        channel.setReceiver(receiver);
         channel.connect(clusterName);
     }
 
     @Override
     protected void doStop() throws Exception {
+        log.debug("Closing connection to cluster: {} from receiver: {}.", clusterName, receiver);
         channel.disconnect();
         super.doStop();
     }
-
-    @Override
-    public void process(Exchange exchange) throws Exception {
-        Object body = exchange.getIn().getBody();
-        if (body != null) {
-            Address destinationAddress = exchange.getIn().getHeader(JGroupsEndpoint.HEADER_JGROUPS_DEST, Address.class);
-            Address sourceAddress = exchange.getIn().getHeader(JGroupsEndpoint.HEADER_JGROUPS_SRC, Address.class);
-
-            log.debug("Posting: {} to cluster: {}", body, clusterName);
-            if (destinationAddress != null) {
-               log.debug("Posting to custom destination address: {}", destinationAddress);
-            }
-            if (sourceAddress != null) {
-                log.debug("Posting from custom source address: {}", sourceAddress);
-            }
-
-            channel.send(new Message(destinationAddress, sourceAddress, body));
-        } else {
-            log.debug("Body is null, cannot post to channel.");
-        }
-    }
-
 }
