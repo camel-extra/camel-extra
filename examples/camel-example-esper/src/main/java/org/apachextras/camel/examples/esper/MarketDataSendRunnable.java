@@ -19,7 +19,7 @@
 
  http://www.gnu.org/licenses/gpl-2.0-standalone.html
  ***************************************************************************************/
-package org.apachextras.camel.examples.iona;
+package org.apachextras.camel.examples.esper;
 
 import java.util.Random;
 

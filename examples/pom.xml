@@ -36,7 +36,7 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>camel-esper-demo</module>
+    <module>camel-example-esper</module>
   </modules>
 
 </project>

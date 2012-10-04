@@ -19,11 +19,26 @@
 
  http://www.gnu.org/licenses/gpl-2.0-standalone.html
  ***************************************************************************************/
-package org.apachextras.camel.examples.iona;
+package org.apachextras.camel.examples.esper;
 
-public enum FeedEnum {
+import java.io.Serializable;
 
-    FEED_A,
-    FEED_B;
+public class MarketDataEvent implements Serializable {
 
+    private static final long serialVersionUID = 5171705971847030315L;
+    private String symbol;
+    private FeedEnum feed;
+
+    public MarketDataEvent(String symbol, FeedEnum feed) {
+        this.symbol = symbol;
+        this.feed = feed;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public FeedEnum getFeed() {
+        return feed;
+    }
 }

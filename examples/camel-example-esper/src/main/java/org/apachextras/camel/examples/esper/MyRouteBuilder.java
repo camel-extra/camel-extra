@@ -19,7 +19,7 @@
 
  http://www.gnu.org/licenses/gpl-2.0-standalone.html
  ***************************************************************************************/
-package org.apachextras.camel.examples.iona;
+package org.apachextras.camel.examples.esper;
 
 import java.util.Map;
 
@@ -37,7 +37,7 @@ public class MyRouteBuilder extends RouteBuilder {
 	public void configure() {
 
 		from("activemq:EventStreamQueue").to("esper://feed");
-		from("esper://feed?eql=insert into TicksPerSecond select feed, count(*) as cnt from org.apachextras.camel.examples.iona.MarketDataEvent.win:time_batch(1 sec) group by feed")
+		from("esper://feed?eql=insert into TicksPerSecond select feed, count(*) as cnt from org.apachextras.camel.examples.esper.MarketDataEvent.win:time_batch(1 sec) group by feed")
 				.to("esper://feed");
 		from("esper://feed?eql=select feed, avg(cnt) as avgCnt, cnt as feedCnt from TicksPerSecond.win:time(10 sec) group by feed + having cnt < avg(cnt) * 0.75")
 				.process(new Processor() {
