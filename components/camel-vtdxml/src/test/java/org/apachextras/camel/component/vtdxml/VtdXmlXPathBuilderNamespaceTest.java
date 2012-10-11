@@ -19,15 +19,13 @@
 
  http://www.gnu.org/licenses/gpl-2.0-standalone.html
  ***************************************************************************************/
-package org.apache.camel.component.vtdxml;
+package org.apachextras.camel.component.vtdxml;
 
 import java.io.File;
 import java.util.Iterator;
 
-import org.apache.camel.component.vtdxml.VtdXmlXPathBuilder;
 import org.apache.camel.test.junit4.ExchangeTestSupport;
 import org.apache.camel.util.ObjectHelper;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**

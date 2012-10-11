@@ -19,7 +19,7 @@
 
  http://www.gnu.org/licenses/gpl-2.0-standalone.html
  ***************************************************************************************/
-package org.apache.camel.component.vtdxml;
+package org.apachextras.camel.component.vtdxml;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;

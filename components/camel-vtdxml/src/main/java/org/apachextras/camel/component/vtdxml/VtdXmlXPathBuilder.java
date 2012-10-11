@@ -19,7 +19,7 @@
 
  http://www.gnu.org/licenses/gpl-2.0-standalone.html
  ***************************************************************************************/
-package org.apache.camel.component.vtdxml;
+package org.apachextras.camel.component.vtdxml;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
