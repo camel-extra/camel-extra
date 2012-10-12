@@ -19,14 +19,24 @@
 
  http://www.gnu.org/licenses/gpl-2.0-standalone.html
  ***************************************************************************************/
-package org.apache.camel.component.vtdxml;
+package org.apachextras.camel.component.vtdxml;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.test.junit4.CamelTestSupport;
+import org.junit.Test;
 
 /**
  *
  */
-public class VtdXPathRouteDslTest extends VtdXPathRouteTest {
+public class VtdXPathRouteTest extends CamelTestSupport {
+
+    @Test
+    public void testVtdXPathRoute() throws Exception {
+        getMockEndpoint("mock:james").expectedMessageCount(1);
+        getMockEndpoint("mock:other").expectedMessageCount(2);
+
+        assertMockEndpointsSatisfied();
+    }
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {

@@ -19,12 +19,11 @@
 
  http://www.gnu.org/licenses/gpl-2.0-standalone.html
  ***************************************************************************************/
-package org.apache.camel.component.vtdxml;
+package org.apachextras.camel.component.vtdxml;
 
 import java.io.File;
 import java.util.Iterator;
 
-import org.apache.camel.component.vtdxml.VtdXmlXPathBuilder;
 import org.apache.camel.test.junit4.ExchangeTestSupport;
 import org.apache.camel.util.ObjectHelper;
 import org.junit.Test;
@@ -32,11 +31,12 @@ import org.junit.Test;
 /**
  *
  */
-public class VtdXmlXPathBuilderFileTest extends ExchangeTestSupport {
+public class VtdXmlXPathBuilderStringTest extends ExchangeTestSupport {
 
     @Test
     public void testVtdXmlXPathBuilderEvaluate() throws Exception {
-        exchange.getIn().setBody(new File("src/test/data/persons.xml"));
+        String data = context.getTypeConverter().convertTo(String.class, new File("src/test/data/persons.xml"));
+        exchange.getIn().setBody(data);
 
         VtdXmlXPathBuilder xpath = new VtdXmlXPathBuilder("/persons/person");
         Object result = xpath.evaluate(exchange, Object.class);
@@ -52,13 +52,14 @@ public class VtdXmlXPathBuilderFileTest extends ExchangeTestSupport {
 
     @Test
     public void testVtdXmlXPathBuilderMatches() throws Exception {
-        exchange.getIn().setBody(new File("src/test/data/persons.xml"));
+        String data = context.getTypeConverter().convertTo(String.class, new File("src/test/data/persons.xml"));
+        exchange.getIn().setBody(data);
 
         VtdXmlXPathBuilder xpath = new VtdXmlXPathBuilder("/persons/person/name = 'James Strachan'");
         boolean matches = xpath.matches(exchange);
         assertTrue("Should match", matches);
 
-        xpath = new VtdXmlXPathBuilder("/persons/person/name = 'Doald Duck'");
+        xpath = new VtdXmlXPathBuilder("/persons/person/name = 'Donald Duck'");
         matches = xpath.matches(exchange);
         assertFalse("Should not match", matches);
     }
