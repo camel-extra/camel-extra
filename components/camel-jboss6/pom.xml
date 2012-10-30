@@ -36,7 +36,7 @@
     <description>Camel JBoss 6.x support</description>
 
     <properties>
-        <camel.osgi.export.pkg>org.apachextras.camel.jboss</camel.osgi.export.pkg>
+        <camel.osgi.export.pkg>org.apacheextras.camel.jboss</camel.osgi.export.pkg>
     </properties>
 
     <repositories>

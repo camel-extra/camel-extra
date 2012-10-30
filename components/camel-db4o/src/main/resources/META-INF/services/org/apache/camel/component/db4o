@@ -18,4 +18,4 @@
 #
 # http://www.gnu.org/licenses/gpl-2.0-standalone.html
 
-class=org.apachextras.camel.component.db4o.Db4oComponent
+class=org.apacheextras.camel.component.db4o.Db4oComponent
