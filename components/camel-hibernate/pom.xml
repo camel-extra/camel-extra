@@ -36,7 +36,7 @@
   <description>Camel Hibernate support</description>
 
   <properties>
-    <camel.osgi.export.pkg>org.apachextras.camel.component.hibernate</camel.osgi.export.pkg>
+    <camel.osgi.export.pkg>org.apacheextras.camel.component.hibernate</camel.osgi.export.pkg>
   </properties>
 
   <dependencies>
