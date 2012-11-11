@@ -126,11 +126,17 @@ public class ZeromqProducerTest {
 
     @Test
     public void stopInterruptsBlockedSender() throws Exception {
+        producer.start();
         when(socket.send((byte[]) any(), anyInt())).then(new Answer() {
 
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {
-                new ArrayBlockingQueue(10).take(); // anything just to
+                try {
+                    new ArrayBlockingQueue(10).take(); // anything just to
+                } catch (InterruptedException e) {
+                    // ignore
+                    return null;
+                }
                 // block
                 return null;
             }
@@ -142,7 +148,7 @@ public class ZeromqProducerTest {
                 try {
                     producer.process(exchange);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    // ignore
                 }
             }
         });
