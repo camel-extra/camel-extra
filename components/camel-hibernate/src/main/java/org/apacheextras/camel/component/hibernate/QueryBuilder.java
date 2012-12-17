@@ -45,8 +45,8 @@ public abstract class QueryBuilder implements QueryFactory {
      */
     public static QueryBuilder query(final String query) {
         return new QueryBuilder() {
-            protected Query makeQueryObject(Session entityManager) {
-                return entityManager.createQuery(query);
+            protected Query makeQueryObject(Session session) {
+                return session.createQuery(query);
             }
 
             @Override
@@ -62,8 +62,8 @@ public abstract class QueryBuilder implements QueryFactory {
      */
     public static QueryBuilder nativeQuery(final String nativeQuery) {
         return new QueryBuilder() {
-            protected Query makeQueryObject(Session entityManager) {
-                return entityManager.createSQLQuery(nativeQuery);
+            protected Query makeQueryObject(Session session) {
+                return session.createSQLQuery(nativeQuery);
             }
 
             @Override

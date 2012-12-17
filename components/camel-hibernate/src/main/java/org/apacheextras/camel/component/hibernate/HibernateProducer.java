@@ -21,15 +21,13 @@
  ***************************************************************************************/
 package org.apacheextras.camel.component.hibernate;
 
+import java.util.Iterator;
+
 import org.apache.camel.Exchange;
 import org.apache.camel.Expression;
 import org.apache.camel.converter.ObjectConverter;
 import org.apache.camel.impl.DefaultProducer;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
-
-import java.sql.SQLException;
-import java.util.Iterator;
 
 public class HibernateProducer extends DefaultProducer {
     private final TransactionStrategy template;

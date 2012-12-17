@@ -27,6 +27,7 @@ import org.apache.camel.impl.ScheduledPollConsumer;
 import org.apache.camel.util.ObjectHelper;
 import org.apache.camel.RuntimeCamelException;
 import org.hibernate.LockMode;
+import org.hibernate.LockOptions;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.slf4j.Logger;
@@ -171,7 +172,9 @@ public class HibernateConsumer extends ScheduledPollConsumer {
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Acquiring exclusive lock on entity: " + entity);
             }
-            session.lock(entity, LockMode.WRITE);
+            session.buildLockRequest(LockOptions.UPGRADE)
+            		.setLockMode(LockMode.PESSIMISTIC_WRITE)
+            		.setTimeOut(60000).lock(entity);
             return true;
         } catch (Exception e) {
             if (LOG.isDebugEnabled()) {

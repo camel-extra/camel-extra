@@ -27,7 +27,8 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
-import org.hibernate.connection.DriverManagerConnectionProvider;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -48,16 +49,19 @@ public class QueryBuilderIntegrationTest extends Assert {
 
     @Before
     public void setUp() {
-        SessionFactory sessionFactory =
-                new Configuration().
+        Configuration configuration
+                = new Configuration().
                         setProperty(Environment.DIALECT,"org.hibernate.dialect.HSQLDialect").
-                        setProperty(Environment.CONNECTION_PROVIDER, DriverManagerConnectionProvider.class.getName()).
                         setProperty(Environment.URL, "jdbc:hsqldb:.").
                         setProperty(Environment.USER, "sa").
                         setProperty(Environment.PASS, "").
                         setProperty(Environment.HBM2DDL_AUTO, "create").
-                        addResource("org/apacheextras/camel/examples/SendEmail.hbm.xml").
-                        buildSessionFactory();
+                        addResource("org/apacheextras/camel/examples/SendEmail.hbm.xml");
+        ServiceRegistry serviceRegistry = new ServiceRegistryBuilder()
+        		.applySettings(configuration.getProperties())
+        		.buildServiceRegistry();
+        SessionFactory sessionFactory = configuration.buildSessionFactory(
+        		serviceRegistry);
         session = sessionFactory.openSession();
 
         session.save(new SendEmail(address));

@@ -32,10 +32,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit38.AbstractJUnit38SpringContextTests;
+import org.junit.Ignore;
 
 import java.util.List;
 
 @ContextConfiguration
+@Ignore
 public class HibernateSpringTest extends AbstractJUnit38SpringContextTests {
     private static final transient Logger LOG = LoggerFactory.getLogger(HibernateSpringTest.class);
 

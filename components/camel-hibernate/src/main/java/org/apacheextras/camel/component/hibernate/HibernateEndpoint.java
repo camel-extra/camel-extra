@@ -21,7 +21,6 @@
  ***************************************************************************************/
 package org.apacheextras.camel.component.hibernate;
 
-import org.apache.camel.Component;
 import org.apache.camel.Consumer;
 import org.apache.camel.Exchange;
 import org.apache.camel.Expression;

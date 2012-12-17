@@ -21,7 +21,7 @@
  ***************************************************************************************/
 package org.apacheextras.camel.component.hibernate;
 
-import org.apache.camel.impl.ServiceSupport;
+import org.apache.camel.support.ServiceSupport;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -34,7 +34,7 @@ public class DefaultTransactionStrategy extends ServiceSupport implements Transa
     }
 
     public <T> T execute(TransactionCallback<T> callback) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();

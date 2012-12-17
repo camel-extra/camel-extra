@@ -32,8 +32,8 @@ public interface QueryFactory {
     /**
      * Creates a new query to find objects to be processed
      *
-     * @param entityManager the entity manager
+     * @param session the Session
      * @return the query configured with any parameters etc
      */
-    Query createQuery(Session entityManager);
+    Query createQuery(Session session);
 }
