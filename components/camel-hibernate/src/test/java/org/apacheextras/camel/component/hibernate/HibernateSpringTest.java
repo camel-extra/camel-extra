@@ -29,14 +29,15 @@ import org.apache.camel.component.mock.MockEndpoint;
 import org.apacheextras.camel.examples.SendEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit38.AbstractJUnit38SpringContextTests;
+import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.junit.Ignore;
+import org.junit.Test;
 
 import java.util.List;
 
 @ContextConfiguration
 @Ignore
-public class HibernateSpringTest extends AbstractJUnit38SpringContextTests {
+public class HibernateSpringTest extends AbstractJUnit4SpringContextTests {
 
     @EndpointInject(uri = "mock:result")
     protected MockEndpoint resultEndpoint;
@@ -44,14 +45,14 @@ public class HibernateSpringTest extends AbstractJUnit38SpringContextTests {
     @Autowired
     protected ProducerTemplate template;
 
-
+    @Test
     public void testProducerInsertsIntoDatabaseThenConsumerFiresMessageExchange() throws Exception {
+        resultEndpoint.expectedMessageCount(1);
+
         template.sendBody(new SendEmail("foo@bar.com"));
 
-        resultEndpoint.expectedMessageCount(1);
         resultEndpoint.assertIsSatisfied();
         List<Exchange> list = resultEndpoint.getReceivedExchanges();
         System.out.println("Received: " + list);
     }
-
 }

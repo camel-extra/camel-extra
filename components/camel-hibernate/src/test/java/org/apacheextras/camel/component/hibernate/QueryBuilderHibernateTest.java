@@ -21,19 +21,21 @@
  ***************************************************************************************/
 package org.apacheextras.camel.component.hibernate;
 
+import static org.junit.Assert.assertEquals;
+
 import org.apacheextras.camel.examples.SendEmail;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
-import org.hibernate.connection.DriverManagerConnectionProvider;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class QueryBuilderIntegrationTest extends Assert {
+public class QueryBuilderHibernateTest {
 
     // Fixtures
 
@@ -48,16 +50,18 @@ public class QueryBuilderIntegrationTest extends Assert {
 
     @Before
     public void setUp() {
-        SessionFactory sessionFactory =
-                new Configuration().
-                        setProperty(Environment.DIALECT,"org.hibernate.dialect.DerbyDialect").
-                        setProperty(Environment.CONNECTION_PROVIDER, DriverManagerConnectionProvider.class.getName()).
-                        setProperty(Environment.URL, "jdbc:derby:target/testdb;create=true").
-                        setProperty(Environment.USER, "").
-                        setProperty(Environment.PASS, "").
-                        setProperty(Environment.HBM2DDL_AUTO, "create").
-                        addResource("org/apacheextras/camel/examples/SendEmail.hbm.xml").
-                        buildSessionFactory();
+        Configuration configuration
+            = new Configuration().
+                setProperty(Environment.DIALECT,"org.hibernate.dialect.DerbyDialect").
+                setProperty(Environment.URL, "jdbc:derby:target/testdb;create=true").
+                setProperty(Environment.USER, "").
+                setProperty(Environment.PASS, "").
+                setProperty(Environment.HBM2DDL_AUTO, "create").
+                addResource("org/apacheextras/camel/examples/SendEmail.hbm.xml");
+        ServiceRegistry serviceRegistry = new ServiceRegistryBuilder()
+            .applySettings(configuration.getProperties())
+            .buildServiceRegistry();
+        SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
         session = sessionFactory.openSession();
 
         session.save(new SendEmail(address));

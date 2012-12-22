@@ -15,7 +15,6 @@
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
     ">
 
-
   <camelContext xmlns="http://camel.apache.org/schema/spring">
     <template id="template" defaultEndpoint="hibernate://org.apacheextras.camel.examples.SendEmail"/>
 
