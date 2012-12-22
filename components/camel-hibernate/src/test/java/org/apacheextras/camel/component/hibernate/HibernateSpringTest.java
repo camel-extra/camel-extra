@@ -27,8 +27,6 @@ import org.apache.camel.Exchange;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apacheextras.camel.examples.SendEmail;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit38.AbstractJUnit38SpringContextTests;
@@ -39,7 +37,6 @@ import java.util.List;
 @ContextConfiguration
 @Ignore
 public class HibernateSpringTest extends AbstractJUnit38SpringContextTests {
-    private static final transient Logger LOG = LoggerFactory.getLogger(HibernateSpringTest.class);
 
     @EndpointInject(uri = "mock:result")
     protected MockEndpoint resultEndpoint;
