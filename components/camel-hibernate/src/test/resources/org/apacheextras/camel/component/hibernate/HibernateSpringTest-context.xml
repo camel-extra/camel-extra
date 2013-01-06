@@ -34,11 +34,7 @@
         <constructor-arg ref="transactionTemplate"/>
     </bean>
 
-  <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
-    <property name="sessionFactory" ref="sessionFactory"/>
-  </bean>
-
-  <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+  <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
     <property name="dataSource" ref="dataSource"/>
     <property name="mappingResources">
       <list>
@@ -55,7 +51,7 @@
 
   <jdbc:embedded-database id="dataSource" type="DERBY" />
 
-  <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+  <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
     <property name="sessionFactory" ref="sessionFactory"/>
   </bean>
 

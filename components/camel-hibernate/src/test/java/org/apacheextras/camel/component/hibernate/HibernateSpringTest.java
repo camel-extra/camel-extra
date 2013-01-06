@@ -22,21 +22,19 @@
 package org.apacheextras.camel.component.hibernate;
 
 
+import java.util.List;
+
 import org.apache.camel.EndpointInject;
 import org.apache.camel.Exchange;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apacheextras.camel.examples.SendEmail;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
-import org.junit.Ignore;
-import org.junit.Test;
-
-import java.util.List;
 
 @ContextConfiguration
-@Ignore
 public class HibernateSpringTest extends AbstractJUnit4SpringContextTests {
 
     @EndpointInject(uri = "mock:result")
