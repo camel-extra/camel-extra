@@ -33,6 +33,7 @@
 
   <artifactId>camel-zeromq</artifactId>
   <version>2.11-SNAPSHOT</version>
+  <name>Camel :: ZeroMQ</name>
   <packaging>bundle</packaging>
 
   <properties>
