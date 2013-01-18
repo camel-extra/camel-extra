@@ -21,11 +21,7 @@
  ***************************************************************************************/
 package org.apacheextras.camel.component.zeromq;
 
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.Endpoint;
