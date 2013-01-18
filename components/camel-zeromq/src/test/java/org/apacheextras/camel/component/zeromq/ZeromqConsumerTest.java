@@ -119,28 +119,15 @@ public class ZeromqConsumerTest extends CamelTestSupport {
     }
 
     @Test
-    public void stopInterruptsExecutor() throws Exception {
-        ExecutorService realexe = Executors.newSingleThreadExecutor();
-        Future future = realexe.submit(new Runnable() {
-
-            @Override
-            public void run() {
-                try {
-                    // anything just to block
-                    BlockingQueue queue = new ArrayBlockingQueue(10);
-                    queue.take();
-                    fail("We were not interrupted");
-                } catch (InterruptedException e) {
-                }
-            }
-
-        });
-        when(manager.newFixedThreadPool(any(ZeromqConsumer.class), anyString(), anyInt())).thenReturn(realexe);
+    public void shouldStopExecutor() throws Exception {
+        // Given
         consumer.doStart();
+
+        // When
         consumer.doStop();
-        future.get();
-        assertTrue(realexe.isShutdown());
-        assertTrue(realexe.isTerminated());
+
+        // Then
+        verify(executor).shutdownNow();
     }
 
     @Test
