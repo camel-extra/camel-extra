@@ -49,7 +49,7 @@
     <site-repo-url>scpexe://people.apache.org/www/activemq.apache.org/camel/maven/</site-repo-url>
     <sonatypeOssDistMgmtSnapshotsUrl>https://oss.sonatype.org/content/repositories/snapshots/</sonatypeOssDistMgmtSnapshotsUrl>
 
-    <!-- OSGi bundles properties -->
+    <!-- OSGI bundles properties -->
     <camel.osgi.import.pkg>
       !${camel.osgi.export.pkg},
       org.apache.camel.*;${camel.osgi.import.camel.version},
