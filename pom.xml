@@ -50,7 +50,11 @@
     <sonatypeOssDistMgmtSnapshotsUrl>https://oss.sonatype.org/content/repositories/snapshots/</sonatypeOssDistMgmtSnapshotsUrl>
 
     <!-- OSGi bundles properties -->
-    <camel.osgi.import.pkg>*</camel.osgi.import.pkg>
+    <camel.osgi.import.pkg>
+      !${camel.osgi.export.pkg},
+      org.apache.camel.*;${camel.osgi.import.camel.version},
+      *
+    </camel.osgi.import.pkg>
     <camel.osgi.private.pkg>!*</camel.osgi.private.pkg>
     <camel.osgi.export>${camel.osgi.export.pkg}*;version=${camel.osgi.export.version}</camel.osgi.export>
     <camel.osgi.export.version>${project.version}</camel.osgi.export.version>
