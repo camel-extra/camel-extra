@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--
+  Copyright (C) 2008 - 2012 Camel Extra Team. All rights reserved.
+  http://code.google.com/a/apache-extras.org/p/camel-extra
+
+  The software in this package is published under the terms of the GPL license
+  a copy of which has been included with this distribution in the license.txt file.
+-->
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.jboss.org/dtd/hibernate/hibernate-mapping.dtd">
+
+<hibernate-mapping>
+
+	<class name="org.apacheextras.camel.examples.hibernate.Order" schema="orders" table="incoming_order">
+
+		<id name="id">
+			<generator class="native"/>
+		</id>
+
+		<property name="item" length="8"/>
+		<property name="amount" length="4"/>
+		<property name="description" length="50"/>
+	</class>
+
+</hibernate-mapping>

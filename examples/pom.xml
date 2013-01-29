@@ -37,6 +37,7 @@
 
   <modules>
     <module>camel-example-esper</module>
+    <module>camel-example-hibernate</module>
   </modules>
 
 </project>
