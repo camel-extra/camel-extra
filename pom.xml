@@ -42,7 +42,7 @@
   </prerequisites>
 
   <properties>
-    <camel-version>2.10.0</camel-version>
+    <camel-version>2.10.1</camel-version>
 
     <release-repo-url>scpexe://people.apache.org/www/people.apache.org/repo/m2-ibiblio-rsync-repository
     </release-repo-url>
