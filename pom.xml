@@ -154,9 +154,9 @@
   </distributionManagement>
 
   <scm>
-    <connection>scm:svn:http://svn.codespot.com/a/apache-extras.org/camel-extra/tags/camel-extra-2.10.0</connection>
-    <developerConnection>scm:svn:https://svn.codespot.com/a/apache-extras.org/camel-extra/tags/camel-extra-2.10.0</developerConnection>
-    <url>http://svn.codespot.com/a/apache-extras.org/camel-extra/tags/camel-extra-2.10.0</url>
+    <connection>scm:svn:http://svn.codespot.com/a/apache-extras.org/camel-extra/branches/camel-extra-2.10.x</connection>
+    <developerConnection>scm:svn:https://svn.codespot.com/a/apache-extras.org/camel-extra/branches/camel-extra-2.10.x</developerConnection>
+    <url>http://svn.codespot.com/a/apache-extras.org/camel-extra/branches/camel-extra-2.10.x</url>
   </scm>
 
   <modules>
