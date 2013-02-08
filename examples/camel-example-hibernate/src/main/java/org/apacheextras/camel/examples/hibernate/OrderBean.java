@@ -31,8 +31,9 @@ public class OrderBean {
      * Generates a new order structured as a {@link Map}
      */
     public Order generateOrder() {
+    	counter++;
+    	
         Order answer = new Order();
-        answer.setId(counter++);
         answer.setItem(counter % 2 == 0 ? 111 : 222);
         answer.setAmount(ran.nextInt(10) + 1);
         answer.setDescription(counter % 2 == 0 ? "Camel in Action" : "ActiveMQ in Action");
