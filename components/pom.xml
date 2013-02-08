@@ -36,13 +36,13 @@
   <packaging>pom</packaging>
 
   <modules>
+    <module>camel-db4o</module>
     <module>camel-esper</module>
     <module>camel-exist</module>
     <module>camel-hibernate</module>
-    <module>camel-jboss6</module>
     <module>camel-jboss</module>
+    <module>camel-jboss6</module>
     <module>camel-jgroups</module>
-    <module>camel-db4o</module>
     <module>camel-vtdxml</module>
     <module>camel-zeromq</module>
   </modules>

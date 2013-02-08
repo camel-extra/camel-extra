@@ -32,8 +32,8 @@
 
     <artifactId>camel-jboss</artifactId>
     <packaging>bundle</packaging>
-    <name>Camel :: JBoss</name>
-    <description>Camel JBoss support</description>
+    <name>Camel :: JBoss 5.x</name>
+    <description>Camel JBoss 5.x support</description>
 
     <properties>
         <camel.osgi.export.pkg>org.apacheextras.camel.jboss</camel.osgi.export.pkg>
