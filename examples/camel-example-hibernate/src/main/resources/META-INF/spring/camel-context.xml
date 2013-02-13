@@ -29,7 +29,6 @@
        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
-  <!-- START SNIPPET: e1 -->
   <!-- this is the JDBC data source which uses an in-memory only Apache Derby database -->
   <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
     <property name="driverClassName" value="org.apache.derby.jdbc.EmbeddedDriver"/>
@@ -64,31 +63,34 @@
 
   </camelContext>
 
+  <!-- setup the Camel hibernate component -->
   <bean id="hibernate" class="org.apacheextras.camel.component.hibernate.HibernateComponent">
     <property name="sessionFactory" ref="sessionFactory"/>
     <property name="transactionStrategy" ref="springTransactionStrategy"/>
   </bean>
 
+  <!-- setup hibernate and spring to use transaction -->
   <bean id="springTransactionStrategy" class="org.apacheextras.camel.component.hibernate.SpringTransactionStrategy">
     <constructor-arg ref="sessionFactory"/>
     <constructor-arg ref="transactionTemplate"/>
   </bean>
-
   <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
     <property name="sessionFactory" ref="sessionFactory"/>
   </bean>
-
   <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
     <property name="transactionManager" ref="transactionManager"/>
   </bean>
 
+  <!-- setup Hibernate session factory -->
   <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
     <property name="dataSource" ref="dataSource"/>
+    <!-- here we define the hibernate mapping files we use -->
     <property name="mappingResources">
       <list>
         <value>Order.hbm.xml</value>
       </list>
     </property>
+    <!-- and here we have additional hibernate options -->
     <property name="hibernateProperties">
       <value>
         hibernate.dialect=org.hibernate.dialect.DerbyTenSevenDialect
@@ -96,6 +98,5 @@
       </value>
     </property>
   </bean>
-
 
 </beans>
