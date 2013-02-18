@@ -39,13 +39,6 @@
         <camel.osgi.export.pkg>org.apacheextras.camel.jboss</camel.osgi.export.pkg>
     </properties>
 
-    <repositories>
-        <repository>
-            <id>jboss</id>
-            <url>http://repository.jboss.org/nexus/content/groups/public-jboss/</url>
-        </repository>
-    </repositories>
-
   	<dependencies>
 		<dependency>
 			<groupId>org.apache.camel</groupId>
@@ -57,7 +50,7 @@
 		<dependency>
 			<groupId>org.jboss</groupId>
 			<artifactId>jboss-vfs</artifactId>
-			<version>3.0.0.GA</version>
+			<version>${jboss-vfs6-version}</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>

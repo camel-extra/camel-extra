@@ -48,12 +48,12 @@
     <dependency>
       <groupId>exist</groupId>
       <artifactId>exist</artifactId>
-      <version>0.9.2</version>
+      <version>${exist-version}</version>
     </dependency>
     <dependency>
       <groupId>exist</groupId>
       <artifactId>exist-xmldb</artifactId>
-      <version>0.9.2</version>
+      <version>${exist-version}</version>
     </dependency>
 
     <!-- testing -->
