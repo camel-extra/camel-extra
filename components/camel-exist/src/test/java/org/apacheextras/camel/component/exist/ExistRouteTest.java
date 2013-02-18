@@ -21,18 +21,20 @@
  ***************************************************************************************/
 package org.apacheextras.camel.component.exist;
 
-import java.util.List;
-
-import org.apache.camel.ContextTestSupport;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
+import org.apache.camel.test.junit4.CamelTestSupport;
 import org.exist.xmldb.DatabaseImpl;
+import org.junit.Test;
 import org.xmldb.api.DatabaseManager;
 
-public class ExistRouteTest extends ContextTestSupport {
+import java.util.List;
+
+public class ExistRouteTest extends CamelTestSupport {
     private DatabaseImpl database;
 
+    @Test
     public void testSendMessagesIntoEsper() throws Exception {
         MockEndpoint endpoint = getMockEndpoint("mock:results");
         endpoint.expectedMessageCount(2);
@@ -41,19 +43,17 @@ public class ExistRouteTest extends ContextTestSupport {
         template.sendBody("direct:start", "<order product='pizza' amount='2' id='b'/>");
         template.sendBody("direct:start", "<order product='beer' amount='3' id='c'/>");
 
-        String[] expectedFoos = {"b", "d"};
-
         assertMockEndpointsSatisfied();
+
         List<Exchange> list = endpoint.getReceivedExchanges();
-        int counter = 0;
         for (Exchange exchange : list) {
             Object value = exchange.getIn().getBody();
-            System.out.println("Received: " + value);
+            log.info("Received {}", value);
         }
     }
 
     @Override
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         database = new DatabaseImpl();
         database.setProperty("create-database", "true");
         //database.setProperty("configuration", "src/test/resources/conf.xml");
