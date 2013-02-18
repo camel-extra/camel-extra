@@ -40,14 +40,6 @@
     <camel.osgi.export.pkg>org.apacheextras.camel.component.zeromq</camel.osgi.export.pkg>
   </properties>
 
-  <repositories>
-    <repository>
-      <id>akka.repository</id>
-      <name>Akka Maven Repository</name>
-      <url>http://repo.akka.io/releases/</url>
-    </repository>
-  </repositories>
-
   <dependencies>
 
     <dependency>
@@ -58,8 +50,8 @@
     <!-- akka-zeromq -->
     <dependency>
       <groupId>com.typesafe.akka</groupId>
-      <artifactId>akka-zeromq</artifactId>
-      <version>2.1-M1</version>
+      <artifactId>akka-zeromq_2.10</artifactId>
+      <version>2.1.0</version>
     </dependency>
 
     <dependency>
