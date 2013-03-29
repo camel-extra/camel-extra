@@ -71,6 +71,7 @@
     <jboss-vfs6-version>3.0.0.GA</jboss-vfs6-version>
     <jgroups-version>3.0.10.Final</jgroups-version>
     <mockito-version>1.9.5</mockito-version>
+    <spring-neo4j-version>2.2.0.RELEASE</spring-neo4j-version>
     <vtd-xml-version>2.1.0</vtd-xml-version>
   </properties>
 

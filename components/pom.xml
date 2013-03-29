@@ -43,6 +43,7 @@
     <module>camel-jboss</module>
     <module>camel-jboss6</module>
     <module>camel-jgroups</module>
+    <module>camel-spring-neo4j</module>
     <module>camel-vtdxml</module>
     <module>camel-zeromq</module>
   </modules>
