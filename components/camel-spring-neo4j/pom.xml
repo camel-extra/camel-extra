@@ -27,7 +27,7 @@
 
   <artifactId>camel-spring-neo4j</artifactId>
   <packaging>bundle</packaging>
-  <name>Camel :: Neo4j</name>
+  <name>Camel Extra :: Neo4j</name>
   <description>Camel Spring Neo4j support</description>
 
   <properties>

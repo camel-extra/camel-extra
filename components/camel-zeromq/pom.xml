@@ -28,12 +28,11 @@
     <groupId>org.apache-extras.camel-extra</groupId>
     <artifactId>components</artifactId>
     <version>2.11-SNAPSHOT</version>
-    <relativePath>..</relativePath>
   </parent>
 
   <artifactId>camel-zeromq</artifactId>
   <version>2.11-SNAPSHOT</version>
-  <name>Camel :: ZeroMQ</name>
+  <name>Camel Extra :: ZeroMQ</name>
   <packaging>bundle</packaging>
 
   <properties>
