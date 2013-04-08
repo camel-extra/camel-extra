@@ -56,12 +56,12 @@ public class JGroupsEndpointTest extends CamelTestSupport {
     }
 
     @Test
-    public void shouldSetChannel() throws Exception {
+    public void shouldResolveDefaultChannel() throws Exception {
         // When
         JGroupsEndpoint endpoint = getMandatoryEndpoint("jgroups:" + CLUSTER_NAME, JGroupsEndpoint.class);
 
         // Then
-        assertNotNull(endpoint.getChannel());
+        assertNotNull(endpoint.getResolvedChannel());
     }
 
 }

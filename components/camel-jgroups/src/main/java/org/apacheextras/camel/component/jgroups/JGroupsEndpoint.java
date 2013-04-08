@@ -27,7 +27,9 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.Producer;
 import org.apache.camel.impl.DefaultEndpoint;
+import org.apache.commons.lang.StringUtils;
 import org.jgroups.Channel;
+import org.jgroups.JChannel;
 import org.jgroups.Message;
 
 public class JGroupsEndpoint extends DefaultEndpoint {
@@ -38,22 +40,27 @@ public class JGroupsEndpoint extends DefaultEndpoint {
 
     private Channel channel;
 
+    private Channel resolvedChannel;
+
     private String clusterName;
 
-    public JGroupsEndpoint(String endpointUri, Component component, Channel channel, String clusterName) {
+    private String channelProperties;
+
+    public JGroupsEndpoint(String endpointUri, Component component, Channel channel, String clusterName, String channelProperties) {
         super(endpointUri, component);
         this.channel = channel;
         this.clusterName = clusterName;
+        this.channelProperties = channelProperties;
     }
 
     @Override
     public Producer createProducer() throws Exception {
-        return new JGroupsProducer(this, channel, clusterName);
+        return new JGroupsProducer(this, resolvedChannel, clusterName);
     }
 
     @Override
     public Consumer createConsumer(Processor processor) throws Exception {
-        return new JGroupsConsumer(this, processor, channel, clusterName);
+        return new JGroupsConsumer(this, processor, resolvedChannel, clusterName);
     }
 
     @Override
@@ -70,9 +77,25 @@ public class JGroupsEndpoint extends DefaultEndpoint {
     }
 
     @Override
+    protected void doStart() throws Exception {
+        super.doStart();
+        resolvedChannel = resolveChannel();
+    }
+
+    @Override
     protected void doStop() throws Exception {
-        channel.close();
+        resolvedChannel.close();
         super.doStop();
+    }
+
+    private Channel resolveChannel() throws Exception {
+        if (channel != null) {
+            return channel;
+        }
+        if (StringUtils.isNotBlank(channelProperties)) {
+            return new JChannel(channelProperties);
+        }
+        return new JChannel();
     }
 
     public Channel getChannel() {
@@ -89,6 +112,22 @@ public class JGroupsEndpoint extends DefaultEndpoint {
 
     public void setClusterName(String clusterName) {
         this.clusterName = clusterName;
+    }
+
+    public String getChannelProperties() {
+        return channelProperties;
+    }
+
+    public void setChannelProperties(String channelProperties) {
+        this.channelProperties = channelProperties;
+    }
+
+    public Channel getResolvedChannel() {
+        return resolvedChannel;
+    }
+
+    public void setResolvedChannel(Channel resolvedChannel) {
+        this.resolvedChannel = resolvedChannel;
     }
 
 }
