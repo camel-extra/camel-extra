@@ -23,7 +23,6 @@ package org.apacheextras.camel.component.jgroups;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.test.junit4.CamelTestSupport;
-import org.apacheextras.camel.component.jgroups.JGroupsEndpoint;
 import org.junit.Test;
 
 public class JGroupsEndpointTest extends CamelTestSupport {

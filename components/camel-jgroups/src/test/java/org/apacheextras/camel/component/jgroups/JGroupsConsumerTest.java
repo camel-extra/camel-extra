@@ -22,6 +22,7 @@
 package org.apacheextras.camel.component.jgroups;
 
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.jgroups.JChannel;
 import org.jgroups.Message;
@@ -29,11 +30,13 @@ import org.junit.Test;
 
 public class JGroupsConsumerTest extends CamelTestSupport {
 
-    static final String CLUSTER_NAME = "CLUSTER_NAME";
-
-    static final String MESSAGE = "MESSAGE";
-
     // Fixtures
+
+    String clusterName = "clusterName";
+
+    String mockEndpoint = "mock:test";
+
+    String message = "message";
 
     JChannel channel;
 
@@ -44,7 +47,7 @@ public class JGroupsConsumerTest extends CamelTestSupport {
         return new RouteBuilder() {
             @Override
             public void configure() throws Exception {
-                from("jgroups:" + CLUSTER_NAME).to("mock:test");
+                from("jgroups:" + clusterName).to(mockEndpoint);
             }
         };
     }
@@ -55,7 +58,7 @@ public class JGroupsConsumerTest extends CamelTestSupport {
     protected void doPreSetup() throws Exception {
         super.doPreSetup();
         channel = new JChannel();
-        channel.connect(CLUSTER_NAME);
+        channel.connect(clusterName);
     }
 
     @Override
@@ -67,12 +70,13 @@ public class JGroupsConsumerTest extends CamelTestSupport {
     @Test
     public void shouldConsumeMulticastedMessage() throws Exception {
         // When
-        channel.send(new Message(null, null, MESSAGE));
+        channel.send(new Message(null, null, message));
 
         // Then
-        getMockEndpoint("mock:test").setExpectedMessageCount(1);
-        getMockEndpoint("mock:test").expectedBodiesReceived(MESSAGE);
-        getMockEndpoint("mock:test").assertIsSatisfied();
+        MockEndpoint mock = getMockEndpoint(mockEndpoint);
+        mock.setExpectedMessageCount(1);
+        mock.expectedBodiesReceived(message);
+        mock.assertIsSatisfied();
     }
 
 }
