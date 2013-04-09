@@ -27,7 +27,6 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.Producer;
 import org.apache.camel.impl.DefaultEndpoint;
-import org.apache.commons.lang.StringUtils;
 import org.jgroups.Channel;
 import org.jgroups.JChannel;
 import org.jgroups.Message;
@@ -92,7 +91,7 @@ public class JGroupsEndpoint extends DefaultEndpoint {
         if (channel != null) {
             return channel;
         }
-        if (StringUtils.isNotBlank(channelProperties)) {
+        if (channelProperties != null && !channelProperties.isEmpty()) {
             return new JChannel(channelProperties);
         }
         return new JChannel();
