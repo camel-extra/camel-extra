@@ -25,6 +25,10 @@ import org.apache.camel.Processor;
 import org.apache.camel.impl.DefaultConsumer;
 import org.jgroups.Channel;
 
+/**
+ * Consumes messages from the JGroups channels ({@code org.jgroups.Channel}). Received messages
+ * ({@code org.jgroups.Message}) are routed to Camel as the body of {@link org.apache.camel.Exchange}.
+ */
 public class JGroupsConsumer extends DefaultConsumer {
 
     private final Channel channel;

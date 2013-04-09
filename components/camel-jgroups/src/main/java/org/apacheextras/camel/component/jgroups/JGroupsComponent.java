@@ -27,6 +27,9 @@ import org.apache.camel.Endpoint;
 import org.apache.camel.impl.DefaultComponent;
 import org.jgroups.Channel;
 
+/**
+ * Component providing support for messages multicasted from- or to JGroups channels ({@code org.jgroups.Channel}).
+ */
 public class JGroupsComponent extends DefaultComponent {
 
     private Channel channel;
