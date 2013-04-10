@@ -23,9 +23,6 @@ package org.apacheextras.camel.component.jgroups;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.apacheextras.camel.component.jgroups.CamelJGroupsReceiver;
-import org.apacheextras.camel.component.jgroups.JGroupsEndpoint;
-import org.apacheextras.camel.component.jgroups.JGroupsException;
 import org.jgroups.Message;
 import org.junit.Test;
 import org.junit.runner.RunWith;

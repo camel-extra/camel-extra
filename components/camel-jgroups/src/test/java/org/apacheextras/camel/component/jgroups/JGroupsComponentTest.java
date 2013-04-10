@@ -24,8 +24,6 @@ package org.apacheextras.camel.component.jgroups;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
-import org.apacheextras.camel.component.jgroups.JGroupsComponent;
-import org.apacheextras.camel.component.jgroups.JGroupsEndpoint;
 import org.jgroups.JChannel;
 import org.jgroups.Message;
 import org.junit.Test;
@@ -38,7 +36,11 @@ public class JGroupsComponentTest extends CamelTestSupport {
 
     static final String MESSAGE = "MESSAGE";
 
-    static final String SAMPLE_CHANNEL_PROPERTIES = "UDP(discard_incompatible_packets=\"true\")";
+    static final String SAMPLE_CHANNEL_PROPERTY = "discard_incompatible_packets=true";
+
+    static final String SAMPLE_CHANNEL_PROPERTIES = String.format("UDP(%s)", SAMPLE_CHANNEL_PROPERTY);
+
+    static final String CONFIGURED_ENDPOINT_URI = String.format("jgroups:%s?channelProperties=%s", CLUSTER_NAME, SAMPLE_CHANNEL_PROPERTIES);
 
     // Fixtures
 
@@ -54,15 +56,11 @@ public class JGroupsComponentTest extends CamelTestSupport {
         defaultComponent.setChannel(defaultComponentChannel);
         context().addComponent("my-default-jgroups", defaultComponent);
 
-        JGroupsComponent configuredComponent = new JGroupsComponent();
-        configuredComponent.setChannelProperties(SAMPLE_CHANNEL_PROPERTIES);
-        context().addComponent("my-configured-jgroups", configuredComponent);
-
         return new RouteBuilder() {
             @Override
             public void configure() throws Exception {
                 from("my-default-jgroups:" + CLUSTER_NAME).to("mock:default");
-                from("my-configured-jgroups:" + CLUSTER_NAME).to("mock:configured");
+                from(CONFIGURED_ENDPOINT_URI).to("mock:configured");
             }
         };
     }
@@ -99,11 +97,10 @@ public class JGroupsComponentTest extends CamelTestSupport {
     @Test
     public void shouldConfigureChannelWithProperties() throws Exception {
         // When
-        JGroupsEndpoint endpoint = getMandatoryEndpoint("my-configured-jgroups:" + CLUSTER_NAME, JGroupsEndpoint.class);
-        JGroupsComponent component = (JGroupsComponent)endpoint.getComponent();
+        JGroupsEndpoint endpoint = getMandatoryEndpoint(CONFIGURED_ENDPOINT_URI, JGroupsEndpoint.class);
 
         // Then
-        assertEquals(SAMPLE_CHANNEL_PROPERTIES, component.getChannelProperties());
+        assertTrue(endpoint.getResolvedChannel().getProperties().contains(SAMPLE_CHANNEL_PROPERTY));
     }
 
     @Test

@@ -23,7 +23,6 @@ package org.apacheextras.camel.component.jgroups;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.test.junit4.CamelTestSupport;
-import org.apacheextras.camel.component.jgroups.JGroupsEndpoint;
 import org.junit.Test;
 
 public class JGroupsEndpointTest extends CamelTestSupport {
@@ -56,12 +55,12 @@ public class JGroupsEndpointTest extends CamelTestSupport {
     }
 
     @Test
-    public void shouldSetChannel() throws Exception {
+    public void shouldResolveDefaultChannel() throws Exception {
         // When
         JGroupsEndpoint endpoint = getMandatoryEndpoint("jgroups:" + CLUSTER_NAME, JGroupsEndpoint.class);
 
         // Then
-        assertNotNull(endpoint.getChannel());
+        assertNotNull(endpoint.getResolvedChannel());
     }
 
 }

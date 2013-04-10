@@ -63,7 +63,7 @@
 
     <db4o-version>8.0</db4o-version>
     <javassist-bundle-version>3.12.1.GA_3</javassist-bundle-version>
-    <jgroups-version>3.0.10.Final</jgroups-version>
+    <jgroups-version>3.2.8.Final</jgroups-version>
   </properties>
 
   <url>http://code.google.com/a/apache-extras.org/p/camel-extra</url>

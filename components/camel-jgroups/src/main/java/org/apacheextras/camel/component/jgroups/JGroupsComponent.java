@@ -25,10 +25,11 @@ import java.util.Map;
 
 import org.apache.camel.Endpoint;
 import org.apache.camel.impl.DefaultComponent;
-import org.apache.commons.lang.StringUtils;
 import org.jgroups.Channel;
-import org.jgroups.JChannel;
 
+/**
+ * Component providing support for messages multicasted from- or to JGroups channels ({@code org.jgroups.Channel}).
+ */
 public class JGroupsComponent extends DefaultComponent {
 
     private Channel channel;
@@ -36,19 +37,8 @@ public class JGroupsComponent extends DefaultComponent {
     private String channelProperties;
 
     @Override
-    protected Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
-        Channel resolvedChannel = resolveChannel();
-        return new JGroupsEndpoint(uri, this, resolvedChannel, remaining);
-    }
-
-    private Channel resolveChannel() throws Exception {
-        if (channel != null) {
-            return channel;
-        }
-        if (StringUtils.isNotBlank(channelProperties)) {
-            return new JChannel(channelProperties);
-        }
-        return new JChannel();
+    protected Endpoint createEndpoint(String uri, String clusterName, Map<String, Object> parameters) throws Exception {
+        return new JGroupsEndpoint(uri, this, channel, clusterName, channelProperties);
     }
 
     public Channel getChannel() {
