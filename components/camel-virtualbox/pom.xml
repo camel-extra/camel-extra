@@ -50,6 +50,7 @@
             <groupId>org.virtualbox</groupId>
             <artifactId>vboxjws</artifactId>
             <version>${virtualbox-version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- Testing -->
