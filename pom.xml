@@ -71,11 +71,13 @@
     <jboss-vfs5-version>2.2.0.SP1</jboss-vfs5-version>
     <jboss-vfs6-version>3.0.0.GA</jboss-vfs6-version>
     <jgroups-version>3.2.8.Final</jgroups-version>
+    <logback-version>1.0.11</logback-version>
     <mockito-version>1.9.5</mockito-version>
     <protobuf-java-bundle-version>2.4.1_1</protobuf-java-bundle-version>
     <scala-version>2.10.0</scala-version>
     <spring-neo4j-version>2.2.0.RELEASE</spring-neo4j-version>
     <typesafe-config-version>1.0.0</typesafe-config-version>
+    <virtualbox-version>4.2.8</virtualbox-version>
     <vtd-xml-version>2.1.0</vtd-xml-version>
     <zeromq-scala-binding-version>0.0.7</zeromq-scala-binding-version>
   </properties>

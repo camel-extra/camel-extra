@@ -49,14 +49,14 @@
         <dependency>
             <groupId>org.virtualbox</groupId>
             <artifactId>vboxjws</artifactId>
-            <version>4.2.8</version>
+            <version>${virtualbox-version}</version>
         </dependency>
 
         <!-- Testing -->
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.0.0</version>
+            <version>${logback-version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
