@@ -28,18 +28,18 @@ import java.util.Map;
 
 public class VirtualBoxCommandHandlersManager {
 
-    private final Map<Class<? extends VirtualBoxCommand<?>>, VirtualBoxCommandHandler<? extends VirtualBoxCommand<?>, ?>> commandHandlers;
+    private final Map<Class<?>, VirtualBoxCommandHandler<?,?>> commandHandlers;
 
-    public VirtualBoxCommandHandlersManager(Iterable<? extends VirtualBoxCommandHandler<?, ?>> commandHandlers) {
-        this.commandHandlers = new HashMap<Class<? extends VirtualBoxCommand<?>>, VirtualBoxCommandHandler<? extends VirtualBoxCommand<?>, ?>>();
-        for (VirtualBoxCommandHandler<? extends VirtualBoxCommand<?>, ?> commandHandler : commandHandlers) {
+    public VirtualBoxCommandHandlersManager(Iterable<VirtualBoxCommandHandler<?,?>> commandHandlers) {
+        this.commandHandlers = new HashMap<Class<?>, VirtualBoxCommandHandler<?,?>>();
+        for (VirtualBoxCommandHandler<?,?> commandHandler : commandHandlers) {
             this.commandHandlers.put(commandHandler.commandClass(), commandHandler);
         }
     }
 
     public <C extends VirtualBoxCommand<R>, R> R handleCommand(C command) {
         @SuppressWarnings("unchecked")
-        VirtualBoxCommandHandler<C, R> handler = (VirtualBoxCommandHandler<C, R>) commandHandlers.get(command.getClass());
+        VirtualBoxCommandHandler<C,R> handler = (VirtualBoxCommandHandler<C, R>) resolveCommandHandler(command.getClass());
         return handler.handle(command);
     }
 
@@ -53,12 +53,19 @@ public class VirtualBoxCommandHandlersManager {
             String commandName = exchange.getIn().getBody(String.class);
             String commandClassName = getClass().getPackage().getName() + ".handlers." + commandName + "Command";
             Class<?> commandClass = exchange.getContext().getClassResolver().resolveClass(commandClassName);
-            VirtualBoxCommandHandler<?, ?> handler = commandHandlers.get(commandClass);
+            VirtualBoxCommandHandler<?, ?> handler = resolveCommandHandler(commandClass);
             @SuppressWarnings("unchecked")
             VirtualBoxCommand<T> command = (VirtualBoxCommand<T>) handler.resolveCommand(exchange);
             return handleCommand(command);
         }
     }
 
+    private VirtualBoxCommandHandler<?,?> resolveCommandHandler(Class<?> commandClass) {
+        VirtualBoxCommandHandler<?,?> commandHandler = commandHandlers.get(commandClass);
+        if(commandHandler == null) {
+            throw new NoHandlerRegisteredException(commandClass);
+        }
+        return commandHandler;
+    }
 
 }

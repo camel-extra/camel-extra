@@ -23,6 +23,6 @@ package org.apacheextras.camel.component.virtualbox.command;
 
 public interface CommandHandlersResolver {
 
-    Iterable<? extends VirtualBoxCommandHandler<?, ?>> resolveCommandHandlers();
+    Iterable<VirtualBoxCommandHandler<?, ?>> resolveCommandHandlers();
 
 }

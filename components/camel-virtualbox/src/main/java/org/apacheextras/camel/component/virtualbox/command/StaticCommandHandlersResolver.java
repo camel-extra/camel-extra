@@ -42,7 +42,7 @@ public class StaticCommandHandlersResolver implements CommandHandlersResolver {
     }
 
     @Override
-    public Iterable<? extends VirtualBoxCommandHandler<?, ?>> resolveCommandHandlers() {
+    public Iterable<VirtualBoxCommandHandler<?, ?>> resolveCommandHandlers() {
         return Arrays.asList(
                 new RestoreCurrentSnapshotCommandHandler(virtualBoxTemplate, progressListener),
                 new GetVersionCommandHandler(virtualBoxTemplate),

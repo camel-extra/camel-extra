@@ -1,3 +1,5 @@
+package org.apacheextras.camel.component.virtualbox.command;
+
 /**************************************************************************************
  http://code.google.com/a/apache-extras.org/p/camel-extra
 
@@ -19,30 +21,17 @@
 
  http://www.gnu.org/licenses/gpl-2.0-standalone.html
  ***************************************************************************************/
-package org.apacheextras.camel.component.virtualbox.command;
+public class NoHandlerRegisteredException extends RuntimeException {
 
-import org.apache.camel.Exchange;
-import org.apacheextras.camel.component.virtualbox.template.VirtualBoxTemplate;
+    private final Class<?> commandClass;
 
-public abstract class VirtualBoxCommandHandler<C extends VirtualBoxCommand<?>, R> {
-
-    protected final VirtualBoxTemplate virtualBoxTemplate;
-
-    protected VirtualBoxCommandHandler(VirtualBoxTemplate virtualBoxTemplate) {
-        this.virtualBoxTemplate = virtualBoxTemplate;
+    public NoHandlerRegisteredException(Class<?> commandClass) {
+        super("No handler registered for class: " + commandClass.getName());
+        this.commandClass = commandClass;
     }
 
-    public abstract Class<C> commandClass();
-
-    /**
-     * Executes a command against the VirtualBox installation.
-     *
-     * @param command VirtualBox command to be executed. Cannot be null.
-     * @return Result of the execution or {@link NoReturnValue} to indicate that operation do not return meaningful
-     * value. Null can be returned.
-     */
-    public abstract R handle(C command);
-
-    public abstract C resolveCommand(Exchange exchange);
+    public Class<?> commandClass() {
+        return commandClass;
+    }
 
 }

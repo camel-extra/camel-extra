@@ -23,9 +23,14 @@ package org.apacheextras.camel.component.virtualbox;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.impl.DefaultProducer;
+import org.apacheextras.camel.component.virtualbox.command.NoHandlerRegisteredException;
 import org.apacheextras.camel.component.virtualbox.command.VirtualBoxCommandHandlersManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class VirtualBoxProducer extends DefaultProducer {
+
+    private static final Logger LOG = LoggerFactory.getLogger(VirtualBoxProducer.class);
 
     private final VirtualBoxCommandHandlersManager handlersManager;
 
@@ -36,7 +41,13 @@ public class VirtualBoxProducer extends DefaultProducer {
 
     @Override
     public void process(Exchange exchange) throws Exception {
-        exchange.getIn().setBody(handlersManager.handleCommand(exchange));
+        LOG.debug("Received exchange: {}", exchange);
+        try {
+            Object commandResult = handlersManager.handleCommand(exchange);
+            exchange.getIn().setBody(commandResult);
+        } catch (NoHandlerRegisteredException e) {
+            LOG.info("No proper handler registered: ", e);
+        }
     }
 
 }

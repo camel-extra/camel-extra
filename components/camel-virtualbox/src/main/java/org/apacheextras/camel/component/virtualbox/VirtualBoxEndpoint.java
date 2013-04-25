@@ -82,7 +82,7 @@ public class VirtualBoxEndpoint extends DefaultEndpoint {
                 virtualBoxManagerFactory = new WebServiceVirtualBoxManagerFactory(url, username, password);
             }
             resolvedVirtualBoxTemplate = new VirtualBoxTemplate(virtualBoxManagerFactory);
-            Iterable<? extends VirtualBoxCommandHandler<?, ?>> listeners =
+            Iterable<VirtualBoxCommandHandler<?, ?>> listeners =
                     new StaticCommandHandlersResolver(resolvedVirtualBoxTemplate, new EmptyProgressListener()).resolveCommandHandlers();
             return new VirtualBoxCommandHandlersManager(listeners);
         }
