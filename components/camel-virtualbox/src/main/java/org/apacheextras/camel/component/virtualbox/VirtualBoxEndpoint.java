@@ -90,7 +90,7 @@ public class VirtualBoxEndpoint extends DefaultEndpoint {
 
     @Override
     public Producer createProducer() throws Exception {
-        return new VirtualBoxProducer(resolvedCommandHandlersManager, this);
+        return new VirtualBoxProducer(resolvedCommandHandlersManager, this, machineId);
     }
 
     @Override

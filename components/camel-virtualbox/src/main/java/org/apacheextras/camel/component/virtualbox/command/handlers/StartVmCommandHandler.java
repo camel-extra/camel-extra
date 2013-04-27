@@ -28,7 +28,7 @@ import org.apacheextras.camel.component.virtualbox.template.VirtualBoxManagerCal
 import org.apacheextras.camel.component.virtualbox.template.VirtualBoxTemplate;
 import org.virtualbox_4_2.VirtualBoxManager;
 
-import static org.apacheextras.camel.component.virtualbox.command.MachineAwareVirtualBoxCommand.HEADER_MACHINE;
+import static org.apacheextras.camel.component.virtualbox.command.MachineAwareVirtualBoxCommand.resolveMachineId;
 import static org.apacheextras.camel.component.virtualbox.command.NoReturnValue.noValue;
 
 public class StartVmCommandHandler extends VirtualBoxCommandHandler<StartVmCommand, NoReturnValue> {
@@ -55,8 +55,8 @@ public class StartVmCommandHandler extends VirtualBoxCommandHandler<StartVmComma
     }
 
     @Override
-    public StartVmCommand resolveCommand(Exchange exchange) {
-        return new StartVmCommand(exchange.getIn().getHeader(HEADER_MACHINE, String.class));
+    public StartVmCommand resolveCommand(Exchange exchange, String defaultMachineId) {
+        return new StartVmCommand(resolveMachineId(exchange, defaultMachineId));
     }
 
 }

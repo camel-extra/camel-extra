@@ -31,7 +31,7 @@ import org.virtualbox_4_2.IConsole;
 import org.virtualbox_4_2.IMachine;
 import org.virtualbox_4_2.IProgress;
 
-import static org.apacheextras.camel.component.virtualbox.command.MachineAwareVirtualBoxCommand.HEADER_MACHINE;
+import static org.apacheextras.camel.component.virtualbox.command.MachineAwareVirtualBoxCommand.resolveMachineId;
 import static org.apacheextras.camel.component.virtualbox.command.NoReturnValue.noValue;
 
 public class PowerDownCommandHandler extends ProgressingVirtualBoxCommandHandler<PowerDownCommand, NoReturnValue> {
@@ -57,8 +57,8 @@ public class PowerDownCommandHandler extends ProgressingVirtualBoxCommandHandler
     }
 
     @Override
-    public PowerDownCommand resolveCommand(Exchange exchange) {
-        return new PowerDownCommand(exchange.getIn().getHeader(HEADER_MACHINE, String.class));
+    public PowerDownCommand resolveCommand(Exchange exchange, String defaultMachineId) {
+        return new PowerDownCommand(resolveMachineId(exchange, defaultMachineId));
     }
 
 }

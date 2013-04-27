@@ -21,7 +21,14 @@
  ***************************************************************************************/
 package org.apacheextras.camel.component.virtualbox.command;
 
+import org.apache.camel.Exchange;
+import org.slf4j.Logger;
+
+import static org.slf4j.LoggerFactory.getLogger;
+
 public abstract class MachineAwareVirtualBoxCommand<R> implements VirtualBoxCommand<R> {
+
+    private final static Logger LOG = getLogger(MachineAwareVirtualBoxCommand.class);
 
     public static final String HEADER_MACHINE = "virtualbox_machine";
 
@@ -33,6 +40,18 @@ public abstract class MachineAwareVirtualBoxCommand<R> implements VirtualBoxComm
 
     public String machineName() {
         return machineName;
+    }
+
+    public static String resolveMachineId(Exchange exchange, String defaultMachineId) {
+        String messageMachineId = exchange.getIn().getHeader(HEADER_MACHINE, String.class);
+        if (messageMachineId == null) {
+            LOG.debug("Machine ID specified in the header: {} ID will be used instead of default {}",
+                    messageMachineId, defaultMachineId);
+            return messageMachineId;
+        } else {
+            LOG.debug("Machine ID not specified in header, using default machine ID: {}", defaultMachineId);
+            return defaultMachineId;
+        }
     }
 
 }

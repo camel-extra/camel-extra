@@ -32,7 +32,7 @@ import org.virtualbox_4_2.IMachine;
 import org.virtualbox_4_2.IProgress;
 import org.virtualbox_4_2.LockType;
 
-import static org.apacheextras.camel.component.virtualbox.command.MachineAwareVirtualBoxCommand.HEADER_MACHINE;
+import static org.apacheextras.camel.component.virtualbox.command.MachineAwareVirtualBoxCommand.resolveMachineId;
 import static org.apacheextras.camel.component.virtualbox.command.NoReturnValue.noValue;
 
 public class RestoreCurrentSnapshotCommandHandler extends ProgressingVirtualBoxCommandHandler<RestoreCurrentSnapshotCommand, NoReturnValue> {
@@ -58,8 +58,8 @@ public class RestoreCurrentSnapshotCommandHandler extends ProgressingVirtualBoxC
     }
 
     @Override
-    public RestoreCurrentSnapshotCommand resolveCommand(Exchange exchange) {
-        return new RestoreCurrentSnapshotCommand(exchange.getIn().getHeader(HEADER_MACHINE, String.class));
+    public RestoreCurrentSnapshotCommand resolveCommand(Exchange exchange, String defaultMachineId) {
+        return new RestoreCurrentSnapshotCommand(resolveMachineId(exchange, defaultMachineId));
     }
 
 }

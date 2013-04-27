@@ -28,7 +28,7 @@ import org.apacheextras.camel.component.virtualbox.template.MachineCallback;
 import org.apacheextras.camel.component.virtualbox.template.VirtualBoxTemplate;
 import org.virtualbox_4_2.IMachine;
 
-import static org.apacheextras.camel.component.virtualbox.command.MachineAwareVirtualBoxCommand.HEADER_MACHINE;
+import static org.apacheextras.camel.component.virtualbox.command.MachineAwareVirtualBoxCommand.resolveMachineId;
 import static org.apacheextras.camel.component.virtualbox.command.NoReturnValue.noValue;
 import static org.apacheextras.camel.component.virtualbox.command.handlers.SetBiosSystemTimeOffsetCommand.HEADER_OFFSET;
 
@@ -55,8 +55,8 @@ public class SetBiosSystemTimeOffsetCommandHandler extends VirtualBoxCommandHand
     }
 
     @Override
-    public SetBiosSystemTimeOffsetCommand resolveCommand(Exchange exchange) {
-        String machine = exchange.getIn().getHeader(HEADER_MACHINE, String.class);
+    public SetBiosSystemTimeOffsetCommand resolveCommand(Exchange exchange, String defaultMachineId) {
+        String machine = resolveMachineId(exchange, defaultMachineId);
         long offset = exchange.getIn().getHeader(HEADER_OFFSET, Long.class);
         return new SetBiosSystemTimeOffsetCommand(machine, offset);
     }

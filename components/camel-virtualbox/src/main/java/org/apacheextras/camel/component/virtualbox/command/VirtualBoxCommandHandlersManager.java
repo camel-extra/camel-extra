@@ -43,7 +43,7 @@ public class VirtualBoxCommandHandlersManager {
         return handler.handle(command);
     }
 
-    public <T> T handleCommand(Exchange exchange) {
+    public <T> T handleCommand(Exchange exchange, String defaultMachineId) {
         Object body = exchange.getIn().getBody();
         if (VirtualBoxCommand.class.isAssignableFrom(body.getClass())) {
             @SuppressWarnings("unchecked")
@@ -55,7 +55,7 @@ public class VirtualBoxCommandHandlersManager {
             Class<?> commandClass = exchange.getContext().getClassResolver().resolveClass(commandClassName);
             VirtualBoxCommandHandler<?, ?> handler = resolveCommandHandler(commandClass);
             @SuppressWarnings("unchecked")
-            VirtualBoxCommand<T> command = (VirtualBoxCommand<T>) handler.resolveCommand(exchange);
+            VirtualBoxCommand<T> command = (VirtualBoxCommand<T>) handler.resolveCommand(exchange, defaultMachineId);
             return handleCommand(command);
         }
     }

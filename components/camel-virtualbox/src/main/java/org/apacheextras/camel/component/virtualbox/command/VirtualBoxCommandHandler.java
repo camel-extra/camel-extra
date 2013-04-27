@@ -43,6 +43,6 @@ public abstract class VirtualBoxCommandHandler<C extends VirtualBoxCommand<?>, R
      */
     public abstract R handle(C command);
 
-    public abstract C resolveCommand(Exchange exchange);
+    public abstract C resolveCommand(Exchange exchange, String defaultMachineId);
 
 }

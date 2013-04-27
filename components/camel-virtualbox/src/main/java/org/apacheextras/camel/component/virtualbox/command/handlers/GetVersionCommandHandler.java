@@ -49,7 +49,7 @@ public class GetVersionCommandHandler extends VirtualBoxCommandHandler<GetVersio
     }
 
     @Override
-    public GetVersionCommand resolveCommand(Exchange exchange) {
+    public GetVersionCommand resolveCommand(Exchange exchange, String defaultMachineId) {
         return new GetVersionCommand();
     }
 
