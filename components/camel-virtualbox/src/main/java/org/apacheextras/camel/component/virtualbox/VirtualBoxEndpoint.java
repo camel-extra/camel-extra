@@ -35,11 +35,20 @@ import org.apacheextras.camel.component.virtualbox.template.WebServiceVirtualBox
 
 public class VirtualBoxEndpoint extends DefaultEndpoint {
 
-    private final String machineId;
 
     private VirtualBoxCommandHandlersManager commandHandlersManager;
 
     private VirtualBoxCommandHandlersManager resolvedCommandHandlersManager;
+
+    private VirtualBoxTemplate virtualBoxTemplate;
+
+    private VirtualBoxTemplate resolvedVirtualBoxTemplate;
+
+    private String machineId;
+
+    private Class<? extends VirtualBoxManagerFactory> vboxManagerFactoryClass;
+
+    private VirtualBoxManagerFactory resolvedVirtualBoxManagerFactory;
 
     private String url;
 
@@ -47,41 +56,50 @@ public class VirtualBoxEndpoint extends DefaultEndpoint {
 
     private String password;
 
-    private Class<? extends VirtualBoxManagerFactory> vboxManagerFactoryClass;
-
-    private VirtualBoxTemplate resolvedVirtualBoxTemplate;
-
-    public VirtualBoxEndpoint(String endpointUri, VirtualBoxComponent component, String machineId, VirtualBoxCommandHandlersManager commandHandlersManager) {
+    public VirtualBoxEndpoint(String endpointUri, VirtualBoxComponent component, VirtualBoxTemplate virtualBoxTemplate,
+                              VirtualBoxCommandHandlersManager commandHandlersManager, String machineId,
+                              Class<? extends VirtualBoxManagerFactory> vboxManagerFactoryClass,
+                              String url, String username, String password) {
         super(endpointUri, component);
-        this.machineId = machineId;
         this.commandHandlersManager = commandHandlersManager;
+        this.virtualBoxTemplate = virtualBoxTemplate;
+        this.machineId = machineId;
+        this.vboxManagerFactoryClass = vboxManagerFactoryClass;
+        this.url = url;
+        this.username = username;
+        this.password = password;
     }
 
     @Override
     protected void doStart() throws Exception {
         super.doStart();
-        resolvedCommandHandlersManager = resolveCommandHandlersManager();
+        this.resolvedVirtualBoxManagerFactory = resolveVirtualBoxManagerFactory();
+        this.resolvedVirtualBoxTemplate = resolveVirtualBoxTemplate();
+        this.resolvedCommandHandlersManager = resolveCommandHandlersManager();
+    }
+
+    private VirtualBoxManagerFactory resolveVirtualBoxManagerFactory() {
+        if (vboxManagerFactoryClass != null) {
+            try {
+                return vboxManagerFactoryClass.newInstance();
+            } catch (InstantiationException e) {
+                throw new RuntimeException(e);
+            } catch (IllegalAccessException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            return new WebServiceVirtualBoxManagerFactory(url, username, password);
+        }
+    }
+
+    private VirtualBoxTemplate resolveVirtualBoxTemplate() {
+        return virtualBoxTemplate != null ? virtualBoxTemplate : new VirtualBoxTemplate(resolvedVirtualBoxManagerFactory);
     }
 
     private VirtualBoxCommandHandlersManager resolveCommandHandlersManager() {
-        if (getComponent().getCommandHandlersManager() != null) {
-            return getComponent().getCommandHandlersManager();
-        } else if (commandHandlersManager != null) {
+        if(commandHandlersManager != null) {
             return commandHandlersManager;
-        } else {
-            VirtualBoxManagerFactory virtualBoxManagerFactory = null;
-            if (vboxManagerFactoryClass != null) {
-                try {
-                    virtualBoxManagerFactory = vboxManagerFactoryClass.newInstance();
-                } catch (InstantiationException e) {
-                    throw new RuntimeException(e);
-                } catch (IllegalAccessException e) {
-                    throw new RuntimeException(e);
-                }
-            } else {
-                virtualBoxManagerFactory = new WebServiceVirtualBoxManagerFactory(url, username, password);
-            }
-            resolvedVirtualBoxTemplate = new VirtualBoxTemplate(virtualBoxManagerFactory);
+        } else  {
             Iterable<VirtualBoxCommandHandler<?, ?>> listeners =
                     new StaticCommandHandlersResolver(resolvedVirtualBoxTemplate, new EmptyProgressListener()).resolveCommandHandlers();
             return new VirtualBoxCommandHandlersManager(listeners);
@@ -103,6 +121,12 @@ public class VirtualBoxEndpoint extends DefaultEndpoint {
         return true;
     }
 
+    @Override
+    public VirtualBoxComponent getComponent() {
+        return (VirtualBoxComponent) super.getComponent();
+    }
+
+
     public VirtualBoxCommandHandlersManager getCommandHandlersManager() {
         return commandHandlersManager;
     }
@@ -111,17 +135,52 @@ public class VirtualBoxEndpoint extends DefaultEndpoint {
         this.commandHandlersManager = commandHandlersManager;
     }
 
-    @Override
-    public VirtualBoxComponent getComponent() {
-        return (VirtualBoxComponent) super.getComponent();
-    }
-
     public VirtualBoxCommandHandlersManager getResolvedCommandHandlersManager() {
         return resolvedCommandHandlersManager;
     }
 
     public void setResolvedCommandHandlersManager(VirtualBoxCommandHandlersManager resolvedCommandHandlersManager) {
         this.resolvedCommandHandlersManager = resolvedCommandHandlersManager;
+    }
+
+    public VirtualBoxTemplate getVirtualBoxTemplate() {
+        return virtualBoxTemplate;
+    }
+
+    public void setVirtualBoxTemplate(VirtualBoxTemplate virtualBoxTemplate) {
+        this.virtualBoxTemplate = virtualBoxTemplate;
+    }
+
+    public VirtualBoxTemplate getResolvedVirtualBoxTemplate() {
+        return resolvedVirtualBoxTemplate;
+    }
+
+    public void setResolvedVirtualBoxTemplate(VirtualBoxTemplate resolvedVirtualBoxTemplate) {
+        this.resolvedVirtualBoxTemplate = resolvedVirtualBoxTemplate;
+    }
+
+    public String getMachineId() {
+        return machineId;
+    }
+
+    public void setMachineId(String machineId) {
+        this.machineId = machineId;
+    }
+
+    public Class<? extends VirtualBoxManagerFactory> getVboxManagerFactoryClass() {
+        return vboxManagerFactoryClass;
+    }
+
+    public void setVboxManagerFactoryClass(Class<? extends VirtualBoxManagerFactory> vboxManagerFactoryClass) {
+        this.vboxManagerFactoryClass = vboxManagerFactoryClass;
+    }
+
+    public VirtualBoxManagerFactory getResolvedVirtualBoxManagerFactory() {
+        return resolvedVirtualBoxManagerFactory;
+    }
+
+    public void setResolvedVirtualBoxManagerFactory(VirtualBoxManagerFactory resolvedVirtualBoxManagerFactory) {
+        this.resolvedVirtualBoxManagerFactory = resolvedVirtualBoxManagerFactory;
     }
 
     public String getUrl() {
@@ -146,14 +205,6 @@ public class VirtualBoxEndpoint extends DefaultEndpoint {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Class<? extends VirtualBoxManagerFactory> getVboxManagerFactoryClass() {
-        return vboxManagerFactoryClass;
-    }
-
-    public void setVboxManagerFactoryClass(Class<? extends VirtualBoxManagerFactory> vboxManagerFactoryClass) {
-        this.vboxManagerFactoryClass = vboxManagerFactoryClass;
     }
 
 }
