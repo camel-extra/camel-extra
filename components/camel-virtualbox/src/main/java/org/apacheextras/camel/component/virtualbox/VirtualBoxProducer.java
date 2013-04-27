@@ -37,7 +37,8 @@ public class VirtualBoxProducer extends DefaultProducer {
 
     private final String machineId;
 
-    public VirtualBoxProducer(VirtualBoxCommandHandlersManager handlersManager, VirtualBoxEndpoint endpoint, String machineId) {
+    public VirtualBoxProducer(VirtualBoxEndpoint endpoint,
+                              VirtualBoxCommandHandlersManager handlersManager, String machineId) {
         super(endpoint);
         this.handlersManager = handlersManager;
         this.machineId = machineId;

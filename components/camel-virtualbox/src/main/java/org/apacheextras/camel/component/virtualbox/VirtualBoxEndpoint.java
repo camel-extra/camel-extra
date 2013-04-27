@@ -21,10 +21,11 @@
  ***************************************************************************************/
 package org.apacheextras.camel.component.virtualbox;
 
-import org.apache.camel.Consumer;
 import org.apache.camel.Processor;
-import org.apache.camel.Producer;
 import org.apache.camel.impl.DefaultEndpoint;
+import org.apache.camel.spi.Injector;
+import org.apache.camel.util.ReflectionInjector;
+import org.apacheextras.camel.component.virtualbox.command.CommandHandlersResolver;
 import org.apacheextras.camel.component.virtualbox.command.StaticCommandHandlersResolver;
 import org.apacheextras.camel.component.virtualbox.command.VirtualBoxCommandHandler;
 import org.apacheextras.camel.component.virtualbox.command.VirtualBoxCommandHandlersManager;
@@ -32,9 +33,15 @@ import org.apacheextras.camel.component.virtualbox.template.EmptyProgressListene
 import org.apacheextras.camel.component.virtualbox.template.VirtualBoxManagerFactory;
 import org.apacheextras.camel.component.virtualbox.template.VirtualBoxTemplate;
 import org.apacheextras.camel.component.virtualbox.template.WebServiceVirtualBoxManagerFactory;
+import org.slf4j.Logger;
+
+import static org.slf4j.LoggerFactory.getLogger;
 
 public class VirtualBoxEndpoint extends DefaultEndpoint {
 
+    private static final Logger LOG = getLogger(VirtualBoxEndpoint.class);
+
+    private static final Injector INJECTOR = new ReflectionInjector();
 
     private VirtualBoxCommandHandlersManager commandHandlersManager;
 
@@ -80,39 +87,40 @@ public class VirtualBoxEndpoint extends DefaultEndpoint {
 
     private VirtualBoxManagerFactory resolveVirtualBoxManagerFactory() {
         if (vboxManagerFactoryClass != null) {
-            try {
-                return vboxManagerFactoryClass.newInstance();
-            } catch (InstantiationException e) {
-                throw new RuntimeException(e);
-            } catch (IllegalAccessException e) {
-                throw new RuntimeException(e);
-            }
+            return INJECTOR.newInstance(vboxManagerFactoryClass);
         } else {
+            LOG.debug("No vboxManagerFactoryClass specified - default {} with URL {} will be used.",
+                    WebServiceVirtualBoxManagerFactory.class, url);
             return new WebServiceVirtualBoxManagerFactory(url, username, password);
         }
     }
 
     private VirtualBoxTemplate resolveVirtualBoxTemplate() {
-        return virtualBoxTemplate != null ? virtualBoxTemplate : new VirtualBoxTemplate(resolvedVirtualBoxManagerFactory);
+        if(virtualBoxTemplate != null) {
+            return virtualBoxTemplate;
+        } else {
+            return new VirtualBoxTemplate(resolvedVirtualBoxManagerFactory);
+        }
     }
 
     private VirtualBoxCommandHandlersManager resolveCommandHandlersManager() {
         if(commandHandlersManager != null) {
             return commandHandlersManager;
         } else  {
-            Iterable<VirtualBoxCommandHandler<?, ?>> listeners =
-                    new StaticCommandHandlersResolver(resolvedVirtualBoxTemplate, new EmptyProgressListener()).resolveCommandHandlers();
-            return new VirtualBoxCommandHandlersManager(listeners);
+            LOG.debug("Resolving available command handlers using {}", StaticCommandHandlersResolver.class);
+            CommandHandlersResolver handlersResolver = new StaticCommandHandlersResolver(resolvedVirtualBoxTemplate, new EmptyProgressListener());
+            Iterable<VirtualBoxCommandHandler<?, ?>> commandHandlers = handlersResolver.resolveCommandHandlers();
+            return new VirtualBoxCommandHandlersManager(commandHandlers);
         }
     }
 
     @Override
-    public Producer createProducer() throws Exception {
-        return new VirtualBoxProducer(resolvedCommandHandlersManager, this, machineId);
+    public VirtualBoxProducer createProducer() throws Exception {
+        return new VirtualBoxProducer(this, resolvedCommandHandlersManager, machineId);
     }
 
     @Override
-    public Consumer createConsumer(Processor processor) throws Exception {
+    public VirtualBoxConsumer createConsumer(Processor processor) throws Exception {
         return new VirtualBoxConsumer(this, processor, resolvedVirtualBoxTemplate, machineId);
     }
 
@@ -125,7 +133,6 @@ public class VirtualBoxEndpoint extends DefaultEndpoint {
     public VirtualBoxComponent getComponent() {
         return (VirtualBoxComponent) super.getComponent();
     }
-
 
     public VirtualBoxCommandHandlersManager getCommandHandlersManager() {
         return commandHandlersManager;
