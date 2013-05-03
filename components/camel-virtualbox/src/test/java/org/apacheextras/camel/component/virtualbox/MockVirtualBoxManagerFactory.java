@@ -24,7 +24,10 @@ package org.apacheextras.camel.component.virtualbox;
 import org.apacheextras.camel.component.virtualbox.template.VirtualBoxManagerFactory;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
+import org.virtualbox_4_2.IBIOSSettings;
 import org.virtualbox_4_2.IConsole;
+import org.virtualbox_4_2.IEventListener;
+import org.virtualbox_4_2.IEventSource;
 import org.virtualbox_4_2.IMachine;
 import org.virtualbox_4_2.IProgress;
 import org.virtualbox_4_2.ISession;
@@ -34,6 +37,8 @@ import org.virtualbox_4_2.MachineState;
 import org.virtualbox_4_2.VirtualBoxManager;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.virtualbox_4_2.SessionState.Locked;
@@ -47,10 +52,12 @@ public class MockVirtualBoxManagerFactory implements VirtualBoxManagerFactory {
 
     // Mocked collaborators
 
+    static final IEventSource EVENT_SOURCE = mock(IEventSource.class, RETURNS_DEEP_STUBS);
     static final IConsole CONSOLE = mock(IConsole.class);
     static final IProgress PROGRESS = mock(IProgress.class);
     static final ISession SESSION = mock(ISession.class);
     static final IMachine MACHINE = mock(IMachine.class);
+    static final IBIOSSettings BIOS_SETTINGS = mock(IBIOSSettings.class);
     static ArgumentCaptor<String> MACHINE_NAME_USED = ArgumentCaptor.forClass(String.class);
     static final IVirtualBox VIRTUAL_BOX = mock(IVirtualBox.class);
     static final VirtualBoxManager VIRTUAL_BOX_MANAGER = mock(VirtualBoxManager.class);
@@ -60,11 +67,13 @@ public class MockVirtualBoxManagerFactory implements VirtualBoxManagerFactory {
     @Override
     public VirtualBoxManager create() {
         when(MACHINE.getState()).thenReturn(VM_STATE);
+        when(MACHINE.getBIOSSettings()).thenReturn(BIOS_SETTINGS);
 
         when(SESSION.getConsole()).thenReturn(CONSOLE);
 
         when(CONSOLE.powerDown()).thenReturn(PROGRESS);
         when(CONSOLE.restoreSnapshot(any(ISnapshot.class))).thenReturn(PROGRESS);
+        when(CONSOLE.getEventSource()).thenReturn(EVENT_SOURCE);
 
         when(PROGRESS.getPercent()).thenReturn(100L);
 
@@ -77,8 +86,8 @@ public class MockVirtualBoxManagerFactory implements VirtualBoxManagerFactory {
         return VIRTUAL_BOX_MANAGER;
     }
 
-    static void resetMocks() {
-        Mockito.reset(CONSOLE, PROGRESS, SESSION, MACHINE, VIRTUAL_BOX, VIRTUAL_BOX_MANAGER);
+    static void reset() {
+        Mockito.reset(EVENT_SOURCE, CONSOLE, PROGRESS, SESSION, MACHINE, BIOS_SETTINGS, VIRTUAL_BOX, VIRTUAL_BOX_MANAGER);
         MACHINE_NAME_USED = ArgumentCaptor.forClass(String.class);
     }
 

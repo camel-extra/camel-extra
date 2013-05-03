@@ -25,6 +25,7 @@ import org.apacheextras.camel.component.virtualbox.command.handlers.GetStateComm
 import org.apacheextras.camel.component.virtualbox.command.handlers.GetVersionCommandHandler;
 import org.apacheextras.camel.component.virtualbox.command.handlers.PowerDownCommandHandler;
 import org.apacheextras.camel.component.virtualbox.command.handlers.RestoreCurrentSnapshotCommandHandler;
+import org.apacheextras.camel.component.virtualbox.command.handlers.SetBiosSystemTimeOffsetCommandHandler;
 import org.apacheextras.camel.component.virtualbox.command.handlers.StartVmCommandHandler;
 import org.apacheextras.camel.component.virtualbox.template.ProgressListener;
 import org.apacheextras.camel.component.virtualbox.template.VirtualBoxTemplate;
@@ -44,11 +45,12 @@ public class StaticCommandHandlersResolver implements CommandHandlersResolver {
     @Override
     public Iterable<VirtualBoxCommandHandler<?, ?>> resolveCommandHandlers() {
         return Arrays.asList(
-                new RestoreCurrentSnapshotCommandHandler(virtualBoxTemplate, progressListener),
-                new GetVersionCommandHandler(virtualBoxTemplate),
-                new StartVmCommandHandler(virtualBoxTemplate),
                 new GetStateCommandHandler(virtualBoxTemplate),
-                new PowerDownCommandHandler(virtualBoxTemplate, progressListener)
+                new GetVersionCommandHandler(virtualBoxTemplate),
+                new PowerDownCommandHandler(virtualBoxTemplate, progressListener),
+                new RestoreCurrentSnapshotCommandHandler(virtualBoxTemplate, progressListener),
+                new SetBiosSystemTimeOffsetCommandHandler(virtualBoxTemplate),
+                new StartVmCommandHandler(virtualBoxTemplate)
         );
     }
 

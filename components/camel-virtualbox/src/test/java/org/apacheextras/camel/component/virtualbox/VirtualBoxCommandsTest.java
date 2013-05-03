@@ -30,6 +30,7 @@ import org.virtualbox_4_2.ISnapshot;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.apacheextras.camel.component.virtualbox.MockVirtualBoxManagerFactory.BIOS_SETTINGS;
 import static org.apacheextras.camel.component.virtualbox.MockVirtualBoxManagerFactory.CONSOLE;
 import static org.apacheextras.camel.component.virtualbox.MockVirtualBoxManagerFactory.MACHINE;
 import static org.apacheextras.camel.component.virtualbox.MockVirtualBoxManagerFactory.MACHINE_NAME_USED;
@@ -38,13 +39,14 @@ import static org.apacheextras.camel.component.virtualbox.MockVirtualBoxManagerF
 import static org.apacheextras.camel.component.virtualbox.MockVirtualBoxManagerFactory.VM_STATE;
 import static org.apacheextras.camel.component.virtualbox.MockVirtualBoxManagerFactory.mockLockedSession;
 import static org.apacheextras.camel.component.virtualbox.command.MachineAwareVirtualBoxCommand.HEADER_MACHINE;
+import static org.apacheextras.camel.component.virtualbox.command.handlers.SetBiosSystemTimeOffsetCommand.HEADER_OFFSET;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 
-public class VirtualBoxComponentTest extends CamelTestSupport {
+public class VirtualBoxCommandsTest extends CamelTestSupport {
 
     // Fixtures
 
@@ -75,8 +77,7 @@ public class VirtualBoxComponentTest extends CamelTestSupport {
     protected void doPostSetup() throws Exception {
         super.doPostSetup();
         mock = getMockEndpoint(mockEndpoint);
-        context.getEndpoint(startTest);
-        resetMocks();
+        MockVirtualBoxManagerFactory.reset();
     }
 
     // Tests
@@ -150,6 +151,20 @@ public class VirtualBoxComponentTest extends CamelTestSupport {
 
         // Then
         verify(VIRTUAL_BOX_MANAGER).startVm(eq(machine), anyString(), anyInt());
+    }
+
+    @Test
+    public void shouldSetBiosSystemTimeOffset() throws InterruptedException {
+        // Given
+        long offset = 123;
+        Map<String, Object> headers = new HashMap<String, Object>();
+        headers.put(HEADER_OFFSET, offset);
+
+        // When
+        sendBody(startTest, "SetBiosSystemTimeOffset", headers);
+
+        // Then
+        verify(BIOS_SETTINGS).setTimeOffset(eq(offset));
     }
 
 }
