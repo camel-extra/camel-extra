@@ -27,7 +27,7 @@
   <parent>
     <groupId>org.apache.camel</groupId>
     <artifactId>camel-parent</artifactId>
-    <version>2.11-SNAPSHOT</version>
+    <version>2.11.0</version>
   </parent>
 
   <groupId>org.apache-extras.camel-extra</groupId>
@@ -42,7 +42,7 @@
   </prerequisites>
 
   <properties>
-    <camel-version>2.11-SNAPSHOT</camel-version>
+    <camel-version>2.11.0</camel-version>
 
     <release-repo-url>scpexe://people.apache.org/www/people.apache.org/repo/m2-ibiblio-rsync-repository
     </release-repo-url>
@@ -61,21 +61,21 @@
     <camel.osgi.import>${camel.osgi.import.pkg}</camel.osgi.import>
     <camel.osgi.symbolic.name>${project.groupId}.${project.artifactId}</camel.osgi.symbolic.name>
 
-    <akka-version>2.1.0</akka-version>
+    <akka-version>2.1.2</akka-version>
     <antlr-version>3.5</antlr-version>
     <antlr-bundle-version>3.5_1</antlr-bundle-version>
     <db4o-version>8.0</db4o-version>
-    <esper-version>4.8.0</esper-version>
+    <esper-version>4.9.0</esper-version>
     <exist-version>0.9.2</exist-version>
     <javassist-bundle-version>3.12.1.GA_3</javassist-bundle-version>
     <jboss-vfs5-version>2.2.0.SP1</jboss-vfs5-version>
     <jboss-vfs6-version>3.0.0.GA</jboss-vfs6-version>
-    <jgroups-version>3.2.8.Final</jgroups-version>
-    <logback-version>1.0.11</logback-version>
+    <jgroups-version>3.3.0.Final</jgroups-version>
+    <logback-version>1.0.12</logback-version>
     <mockito-version>1.9.5</mockito-version>
     <protobuf-java-bundle-version>2.4.1_1</protobuf-java-bundle-version>
-    <scala-version>2.10.0</scala-version>
-    <spring-neo4j-version>2.2.0.RELEASE</spring-neo4j-version>
+    <scala-version>2.10.1</scala-version>
+    <spring-neo4j-version>2.2.1.RELEASE</spring-neo4j-version>
     <typesafe-config-version>1.0.0</typesafe-config-version>
     <virtualbox-version>4.2.8</virtualbox-version>
     <vtd-xml-version>2.1.0</vtd-xml-version>
