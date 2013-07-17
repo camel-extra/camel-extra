@@ -1,0 +1,5 @@
+username=joed
+password=secret
+domain=WORKGROUP
+share=share
+localpath=C:/temp/share
