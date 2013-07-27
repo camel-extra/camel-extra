@@ -37,6 +37,7 @@
 
     <properties>
         <camel.osgi.export.pkg>org.apacheextras.camel.component.jgroups</camel.osgi.export.pkg>
+        <camel.osgi.export.service>org.apache.camel.spi.ComponentResolver;component=jgroups</camel.osgi.export.service>
     </properties>
 
     <dependencies>

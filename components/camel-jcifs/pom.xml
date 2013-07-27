@@ -15,8 +15,9 @@
     <name>Camel Extra :: JCIFS</name>
     <description>Camel JCIFS (SMB) component</description>
 
-    <properties>
+   <properties>
         <camel.osgi.export.pkg>org.apacheextras.camel.component.jcifs</camel.osgi.export.pkg>
+        <camel.osgi.export.service>org.apache.camel.spi.ComponentResolver;component=smb</camel.osgi.export.service>
     </properties>
 
     <dependencies>

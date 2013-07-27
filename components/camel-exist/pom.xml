@@ -34,9 +34,10 @@
   <name>Camel Extra :: Exist</name>
   <description>Camel Exist support</description>
 
-  <properties>
-    <camel.osgi.export.pkg>org.apacheextras.camel.component.exist*</camel.osgi.export.pkg>
-  </properties>
+    <properties>
+        <camel.osgi.export.pkg>org.apacheextras.camel.component.exist</camel.osgi.export.pkg>
+        <camel.osgi.export.service>org.apache.camel.spi.ComponentResolver;component=exist</camel.osgi.export.service>
+    </properties>
 
   <dependencies>
 

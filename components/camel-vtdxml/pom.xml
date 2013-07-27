@@ -37,6 +37,7 @@
 
 	<properties>
 		<camel.osgi.export.pkg>org.apacheextras.camel.component.vtdxml</camel.osgi.export.pkg>
+		<camel.osgi.export.service>org.apache.camel.spi.LanguageResolver;language=vtdxml</camel.osgi.export.service>
 	</properties>
 
 	<dependencies>

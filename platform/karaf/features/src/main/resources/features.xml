@@ -74,6 +74,7 @@
         <bundle>wrap:mvn:com.ximpleware/vtd-xml/${vtd-xml-version}</bundle>
         <bundle>mvn:org.apache-extras.camel-extra/camel-vtdxml/${project.version}</bundle>
     </feature>
+<!-- akka is not OSGi bundles 
     <feature name='camel-zeromq' version='${project.version}' resolver='(obr)' start-level='50'>
         <feature version='${camel-version}'>camel</feature>
         <bundle>mvn:com.typesafe/config/${typesafe-config-version}</bundle>
@@ -84,4 +85,5 @@
         <bundle>mvn:com.typesafe.akka/akka-zeromq_2.10/${akka-version}</bundle>
         <bundle>mvn:org.apache-extras.camel-extra/camel-zeromq/${project.version}</bundle>
     </feature>
+-->
 </features>

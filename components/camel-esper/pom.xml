@@ -34,9 +34,10 @@
   <name>Camel Extra :: Esper</name>
   <description>Camel Esper support</description>
 
-  <properties>
-    <camel.osgi.export.pkg>org.apacheextras.camel.component.esper*</camel.osgi.export.pkg>
-  </properties>
+    <properties>
+        <camel.osgi.export.pkg>org.apacheextras.camel.component.esper</camel.osgi.export.pkg>
+        <camel.osgi.export.service>org.apache.camel.spi.ComponentResolver;component=esper</camel.osgi.export.service>
+    </properties>
 
   <dependencies>
 

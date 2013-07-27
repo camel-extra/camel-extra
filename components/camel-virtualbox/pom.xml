@@ -38,6 +38,7 @@
 
     <properties>
         <camel.osgi.export.pkg>org.apacheextras.camel.component.virtualbox</camel.osgi.export.pkg>
+        <camel.osgi.export.service>org.apache.camel.spi.ComponentResolver;component=virtualbox</camel.osgi.export.service>
     </properties>
 
     <dependencies>
