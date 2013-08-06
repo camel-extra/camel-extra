@@ -27,7 +27,7 @@
   <groupId>org.apache-extras.karaf</groupId>
   <artifactId>camel-extra</artifactId>
   <packaging>pom</packaging>
-  <name>Camel :: Platforms :: Apache Karaf :: Features</name>
+  <name>Camel Extra :: Platforms :: Apache Karaf :: Features</name>
 
   <properties>
     <features.file>features.xml</features.file>

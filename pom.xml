@@ -76,6 +76,7 @@
     <mockito-version>1.9.5</mockito-version>
     <objenesis-version>1.2</objenesis-version>
     <protobuf-java-bundle-version>2.4.1_1</protobuf-java-bundle-version>
+    <rserve-version>0.6-1</rserve-version>
     <scala-version>2.10.1</scala-version>
     <spring-neo4j-version>2.2.1.RELEASE</spring-neo4j-version>
     <typesafe-config-version>1.0.2</typesafe-config-version>
