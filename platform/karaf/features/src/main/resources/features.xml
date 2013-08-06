@@ -63,6 +63,12 @@
         <bundle>mvn:org.jgroups/jgroups/${jgroups-version}</bundle>
         <bundle>mvn:org.apache-extras.camel-extra/camel-jgroups/${project.version}</bundle>
     </feature>
+        <feature name='camel-rcode' version='${project.version}' resolver='(obr)' start-level='50'>
+        <feature version='${camel-version}'>camel</feature>
+        <bundle>wrap:mvn:org.nuiton.thirdparty/REngine/${rserve-version}</bundle>
+        <bundle>wrap:mvn:org.nuiton.thirdparty/Rserve/${rserve-version}</bundle>
+        <bundle>mvn:org.apache-extras.camel-extra/camel-rcode/${project.version}</bundle>
+    </feature>
     <feature name='camel-spring-neo4j' version='${project.version}' resolver='(obr)' start-level='50'>
         <feature version='${camel-version}'>camel</feature>
         
