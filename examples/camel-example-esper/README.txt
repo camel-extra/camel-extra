@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2008 - 2012 Camel Extra Team. All rights reserved.
+# Copyright (C) 2008 - 2013 Camel Extra Team. All rights reserved.
 # http://code.google.com/a/apache-extras.org/p/camel-extra
 # ----------------------------------------------------------------------------------
 # The software in this package is published under the terms of the GPL license
@@ -21,3 +21,4 @@ This demo is based on an Exper tutorial:
 http://esper.codehaus.org/tutorials/tutorial/feedmonitor_casestudy.html
 
 look there for an exact meaning of the two Esper scripts in the demo
+

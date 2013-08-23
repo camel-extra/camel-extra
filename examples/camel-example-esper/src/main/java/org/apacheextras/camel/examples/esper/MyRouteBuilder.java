@@ -23,6 +23,7 @@ package org.apacheextras.camel.examples.esper;
 
 import java.util.Map;
 
+import com.espertech.esper.client.EventBean;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
@@ -30,25 +31,26 @@ import org.apache.camel.spring.Main;
 
 public class MyRouteBuilder extends RouteBuilder {
 
-	public static void main(String... args) throws Exception {
-		Main.main(args);
-	}
+    public static void main(String... args) throws Exception {
+        Main.main(args);
+    }
 
-	public void configure() {
+    public void configure() {
 
-		from("activemq:EventStreamQueue").to("esper://feed");
-		from("esper://feed?eql=insert into TicksPerSecond select feed, count(*) as cnt from org.apacheextras.camel.examples.esper.MarketDataEvent.win:time_batch(1 sec) group by feed")
-				.to("esper://feed");
-		from("esper://feed?eql=select feed, avg(cnt) as avgCnt, cnt as feedCnt from TicksPerSecond.win:time(10 sec) group by feed + having cnt < avg(cnt) * 0.75")
-				.process(new Processor() {
-					@SuppressWarnings("unchecked")
-					public void process(Exchange arg0) throws Exception {
-						com.espertech.esper.event.map.MapEventBean ev = (com.espertech.esper.event.map.MapEventBean) arg0
-								.getIn().getBody();
-						Map map = (Map) ev.getUnderlying();
-						System.out.println(map);
-					}
-				});
-		
-	}
+        from("activemq:EventStreamQueue").to("esper://feed");
+
+        from("esper://feed?eql=insert into TicksPerSecond select feed, count(*) as cnt from org.apacheextras.camel.examples.esper.MarketDataEvent.win:time_batch(1 sec) group by feed")
+                .to("esper://feed");
+
+        from("esper://feed?eql=select feed, avg(cnt) as avgCnt, cnt as feedCnt from TicksPerSecond.win:time(10 sec) group by feed + having cnt < avg(cnt) * 0.75")
+                .process(new Processor() {
+                    @SuppressWarnings("unchecked")
+                    public void process(Exchange exchange) throws Exception {
+                        EventBean event = exchange.getIn().getBody(EventBean.class);
+                        Map map = (Map) event.getUnderlying();
+                        System.out.println(map);
+                    }
+                });
+
+    }
 }

@@ -26,7 +26,6 @@ import com.espertech.esper.client.EventBean;
 import com.espertech.esper.client.UpdateListener;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.apache.camel.RuntimeExchangeException;
 import org.apache.camel.impl.DefaultConsumer;
 
 /**
@@ -56,17 +55,19 @@ public class EsperConsumer extends DefaultConsumer implements UpdateListener {
     }
 
     public void update(EventBean[] newEvents, EventBean[] oldEvents) {
-      if (newEvents != null) {
-	        for (EventBean eventBean : newEvents) {
-	            Object underlying = eventBean.getUnderlying();
-	            Exchange exchange = endpoint.createExchange(eventBean, statement);
-	            try {
-	                getProcessor().process(exchange);
-	            } catch (Exception e) {
-	                throw new RuntimeExchangeException("Cannot update event", exchange, e);
-	            }
-	        }
-		  }
+        for (int i = 0; newEvents != null && i < newEvents.length; i++) {
+            EventBean newEvent = newEvents[i];
+            EventBean oldEvent = null;
+            if (oldEvents != null && oldEvents.length > i) {
+                oldEvent = oldEvents[i];
+            }
+            Exchange exchange = endpoint.createExchange(newEvent, oldEvent, statement);
+            try {
+                getProcessor().process(exchange);
+            } catch (Exception e) {
+                getExceptionHandler().handleException("Cannot update event", exchange, e);
+            }
+        }
     }
 
 }

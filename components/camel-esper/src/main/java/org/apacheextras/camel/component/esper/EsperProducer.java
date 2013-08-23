@@ -48,8 +48,7 @@ public class EsperProducer extends DefaultProducer {
             Map map = new HashMap(in.getHeaders());
             map.put("body", body);
             getEsperRuntime().sendEvent(map, endpoint.getName());
-        }
-        else {
+        } else {
             getEsperRuntime().sendEvent(body);
         }
     }

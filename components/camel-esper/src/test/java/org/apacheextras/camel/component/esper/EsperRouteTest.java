@@ -48,10 +48,15 @@ public class EsperRouteTest extends CamelTestSupport {
         List<Exchange> list = endpoint.getReceivedExchanges();
         int counter = 0;
         for (Exchange exchange : list) {
+            EventBean newEvent = exchange.getIn(EsperMessage.class).getNewEvent();
+            assertNotNull(newEvent);
+            EventBean oldEvent = exchange.getIn(EsperMessage.class).getOldEvent();
+            assertNull(oldEvent);
+
             Object value = exchange.getIn().getBody();
             EventBean eventBean = assertIsInstanceOf(EventBean.class, value);
             Object event = eventBean.get("event");
-            System.out.println("Received: " + event);
+            log.info("Received " + event);
             MyEvent myEvent = assertIsInstanceOf(MyEvent.class, event);
 
             assertEquals("foo[" + counter + "]", expectedFoos[counter++], myEvent.getFoo());

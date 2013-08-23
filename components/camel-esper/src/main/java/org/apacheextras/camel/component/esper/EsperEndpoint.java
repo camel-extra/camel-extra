@@ -105,9 +105,9 @@ public class EsperEndpoint extends DefaultEndpoint {
     /**
      * Creates a Camel {@link Exchange} from an Esper {@link EventBean} instance
      */
-    public Exchange createExchange(EventBean eventBean, EPStatement statement) {
+    public Exchange createExchange(EventBean newEventBean, EventBean oldEventBean, EPStatement statement) {
         Exchange exchange = createExchange(ExchangePattern.InOnly);
-        Message in = exchange.getIn();
+        Message in = new EsperMessage(newEventBean, oldEventBean);
         in.setHeader("CamelEsperName", name);
         in.setHeader("CamelEsperStatement", statement);
         if (pattern != null) {
@@ -116,7 +116,7 @@ public class EsperEndpoint extends DefaultEndpoint {
         if (eql != null) {
             in.setHeader("CamelEsperEql", eql);
         }
-        in.setBody(eventBean);
+        exchange.setIn(in);
         return exchange;
     }
 

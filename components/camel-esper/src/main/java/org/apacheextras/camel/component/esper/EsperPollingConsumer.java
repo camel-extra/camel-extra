@@ -64,7 +64,6 @@ public class EsperPollingConsumer extends PollingConsumerSupport implements Upda
         }
     }
 
-
     public Exchange receive() {
         EventBean bean;
         try {
@@ -75,7 +74,7 @@ public class EsperPollingConsumer extends PollingConsumerSupport implements Upda
         if (bean == null) {
             return null;
         }
-        return endpoint.createExchange(bean, statement);
+        return endpoint.createExchange(bean, null, statement);
     }
 
     public Exchange receiveNoWait() {
@@ -83,7 +82,7 @@ public class EsperPollingConsumer extends PollingConsumerSupport implements Upda
         if (bean == null) {
             return null;
         }
-        return endpoint.createExchange(bean, statement);
+        return endpoint.createExchange(bean, null, statement);
     }
 
     public Exchange receive(long timeout) {
@@ -96,27 +95,7 @@ public class EsperPollingConsumer extends PollingConsumerSupport implements Upda
         if (bean == null) {
             return null;
         }
-        return endpoint.createExchange(bean, statement);
+        return endpoint.createExchange(bean, null, statement);
     }
     
-    /*
-    public Exchange receive() {
-        Iterator<EventBean> iterator = statement.iterator();
-        if (iterator.hasNext()) {
-            EventBean eventBean = iterator.next();
-            return endpoint.createExchange(eventBean, statement);
-        }
-        else {
-            return null;
-        }
-    }
-
-    public Exchange receiveNoWait() {
-        return receive();
-    }
-
-    public Exchange receive(long timeout) {
-        return receive();
-    }
-    */
 }
