@@ -30,6 +30,7 @@ import org.apache.camel.component.file.GenericFileConsumer;
 import org.apache.camel.component.file.GenericFileEndpoint;
 import org.apache.camel.component.file.GenericFileOperations;
 import org.apache.camel.util.FileUtil;
+import org.apache.camel.util.ObjectHelper;
 
 public class SmbConsumer extends GenericFileConsumer<SmbFile>{
 
@@ -44,9 +45,9 @@ public class SmbConsumer extends GenericFileConsumer<SmbFile>{
 	@Override
 	protected boolean pollDirectory(String fileName, List<GenericFile<SmbFile>> fileList, int depth) {
 		
-		if (log.isDebugEnabled()) {
-			log.debug("pollDirectory() running. My delay is [" + this.getDelay() + "] and my strategy is [" + this.getPollStrategy().getClass().toString() + "]");
-			log.debug("pollDirectory() fileName[" + fileName + "]");
+		if (log.isTraceEnabled()) {
+			log.trace("pollDirectory() running. My delay is [" + this.getDelay() + "] and my strategy is [" + this.getPollStrategy().getClass().toString() + "]");
+			log.trace("pollDirectory() fileName[" + fileName + "]");
 		}
 		
 		List<SmbFile> smbFiles;
@@ -64,7 +65,7 @@ public class SmbConsumer extends GenericFileConsumer<SmbFile>{
 					currentFileIsDir = false;
 				}
 			} catch (SmbException e1) {
-				log.warn("Caught SmbException: " + e1.getMessage());
+                throw ObjectHelper.wrapRuntimeCamelException(e1);
 			}
 			if (currentFileIsDir) { 
 				if (endpoint.isRecursive()) {
@@ -79,15 +80,10 @@ public class SmbConsumer extends GenericFileConsumer<SmbFile>{
 				try {
 					GenericFile<SmbFile> genericFile = asGenericFile(fileName, smbFile);
 					if (isValidFile(genericFile, false, smbFiles)) {
-						if (isInProgress(genericFile)) {
-							log.info("skipping as we are already in progress with this file");
-						}
-						else {
-							fileList.add(asGenericFile(fileName, smbFile));
-						}
+                        fileList.add(asGenericFile(fileName, smbFile));
 					}
 				} catch (IOException e) {
-					log.warn("Caught IOException: " + e.getMessage());
+                    throw ObjectHelper.wrapRuntimeCamelException(e);
 				}
 			}
 		}
@@ -106,9 +102,10 @@ public class SmbConsumer extends GenericFileConsumer<SmbFile>{
 		answer.setLastModified(file.getLastModified());
 		answer.setFileName(currentRelativePath + file.getName());
 		answer.setRelativeFilePath(file.getName());
-		if (log.isDebugEnabled()) {
-			log.debug("asGenericFile():");
-			log.debug("absoluteFilePath[" + answer.getAbsoluteFilePath() +"] endpointpath[" + answer.getEndpointPath() + "] filenameonly["+ answer.getFileNameOnly() +"] filename[" + answer.getFileName() + "] relativepath[" + answer.getRelativeFilePath() + "]");
+
+		if (log.isTraceEnabled()) {
+			log.trace("asGenericFile():");
+			log.trace("absoluteFilePath[" + answer.getAbsoluteFilePath() +"] endpointpath[" + answer.getEndpointPath() + "] filenameonly["+ answer.getFileNameOnly() +"] filename[" + answer.getFileName() + "] relativepath[" + answer.getRelativeFilePath() + "]");
 			
 		}
 		return answer;
