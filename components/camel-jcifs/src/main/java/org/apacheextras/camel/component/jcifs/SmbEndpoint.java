@@ -26,6 +26,7 @@ import org.apache.camel.component.file.GenericFile;
 import org.apache.camel.component.file.GenericFileEndpoint;
 import org.apache.camel.component.file.GenericFileProducer;
 import org.apache.camel.impl.DefaultExchange;
+import org.apache.camel.processor.idempotent.MemoryIdempotentRepository;
 
 public class SmbEndpoint extends GenericFileEndpoint<SmbFile> {
 
@@ -41,12 +42,28 @@ public class SmbEndpoint extends GenericFileEndpoint<SmbFile> {
 	
 	@Override
 	public SmbConsumer createConsumer(Processor processor) throws Exception {
-		SmbConsumer consumer = new SmbConsumer(this, processor, createSmbOperations());
-		
-		consumer.setMaxMessagesPerPoll(getMaxMessagesPerPoll());
-		configureConsumer(consumer);
-		return consumer;
-	}
+        SmbConsumer consumer = new SmbConsumer(this, processor, createSmbOperations());
+
+        if (isDelete() && getMove() != null) {
+            throw new IllegalArgumentException("You cannot set both delete=true and move options");
+        }
+
+        // if noop=true then idempotent should also be configured
+        if (isNoop() && !isIdempotentSet()) {
+            log.info("Endpoint is configured with noop=true so forcing endpoint to be idempotent as well");
+            setIdempotent(true);
+        }
+
+        // if idempotent and no repository set then create a default one
+        if (isIdempotentSet() && isIdempotent() && idempotentRepository == null) {
+            log.info("Using default memory based idempotent repository with cache max size: " + DEFAULT_IDEMPOTENT_CACHE_SIZE);
+            idempotentRepository = MemoryIdempotentRepository.memoryIdempotentRepository(DEFAULT_IDEMPOTENT_CACHE_SIZE);
+        }
+
+        consumer.setMaxMessagesPerPoll(getMaxMessagesPerPoll());
+        configureConsumer(consumer);
+        return consumer;
+    }
 
 	@Override
 	public GenericFileProducer<SmbFile> createProducer() throws Exception {
