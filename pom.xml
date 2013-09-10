@@ -27,8 +27,7 @@
   <parent>
     <groupId>org.apache.camel</groupId>
     <artifactId>camel-parent</artifactId>
-    <version>2.12-SNAPSHOT</version>
-    <relativePath>..</relativePath>
+    <version>2.12.0</version>
   </parent>
 
   <groupId>org.apache-extras.camel-extra</groupId>
@@ -43,7 +42,7 @@
   </prerequisites>
 
   <properties>
-    <camel-version>2.12-SNAPSHOT</camel-version>
+    <camel-version>2.12.0</camel-version>
 
     <release-repo-url>scpexe://people.apache.org/www/people.apache.org/repo/m2-ibiblio-rsync-repository
     </release-repo-url>
@@ -95,34 +94,13 @@
 
   <licenses>
     <license>
-      <name>The Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <name>GNU GENERAL PUBLIC LICENSE</name>
+      <url>http://www.gnu.org/licenses/gpl-2.0-standalone.html</url>
       <distribution>repo</distribution>
     </license>
   </licenses>
 
-  <mailingLists>
-    <mailingList>
-      <name>Development List</name>
-      <subscribe>dev-subscribe@camel.apache.org</subscribe>
-      <unsubscribe>dev-unsubscribe@camel.apache.org</unsubscribe>
-      <post>dev@camel.apache.org</post>
-    </mailingList>
-    <mailingList>
-      <name>User List</name>
-      <subscribe>users-subscribe@camel.apache.org</subscribe>
-      <unsubscribe>users-unsubscribe@camel.apache.org</unsubscribe>
-      <post>users@camel.apache.org</post>
-    </mailingList>
-    <mailingList>
-      <name>Commits List</name>
-      <subscribe>commits-subscribe@camel.apache.org</subscribe>
-      <unsubscribe>commits-unsubscribe@camel.apache.org</unsubscribe>
-      <post>commits@camel.apache.org</post>
-    </mailingList>
-  </mailingLists>
-
-  <repositories>
+   <repositories>
     <repository>
       <id>apache.content.snapshots</id>
       <name>Apache Development Snapshot Repository</name>
@@ -213,11 +191,13 @@
         <groupId>org.springframework</groupId>
         <artifactId>spring-test</artifactId>
         <version>${spring-version}</version>
+        <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.easymock</groupId>
         <artifactId>easymockclassextension</artifactId>
         <version>${easymock-version}</version>
+        <scope>test</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
