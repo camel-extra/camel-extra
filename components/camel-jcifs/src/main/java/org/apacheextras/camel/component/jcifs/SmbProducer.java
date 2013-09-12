@@ -18,10 +18,7 @@
  ***************************************************************************************/
 package org.apacheextras.camel.component.jcifs;
 
-import java.io.File;
-
 import jcifs.smb.SmbFile;
-
 import org.apache.camel.Exchange;
 import org.apache.camel.Expression;
 import org.apache.camel.ServicePoolAware;
@@ -30,11 +27,14 @@ import org.apache.camel.component.file.GenericFileExist;
 import org.apache.camel.component.file.GenericFileOperationFailedException;
 import org.apache.camel.component.file.GenericFileOperations;
 import org.apache.camel.component.file.GenericFileProducer;
+import org.apache.camel.impl.DefaultExchange;
 import org.apache.camel.spi.Language;
 import org.apache.camel.util.ExchangeHelper;
 import org.apache.camel.util.FileUtil;
 import org.apache.camel.util.ObjectHelper;
 import org.apache.camel.util.StringHelper;
+
+import java.io.File;
 
 public class SmbProducer extends GenericFileProducer<SmbFile> implements ServicePoolAware{
 
@@ -149,10 +149,23 @@ public class SmbProducer extends GenericFileProducer<SmbFile> implements Service
 			}
 
 			// any done file to write?
-			if (endpoint.getDoneFileName() != null) {
-				if (log.isDebugEnabled())
-					log.debug("doneFileName not null");
-			}
+            if (endpoint.getDoneFileName() != null) {
+                String doneFileName = getEndpoint().createDoneFileName(target);
+                ObjectHelper.notEmpty(doneFileName, "doneFileName", endpoint);
+
+                // create empty exchange with empty body to write as the done file
+                Exchange empty = new DefaultExchange(exchange);
+                empty.getIn().setBody("");
+
+                log.trace("Writing done file: [{}]", doneFileName);
+                // delete any existing done file
+                if (operations.existsFile(doneFileName)) {
+                    if (!operations.deleteFile(doneFileName)) {
+                        throw new GenericFileOperationFailedException("Cannot delete existing done file: " + doneFileName);
+                    }
+                }
+                writeFile(empty, doneFileName);
+            }
 
 			// lets store the name we really used in the header, so end-users
 			// can retrieve it
@@ -264,5 +277,10 @@ public class SmbProducer extends GenericFileProducer<SmbFile> implements Service
 			log.debug("Wrote [" + fileName + "] to [" + getEndpoint() + "]");
 		}
 	}
+
+    @Override
+    public SmbEndpoint getEndpoint() {
+        return (SmbEndpoint) super.getEndpoint();
+    }
 
 }

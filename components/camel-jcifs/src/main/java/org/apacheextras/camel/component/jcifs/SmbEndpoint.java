@@ -19,7 +19,6 @@
 package org.apacheextras.camel.component.jcifs;
 
 import jcifs.smb.SmbFile;
-
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.component.file.GenericFile;
@@ -109,5 +108,11 @@ public class SmbEndpoint extends GenericFileEndpoint<SmbFile> {
 	@Override
 	public boolean isSingleton(){
 		return false;
-	}	
+	}
+
+    @Override
+    protected String createDoneFileName(String fileName) {
+        return super.createDoneFileName(fileName);
+    }
+
 }
