@@ -58,6 +58,11 @@
         <bundle>wrap:mvn:org.jboss/jboss-vfs/${jboss-vfs6-version}</bundle>
         <bundle>mvn:org.apache-extras.camel-extra/camel-jboss6/${project.version}</bundle>
     </feature>
+  <feature name='camel-jcifs' version='${project.version}' resolver='(obr)' start-level='50'>
+    <feature version='${camel-version}'>camel</feature>
+    <bundle>mvn:jcifs/jcifs/${jcifs-version}</bundle>
+    <bundle>mvn:org.apache-extras.camel-extra/camel-jcifs/${project.version}</bundle>
+  </feature>
     <feature name='camel-jgroups' version='${project.version}' resolver='(obr)' start-level='50'>
         <feature version='${camel-version}'>camel</feature>
         <bundle>mvn:org.jgroups/jgroups/${jgroups-version}</bundle>
@@ -70,26 +75,37 @@
         <bundle>mvn:org.apache-extras.camel-extra/camel-rcode/${project.version}</bundle>
     </feature>
     <feature name='camel-spring-neo4j' version='${project.version}' resolver='(obr)' start-level='50'>
-        <feature version='${camel-version}'>camel</feature>
-        
         <!-- TODO: implement me -->
+    <!--
+    <feature version='${camel-version}'>camel</feature>
+    <bundle>mvn:org.neo4j/neo4j-rest-graphdb/${neo4j.rest.graphdb.version}</bundle>
+    <bundle>mvn:org.springframework.data/spring-data-neo4j-rest/${spring-neo4j-version}</bundle>
+    <bundle>mvn:org.apache.mina/mina-core/1.1.</bundle>
+    -->
         <bundle>mvn:org.apache-extras.camel-extra/camel-spring-neo4j/${project.version}</bundle>
     </feature>
+  <feature name='camel-virtualbox' version='${project.version}' resolver='(obr)' start-level='50'>
+    <feature version='${camel-version}'>camel</feature>
+    <!-- TODO: add missing requirements -->
+    <bundle>mvn:org.virtualbox/vboxjws/${virtualbox-version}</bundle>
+    <bundle>mvn:org.apache-extras.camel-extra/camel-virtualbox/${project.version}</bundle>
+  </feature>
     <feature name='camel-vtdxml' version='${project.version}' resolver='(obr)' start-level='50'>
         <feature version='${camel-version}'>camel</feature>
         <bundle>wrap:mvn:com.ximpleware/vtd-xml/${vtd-xml-version}</bundle>
         <bundle>mvn:org.apache-extras.camel-extra/camel-vtdxml/${project.version}</bundle>
     </feature>
-<!-- akka is not OSGi bundles 
+  
     <feature name='camel-zeromq' version='${project.version}' resolver='(obr)' start-level='50'>
         <feature version='${camel-version}'>camel</feature>
+    <!-- TODO: Fix the dependencies, e.g. akka-zeromq to akka-actor
         <bundle>mvn:com.typesafe/config/${typesafe-config-version}</bundle>
         <bundle>mvn:org.scala-lang/scala-library/${scala-version}</bundle>
         <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.protobuf-java/${protobuf-java-bundle-version}</bundle>
         <bundle>wrap:mvn:org.zeromq/zeromq-scala-binding_2.10/${zeromq-scala-binding-version}</bundle>
         <bundle>mvn:com.typesafe.akka/akka-actor_2.10/${akka-version}</bundle>
         <bundle>mvn:com.typesafe.akka/akka-zeromq_2.10/${akka-version}</bundle>
+    -->
         <bundle>mvn:org.apache-extras.camel-extra/camel-zeromq/${project.version}</bundle>
     </feature>
--->
 </features>
