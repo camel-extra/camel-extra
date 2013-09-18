@@ -51,9 +51,9 @@
       <version>${esper-version}</version>
     </dependency>
     <dependency>
-      <groupId>org.antlr</groupId>
-      <artifactId>antlr-runtime</artifactId>
-      <version>${antlr-version}</version>
+      <groupId>org.apache.servicemix.bundles</groupId>
+      <artifactId>org.apache.servicemix.bundles.antlr-runtime</artifactId>
+      <version>${antlr-bundle-version}</version>
     </dependency>
 
     <!-- testing -->
