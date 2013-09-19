@@ -24,7 +24,7 @@
     <version>2.11-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.apache-extras.karaf</groupId>
+  <groupId>org.apache-extras.camel-extra.karaf</groupId>
   <artifactId>camel-extra</artifactId>
   <packaging>pom</packaging>
   <name>Camel Extra :: Platforms :: Apache Karaf :: Features</name>
