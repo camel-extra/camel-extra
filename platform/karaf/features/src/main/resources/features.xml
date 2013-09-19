@@ -98,14 +98,7 @@
   
     <feature name='camel-zeromq' version='${project.version}' resolver='(obr)' start-level='50'>
         <feature version='${camel-version}'>camel</feature>
-    <!-- TODO: Fix the dependencies, e.g. akka-zeromq to akka-actor
-        <bundle>mvn:com.typesafe/config/${typesafe-config-version}</bundle>
-        <bundle>mvn:org.scala-lang/scala-library/${scala-version}</bundle>
-        <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.protobuf-java/${protobuf-java-bundle-version}</bundle>
         <bundle>wrap:mvn:org.zeromq/zeromq-scala-binding_2.10/${zeromq-scala-binding-version}</bundle>
-        <bundle>mvn:com.typesafe.akka/akka-actor_2.10/${akka-version}</bundle>
-        <bundle>mvn:com.typesafe.akka/akka-zeromq_2.10/${akka-version}</bundle>
-    -->
         <bundle>mvn:org.apache-extras.camel-extra/camel-zeromq/${project.version}</bundle>
     </feature>
 </features>
