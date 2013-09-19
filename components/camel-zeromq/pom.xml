@@ -56,6 +56,12 @@
     </dependency>
 
     <dependency>
+      <groupId>org.zeromq</groupId>
+      <artifactId>zeromq-scala-binding_2.10</artifactId>
+      <version>${zeromq-scala-binding-version}</version>
+    </dependency>
+    
+    <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-test</artifactId>
       <scope>test</scope>
