@@ -60,7 +60,7 @@
     </feature>
   <feature name='camel-jcifs' version='${project.version}' resolver='(obr)' start-level='50'>
     <feature version='${camel-version}'>camel</feature>
-    <bundle>mvn:jcifs/jcifs/${jcifs-version}</bundle>
+    <bundle>wrap:mvn:jcifs/jcifs/${jcifs-version}</bundle>
     <bundle>mvn:org.apache-extras.camel-extra/camel-jcifs/${project.version}</bundle>
   </feature>
     <feature name='camel-jgroups' version='${project.version}' resolver='(obr)' start-level='50'>
