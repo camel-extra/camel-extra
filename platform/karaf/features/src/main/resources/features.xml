@@ -86,9 +86,10 @@
     </feature>
   <feature name='camel-virtualbox' version='${project.version}' resolver='(obr)' start-level='50'>
     <feature version='${camel-version}'>camel</feature>
-    <!-- TODO: add missing requirements -->
     <bundle>mvn:org.virtualbox/vboxjws/${virtualbox-version}</bundle>
     <bundle>mvn:org.apache-extras.camel-extra/camel-virtualbox/${project.version}</bundle>
+	<bundle>mvn:javax.validation/validation-api/${javax-validation-api-version}</bundle>
+    <bundle>wrap:mvn:com.sun.xml.ws/jaxws-rt/${jaxws-rt-version}</bundle>
   </feature>
     <feature name='camel-vtdxml' version='${project.version}' resolver='(obr)' start-level='50'>
         <feature version='${camel-version}'>camel</feature>
