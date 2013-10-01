@@ -37,6 +37,7 @@
     <description>Camel VirtualBox support</description>
 
     <properties>
+        <!-- 'org.w2c.dom' workaround explained - https://code.google.com/a/apache-extras.org/p/camel-extra/issues/detail?id=53 -->
         <camel.osgi.export.pkg>org.apacheextras.camel.component.virtualbox.*;org.w2c.dom</camel.osgi.export.pkg>
         <camel.osgi.export.service>org.apache.camel.spi.ComponentResolver;component=virtualbox</camel.osgi.export.service>
     </properties>
