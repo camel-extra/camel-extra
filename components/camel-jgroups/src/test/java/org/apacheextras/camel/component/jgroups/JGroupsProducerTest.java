@@ -31,7 +31,7 @@ import org.jgroups.ReceiverAdapter;
 import org.junit.Test;
 
 public class JGroupsProducerTest extends CamelTestSupport {
-
+   
     static final String CLUSTER_NAME = "CLUSTER_NAME";
 
     static final String MESSAGE = "MESSAGE";
@@ -99,7 +99,7 @@ public class JGroupsProducerTest extends CamelTestSupport {
 
     private void waitForMulticastChannel(int attempts) throws InterruptedException {
         while (messageReceived == null && attempts > 0) {
-            TimeUnit.SECONDS.sleep(1);
+            TimeUnit.SECONDS.sleep(3);
             attempts--;
         }
     }
