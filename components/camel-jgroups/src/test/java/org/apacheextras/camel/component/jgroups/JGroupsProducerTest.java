@@ -99,7 +99,7 @@ public class JGroupsProducerTest extends CamelTestSupport {
 
     private void waitForMulticastChannel(int attempts) throws InterruptedException {
         while (messageReceived == null && attempts > 0) {
-            TimeUnit.SECONDS.sleep(3);
+            TimeUnit.SECONDS.sleep(1);
             attempts--;
         }
     }
