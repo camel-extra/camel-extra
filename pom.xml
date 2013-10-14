@@ -303,6 +303,7 @@
           <instructions>
             <Bundle-Name>${project.artifactId}</Bundle-Name>
             <Bundle-SymbolicName>${camel.osgi.symbolic.name}</Bundle-SymbolicName>
+            <Bundle-Vendor>Apache Extras: Camel</Bundle-Vendor>
             <Export-Package>${camel.osgi.export}</Export-Package>
             <Import-Package>${camel.osgi.import}</Import-Package>
             <Private-Package>${camel.osgi.private.pkg}</Private-Package>
