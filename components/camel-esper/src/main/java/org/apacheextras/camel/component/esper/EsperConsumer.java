@@ -32,8 +32,8 @@ import org.apache.camel.impl.DefaultConsumer;
  * @version $Revision: 1.1 $
  */
 public class EsperConsumer extends DefaultConsumer implements UpdateListener {
-    private EsperEndpoint endpoint;
-    private EPStatement statement;
+    private final EsperEndpoint endpoint;
+    private final EPStatement statement;
 
     public EsperConsumer(EsperEndpoint endpoint, EPStatement statement, Processor processor) {
         super(endpoint, processor);
