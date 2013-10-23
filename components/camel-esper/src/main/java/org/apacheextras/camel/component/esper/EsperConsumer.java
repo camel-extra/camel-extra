@@ -54,6 +54,7 @@ public class EsperConsumer extends DefaultConsumer implements UpdateListener {
         endpoint.removeConsumer();
     }
 
+    @Override
     public void update(EventBean[] newEvents, EventBean[] oldEvents) {
         for (int i = 0; newEvents != null && i < newEvents.length; i++) {
             EventBean newEvent = newEvents[i];

@@ -34,9 +34,9 @@ import org.apache.camel.impl.PollingConsumerSupport;
  * @version $Revision: 1.1 $
  */
 public class EsperPollingConsumer extends PollingConsumerSupport implements UpdateListener {
-    private EsperEndpoint endpoint;
-    private EPStatement statement;
-    private LinkedBlockingQueue<EventBean> beanForwardQueue = new LinkedBlockingQueue<EventBean>();
+    private final EsperEndpoint endpoint;
+    private final EPStatement statement;
+    private final LinkedBlockingQueue<EventBean> beanForwardQueue = new LinkedBlockingQueue<EventBean>();
 
     public EsperPollingConsumer(EsperEndpoint endpoint, EPStatement statement) {
         super(endpoint);
@@ -44,15 +44,18 @@ public class EsperPollingConsumer extends PollingConsumerSupport implements Upda
         this.statement = statement;
     }
 
+    @Override
     protected void doStart() throws Exception {
         statement.addListener(this);
     }
 
+    @Override
     protected void doStop() throws Exception {
         statement.removeListener(this);
         endpoint.removeConsumer();
     }
 
+    @Override
     public void update(EventBean[] arg0, EventBean[] arg1) {
         for (EventBean bean : arg0) {
             try {
@@ -64,6 +67,7 @@ public class EsperPollingConsumer extends PollingConsumerSupport implements Upda
         }
     }
 
+    @Override
     public Exchange receive() {
         EventBean bean;
         try {
@@ -77,6 +81,7 @@ public class EsperPollingConsumer extends PollingConsumerSupport implements Upda
         return endpoint.createExchange(bean, null, statement);
     }
 
+    @Override
     public Exchange receiveNoWait() {
         EventBean bean = beanForwardQueue.poll();
         if (bean == null) {
@@ -85,6 +90,7 @@ public class EsperPollingConsumer extends PollingConsumerSupport implements Upda
         return endpoint.createExchange(bean, null, statement);
     }
 
+    @Override
     public Exchange receive(long timeout) {
         EventBean bean;
         try {

@@ -1,24 +1,25 @@
-/**************************************************************************************
- http://code.google.com/a/apache-extras.org/p/camel-extra
-
- This program is free software; you can redistribute it and/or
- modify it under the terms of the GNU General Public License
- as published by the Free Software Foundation; either version 2
- of the License, or (at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
-
- You should have received a copy of the GNU General Public License
- along with this program; if not, write to the Free Software
- Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
- 02110-1301, USA.
-
- http://www.gnu.org/licenses/gpl-2.0-standalone.html
- ***************************************************************************************/
+/**
+ * ************************************************************************************
+ * http://code.google.com/a/apache-extras.org/p/camel-extra
+ *
+ * This program is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License as published by the Free Software
+ * Foundation; either version 2 of the License, or (at your option) any later
+ * version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU General Public License for more
+ * details.
+ *
+ *
+ * You should have received a copy of the GNU General Public License along with
+ * this program; if not, write to the Free Software Foundation, Inc., 51
+ * Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
+ *
+ * http://www.gnu.org/licenses/gpl-2.0-standalone.html
+ * *************************************************************************************
+ */
 package org.apacheextras.camel.component.esper;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -42,136 +43,148 @@ import org.apache.camel.util.ObjectHelper;
  * @version $Revision: 1.1 $
  */
 public class EsperEndpoint extends DefaultEndpoint {
-    private EsperComponent component;
-    private String name;
-    private boolean mapEvents;
-    private String pattern;
-    private String eql;
-    private EPStatement statement;
-    private AtomicInteger consumers = new AtomicInteger(0);
 
-    public EsperEndpoint(String uri, EsperComponent component, String name) {
-        super(uri, component);
-        this.component = component;
-        this.name = name;
-    }
+  private final EsperComponent component;
+  private final String name;
+  private boolean mapEvents;
+  private String pattern;
+  private String eql;
+  private EPStatement statement;
+  private final AtomicInteger consumers = new AtomicInteger(0);
 
-    public boolean isSingleton() {
-        return true;
-    }
+  public EsperEndpoint(String uri, EsperComponent component, String name) {
+    super(uri, component);
+    this.component = component;
+    this.name = name;
+  }
 
-    public EsperProducer createProducer() throws Exception {
-        return new EsperProducer(this);
-    }
+  @Override
+  public boolean isSingleton() {
+    return true;
+  }
 
-    public EsperConsumer createConsumer(Processor processor) throws Exception {
-        EPStatement stat = getStatement();
-        consumers.incrementAndGet();
-        return new EsperConsumer(this, statement, processor);
-    }
+  @Override
+  public EsperProducer createProducer() throws Exception {
+    return new EsperProducer(this);
+  }
 
-    @Override
-    public PollingConsumer createPollingConsumer() throws Exception {
-        EPStatement stat = getStatement();
-        consumers.incrementAndGet();
-        return new EsperPollingConsumer(this, statement);
-    }
+  @Override
+  public EsperConsumer createConsumer(Processor processor) throws Exception {
+    EPStatement stat = getStatement();
+    consumers.incrementAndGet();
+    return new EsperConsumer(this, statement, processor);
+  }
 
-    private EPStatement getStatement() {
-        if (statement == null) {
-            statement = createStatement();
-            //statement.start();
-        }
-        return statement;
-    }
+  @Override
+  public PollingConsumer createPollingConsumer() throws Exception {
+    EPStatement stat = getStatement();
+    consumers.incrementAndGet();
+    return new EsperPollingConsumer(this, statement);
+  }
 
-    protected EPStatement createStatement() {
-        if (pattern != null) {
-            return getEsperAdministrator().createPattern(pattern);
-        }
-        else {
-            ObjectHelper.notNull(eql, "eql or pattern");
-            return getEsperAdministrator().createEPL(eql);
-        }
+  private EPStatement getStatement() {
+    if (statement == null) {
+      statement = createStatement();
+      //statement.start();
     }
+    return statement;
+  }
 
-    public synchronized void removeConsumer() {
-        if (0 == consumers.decrementAndGet()) {
-            statement.stop();
-            statement.destroy();
-        }
+  protected EPStatement createStatement() {
+    if (pattern != null) {
+      return getEsperAdministrator().createPattern(pattern);
+    } else {
+      ObjectHelper.notNull(eql, "eql or pattern");
+      return getEsperAdministrator().createEPL(eql);
     }
+  }
 
-    /**
-     * Creates a Camel {@link Exchange} from an Esper {@link EventBean} instance
-     */
-    public Exchange createExchange(EventBean newEventBean, EventBean oldEventBean, EPStatement statement) {
-        Exchange exchange = createExchange(ExchangePattern.InOnly);
-        Message in = new EsperMessage(newEventBean, oldEventBean);
-        in.setHeader("CamelEsperName", name);
-        in.setHeader("CamelEsperStatement", statement);
-        if (pattern != null) {
-            in.setHeader("CamelEsperPattern", pattern);
-        }
-        if (eql != null) {
-            in.setHeader("CamelEsperEql", eql);
-        }
-        exchange.setIn(in);
-        return exchange;
+  public synchronized void removeConsumer() {
+    if (0 == consumers.decrementAndGet()) {
+      statement.stop();
+      statement.destroy();
     }
+  }
 
-    // Properties
-    //-------------------------------------------------------------------------
-    public String getName() {
-        return name;
+  /**
+   * Creates a Camel {@link Exchange} from an Esper {@link EventBean} instance
+   *
+   * @param newEventBean
+   * @param oldEventBean
+   * @param statement
+   * @return Exchange
+   */
+  public Exchange createExchange(EventBean newEventBean, EventBean oldEventBean, EPStatement statement) {
+    Exchange exchange = createExchange(ExchangePattern.InOnly);
+    Message in = new EsperMessage(newEventBean, oldEventBean);
+    in.setHeader("CamelEsperName", name);
+    in.setHeader("CamelEsperStatement", statement);
+    if (pattern != null) {
+      in.setHeader("CamelEsperPattern", pattern);
     }
+    if (eql != null) {
+      in.setHeader("CamelEsperEql", eql);
+    }
+    exchange.setIn(in);
+    return exchange;
+  }
 
-    public EPRuntime getEsperRuntime() {
-        return component.getEsperRuntime();
-    }
+  // Properties
+  //-------------------------------------------------------------------------
+  public String getName() {
+    return name;
+  }
 
-    public EPServiceProvider getEsperService() {
-        return component.getEsperService();
-    }
+  public EPRuntime getEsperRuntime() {
+    return component.getEsperRuntime();
+  }
 
-    public EPAdministrator getEsperAdministrator() {
-        return getEsperService().getEPAdministrator();
-    }
+  public EPServiceProvider getEsperService() {
+    return component.getEsperService();
+  }
 
-    public boolean isMapEvents() {
-        return mapEvents;
-    }
+  public EPAdministrator getEsperAdministrator() {
+    return getEsperService().getEPAdministrator();
+  }
 
-    /**
-     * Should we use Map events (the default approach) containing all the message headers
-     * and the message body in the "body" entry, or should we just send the body of the message
-     * as the event.
-     *
-     * @param mapEvents whether or not we should send map events.
-     */
-    public void setMapEvents(boolean mapEvents) {
-        this.mapEvents = mapEvents;
-    }
+  public boolean isMapEvents() {
+    return mapEvents;
+  }
 
-    public String getEql() {
-        return eql;
-    }
+  /**
+   * Should we use Map events (the default approach) containing all the message
+   * headers and the message body in the "body" entry, or should we just send
+   * the body of the message as the event.
+   *
+   * @param mapEvents whether or not we should send map events.
+   */
+  public void setMapEvents(boolean mapEvents) {
+    this.mapEvents = mapEvents;
+  }
 
-    /**
-     * Sets the EQL statement used for consumers
-     */
-    public void setEql(String eql) {
-        this.eql = eql;
-    }
+  public String getEql() {
+    return eql;
+  }
 
-    public String getPattern() {
-        return pattern;
-    }
+  /**
+   * Sets the EQL statement used for consumers
+   *
+   * @param eql
+   */
+  public void setEql(String eql) {
+    this.eql = eql;
+  }
 
-    /**
-     * Sets the Esper pattern used for consumers
-     */
-    public void setPattern(String pattern) {
-        this.pattern = pattern;
-    }
+  public String getPattern() {
+    return pattern;
+  }
+
+  /**
+   * Sets the Esper pattern used for consumers
+   *
+   * @param pattern
+   */
+  public void setPattern(String pattern) {
+    this.pattern = pattern;
+  }
 }
