@@ -79,7 +79,7 @@
     <protobuf-java-bundle-version>2.4.1_1</protobuf-java-bundle-version>
     <rserve-version>0.6-1</rserve-version>
     <scala-version>2.10.1</scala-version>
-    <spring-neo4j-version>2.2.1.RELEASE</spring-neo4j-version>
+    <spring-neo4j-version>2.3.2.RELEASE</spring-neo4j-version>
     <typesafe-config-version>1.0.2</typesafe-config-version>
     <virtualbox-version>4.2.8</virtualbox-version>
     <vtd-xml-version>2.11</vtd-xml-version>
