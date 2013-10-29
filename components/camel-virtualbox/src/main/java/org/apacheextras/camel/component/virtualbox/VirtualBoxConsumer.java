@@ -100,11 +100,13 @@ public class VirtualBoxConsumer extends ScheduledPollConsumer {
         }
         );
         if (event != null) {
-            Exchange exc = getEndpoint().createExchange();
-            exc.getIn().setBody(event);
-            getProcessor().process(exc);
+            Exchange exchange = getEndpoint().createExchange();
+            exchange.getIn().setBody(event);
+            getProcessor().process(exchange);
+            return 1;
+        } else {
+            return 0;
         }
-        return event != null ? 1 : 0;
     }
 
 }
