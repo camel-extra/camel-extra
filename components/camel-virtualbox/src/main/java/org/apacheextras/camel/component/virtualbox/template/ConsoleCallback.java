@@ -24,6 +24,12 @@ package org.apacheextras.camel.component.virtualbox.template;
 import org.virtualbox_4_2.IConsole;
 import org.virtualbox_4_2.IMachine;
 
+/**
+ * Handler interface used to safely execute a block of code on the behalf of the {@link org.virtualbox_4_2.IConsole}.
+ * Execution of the block can result in returning a value.
+ *
+ * @param <T> Type of returned value..
+ */
 public interface ConsoleCallback<T> {
 
     T execute(IMachine machine, IConsole console);
