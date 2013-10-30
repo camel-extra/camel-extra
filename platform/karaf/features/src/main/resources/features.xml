@@ -74,6 +74,59 @@
     <bundle>wrap:mvn:org.nuiton.thirdparty/Rserve/${rserve-version}</bundle>
     <bundle>mvn:org.apache-extras.camel-extra/camel-rcode/${project.version}</bundle>
   </feature>
+  <feature name='camel-spring-neo4j' version='${project.version}' resolver='(obr)' start-level='50'>
+    <!-- TODO: implement me -->
+    <feature version='${camel-version}'>camel</feature>
+    <bundle>wrap:mvn:org.neo4j/neo4j/1.9.3</bundle>
+    <bundle>wrap:mvn:org.neo4j/neo4j-kernel/1.9.3</bundle>
+    <bundle>wrap:mvn:org.neo4j/neo4j-rest-graphdb/1.9</bundle>
+    <bundle>mvn:org.springframework.data/spring-data-neo4j/${spring-neo4j-version}</bundle>
+    <bundle>mvn:org.springframework.data/spring-data-neo4j-rest/${spring-neo4j-version}</bundle>
+    <bundle>mvn:org.apache-extras.camel-extra/camel-spring-neo4j/${project.version}</bundle>
+    <!--
+[INFO] org.apache-extras.camel-extra:camel-spring-neo4j:bundle:2.12-SNAPSHOT
+[INFO] |  +- org.springframework:spring-tx:jar:3.2.4.RELEASE:compile
+[INFO] |  |  \- aopalliance:aopalliance:jar:1.0:compile
+[INFO] |  +- org.springframework:spring-context:jar:3.2.4.RELEASE:compile
+[INFO] |  |  \- org.springframework:spring-expression:jar:3.2.4.RELEASE:compile
+[INFO] |  +- org.springframework:spring-beans:jar:3.2.4.RELEASE:compile
+[INFO] |  +- org.springframework:spring-aspects:jar:3.1.4.RELEASE:compile
+[INFO] |  |  \- org.springframework:spring-context-support:jar:3.2.4.RELEASE:compile
+[INFO] |  +- org.springframework:spring-aop:jar:3.2.4.RELEASE:compile
+[INFO] |  +- org.springframework:spring-core:jar:3.2.4.RELEASE:compile
+[INFO] |  |  \- org.apache.geronimo.specs:geronimo-jta_1.1_spec:jar:1.1.1:compile
+[INFO] |  |  +- org.aspectj:aspectjrt:jar:1.7.2:compile
+[INFO] |  |  +- org.springframework.data:spring-data-commons:jar:1.6.2.RELEASE:compile
+[INFO] |  |  \- org.neo4j:neo4j-cypher-dsl:jar:1.9:compile
+[INFO] |  |  \- org.neo4j:server-api:jar:1.9:compile
+[INFO] |  |     +- org.neo4j.3rdparty.javax.ws.rs:jsr311-api:jar:1.1.2.r612:compile
+[INFO] |  |     +- commons-configuration:commons-configuration:jar:1.6:compile
+[INFO] |  |     |  +- commons-collections:commons-collections:jar:3.2.1:compile
+[INFO] |  |     |  +- commons-lang:commons-lang:jar:2.4:compile
+[INFO] |  |     |  +- commons-logging:commons-logging:jar:1.1.3:compile
+[INFO] |  |     |  \- commons-beanutils:commons-beanutils-core:jar:1.8.0:compile
+[INFO] |  |     \- commons-digester:commons-digester:jar:1.8.1:compile
+[INFO] |  |        \- commons-beanutils:commons-beanutils:jar:1.8.0:compile
+[INFO] |  +- org.codehaus.jackson:jackson-jaxrs:jar:1.9.7:compile
+[INFO] |  |  \- org.codehaus.jackson:jackson-core-asl:jar:1.9.7:compile
+[INFO] |  +- org.codehaus.jackson:jackson-mapper-asl:jar:1.9.7:compile
+[INFO] |  +- com.sun.jersey:jersey-client:jar:1.4:compile
+[INFO] |  |  \- com.sun.jersey:jersey-core:jar:1.4:compile
+[INFO] |  |  +- org.neo4j:neo4j-lucene-index:jar:1.9.3:compile
+[INFO] |  |  |  \- org.apache.lucene:lucene-core:jar:3.6.2:compile
+[INFO] |  |  +- org.neo4j:neo4j-graph-algo:jar:1.9.3:compile
+[INFO] |  |  +- org.neo4j:neo4j-udc:jar:1.9.3:compile
+[INFO] |  |  +- org.neo4j:neo4j-graph-matching:jar:1.9.3:compile
+[INFO] |  |  \- org.neo4j:neo4j-jmx:jar:1.9.3:compile
+[INFO] |  +- org.neo4j:neo4j-cypher:jar:1.9.3:compile
+[INFO] |  |  +- org.scala-lang:scala-library:jar:2.10.0:compile
+[INFO] |  |  \- com.googlecode.concurrentlinkedhashmap:concurrentlinkedhashmap-lru:jar:1.4:compile
+[INFO] |  +- org.slf4j:slf4j-api:jar:1.6.6:compile
+[INFO] |  \- org.slf4j:jcl-over-slf4j:jar:1.7.1:runtime
+[INFO] +- org.apache.camel:camel-core:jar:2.12.0:compile
+[INFO] \- com.sun.xml.bind:jaxb-impl:jar:2.2.6:compile
+    -->
+  </feature>
   <feature name='camel-virtualbox' version='${project.version}' resolver='(obr)' start-level='50'>
     <feature version='${camel-version}'>camel</feature>
     <bundle>mvn:org.virtualbox/vboxjws/${virtualbox-version}</bundle>
