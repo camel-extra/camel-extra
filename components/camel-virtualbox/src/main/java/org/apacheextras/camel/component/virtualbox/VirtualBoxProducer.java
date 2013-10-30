@@ -51,7 +51,7 @@ public class VirtualBoxProducer extends DefaultProducer {
             Object commandResult = handlersManager.handleCommand(exchange, machineId);
             exchange.getIn().setBody(commandResult);
         } catch (NoHandlerRegisteredException e) {
-            LOG.info("No proper handler registered: ", e);
+            LOG.warn("No proper handler registered: ", e);
         }
     }
 
