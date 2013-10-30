@@ -29,6 +29,10 @@ import org.slf4j.Logger;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
+/**
+ * VirtualBox producer sends commands to the VirtualBox manager. It may be used to interact with and control the
+ * behavior of the virtual machines.
+ */
 public class VirtualBoxProducer extends DefaultProducer {
 
     private static final Logger LOG = getLogger(VirtualBoxProducer.class);
@@ -43,6 +47,8 @@ public class VirtualBoxProducer extends DefaultProducer {
         this.handlersManager = handlersManager;
         this.machineId = machineId;
     }
+
+    // Overridden
 
     @Override
     public void process(Exchange exchange) throws Exception {
