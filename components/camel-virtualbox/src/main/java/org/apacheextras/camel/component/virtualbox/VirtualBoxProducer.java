@@ -55,6 +55,10 @@ public class VirtualBoxProducer extends DefaultProducer {
         LOG.debug("Received exchange: {}", exchange);
         try {
             Object commandResult = handlersManager.handleCommand(exchange, machineId);
+            if(commandResult == null) {
+                LOG.warn("Null result returned by the VirtualBox command handler for exchange {}.",
+                        exchange.getExchangeId());
+            }
             exchange.getIn().setBody(commandResult);
         } catch (NoHandlerRegisteredException e) {
             LOG.warn("No proper handler registered: ", e);
