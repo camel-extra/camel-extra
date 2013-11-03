@@ -1,0 +1,1 @@
+demand <- ts(sales, start=c(2011,1), frequency=12);

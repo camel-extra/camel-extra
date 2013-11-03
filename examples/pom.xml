@@ -38,6 +38,7 @@
   <modules>
     <module>camel-example-esper</module>
     <module>camel-example-hibernate</module>
+    <module>camel-example-rcode</module>
   </modules>
 
 </project>

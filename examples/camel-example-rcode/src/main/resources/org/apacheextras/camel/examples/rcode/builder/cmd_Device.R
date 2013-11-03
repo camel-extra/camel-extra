@@ -1,0 +1,1 @@
+jpeg('${exchangeId}.jpg',quality=100);
