@@ -101,7 +101,7 @@
     </license>
   </licenses>
 
-   <repositories>
+  <repositories>
     <repository>
       <id>apache.content.snapshots</id>
       <name>Apache Development Snapshot Repository</name>
@@ -267,6 +267,31 @@
                 <familyName>camel-extra</familyName>
               </licenseFamily>
             </licenseFamilies>
+            <excludes>
+              <exclude>**/README</exclude>
+              <exclude>**/README.txt</exclude>
+              <exclude>**/README.md</exclude>
+              <exclude>**/resources/**/*.xsd</exclude>
+              <exclude>**/webapp/js/**/*</exclude>
+              <exclude>**/test/resources/**/*</exclude>
+              <exclude>**/test/data*/**/*</exclude>
+              <exclude>.gitignore</exclude>
+              <exclude>.git/**/*</exclude>
+              <exclude>**/src/styles/print.css</exclude>
+              <excludes>**/src/main/resources/META-INF/cxf/cxf.extension</excludes>
+              <excludes>**/src/main/resources/META-INF/cxf/bus-extensions.txt</excludes>
+              <exclude>**/target/**/*</exclude>
+              <exclude>**/eclipse-classes/**/*</exclude>
+              <exclude>**/.*</exclude>
+              <exclude>**/.settings/**/*</exclude>
+              <exclude>**/*.iml</exclude>
+              <exclude>.idea/**/*</exclude>
+              <exclude>**/avro/**/*.avpr</exclude>
+              <exclude>**/OSGI-INF/bundle.info</exclude>
+              <exclude>**/test_rsa*</exclude>
+
+              <exclude>**/*.csv</exclude>
+            </excludes>
           </configuration>
         </plugin>
       </plugins>
@@ -294,7 +319,7 @@
           </execution>
         </executions>
       </plugin>
-        <plugin>
+      <plugin>
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-bundle-plugin</artifactId>
         <version>${maven-bundle-version}</version>
@@ -315,7 +340,7 @@
     </plugins>
   </build>
 
-   <profiles>
+  <profiles>
     <profile>
       <id>sonatype-oss-release</id>
       <build>
