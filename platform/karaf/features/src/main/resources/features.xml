@@ -31,7 +31,8 @@
   </feature>
   <feature name='camel-esper' version='${project.version}' resolver='(obr)' start-level='50'>
     <feature version='${camel-version}'>camel</feature>
-    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.antlr-runtime/${antlr-bundle-version}</bundle>
+    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.antlr-runtime/${antlr-bundle-version}
+    </bundle>
     <bundle>mvn:com.espertech/esper/${esper-version}</bundle>
     <bundle>mvn:org.apache-extras.camel-extra/camel-esper/${project.version}</bundle>
   </feature>
@@ -45,7 +46,8 @@
     <feature version='${camel-version}'>camel</feature>
     <feature version='${camel-version}'>camel-spring</feature>
     <bundle>wrap:mvn:org.hibernate/hibernate-core/${hibernate-version}</bundle>
-    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.javassist/${javassist-bundle-version}</bundle>
+    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.javassist/${javassist-bundle-version}
+    </bundle>
     <bundle>mvn:org.apache-extras.camel-extra/camel-hibernate/${project.version}</bundle>
   </feature>
   <feature name='camel-jboss' version='${project.version}' resolver='(obr)' start-level='50'>
@@ -74,62 +76,24 @@
     <bundle>wrap:mvn:org.nuiton.thirdparty/Rserve/${rserve-version}</bundle>
     <bundle>mvn:org.apache-extras.camel-extra/camel-rcode/${project.version}</bundle>
   </feature>
-  <!--
   <feature name='camel-spring-neo4j' version='${project.version}' resolver='(obr)' start-level='50'>
     <feature version='${camel-version}'>camel</feature>
-    <bundle>wrap:mvn:javax.mail/mail/1.4</bundle>
-    <bundle>wrap:mvn:javax.servlet/servlet-api/2.5</bundle>
-    <bundle>wrap:mvn:javax.servlet/jsp-api/2.0</bundle>
-    <bundle>wrap:mvn:org.jdom/jdom/2.0.2</bundle>
-    <bundle>wrap:mvn:commons-codec/commons-codec/1.2</bundle>
-    <bundle>mvn:commons-jxpath/commons-jxpath/1.3</bundle>
-    <bundle>wrap:mvn:aopalliance/aopalliance/1.0</bundle>
-    <bundle>mvn:commons-beanutils/commons-beanutils/1.8.0</bundle>
-    <bundle>wrap:mvn:commons-beanutils/commons-beanutils-core/1.8.0</bundle>
-    <bundle>mvn:commons-logging/commons-logging/1.1.3</bundle>
-    <bundle>mvn:commons-lang/commons-lang/2.4</bundle>
-    <bundle>mvn:commons-collections/commons-collections/3.2.1</bundle>
-    <bundle>wrap:mvn:org.apache.lucene/lucene-core/3.6.2</bundle>
-    <bundle>mvn:commons-digester/commons-digester/1.8.1</bundle>
-    <bundle>mvn:commons-configuration/commons-configuration/1.6</bundle>
-    <bundle>mvn:org.neo4j.3rdparty.javax.ws.rs/jsr311-api/1.1.2.r612</bundle>
-    <bundle>mvn:com.googlecode.concurrentlinkedhashmap/concurrentlinkedhashmap-lru/1.4</bundle>
-    <bundle>mvn:org.scala-lang/scala-library/2.10.0</bundle>
-    <bundle>wrap:mvn:org.neo4j/neo4j-graph-algo/1.9.3</bundle>
-    <bundle>wrap:mvn:org.neo4j/neo4j-udc/1.9.3</bundle>
-    <bundle>wrap:mvn:org.neo4j/neo4j-graph-matching/1.9.3</bundle>
-    <bundle>wrap:mvn:org.neo4j/neo4j-jmx/1.9.3</bundle>
-    <bundle>wrap:mvn:org.neo4j/neo4j-lucene-index/1.9.3</bundle>
-    <bundle>mvn:com.sun.jersey/jersey-core/1.4</bundle>
-    <bundle>mvn:org.codehaus.jackson/jackson-core-asl/1.9.7</bundle>
-    <bundle>wrap:mvn:org.neo4j/server-api/1.9</bundle>
-    <bundle>wrap:mvn:org.neo4j/neo4j-cypher-dsl/1.9</bundle>
-    <bundle>mvn:org.springframework.data/spring-data-commons/1.6.2.RELEASE</bundle>
-    <bundle>wrap:mvn:org.aspectj/aspectjrt/1.7.2</bundle>
+    <feature version='3.1.4.RELEASE'>spring</feature>
+    <feature version='3.1.4.RELEASE'>spring-tx</feature>
+    <feature version='3.1.4.RELEASE'>spring-aspects</feature>
+    <feature version='2.7.6'>cxf-jaxrs</feature>
+    <bundle>mvn:org.springframework/spring-context-support/3.1.4.RELEASE</bundle>
     <bundle>mvn:org.apache.geronimo.specs/geronimo-jta_1.1_spec/1.1.1</bundle>
-    <bundle>wrap:mvn:org.springframework/spring-context-support/3.2.4.RELEASE</bundle>
-    <bundle>wrap:mvn:org.springframework/spring-expression/3.2.4.RELEASE</bundle>
-    <bundle>mvn:org.slf4j/slf4j-api/1.6.6</bundle>
-    <bundle>mvn:org.slf4j/jcl-over-slf4j/1.7.1</bundle>
-    <bundle>wrap:mvn:org.neo4j/neo4j/1.9.3</bundle>
-    <bundle>wrap:mvn:org.neo4j/neo4j-cypher/1.9.3</bundle>
-    <bundle>mvn:com.sun.jersey/jersey-client/1.4</bundle>
-    <bundle>mvn:org.codehaus.jackson/jackson-mapper-asl/1.9.7</bundle>
-    <bundle>mvn:org.codehaus.jackson/jackson-jaxrs/1.9.7</bundle>
-    <bundle>wrap:mvn:org.neo4j/neo4j-rest-graphdb/1.9</bundle>
+    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.jaxb-impl/2.2.6_1</bundle>
+    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.aopalliance/1.0_6</bundle>
+    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.lucene/3.6.2_1</bundle>
+    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.neo4j/1.9.2_1</bundle>
+    <bundle>mvn:org.springframework/spring-expression/3.1.4.RELEASE</bundle>
+    <bundle>mvn:org.springframework.data/spring-data-commons/1.6.2.RELEASE</bundle>
     <bundle>mvn:org.springframework.data/spring-data-neo4j/2.3.2.RELEASE</bundle>
-    <bundle>wrap:mvn:org.neo4j/neo4j-kernel/1.9.3</bundle>
-    <bundle>wrap:mvn:org.springframework/spring-core/3.2.4.RELEASE</bundle>
-    <bundle>wrap:mvn:org.springframework/spring-aop/3.2.4.RELEASE</bundle>
-    <bundle>mvn:org.springframework/spring-aspects/3.1.4.RELEASE</bundle>
-    <bundle>wrap:mvn:org.springframework/spring-beans/3.2.4.RELEASE</bundle>
-    <bundle>wrap:mvn:org.springframework/spring-context/3.2.4.RELEASE</bundle>
-    <bundle>wrap:mvn:org.springframework/spring-tx/3.2.4.RELEASE</bundle>
-    <bundle>mvn:com.sun.xml.bind/jaxb-impl/2.2.6</bundle>
     <bundle>mvn:org.springframework.data/spring-data-neo4j-rest/2.3.2.RELEASE</bundle>
-    <bundle>mvn:org.apache-extras.camel-extra/camel-spring-neo4j/${project.version}</bundle>
+    <bundle>mvn:org.apache-extras.camel-extra/camel-spring-neo4j/2.12-SNAPSHOT</bundle>
   </feature>
-  -->
   <feature name='camel-virtualbox' version='${project.version}' resolver='(obr)' start-level='50'>
     <feature version='${camel-version}'>camel</feature>
     <bundle>mvn:org.virtualbox/vboxjws/${virtualbox-version}</bundle>
