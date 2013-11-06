@@ -76,6 +76,7 @@
     <bundle>wrap:mvn:org.nuiton.thirdparty/Rserve/${rserve-version}</bundle>
     <bundle>mvn:org.apache-extras.camel-extra/camel-rcode/${project.version}</bundle>
   </feature>
+  <!--
   <feature name='camel-spring-neo4j' version='${project.version}' resolver='(obr)' start-level='50'>
     <feature version='${camel-version}'>camel</feature>
     <feature version='3.1.4.RELEASE'>spring</feature>
@@ -94,6 +95,7 @@
     <bundle>mvn:org.springframework.data/spring-data-neo4j-rest/2.3.2.RELEASE</bundle>
     <bundle>mvn:org.apache-extras.camel-extra/camel-spring-neo4j/2.12-SNAPSHOT</bundle>
   </feature>
+  -->
   <feature name='camel-virtualbox' version='${project.version}' resolver='(obr)' start-level='50'>
     <feature version='${camel-version}'>camel</feature>
     <bundle>mvn:org.virtualbox/vboxjws/${virtualbox-version}</bundle>
