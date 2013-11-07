@@ -160,6 +160,7 @@
     <module>components</module>
     <module>platform</module>
     <module>examples</module>
+    <module>tests</module>
   </modules>
 
   <dependencyManagement>
