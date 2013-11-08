@@ -151,9 +151,9 @@
   </distributionManagement>
 
   <scm>
-    <connection>scm:svn:http://svn.codespot.com/a/apache-extras.org/camel-extra/trunk</connection>
-    <developerConnection>scm:svn:https://svn.codespot.com/a/apache-extras.org/camel-extra/trunk</developerConnection>
-    <url>http://svn.codespot.com/a/apache-extras.org/camel-extra/trunk</url>
+    <connection>scm:svn:http://svn.codespot.com/a/apache-extras.org/camel-extra/branches/camel-extra-2.12.x</connection>
+    <developerConnection>scm:svn:https://svn.codespot.com/a/apache-extras.org/camel-extra/branches/camel-extra-2.12.x</developerConnection>
+    <url>http://svn.codespot.com/a/apache-extras.org/camel-extra/branches/camel-extra-2.12.x</url>
   </scm>
 
   <modules>
