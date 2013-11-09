@@ -117,6 +117,7 @@ public class AbstractFeatureTest {
             .unpackDirectory(new File("target/paxexam/unpack")),
         KarafDistributionOption.keepRuntimeFolder(),
         logLevel(LogLevelOption.LogLevel.INFO),
+        configureConsole().ignoreRemoteShell().ignoreLocalConsole(),
         features(
             maven()
                 .groupId(CAMEL_EXTRA_GROUP_ID)
