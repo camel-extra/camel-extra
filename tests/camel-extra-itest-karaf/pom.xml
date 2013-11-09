@@ -176,7 +176,7 @@ http://www.gnu.org/licenses/gpl-2.0-standalone.html
           <parallel>classes</parallel>
           <runOrder>random</runOrder>
           <threadCount>2</threadCount>
-          <forkedProcessTimeoutInSeconds>300</forkedProcessTimeoutInSeconds>
+          <forkedProcessTimeoutInSeconds>1200</forkedProcessTimeoutInSeconds>
         </configuration>
       </plugin>
     </plugins>
