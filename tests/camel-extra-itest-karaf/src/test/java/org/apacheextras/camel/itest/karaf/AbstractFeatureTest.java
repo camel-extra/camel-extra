@@ -109,7 +109,7 @@ public class AbstractFeatureTest {
    * @return configured options
    */
   public static Option[] configure(String feature) {
-    final Option[] options = new Option[]{
+    return new Option[]{
         karafDistributionConfiguration()
             .frameworkUrl(
                 maven()
@@ -134,7 +134,6 @@ public class AbstractFeatureTest {
             new StringBuilder().append("camel-").append(feature).toString()
         )
     };
-    return options;
   }
 
   /**
