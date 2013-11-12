@@ -21,6 +21,7 @@
  ***************************************************************************************/
 package org.apacheextras.camel.itest.karaf;
 
+import org.apache.karaf.features.Feature;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.ops4j.pax.exam.junit.PaxExam;
@@ -31,25 +32,12 @@ import static org.junit.Assert.assertTrue;
 @RunWith(PaxExam.class)
 public class CamelDb4oTest extends AbstractFeatureTest {
 
-  public static final String COMPONENT = extractName(CamelDb4oTest.class);
-
   @Test
   public void test() {
+    Feature feature = getFeature(fullComponentName());
     assertTrue(getKarafFeatureUrl().toString().contains(KARAF_VERSION));
-    assertEquals("camel-" + COMPONENT,
-        getFeature(
-            new StringBuilder()
-                .append("camel-")
-                .append(COMPONENT)
-                .toString())
-            .getName()
-    );
-    assertTrue(isInstalled(getFeature(
-        new StringBuilder()
-            .append("camel-")
-            .append(COMPONENT)
-            .toString()
-    )));
+    assertEquals(fullComponentName(), feature.getName());
+    assertTrue(isInstalled(feature));
   }
 
 }

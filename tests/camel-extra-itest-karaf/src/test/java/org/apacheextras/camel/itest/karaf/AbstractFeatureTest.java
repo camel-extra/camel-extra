@@ -23,8 +23,6 @@ package org.apacheextras.camel.itest.karaf;
 
 import org.apache.karaf.features.Feature;
 import org.apache.karaf.features.FeaturesService;
-import org.junit.After;
-import org.junit.Before;
 import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.karaf.options.KarafDistributionOption;
@@ -56,9 +54,19 @@ public class AbstractFeatureTest {
   @Inject
   protected FeaturesService featuresService;
 
+  private String cachedComponentName = extractName(getClass());
+
+  protected String componentName() {
+      return cachedComponentName;
+  }
+
+  protected String fullComponentName() {
+   return "camel-" + componentName();
+  }
+
   @Configuration
   public Option[] configure() {
-      return configure(extractName(getClass()));
+      return configure(componentName());
   }
 
   public boolean isInstalled(Feature feature) {
