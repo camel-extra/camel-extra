@@ -25,6 +25,7 @@ import org.apache.karaf.features.Feature;
 import org.apache.karaf.features.FeaturesService;
 import org.junit.After;
 import org.junit.Before;
+import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.karaf.options.KarafDistributionOption;
 import org.ops4j.pax.exam.karaf.options.LogLevelOption;
@@ -54,6 +55,11 @@ public class AbstractFeatureTest {
 
   @Inject
   protected FeaturesService featuresService;
+
+  @Configuration
+  public Option[] configure() {
+      return configure(extractName(getClass()));
+  }
 
   @Before
   public void setUp() {

@@ -22,19 +22,12 @@
 package org.apacheextras.camel.itest.karaf;
 
 import org.junit.Test;
-import org.ops4j.pax.exam.Configuration;
-import org.ops4j.pax.exam.Option;
 
 import static org.junit.Assert.assertTrue;
 
 public class CamelHibernateTest extends AbstractFeatureTest {
 
   public static final String COMPONENT = extractName(CamelHibernateTest.class);
-
-  @Configuration
-  public static Option[] configure() {
-    return configure(COMPONENT);
-  }
 
   @Test
   public void test() {

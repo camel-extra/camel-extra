@@ -23,8 +23,6 @@ package org.apacheextras.camel.itest.karaf;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.ops4j.pax.exam.Configuration;
-import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.junit.PaxExam;
 
 import static org.junit.Assert.assertEquals;
@@ -33,11 +31,6 @@ import static org.junit.Assert.assertTrue;
 @RunWith(PaxExam.class)
 public class CamelJgroupsTest extends AbstractFeatureTest {
   public static final String COMPONENT = extractName(CamelJgroupsTest.class);
-
-  @Configuration
-  public static Option[] configure() {
-    return configure(COMPONENT);
-  }
 
   @Test
   public void test() {
