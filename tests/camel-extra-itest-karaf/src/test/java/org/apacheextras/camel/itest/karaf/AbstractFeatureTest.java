@@ -61,14 +61,6 @@ public class AbstractFeatureTest {
       return configure(extractName(getClass()));
   }
 
-  @Before
-  public void setUp() {
-  }
-
-  @After
-  public void tearDown() {
-  }
-
   public boolean isInstalled(Feature feature) {
     if(null != featuresService) {
       return featuresService.isInstalled(feature);
