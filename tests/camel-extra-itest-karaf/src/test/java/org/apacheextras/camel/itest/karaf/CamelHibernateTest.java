@@ -23,8 +23,6 @@ package org.apacheextras.camel.itest.karaf;
 
 import org.junit.Test;
 
-import static org.junit.Assert.assertTrue;
-
 public class CamelHibernateTest extends AbstractFeatureTest {
 
   public static final String COMPONENT = extractName(CamelHibernateTest.class);

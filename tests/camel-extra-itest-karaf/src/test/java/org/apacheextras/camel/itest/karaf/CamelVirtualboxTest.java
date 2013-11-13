@@ -25,9 +25,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.ops4j.pax.exam.junit.PaxExam;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 @RunWith(PaxExam.class)
 public class CamelVirtualboxTest extends AbstractFeatureTest {
 

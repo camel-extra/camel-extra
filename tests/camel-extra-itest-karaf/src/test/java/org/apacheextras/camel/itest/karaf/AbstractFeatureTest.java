@@ -23,6 +23,7 @@ package org.apacheextras.camel.itest.karaf;
 
 import org.apache.karaf.features.Feature;
 import org.apache.karaf.features.FeaturesService;
+import org.junit.Assert;
 import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.karaf.options.KarafDistributionOption;
@@ -39,7 +40,7 @@ import static org.ops4j.pax.exam.CoreOptions.maven;
 import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
 import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.*;
 
-public class AbstractFeatureTest {
+public class AbstractFeatureTest extends Assert {
 
   public static final String CAMEL_EXTRA_GROUP_ID = "org.apache-extras.camel-extra.karaf";
   public static final String CAMEL_EXTRA_ARTIFACT_ID = "camel-extra";
