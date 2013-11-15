@@ -67,7 +67,7 @@ public class AbstractFeatureTest extends Assert {
 
   @Configuration
   public Option[] configure() {
-      return configure(componentName());
+      return commonOptions();
   }
 
   public boolean isInstalled(Feature feature) {
@@ -106,10 +106,9 @@ public class AbstractFeatureTest extends Assert {
   /**
    * Configures Apache Karaf to run with Camel Extra and returns the configuration options.
    *
-   * @param feature name
    * @return configured options
    */
-  public static Option[] configure(String feature) {
+  public Option[] commonOptions() {
     return new Option[]{
         karafDistributionConfiguration()
             .frameworkUrl(
@@ -132,8 +131,7 @@ public class AbstractFeatureTest extends Assert {
                 .type("xml")
                 .classifier("features")
                 .versionAsInProject(),
-            new StringBuilder().append("camel-").append(feature).toString()
-        )
+            fullComponentName())
     };
   }
 
