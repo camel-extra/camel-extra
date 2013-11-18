@@ -27,12 +27,12 @@
   <parent>
     <groupId>org.apache.camel</groupId>
     <artifactId>camel-parent</artifactId>
-    <version>2.12.1</version>
+    <version>2.13-SNAPSHOT</version>
   </parent>
 
   <groupId>org.apache-extras.camel-extra</groupId>
   <artifactId>camel-parent</artifactId>
-  <version>2.12.1-SNAPSHOT</version>
+  <version>2.13-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Camel Extra</name>
   <description>Camel Extra Parent POM</description>
@@ -42,7 +42,7 @@
   </prerequisites>
 
   <properties>
-    <camel-version>2.12.1</camel-version>
+    <camel-version>2.13-SNAPSHOT</camel-version>
 
     <site-repo-url>scpexe://people.apache.org/www/activemq.apache.org/camel/maven/</site-repo-url>
     <sonatypeOssDistMgmtSnapshotsUrl>https://oss.sonatype.org/content/repositories/snapshots/</sonatypeOssDistMgmtSnapshotsUrl>
@@ -214,6 +214,11 @@
         <scope>test</scope>
       </dependency>
 
+      <dependency>
+        <groupId>org.ops4j.pax.exam</groupId>
+        <artifactId>pax-exam</artifactId>
+        <version>${pax-exam-version}</version>
+      </dependency>
       <dependency>
         <groupId>org.ops4j.pax.exam</groupId>
         <artifactId>pax-exam-container-karaf</artifactId>
