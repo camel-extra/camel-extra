@@ -113,8 +113,6 @@ public class AbstractFeatureTest extends Assert {
    */
   public Option[] commonOptions() {
     return new Option[]{
-        editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiServerPort", AvailablePortFinder.getNextAvailable() + ""),
-        editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiRegistryPort", AvailablePortFinder.getNextAvailable() + ""),
         karafDistributionConfiguration()
             .frameworkUrl(
                 maven()
@@ -129,6 +127,8 @@ public class AbstractFeatureTest extends Assert {
         KarafDistributionOption.keepRuntimeFolder(),
         logLevel(LogLevelOption.LogLevel.INFO),
         configureConsole().ignoreRemoteShell().ignoreLocalConsole(),
+        editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiServerPort", AvailablePortFinder.getNextAvailable() + ""),
+        editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiRegistryPort", AvailablePortFinder.getNextAvailable() + ""),
         features(
             maven()
                 .groupId(CAMEL_EXTRA_GROUP_ID)
