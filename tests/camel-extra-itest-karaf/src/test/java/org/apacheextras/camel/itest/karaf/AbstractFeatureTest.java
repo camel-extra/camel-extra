@@ -129,8 +129,6 @@ public class AbstractFeatureTest extends Assert {
         KarafDistributionOption.keepRuntimeFolder(),
         logLevel(LogLevelOption.LogLevel.INFO),
         configureConsole().ignoreRemoteShell().ignoreLocalConsole(),
-        editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiServerPort", AvailablePortFinder.getNextAvailable() + ""),
-        editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiRegistryPort", AvailablePortFinder.getNextAvailable() + ""),
         features(
             maven()
                 .groupId(CAMEL_EXTRA_GROUP_ID)
@@ -138,7 +136,10 @@ public class AbstractFeatureTest extends Assert {
                 .type("xml")
                 .classifier("features")
                 .versionAsInProject(),
-            fullComponentName())
+            fullComponentName()),
+        // Suppress the port collisions warnings in parallel tests
+        editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiServerPort", AvailablePortFinder.getNextAvailable() + ""),
+        editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiRegistryPort", AvailablePortFinder.getNextAvailable() + "")
     };
   }
 
