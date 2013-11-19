@@ -21,9 +21,9 @@
  ***************************************************************************************/
 package org.apacheextras.camel.itest.karaf;
 
+import org.apache.camel.test.AvailablePortFinder;
 import org.apache.karaf.features.Feature;
 import org.apache.karaf.features.FeaturesService;
-import org.apache.mina.util.AvailablePortFinder;
 import org.junit.Assert;
 import org.junit.Before;
 import org.ops4j.net.FreePort;
