@@ -114,6 +114,7 @@ public class AbstractFeatureTest extends Assert {
   public Option[] commonOptions() {
     return new Option[]{
         editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiServerPort", AvailablePortFinder.getNextAvailable() + ""),
+        editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiRegistryPort", AvailablePortFinder.getNextAvailable() + ""),
         karafDistributionConfiguration()
             .frameworkUrl(
                 maven()
