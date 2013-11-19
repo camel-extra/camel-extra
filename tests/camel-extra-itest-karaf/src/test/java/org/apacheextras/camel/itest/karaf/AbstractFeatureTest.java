@@ -114,7 +114,7 @@ public class AbstractFeatureTest extends Assert {
    */
   public Option[] commonOptions() {
     return new Option[]{
-        repository("https://repository.apache.org/content/repositories/snapshots"),
+        repository("http://repository.apache.org/content/repositories/snapshots/").allowSnapshots(),
         karafDistributionConfiguration()
             .frameworkUrl(
                 maven()
