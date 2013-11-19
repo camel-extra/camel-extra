@@ -41,6 +41,7 @@ import java.io.File;
 
 import static org.ops4j.pax.exam.CoreOptions.maven;
 import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
+import static org.ops4j.pax.exam.CoreOptions.repository;
 import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.*;
 
 public class AbstractFeatureTest extends Assert {
@@ -113,6 +114,7 @@ public class AbstractFeatureTest extends Assert {
    */
   public Option[] commonOptions() {
     return new Option[]{
+        repository("https://repository.apache.org/content/repositories/snapshots"),
         karafDistributionConfiguration()
             .frameworkUrl(
                 maven()
