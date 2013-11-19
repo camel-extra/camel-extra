@@ -59,7 +59,8 @@ public class AbstractFeatureTest extends Assert {
 
   @Before
   public void containerStartupDelay() throws InterruptedException {
-      SECONDS.sleep(30);
+      System.out.println("FOOOOOOOOOOO");
+      SECONDS.sleep(120);
   }
 
   private String cachedComponentName = extractName(getClass());
