@@ -41,6 +41,7 @@ import java.io.File;
 
 import static org.ops4j.pax.exam.CoreOptions.maven;
 import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
+import static org.ops4j.pax.exam.CoreOptions.repositories;
 import static org.ops4j.pax.exam.CoreOptions.repository;
 import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.*;
 
@@ -114,7 +115,6 @@ public class AbstractFeatureTest extends Assert {
    */
   public Option[] commonOptions() {
     return new Option[]{
-        repository("http://repository.apache.org/content/repositories/snapshots/").allowSnapshots(),
         karafDistributionConfiguration()
             .frameworkUrl(
                 maven()
@@ -139,7 +139,15 @@ public class AbstractFeatureTest extends Assert {
             fullComponentName()),
         // Suppress the port collisions warnings in parallel tests
         editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiServerPort", AvailablePortFinder.getNextAvailable() + ""),
-        editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiRegistryPort", AvailablePortFinder.getNextAvailable() + "")
+        editConfigurationFilePut("etc/org.apache.karaf.management.cfg", "rmiRegistryPort", AvailablePortFinder.getNextAvailable() + ""),
+        // Add apache-snapshots repository
+        editConfigurationFilePut("etc/org.ops4j.pax.url.mvn.cfg", "org.ops4j.pax.url.mvn.repositories",
+            "http://repo1.maven.org/maven2@id=central, "
+            + "http://svn.apache.org/repos/asf/servicemix/m2-repo@id=servicemix, "
+            + "http://repository.springsource.com/maven/bundles/release@id=springsource.release, "
+            + "http://repository.springsource.com/maven/bundles/external@id=springsource.external, "
+            + "http://oss.sonatype.org/content/repositories/releases/@id=sonatype, "
+            + "http://repository.apache.org/content/groups/snapshots-group@snapshots@noreleases@id=apache")
     };
   }
 
