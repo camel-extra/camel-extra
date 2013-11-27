@@ -325,7 +325,7 @@
               <exclude>**/avro/**/*.avpr</exclude>
               <exclude>**/OSGI-INF/bundle.info</exclude>
               <exclude>**/test_rsa*</exclude>
-              <exclide>**/.gitignore</exclide>
+              <exclude>**/.gitignore</exclude>
               <exclude>**/*.csv</exclude>
             </excludes>
           </configuration>
