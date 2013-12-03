@@ -22,7 +22,6 @@
 package org.apacheextras.camel.examples.esper;
 
 import java.util.Random;
-
 import javax.jms.Connection;
 import javax.jms.DeliveryMode;
 import javax.jms.Destination;
@@ -82,7 +81,7 @@ public class MarketDataSendRunnable implements Runnable {
         } catch (RuntimeException ex)         {
             log.error("Error in send loop", ex);
         } catch (JMSException e) {
-			e.printStackTrace();
+			    log.error("Detected a JMS error '{}' caused by '{}'", e.getMessage(), e);
 		}
 
         log.info(".call Thread " + Thread.currentThread() + " done");

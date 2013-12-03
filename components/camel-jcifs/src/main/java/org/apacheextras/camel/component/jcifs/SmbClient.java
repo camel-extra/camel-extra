@@ -29,14 +29,14 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.camel.util.IOHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jcifs.smb.NtlmPasswordAuthentication;
 import jcifs.smb.SmbException;
 import jcifs.smb.SmbFile;
 import jcifs.smb.SmbFileOutputStream;
-
-import org.apache.camel.util.IOHelper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *  
@@ -52,7 +52,7 @@ public class SmbClient {
 	/**
 	 * Allows for overriding the default {@link SmbApiFactory} implementation.
 	 * 
-	 * @param smbFileFactory a {@link SmbApiFactory} to use instead of the default implementation.
+	 * @param smbApiFactory a {@link SmbApiFactory} to use instead of the default implementation.
 	 */
 	public void setSmbApiFactory(SmbApiFactory smbApiFactory) {
 		this.smbApiFactory = smbApiFactory;
@@ -100,8 +100,10 @@ public class SmbClient {
 				smbFile.mkdirs();
 			}
 		} catch (MalformedURLException e) {
+      log.error("Could not locate direction '{}' due to '{}'", e.getMessage(), e);
 			return false;
 		} catch (SmbException e) {
+      log.error("Could not create directory '{}' due to '{}'", e.getMessage(), e);
 			return false;
 		}
 		return true;
@@ -148,6 +150,7 @@ public class SmbClient {
 		try {
 			sFile.delete();
 		} catch(SmbException e) {
+      log.error("Could not delete '{}' due to '{}'", e.getMessage(), e);
 			return false;
 		}
 		return true;
@@ -159,6 +162,7 @@ public class SmbClient {
 		try {
 			sFile.renameTo(renamedFile);
 		} catch (SmbException e) {
+      log.error("Could not rename '{}' due to '{}'", e.getMessage(), e);
 			return false;
 		}
 		return true;

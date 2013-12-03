@@ -21,14 +21,14 @@
  ***************************************************************************************/
 package org.apacheextras.camel.examples.esper;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.IOException;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FeedSimMain {
 
@@ -48,6 +48,7 @@ public class FeedSimMain {
         try {
             numberOfThreads = Integer.parseInt(args[0]);
         } catch (NullPointerException e) {
+            log.error("'{}' caused by '{}'", e.getMessage(), e);
             System.out.println("Invalid number of threads:" + args[0]);
             System.exit(-2);
             return;
@@ -57,6 +58,7 @@ public class FeedSimMain {
         try {
             dropProbability = Double.parseDouble(args[1]);
         } catch (NumberFormatException e) {
+            log.error("'{}' caused by '{}'", e.getMessage(), e);
             System.out.println("Invalid drop probability:" + args[1]);
             System.exit(-2);
             return;
@@ -66,6 +68,7 @@ public class FeedSimMain {
         try {
             numberOfSeconds = Integer.parseInt(args[2]);
         } catch (NullPointerException e) {
+            log.error("'{}' caused by '{}'", e.getMessage(), e);
             System.out.println("Invalid number of seconds to run:" + args[2]);
             System.exit(-2);
             return;

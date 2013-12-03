@@ -22,6 +22,16 @@
  ***************************************************************************************/
 package org.apacheextras.camel.component.jcifs;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.camel.Exchange;
 import org.apache.camel.component.file.FileComponent;
 import org.apache.camel.component.file.GenericFile;
@@ -35,16 +45,6 @@ import org.apache.camel.util.IOHelper;
 import org.apache.camel.util.ObjectHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 public class SmbOperations<SmbFile> implements GenericFileOperations<SmbFile> {
 
@@ -67,7 +67,7 @@ public class SmbOperations<SmbFile> implements GenericFileOperations<SmbFile> {
 			return client.delete(getPath(name));
 
 		} catch (Exception e) {
-			throw new GenericFileOperationFailedException("could not delete file " + e);
+			throw new GenericFileOperationFailedException("Could not delete file", e);
 		}
 	}
 
@@ -76,7 +76,7 @@ public class SmbOperations<SmbFile> implements GenericFileOperations<SmbFile> {
 			login();
 			return client.isExist(getPath(name));
 		} catch (Exception e) {
-			throw new GenericFileOperationFailedException("could not determine if file exists " + e);
+			throw new GenericFileOperationFailedException("Could not determine if file exists", e);
 		}
 	}
 
@@ -87,7 +87,7 @@ public class SmbOperations<SmbFile> implements GenericFileOperations<SmbFile> {
 			login();
 			return client.rename(fromPath, toPath);
 		} catch (Exception e) {
-			throw new GenericFileOperationFailedException("could not rename file " + e);
+			throw new GenericFileOperationFailedException("Could not rename file", e);
 		}
 	}
 
@@ -96,6 +96,7 @@ public class SmbOperations<SmbFile> implements GenericFileOperations<SmbFile> {
 			login();
 			return client.createDirs(getPath(directory));
 		} catch (Exception e) {
+      log.error(e.getMessage(), e);
 			return false;
 		}
 	}
@@ -139,14 +140,14 @@ public class SmbOperations<SmbFile> implements GenericFileOperations<SmbFile> {
 				throw new GenericFileOperationFailedException("Cannot create new local work file: " + temp);
 			}
 		} catch (IOException e1) {
-			throw new GenericFileOperationFailedException("Cannot create new local work file: " + temp + " " + e1);
+			throw new GenericFileOperationFailedException("Cannot create new local work file: " + temp, e1);
 		}
 
 		// store content as a file in the local work directory in the temp handle
 		try {
 			os = new FileOutputStream(temp);
 		} catch (FileNotFoundException e1) {
-			throw new GenericFileOperationFailedException("File not found: " + temp + " " + e1);
+			throw new GenericFileOperationFailedException("File not found: " + temp, e1);
 		}
 
 		// set header with the path to the local work file
@@ -270,7 +271,7 @@ public class SmbOperations<SmbFile> implements GenericFileOperations<SmbFile> {
 				files.add((SmbFile) f);
 			}
 		} catch (Exception e) {
-			throw new GenericFileOperationFailedException("Could not get files " + e.getMessage());
+			throw new GenericFileOperationFailedException("Could not get files " + e.getMessage(), e);
 		}
 		return files;
 	}

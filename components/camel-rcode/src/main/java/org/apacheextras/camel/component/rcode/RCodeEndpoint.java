@@ -165,7 +165,7 @@ public class RCodeEndpoint extends DefaultEndpoint {
             try {
                 rConnection = RConnectionFactory.getInstance().createConnection(rCodeConfiguration);
             } catch (RserveException ex) {
-                LOGGER.error("Could not create a connection due to: {}", ex.getMessage());
+                LOGGER.error("Could not create a connection due to: {}, {}", ex.getMessage(), ex);
                 throw new RuntimeCamelException(ex);
             }
         }
@@ -174,7 +174,7 @@ public class RCodeEndpoint extends DefaultEndpoint {
             try {
                 rConnection.login(rCodeConfiguration.getUser(), rCodeConfiguration.getPassword());
             } catch (RserveException ex) {
-                LOGGER.error("Unable to login due to: {}", ex.getMessage());
+                LOGGER.error("Unable to login due to: {}, {}", ex.getMessage(), ex);
                 throw new RuntimeCamelException(ex);
             }
         }
@@ -182,7 +182,7 @@ public class RCodeEndpoint extends DefaultEndpoint {
         try {
             rConnection.setStringEncoding("utf8");
         } catch (RserveException ex) {
-            LOGGER.error("Unable to set the encoding due to: {}", ex.getMessage());
+            LOGGER.error("Unable to set the encoding due to: {}, {}", ex.getMessage(), ex);
             throw new RuntimeCamelException(ex);
         }
     }
