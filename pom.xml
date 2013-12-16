@@ -68,7 +68,7 @@
     <hibernate-commons-annotation-version>4.0.2.Final</hibernate-commons-annotation-version>
     <jandex-version>1.1.0.Final</jandex-version>
     <javax-validation-api-version>1.1.0.Final</javax-validation-api-version>
-    <javassist-bundle-version>3.12.1.GA_3</javassist-bundle-version>
+    <javassist-version>3.18.1-GA</javassist-version>
     <jaxws-rt-version>2.2.9-b14002</jaxws-rt-version>
     <jsr303-bundle-version>2.2.0</jsr303-bundle-version>
     <jboss-vfs5-version>2.2.1.GA</jboss-vfs5-version>
