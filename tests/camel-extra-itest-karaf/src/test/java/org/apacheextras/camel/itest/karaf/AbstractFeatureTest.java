@@ -174,4 +174,11 @@ public class AbstractFeatureTest extends Assert {
     return sb.toString();
   }
 
+    // Assertion helpers
+
+    protected void assertIsFeatureInstalled() {
+        Feature feature = getFeature(fullComponentName());
+        assertTrue(isInstalled(feature));
+    }
+
 }

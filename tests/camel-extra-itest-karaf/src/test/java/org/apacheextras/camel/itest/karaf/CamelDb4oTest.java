@@ -29,12 +29,16 @@ import org.ops4j.pax.exam.junit.PaxExam;
 @RunWith(PaxExam.class)
 public class CamelDb4oTest extends AbstractFeatureTest {
 
-  @Test
-  public void test() {
-    Feature feature = getFeature(fullComponentName());
-    assertTrue(getKarafFeatureUrl().toString().contains(KARAF_VERSION));
-    assertEquals(fullComponentName(), feature.getName());
-    assertTrue(isInstalled(feature));
-  }
+    @Test
+    public void test() {
+        Feature feature = getFeature(fullComponentName());
+        assertTrue(getKarafFeatureUrl().toString().contains(KARAF_VERSION));
+        assertEquals(fullComponentName(), feature.getName());
+    }
+
+    @Test
+    public void shouldInstallFeature() {
+        assertIsFeatureInstalled();
+    }
 
 }

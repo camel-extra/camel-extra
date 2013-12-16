@@ -31,8 +31,7 @@ public class CamelHibernateTest extends AbstractFeatureTest {
 
     @Test
     public void shouldInstallFeature() {
-        Feature feature = getFeature(fullComponentName());
-        assertTrue(isInstalled(feature));
+        assertIsFeatureInstalled();
     }
 
     @Test
