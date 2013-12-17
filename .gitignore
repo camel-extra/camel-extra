@@ -31,3 +31,8 @@ Thumbs.db
 # #
 .idea
 *.iml
+
+##
+## Ignore build files
+## #
+**/target/*
