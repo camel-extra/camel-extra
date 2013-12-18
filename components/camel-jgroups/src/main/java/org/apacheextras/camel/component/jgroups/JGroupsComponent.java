@@ -36,9 +36,11 @@ public class JGroupsComponent extends DefaultComponent {
 
     private String channelProperties;
 
+    private Boolean enableViewMessages;
+
     @Override
     protected Endpoint createEndpoint(String uri, String clusterName, Map<String, Object> parameters) throws Exception {
-        return new JGroupsEndpoint(uri, this, channel, clusterName, channelProperties);
+        return new JGroupsEndpoint(uri, this, channel, clusterName, channelProperties, enableViewMessages);
     }
 
     public Channel getChannel() {
@@ -55,6 +57,14 @@ public class JGroupsComponent extends DefaultComponent {
 
     public void setChannelProperties(String channelProperties) {
         this.channelProperties = channelProperties;
+    }
+
+    public Boolean getEnableViewMessages() {
+        return enableViewMessages;
+    }
+
+    public void setEnableViewMessages(Boolean enableViewMessages) {
+        this.enableViewMessages = enableViewMessages;
     }
 
 }

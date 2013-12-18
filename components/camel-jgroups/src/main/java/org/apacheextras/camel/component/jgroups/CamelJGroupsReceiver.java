@@ -29,6 +29,7 @@ import org.apache.camel.util.AsyncProcessorConverterHelper;
 import org.apache.camel.util.ObjectHelper;
 import org.jgroups.Message;
 import org.jgroups.ReceiverAdapter;
+import org.jgroups.View;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,6 +50,26 @@ public class CamelJGroupsReceiver extends ReceiverAdapter {
 
         this.endpoint = endpoint;
         this.processor = AsyncProcessorConverterHelper.convert(processor);
+    }
+
+    @Override
+    public void viewAccepted(View view) {
+        if (endpoint.isResolvedEnableViewMessages()) {
+            Exchange exchange = endpoint.createExchange(view);
+            try {
+                LOG.debug("Processing view: {}", view);
+                processor.process(exchange, new AsyncCallback() {
+                    @Override
+                    public void done(boolean doneSync) {
+                        // noop
+                    }
+                });
+            } catch (Exception e) {
+                throw new JGroupsException("Error in consumer while dispatching exchange containing view " + view, e);
+            }
+        } else {
+            LOG.debug("Option enableViewMessages is set to false. Skipping processing of the view: {}", view);
+        }
     }
 
     @Override

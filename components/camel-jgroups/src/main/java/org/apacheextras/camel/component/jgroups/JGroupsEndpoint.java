@@ -30,12 +30,15 @@ import org.apache.camel.impl.DefaultEndpoint;
 import org.jgroups.Channel;
 import org.jgroups.JChannel;
 import org.jgroups.Message;
+import org.jgroups.View;
 
 public class JGroupsEndpoint extends DefaultEndpoint {
 
     public static final String HEADER_JGROUPS_SRC = "JGROUPS_SRC";
 
     public static final String HEADER_JGROUPS_DEST = "JGROUPS_DEST";
+
+    public static final String HEADER_JGROUPS_CHANNEL_ADDRESS = "JGROUPS_CHANNEL_ADDRESS";
 
     private Channel channel;
 
@@ -45,11 +48,16 @@ public class JGroupsEndpoint extends DefaultEndpoint {
 
     private String channelProperties;
 
-    public JGroupsEndpoint(String endpointUri, Component component, Channel channel, String clusterName, String channelProperties) {
+    private Boolean enableViewMessages;
+
+    private boolean resolvedEnableViewMessages = false;
+
+    public JGroupsEndpoint(String endpointUri, Component component, Channel channel, String clusterName, String channelProperties, Boolean enableViewMessages) {
         super(endpointUri, component);
         this.channel = channel;
         this.clusterName = clusterName;
         this.channelProperties = channelProperties;
+        this.enableViewMessages = enableViewMessages;
     }
 
     @Override
@@ -69,9 +77,17 @@ public class JGroupsEndpoint extends DefaultEndpoint {
 
     public Exchange createExchange(Message message) {
         Exchange exchange = createExchange();
-        exchange.getIn().setBody(message.getObject());
         exchange.getIn().setHeader(HEADER_JGROUPS_SRC, message.getSrc());
         exchange.getIn().setHeader(HEADER_JGROUPS_DEST, message.getDest());
+        exchange.getIn().setHeader(HEADER_JGROUPS_CHANNEL_ADDRESS, resolvedChannel.getAddress());
+        exchange.getIn().setBody(message.getObject());
+        return exchange;
+    }
+
+    public Exchange createExchange(View view) {
+        Exchange exchange = createExchange();
+        exchange.getIn().setHeader(HEADER_JGROUPS_CHANNEL_ADDRESS, resolvedChannel.getAddress());
+        exchange.getIn().setBody(view);
         return exchange;
     }
 
@@ -79,6 +95,7 @@ public class JGroupsEndpoint extends DefaultEndpoint {
     protected void doStart() throws Exception {
         super.doStart();
         resolvedChannel = resolveChannel();
+        resolvedEnableViewMessages = resolveEnableViewMessages();
     }
 
     @Override
@@ -95,6 +112,13 @@ public class JGroupsEndpoint extends DefaultEndpoint {
             return new JChannel(channelProperties);
         }
         return new JChannel();
+    }
+
+    private boolean resolveEnableViewMessages() {
+        if(enableViewMessages != null) {
+            resolvedEnableViewMessages = enableViewMessages;
+        }
+        return resolvedEnableViewMessages;
     }
 
     public Channel getChannel() {
@@ -127,6 +151,22 @@ public class JGroupsEndpoint extends DefaultEndpoint {
 
     public void setResolvedChannel(Channel resolvedChannel) {
         this.resolvedChannel = resolvedChannel;
+    }
+
+    public Boolean getEnableViewMessages() {
+        return enableViewMessages;
+    }
+
+    public void setEnableViewMessages(Boolean enableViewMessages) {
+        this.enableViewMessages = enableViewMessages;
+    }
+
+    public boolean isResolvedEnableViewMessages() {
+        return resolvedEnableViewMessages;
+    }
+
+    public void setResolvedEnableViewMessages(boolean resolvedEnableViewMessages) {
+        this.resolvedEnableViewMessages = resolvedEnableViewMessages;
     }
 
 }
