@@ -31,9 +31,9 @@
   </feature>
   <feature name='camel-esper' version='${project.version}' resolver='(obr)' start-level='50'>
     <feature version='${camel-version}'>camel</feature>
-    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.antlr-runtime/${antlr-bundle-version}</bundle>
-    <bundle>mvn:com.espertech/esper/${esper-version}</bundle>
     <bundle>mvn:org.apache-extras.camel-extra/camel-esper/${project.version}</bundle>
+    <bundle dependency='true'>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.antlr-runtime/${antlr-bundle-version}</bundle>
+    <bundle dependency='true'>mvn:com.espertech/esper/${esper-version}</bundle>
   </feature>
   <feature name='camel-exist' version='${project.version}' resolver='(obr)' start-level='50'>
     <feature version='${camel-version}'>camel</feature>
