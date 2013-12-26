@@ -172,7 +172,8 @@ http://www.gnu.org/licenses/gpl-2.0-standalone.html
           <parallel>classes</parallel>
           <runOrder>random</runOrder>
           <threadCount>2</threadCount>
-          <forkedProcessTimeoutInSeconds>1200</forkedProcessTimeoutInSeconds>
+          <!-- Timeout tests after 30 minutes. -->
+          <forkedProcessTimeoutInSeconds>1800</forkedProcessTimeoutInSeconds>
         </configuration>
       </plugin>
     </plugins>
