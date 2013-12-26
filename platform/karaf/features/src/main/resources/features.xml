@@ -37,9 +37,9 @@
   </feature>
   <feature name='camel-exist' version='${project.version}' resolver='(obr)' start-level='50'>
     <feature version='${camel-version}'>camel</feature>
-    <bundle>wrap:mvn:exist/exist-xmldb/${exist-version}</bundle>
-    <bundle>wrap:mvn:exist/exist/${exist-version}</bundle>
-    <bundle>mvn:org.apache-extras.camel-extra/camel-exist/${project.version}</bundle>
+      <bundle>mvn:org.apache-extras.camel-extra/camel-exist/${project.version}</bundle>
+      <bundle dependency='true'>wrap:mvn:exist/exist-xmldb/${exist-version}</bundle>
+      <bundle dependency='true'>wrap:mvn:exist/exist/${exist-version}</bundle>
   </feature>
   <feature name='camel-hibernate' version='${project.version}' resolver='(obr)' start-level='50'>
     <feature version='${camel-version}'>camel</feature>
