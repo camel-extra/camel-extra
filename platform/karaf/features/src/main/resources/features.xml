@@ -26,8 +26,8 @@
 
   <feature name='camel-db4o' version='${project.version}' resolver='(obr)' start-level='50'>
     <feature version='${camel-version}'>camel</feature>
-    <bundle>mvn:com.db4o/db4o-core-java5/${db4o-version}</bundle>
     <bundle>mvn:org.apache-extras.camel-extra/camel-db4o/${project.version}</bundle>
+    <bundle dependency='true'>mvn:com.db4o/db4o-core-java5/${db4o-version}</bundle>
   </feature>
   <feature name='camel-esper' version='${project.version}' resolver='(obr)' start-level='50'>
     <feature version='${camel-version}'>camel</feature>
