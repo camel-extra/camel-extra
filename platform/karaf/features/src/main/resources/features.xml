@@ -75,11 +75,6 @@
     <bundle>wrap:mvn:jcifs/jcifs/${jcifs-version}</bundle>
     <bundle>mvn:org.apache-extras.camel-extra/camel-jcifs/${project.version}</bundle>
   </feature>
-  <feature name='camel-jgroups' version='${project.version}' resolver='(obr)' start-level='50'>
-    <feature version='${camel-version}'>camel</feature>
-    <bundle>mvn:org.jgroups/jgroups/${jgroups-version}</bundle>
-    <bundle>mvn:org.apache-extras.camel-extra/camel-jgroups/${project.version}</bundle>
-  </feature>
   <feature name='camel-rcode' version='${project.version}' resolver='(obr)' start-level='50'>
     <feature version='${camel-version}'>camel</feature>
     <bundle>wrap:mvn:org.nuiton.thirdparty/REngine/${rserve-version}</bundle>
