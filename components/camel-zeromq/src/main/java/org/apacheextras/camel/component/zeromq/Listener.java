@@ -33,7 +33,7 @@ import org.zeromq.ZMQ.Socket;
 
 class Listener implements Runnable {
 
-    private static final Logger logger = LoggerFactory.getLogger(Listener.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
 
     private volatile boolean running = true;
     private Socket socket;
@@ -65,9 +65,9 @@ class Listener implements Runnable {
         socket = akkaSocketFactory.createConsumerSocket(context, endpoint.getSocketType());
 
         String addr = endpoint.getSocketAddress();
-        logger.info("Connecting to server [{}]", addr);
+        LOGGER.info("Connecting to server [{}]", addr);
         socket.connect(addr);
-        logger.info("Connected OK");
+        LOGGER.info("Connected OK");
 
         if (endpoint.getSocketType() == ZeromqSocketType.SUBSCRIBE) {
             subscribe();
@@ -81,9 +81,9 @@ class Listener implements Runnable {
             byte[] msg = socket.recv(0);
             if (msg == null)
                 continue;
-            logger.trace("Received message [length=" + msg.length + "]");
+            LOGGER.trace("Received message [length=" + msg.length + "]");
             Exchange exchange = endpoint.createZeromqExchange(msg);
-            logger.trace("Created exchange [exchange={}]", new Object[]{exchange});
+            LOGGER.trace("Created exchange [exchange={}]", new Object[] {exchange});
             try {
                 if (processor instanceof AsyncProcessor) {
                     ((AsyncProcessor) processor).process(exchange, callback);
@@ -91,19 +91,21 @@ class Listener implements Runnable {
                     processor.process(exchange);
                 }
             } catch (Exception e) {
-                logger.error("Exception processing exchange [{}]", e);
+                LOGGER.error("Exception processing exchange [{}]", e);
             }
         }
 
         try {
-            logger.info("Closing socket");
+            LOGGER.info("Closing socket");
             socket.close();
         } catch (Exception e) {
+          LOGGER.error("Could not close socket during run() [{}]", e);
         }
         try {
-            logger.info("Terminating context");
+            LOGGER.info("Terminating context");
             context.term();
         } catch (Exception e) {
+          LOGGER.error("Could not terminate context during run() [{}]", e);
         }
     }
 
@@ -112,13 +114,14 @@ class Listener implements Runnable {
     }
 
     void stop() {
-        logger.debug("Requesting shutdown of consumer thread");
+        LOGGER.debug("Requesting shutdown of consumer thread");
         running = false;
         // we have to term the context to interrupt the recv call
         if (context != null)
             try {
                 context.term();
             } catch (Exception e) {
+              LOGGER.error("Could not terminate context during stop() [{}]", e);
             }
     }
 
@@ -126,10 +129,11 @@ class Listener implements Runnable {
         if (endpoint.getTopics() == null) {
             // subscribe all by using
             // empty filter
-            logger.debug("Subscribing to all messages (topics option was not specified)", endpoint.getTopics());
+            LOGGER.debug("Subscribing to all messages (topics option was not specified)",
+                endpoint.getTopics());
             socket.subscribe("".getBytes());
         } else {
-            logger.debug("Subscribing to topics: {}", endpoint.getTopics());
+            LOGGER.debug("Subscribing to topics: {}", endpoint.getTopics());
             for (String topic : endpoint.getTopics().split(",")) {
                 socket.subscribe(topic.getBytes());
             }

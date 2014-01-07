@@ -30,7 +30,7 @@ import org.zeromq.ZMQ.Socket;
 
 public class ZeromqProducer extends DefaultProducer {
 
-    private static final Logger logger = LoggerFactory.getLogger(ZeromqProducer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ZeromqProducer.class);
 
     private final ZeromqEndpoint endpoint;
     private Socket socket;
@@ -94,9 +94,9 @@ public class ZeromqProducer extends DefaultProducer {
         this.topics = endpoint.getTopics() == null ? null : endpoint.getTopics().split(",");
 
         String addr = endpoint.getSocketAddress();
-        logger.info("Binding client to [{}]", addr);
+        LOGGER.info("Binding client to [{}]", addr);
         socket.bind(addr);
-        logger.info("Client bound OK");
+        LOGGER.info("Client bound OK");
     }
 
     @Override
@@ -108,15 +108,17 @@ public class ZeromqProducer extends DefaultProducer {
                 try {
                     socket.close();
                 } catch (Exception e) {
+                  LOGGER.error("Could not close socket during stop() [{}]", e);
                 }
             }
         });
         t.start();
-        logger.debug("Waiting {}ms for producer socket to close", shutdownWait);
+        LOGGER.debug("Waiting {}ms for producer socket to close", shutdownWait);
         t.join(shutdownWait);
         try {
             context.term();
         } catch (Exception e) {
+          LOGGER.error("Could not terminate the context during stop() [{}]", e);
         }
     }
 }
