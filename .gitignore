@@ -31,6 +31,7 @@ Thumbs.db
 # #
 .idea
 *.iml
+atlassian-ide-plugin.xml
 
 ##
 # Ignore build files
