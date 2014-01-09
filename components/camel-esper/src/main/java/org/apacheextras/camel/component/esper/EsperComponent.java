@@ -72,7 +72,6 @@ public class EsperComponent extends DefaultComponent {
     if (esperService == null) {
       Configuration configuration = new Configuration();
       configuration.configure();
-      //esperService = EPServiceProviderManager.getDefaultProvider();
       esperService = EPServiceProviderManager.getProvider("EPServiceProvider", configuration);
     }
     return esperService;
