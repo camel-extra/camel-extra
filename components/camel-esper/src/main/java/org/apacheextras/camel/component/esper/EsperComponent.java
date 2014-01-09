@@ -24,6 +24,7 @@ package org.apacheextras.camel.component.esper;
 
 import java.util.Map;
 
+import com.espertech.esper.client.Configuration;
 import com.espertech.esper.client.EPRuntime;
 import com.espertech.esper.client.EPServiceProvider;
 import com.espertech.esper.client.EPServiceProviderManager;
@@ -69,7 +70,10 @@ public class EsperComponent extends DefaultComponent {
    */
   public EPServiceProvider getEsperService() {
     if (esperService == null) {
-      esperService = EPServiceProviderManager.getDefaultProvider();
+      Configuration configuration = new Configuration();
+      configuration.configure();
+      //esperService = EPServiceProviderManager.getDefaultProvider();
+      esperService = EPServiceProviderManager.getProvider("EPServiceProvider", configuration);
     }
     return esperService;
   }
