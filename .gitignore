@@ -1,0 +1,39 @@
+##
+# Ignore compiled sources
+# #
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+##
+# Ignore packages
+# #
+*.dmg
+*.iso
+*.jar
+
+##
+# Ignore OS generated files
+# #
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+##
+# Ignore IDEA project files
+# #
+.idea
+*.iml
+atlassian-ide-plugin.xml
+
+##
+# Ignore build files
+# #
+**/target/*
