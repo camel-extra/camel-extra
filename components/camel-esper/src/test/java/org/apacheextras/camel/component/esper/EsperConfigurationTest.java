@@ -56,7 +56,7 @@ public class EsperConfigurationTest extends CamelTestSupport {
         from("direct:feed")
             .to("esper:StockTicker");
 
-        from("esper:StockTicker?eql=select avg(price) from StockTick.win:time(1 sec) where symbol='GOOG'")
+        from("esper:StockTicker?configured=true&eql=select avg(price) from StockTick.win:time(1 sec) where symbol='GOOG'")
           .to("mock:EsperStockTickerMock");
       }
     };

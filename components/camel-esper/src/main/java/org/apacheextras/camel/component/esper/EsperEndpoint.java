@@ -47,6 +47,7 @@ public class EsperEndpoint extends DefaultEndpoint {
   private final EsperComponent component;
   private final String name;
   private boolean mapEvents;
+  private boolean configured = false;
   private String pattern;
   private String eql;
   private EPStatement statement;
@@ -136,11 +137,11 @@ public class EsperEndpoint extends DefaultEndpoint {
   }
 
   public EPRuntime getEsperRuntime() {
-    return component.getEsperRuntime();
+    return component.getEsperRuntime(isConfigured());
   }
 
   public EPServiceProvider getEsperService() {
-    return component.getEsperService();
+    return component.getEsperService(isConfigured());
   }
 
   public EPAdministrator getEsperAdministrator() {
@@ -186,5 +187,13 @@ public class EsperEndpoint extends DefaultEndpoint {
    */
   public void setPattern(String pattern) {
     this.pattern = pattern;
+  }
+
+  public boolean isConfigured() {
+    return configured;
+  }
+
+  public void setConfigured(boolean configured) {
+    this.configured = configured;
   }
 }
