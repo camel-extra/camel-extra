@@ -63,7 +63,7 @@
     <antlr-bundle-version>3.5_1</antlr-bundle-version>
     <antlr-bundle-hibernate-version>2.7.7_5</antlr-bundle-hibernate-version>
     <db4o-version>8.0</db4o-version>
-    <esper-version>4.10.0</esper-version>
+    <esper-version>4.11.0</esper-version>
     <exist-version>0.9.2</exist-version>
     <hibernate-commons-annotation-version>4.0.2.Final</hibernate-commons-annotation-version>
     <jandex-version>1.1.0.Final</jandex-version>
@@ -326,6 +326,7 @@
               <exclude>**/test_rsa*</exclude>
               <exclude>**/.gitignore</exclude>
               <exclude>**/*.csv</exclude>
+              <exclude>atlassian-ide-plugin.xml</exclude>
             </excludes>
           </configuration>
         </plugin>
