@@ -28,6 +28,7 @@ import com.espertech.esper.client.Configuration;
 import com.espertech.esper.client.EPRuntime;
 import com.espertech.esper.client.EPServiceProvider;
 import com.espertech.esper.client.EPServiceProviderManager;
+
 import org.apache.camel.Endpoint;
 import org.apache.camel.impl.DefaultComponent;
 
@@ -68,11 +69,15 @@ public class EsperComponent extends DefaultComponent {
    *
    * @return event processing service provider
    */
-  public EPServiceProvider getEsperService() {
+  public EPServiceProvider getEsperService(boolean configured) {
     if (esperService == null) {
-      Configuration configuration = new Configuration();
-      configuration.configure();
-      esperService = EPServiceProviderManager.getProvider("EPServiceProvider", configuration);
+      if (configured) {
+        Configuration configuration = new Configuration();
+        configuration.configure();
+        esperService = EPServiceProviderManager.getProvider("DefaultConfiguredProvider", configuration);
+      } else {
+        esperService = EPServiceProviderManager.getDefaultProvider();
+      }
     }
     return esperService;
   }
@@ -91,24 +96,11 @@ public class EsperComponent extends DefaultComponent {
    *
    * @return EPRuntime
    */
-  public EPRuntime getEsperRuntime() {
+  public EPRuntime getEsperRuntime(boolean configured) {
     if (esperRuntime == null) {
-      esperRuntime = getEsperService().getEPRuntime();
+      esperRuntime = getEsperService(configured).getEPRuntime();
     }
     return esperRuntime;
-  }
-
-  /**
-   * {@inheritDoc}
-   *
-   * @throws java.lang.Exception
-   */
-  @Override
-  protected void doStart() throws Exception {
-    super.doStart();
-
-    // let's force lazy creation
-    getEsperRuntime();
   }
 
 }
