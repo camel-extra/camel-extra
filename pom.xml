@@ -152,9 +152,9 @@
   </distributionManagement>
 
   <scm>
-    <connection>scm:svn:http://svn.codespot.com/a/apache-extras.org/camel-extra/branches/camel-extra-2.11.x</connection>
-    <developerConnection>scm:svn:https://svn.codespot.com/a/apache-extras.org/camel-extra/branches/camel-extra-2.11.x</developerConnection>
-    <url>http://svn.codespot.com/a/apache-extras.org/camel-extra/branches/camel-extra-2.11.x</url>
+    <connection>scm:git:http://code.google.com/a/apache-extras.org/p/camel-extra/</connection>
+    <developerConnection>scm:git:https://code.google.com/a/apache-extras.org/p/camel-extra/</developerConnection>
+    <url>http://code.google.com/a/apache-extras.org/p/camel-extra/</url>
   </scm>
 
   <modules>
