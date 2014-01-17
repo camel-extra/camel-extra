@@ -43,26 +43,11 @@ public class EsperComponent extends DefaultComponent {
         return new EsperEndpoint(uri, this, remaining);
     }
 
-<<<<<<< HEAD
     public EPServiceProvider getEsperService() {
         if (esperService == null) {
             esperService = EPServiceProviderManager.getDefaultProvider();
         }
         return esperService;
-=======
-  /**
-   * Returns the event processing service provider. If the provider is null an
-   * instance will be created via the EPServiceProviderManager.
-   *
-   * @return event processing service provider
-   */
-  public EPServiceProvider getEsperService() {
-    if (esperService == null) {
-      Configuration configuration = new Configuration();
-      configuration.configure();
-      //esperService = EPServiceProviderManager.getDefaultProvider();
-      esperService = EPServiceProviderManager.getProvider("EPServiceProvider", configuration);
->>>>>>> dd8d292... CAMEX-9 - camel-esper endpoint will not load any esper config file even the default one
     }
 
     public void setEsperService(EPServiceProvider esperService) {
