@@ -24,6 +24,12 @@
 
   <repository>mvn:org.apache.camel.karaf/apache-camel/${camel-version}/xml/features</repository>
 
+  <feature name='camel-couchbase' version='${project.version}' resolver='(obr)' start-level='50'>
+    <feature version='${camel-version}'>camel</feature>
+    <bundle>mvn:org.apache-extras.camel-extra/camel-couchbase/${project.version}</bundle>
+    <bundle dependency='true'>wrap:mvn:com.couchbase.client/couchbase-client/${couchbase-client-version}</bundle>
+  </feature>
+
   <feature name='camel-db4o' version='${project.version}' resolver='(obr)' start-level='50'>
     <feature version='${camel-version}'>camel</feature>
     <bundle>mvn:org.apache-extras.camel-extra/camel-db4o/${project.version}</bundle>
