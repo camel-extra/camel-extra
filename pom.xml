@@ -171,7 +171,6 @@
     <module>components</module>
     <module>platform</module>
     <module>examples</module>
-    <module>tests</module>
   </modules>
 
   <dependencyManagement>
@@ -386,6 +385,12 @@
   </build>
 
   <profiles>
+    <profile>
+      <id>integration</id>
+      <modules>
+        <module>tests</module>
+      </modules>
+    </profile>
     <profile>
       <id>sonatype-oss-release</id>
       <build>
