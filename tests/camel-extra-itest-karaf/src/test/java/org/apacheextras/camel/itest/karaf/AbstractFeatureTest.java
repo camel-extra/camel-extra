@@ -42,13 +42,13 @@ import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
 import static org.ops4j.pax.exam.CoreOptions.repositories;
 import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.*;
 
-public class AbstractFeatureIntegrationTest extends Assert {
+public class AbstractFeatureTest extends Assert {
 
   public static final String CAMEL_EXTRA_GROUP_ID = "org.apache-extras.camel-extra.karaf";
   public static final String CAMEL_EXTRA_ARTIFACT_ID = "camel-extra";
   public static final String KARAF_VERSION = "2.3.2";
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(AbstractFeatureIntegrationTest.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(AbstractFeatureTest.class);
 
 
   @Inject

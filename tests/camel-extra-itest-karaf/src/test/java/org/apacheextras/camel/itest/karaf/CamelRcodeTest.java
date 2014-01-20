@@ -26,9 +26,9 @@ import org.junit.runner.RunWith;
 import org.ops4j.pax.exam.junit.PaxExam;
 
 @RunWith(PaxExam.class)
-public class CamelJcifsIntegrationTest extends AbstractFeatureIntegrationTest {
+public class CamelRcodeTest extends AbstractFeatureTest {
 
-  public static final String COMPONENT = extractName(CamelJcifsIntegrationTest.class);
+  public static final String COMPONENT = extractName(CamelRcodeTest.class);
 
   @Test
   public void test() {

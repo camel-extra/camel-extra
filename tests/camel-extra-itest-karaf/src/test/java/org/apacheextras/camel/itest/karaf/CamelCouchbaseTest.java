@@ -27,7 +27,7 @@ import org.junit.runner.RunWith;
 import org.ops4j.pax.exam.junit.PaxExam;
 
 @RunWith(PaxExam.class)
-public class CamelCouchbaseIntegrationTest extends AbstractFeatureIntegrationTest {
+public class CamelCouchbaseTest extends AbstractFeatureTest {
 
   @Test
   public void shouldInstallFeature() {
