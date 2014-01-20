@@ -38,6 +38,18 @@
   <name>Camel Extra</name>
   <description>Camel Extra Parent POM</description>
 
+  <issueManagement>
+    <system>JIRA</system>
+    <url>https://camel-extra.atlassian.net</url>
+  </issueManagement>
+
+  <mailingLists>
+    <mailingList>
+      <name>User List</name>
+      <archive>http://camel-extra.1091541.n5.nabble.com</archive>
+    </mailingList>
+  </mailingLists>
+
   <prerequisites>
     <maven>3.0.4</maven>
   </prerequisites>
