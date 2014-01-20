@@ -130,7 +130,7 @@
     <pluginRepository>
       <id>apache.snapshots</id>
       <name>Apache Development Snapshot Repository</name>
-      <url>http://people.apache.org/repo/m2-snapshot-repository</url>
+      <url>http://repository.apache.org/snapshots/</url>
       <releases>
         <enabled>false</enabled>
       </releases>
