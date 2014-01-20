@@ -25,8 +25,6 @@ import org.apache.camel.test.AvailablePortFinder;
 import org.apache.karaf.features.Feature;
 import org.apache.karaf.features.FeaturesService;
 import org.junit.Assert;
-import org.junit.Before;
-import org.ops4j.net.FreePort;
 import org.ops4j.pax.exam.Configuration;
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.karaf.options.KarafDistributionOption;
@@ -42,16 +40,15 @@ import java.io.File;
 import static org.ops4j.pax.exam.CoreOptions.maven;
 import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
 import static org.ops4j.pax.exam.CoreOptions.repositories;
-import static org.ops4j.pax.exam.CoreOptions.repository;
 import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.*;
 
-public class AbstractFeatureTest extends Assert {
+public class AbstractFeatureIntegrationTest extends Assert {
 
   public static final String CAMEL_EXTRA_GROUP_ID = "org.apache-extras.camel-extra.karaf";
   public static final String CAMEL_EXTRA_ARTIFACT_ID = "camel-extra";
   public static final String KARAF_VERSION = "2.3.2";
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(AbstractFeatureTest.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(AbstractFeatureIntegrationTest.class);
 
 
   @Inject

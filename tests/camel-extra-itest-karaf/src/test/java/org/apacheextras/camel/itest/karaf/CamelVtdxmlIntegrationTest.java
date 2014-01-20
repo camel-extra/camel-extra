@@ -26,9 +26,9 @@ import org.junit.runner.RunWith;
 import org.ops4j.pax.exam.junit.PaxExam;
 
 @RunWith(PaxExam.class)
-public class CamelVirtualboxTest extends AbstractFeatureTest {
+public class CamelVtdxmlIntegrationTest extends AbstractFeatureIntegrationTest {
 
-  public static final String COMPONENT = extractName(CamelVirtualboxTest.class);
+  public static final String COMPONENT = extractName(CamelVtdxmlIntegrationTest.class);
 
   @Test
   public void test() {
