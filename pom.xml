@@ -20,7 +20,8 @@
 
     http://www.gnu.org/licenses/gpl-2.0-standalone.html
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
   <modelVersion>4.0.0</modelVersion>
 
@@ -45,7 +46,8 @@
     <camel-version>2.13-SNAPSHOT</camel-version>
 
     <site-repo-url>scpexe://people.apache.org/www/activemq.apache.org/camel/maven/</site-repo-url>
-    <sonatypeOssDistMgmtSnapshotsUrl>https://oss.sonatype.org/content/repositories/snapshots/</sonatypeOssDistMgmtSnapshotsUrl>
+    <sonatypeOssDistMgmtSnapshotsUrl>https://oss.sonatype.org/content/repositories/snapshots/
+    </sonatypeOssDistMgmtSnapshotsUrl>
 
     <!-- OSGI bundles properties -->
     <camel.osgi.import.pkg>
@@ -58,6 +60,9 @@
     <camel.osgi.export.version>${project.version}</camel.osgi.export.version>
     <camel.osgi.import>${camel.osgi.import.pkg}</camel.osgi.import>
     <camel.osgi.symbolic.name>${project.groupId}.${project.artifactId}</camel.osgi.symbolic.name>
+
+    <!-- gpg passphrase for releases -->
+    <gpg.passphrase/>
 
     <akka-version>2.2.1</akka-version>
     <antlr-bundle-version>3.5_1</antlr-bundle-version>
@@ -86,7 +91,7 @@
     <typesafe-config-version>1.0.2</typesafe-config-version>
     <virtualbox-version>4.2.8</virtualbox-version>
     <vtd-xml-version>2.11</vtd-xml-version>
-    <zeromq-scala-binding-version>0.0.7</zeromq-scala-binding-version>   
+    <zeromq-scala-binding-version>0.0.7</zeromq-scala-binding-version>
   </properties>
 
   <url>http://code.google.com/a/apache-extras.org/p/camel-extra</url>
@@ -157,7 +162,8 @@
 
   <scm>
     <connection>scm:git:http://code.google.com/a/apache-extras.org/p/camel-extra/</connection>
-    <developerConnection>scm:git:https://code.google.com/a/apache-extras.org/p/camel-extra/</developerConnection>
+    <developerConnection>scm:git:https://code.google.com/a/apache-extras.org/p/camel-extra/
+    </developerConnection>
     <url>http://code.google.com/a/apache-extras.org/p/camel-extra/</url>
   </scm>
 
@@ -247,10 +253,10 @@
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-compiler-plugin</artifactId>
-          <version>2.5.1</version>
+          <version>${maven-compiler-plugin-version}</version>
           <configuration>
-            <source>1.6</source>
-            <target>1.6</target>
+            <source>1.7</source>
+            <target>1.7</target>
             <maxmem>256M</maxmem>
           </configuration>
         </plugin>
@@ -287,7 +293,7 @@
         <plugin>
           <groupId>org.apache.rat</groupId>
           <artifactId>apache-rat-plugin</artifactId>
-          <version>0.8</version>
+          <version>0.9</version>
           <configuration>
             <licenses>
               <license implementation="org.apache.rat.analysis.license.SimplePatternBasedLicense">
@@ -338,7 +344,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-enforcer-plugin</artifactId>
-        <version>1.0</version>
+        <version>1.3.1</version>
         <executions>
           <execution>
             <id>enforce-maven</id>
@@ -349,7 +355,9 @@
               <rules>
                 <requireMavenVersion>
                   <version>(,2.1.0),(2.1.0,2.2.0),(2.2.0,)</version>
-                  <message>Maven 2.1.0 and 2.2.0 produce incorrect GPG signatures and checksums respectively.</message>
+                  <message>Maven 2.1.0 and 2.2.0 produce incorrect GPG signatures and checksums
+                    respectively.
+                  </message>
                 </requireMavenVersion>
               </rules>
             </configuration>
@@ -385,7 +393,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-source-plugin</artifactId>
-            <version>2.1.2</version>
+            <version>${maven-source-plugin-version}</version>
             <executions>
               <execution>
                 <id>attach-sources</id>
@@ -398,7 +406,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-javadoc-plugin</artifactId>
-            <version>2.7</version>
+            <version>${maven-javadoc-plugin-version}</version>
             <executions>
               <execution>
                 <id>attach-javadocs</id>
