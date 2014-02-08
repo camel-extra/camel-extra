@@ -21,9 +21,9 @@
  ***************************************************************************************/
 package org.apacheextras.camel.component.rcode;
 
+import java.net.InetAddress;
 import java.net.URI;
-
-import org.apache.camel.RuntimeCamelException;
+import java.net.UnknownHostException;
 
 /**
  * The RCodeConfiguration object contains all elements that can be configured
@@ -35,7 +35,7 @@ public final class RCodeConfiguration implements Cloneable {
      * The default rServe host set to
      * <code>127.0.0.1</code>.
      */
-    public static final String DEFAULT_RSERVE_HOST = "127.0.0.1";
+    public static final String DEFAULT_RSERVE_HOST = getHostAddress();
     /**
      * The default rServe port set to
      * <code>6311</code>.
@@ -186,4 +186,12 @@ public final class RCodeConfiguration implements Cloneable {
         }
         this.bufferSize = bufferSize;
     }
+
+  private static String getHostAddress() {
+    try {
+      return InetAddress.getLocalHost().getHostAddress();
+    } catch (UnknownHostException e) {
+      return "127.0.0.1"; // TURN_OFF_WARNINGS
+    }
+  }
 }
