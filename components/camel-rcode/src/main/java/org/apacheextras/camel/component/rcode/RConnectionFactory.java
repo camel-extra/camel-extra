@@ -57,6 +57,6 @@ public class RConnectionFactory {
      * Contains the instance of the RConnection factory.
      */
     protected static class SingletonHolder {
-        public static RConnectionFactory instance = new RConnectionFactory();
+        public static final RConnectionFactory instance = new RConnectionFactory();
     }
 }

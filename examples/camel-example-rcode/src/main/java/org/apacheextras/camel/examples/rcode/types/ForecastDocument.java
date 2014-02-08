@@ -28,28 +28,26 @@ import java.util.Date;
  * Forecast document.
  */
 public class ForecastDocument {
-  
+
   private String title = "";
   private String path = "";
   private Date date = null;
   private byte[] jpegGraph = null;
-  
+
   /**
-   * 
+   *
    */
   public ForecastDocument() {
   }
-  
+
   /**
-   * 
    * @param jpegGraph
    */
   public ForecastDocument(byte[] jpegGraph) {
-    this.jpegGraph = jpegGraph;
+    setJpegGraph(jpegGraph);
   }
-  
+
   /**
-   * 
    * @param title
    * @param path
    * @param date
@@ -58,14 +56,10 @@ public class ForecastDocument {
   public ForecastDocument(String title, String path, Date date, byte[] jpegGraph) {
     this.title = title;
     this.path = path;
-    if(null != date) {
-      this.date = date;
-    } else {
-      this.date = new Date();
-    }
-    this.jpegGraph = jpegGraph;
+    setDate(date);
+    setJpegGraph(jpegGraph);
   }
-  
+
   /**
    * @return the title
    */
@@ -98,27 +92,36 @@ public class ForecastDocument {
    * @return the date
    */
   public Date getDate() {
-    return date;
+    return (Date)date.clone();
   }
 
   /**
    * @param date the date to set
    */
   public void setDate(Date date) {
-    this.date = date;
+    this.date = new Date();
+    if(null != date) {
+      this.date.setTime(date.getTime());
+    } else {
+      this.date = new Date();
+    }
   }
 
   /**
    * @return the jpegGraph
    */
   public byte[] getJpegGraph() {
-    return jpegGraph;
+    return (byte[])jpegGraph.clone();
   }
 
   /**
    * @param jpegGraph the jpegGraph to set
    */
   public void setJpegGraph(byte[] jpegGraph) {
-    this.jpegGraph = jpegGraph;
+    // Avoid malicious code vulnerability and create a copy
+    this.jpegGraph = new byte[jpegGraph.length];
+    for (int i = 0; i < jpegGraph.length; i++) {
+      this.jpegGraph[i] = jpegGraph[i];
+    }
   }
 }
