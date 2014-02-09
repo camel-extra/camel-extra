@@ -41,5 +41,6 @@ atlassian-ide-plugin.xml
 ##
 # Ignore Eclipse project files
 # #
-/.project
-/.settings
+*.project
+*.classpath
+*.settings
