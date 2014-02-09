@@ -46,7 +46,7 @@ public class QueryBuilderHibernateTest {
 
     Session session;
 
-    // Fxiture setup
+    // Fixture setup
 
     @Before
     public void setUp() {
