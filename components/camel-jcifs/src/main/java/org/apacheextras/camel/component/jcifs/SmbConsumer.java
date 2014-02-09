@@ -1,5 +1,4 @@
 /**************************************************************************************
- Copyright (C) 2010 Redpill Linpro AB
  http://code.google.com/a/apache-extras.org/p/camel-extra
 
  This program is free software; you can redistribute it and/or
