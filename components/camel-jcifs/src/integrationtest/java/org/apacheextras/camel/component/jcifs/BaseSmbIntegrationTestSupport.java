@@ -60,7 +60,15 @@ public class BaseSmbIntegrationTestSupport extends CamelTestSupport {
 		return properties.getProperty("share");
 	}
 	
+	public String getAnonShare() {
+		return properties.getProperty("anonshare");
+	}
+	
 	public String getLocalSharePath() {
 		return properties.getProperty("localpath");
+	}
+	
+	public String getAnonLocalSharePath() {
+		return properties.getProperty("anonlocalpath");
 	}
 }

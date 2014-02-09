@@ -22,4 +22,6 @@ username=joed
 password=secret
 domain=WORKGROUP
 share=share
+anonshare=anonshare
 localpath=C:/temp/share
+anonlocalpath=C:/temp/anonshare

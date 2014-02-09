@@ -49,6 +49,20 @@ public class SmbConfiguration extends GenericFileConfiguration {
         super.configure(uri);
         String userInfo = uri.getUserInfo();
 
+        if ( userInfo != null ) {
+            if (userInfo.contains(DOMAIN_SEPARATOR)) {
+                setDomain(ObjectHelper.before(userInfo, DOMAIN_SEPARATOR));
+                userInfo = ObjectHelper.after(userInfo, DOMAIN_SEPARATOR);
+            }
+            if (userInfo.contains(USER_PASS_SEPARATOR)) {
+                setUsername(ObjectHelper.before(userInfo, USER_PASS_SEPARATOR));
+                setPassword(ObjectHelper.after(userInfo, USER_PASS_SEPARATOR));
+            }
+            else {
+                setUsername(userInfo);
+            }
+        }
+
         if (userInfo != null && userInfo.contains(DOMAIN_SEPARATOR)) {
             setDomain(ObjectHelper.before(userInfo, DOMAIN_SEPARATOR));
             userInfo = ObjectHelper.after(userInfo, DOMAIN_SEPARATOR);
