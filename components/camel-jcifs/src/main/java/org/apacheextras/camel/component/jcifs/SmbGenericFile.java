@@ -1,5 +1,4 @@
-/**************************************************************************************
- Copyright (C) 2010 Redpill Linpro AB
+/**
  http://code.google.com/a/apache-extras.org/p/camel-extra
 
  This program is free software; you can redistribute it and/or
@@ -19,14 +18,14 @@
  02110-1301, USA.
 
  http://www.gnu.org/licenses/gpl-2.0-standalone.html
- ***************************************************************************************/
+ */
 package org.apacheextras.camel.component.jcifs;
 
 import org.apache.camel.component.file.GenericFile;
 
 public class SmbGenericFile<T> extends GenericFile<T> {
-	
-	@Override
+    
+    @Override
     public char getFileSeparator() {
         return '/';
     }

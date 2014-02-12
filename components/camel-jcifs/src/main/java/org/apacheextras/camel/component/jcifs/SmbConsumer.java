@@ -1,4 +1,4 @@
-/**************************************************************************************
+/**
  http://code.google.com/a/apache-extras.org/p/camel-extra
 
  This program is free software; you can redistribute it and/or
@@ -18,7 +18,7 @@
  02110-1301, USA.
 
  http://www.gnu.org/licenses/gpl-2.0-standalone.html
- ***************************************************************************************/
+ */
 package org.apacheextras.camel.component.jcifs;
 
 import java.io.IOException;
@@ -35,86 +35,85 @@ import org.apache.camel.component.file.GenericFileOperations;
 import org.apache.camel.util.FileUtil;
 import org.apache.camel.util.ObjectHelper;
 
-public class SmbConsumer extends GenericFileConsumer<SmbFile>{
+public class SmbConsumer extends GenericFileConsumer<SmbFile> {
 
-	private String endpointPath;
-	private String currentRelativePath = "";
+    private String endpointPath;
+    private String currentRelativePath = "";
 
-	public SmbConsumer(GenericFileEndpoint<SmbFile> endpoint, Processor processor, GenericFileOperations<SmbFile> operations) {
-		super(endpoint, processor, operations);
-		this.endpointPath = endpoint.getConfiguration().getDirectory();
-	}
-	
-	@Override
-	protected boolean pollDirectory(String fileName, List<GenericFile<SmbFile>> fileList, int depth) {
-		
-		if (log.isTraceEnabled()) {
-			log.trace("pollDirectory() running. My delay is [" + this.getDelay() + "] and my strategy is [" + this.getPollStrategy().getClass().toString() + "]");
-			log.trace("pollDirectory() fileName[" + fileName + "]");
-		}
-		
-		List<SmbFile> smbFiles;
-		boolean currentFileIsDir = false;
-		smbFiles = operations.listFiles(fileName);
-		for (SmbFile smbFile : smbFiles) {
-			if (!canPollMoreFiles(fileList)) {
-				return false;
-			}
-			try {
-				if (smbFile.isDirectory()) {
-					currentFileIsDir = true;
-				}
-				else {
-					currentFileIsDir = false;
-				}
-			} catch (SmbException e1) {
+    public SmbConsumer(GenericFileEndpoint<SmbFile> endpoint, Processor processor, GenericFileOperations<SmbFile> operations) {
+        super(endpoint, processor, operations);
+        this.endpointPath = endpoint.getConfiguration().getDirectory();
+    }
+    
+    @Override
+    protected boolean pollDirectory(String fileName, List<GenericFile<SmbFile>> fileList, int depth) {
+        
+        if (log.isTraceEnabled()) {
+            log.trace("pollDirectory() running. My delay is [" + this.getDelay() + "] and my strategy is [" + this.getPollStrategy().getClass().toString() + "]");
+            log.trace("pollDirectory() fileName[" + fileName + "]");
+        }
+        
+        List<SmbFile> smbFiles;
+        boolean currentFileIsDir = false;
+        smbFiles = operations.listFiles(fileName);
+        for (SmbFile smbFile : smbFiles) {
+            if (!canPollMoreFiles(fileList)) {
+                return false;
+            }
+            try {
+                if (smbFile.isDirectory()) {
+                    currentFileIsDir = true;
+                } else {
+                    currentFileIsDir = false;
+                }
+            } catch (SmbException e1) {
                 throw ObjectHelper.wrapRuntimeCamelException(e1);
-			}
-			if (currentFileIsDir) { 
-				if (endpoint.isRecursive()) {
-					currentRelativePath = smbFile.getName().split("/")[0] + "/";
-					pollDirectory(fileName + smbFile.getName(), fileList, depth++);
-				}
-				else {
-					currentRelativePath = "";
-				}
-			}
-			else {
-				try {
-					GenericFile<SmbFile> genericFile = asGenericFile(fileName, smbFile);
-					if (isValidFile(genericFile, false, smbFiles)) {
+            }
+            if (currentFileIsDir) { 
+                if (endpoint.isRecursive()) {
+                    currentRelativePath = smbFile.getName().split("/")[0] + "/";
+                    int nextDepth = depth++;
+                    pollDirectory(fileName + smbFile.getName(), fileList, nextDepth);
+                } else {
+                    currentRelativePath = "";
+                }
+            } else {
+                try {
+                    GenericFile<SmbFile> genericFile = asGenericFile(fileName, smbFile);
+                    if (isValidFile(genericFile, false, smbFiles)) {
                         fileList.add(asGenericFile(fileName, smbFile));
-					}
-				} catch (IOException e) {
+                    }
+                } catch (IOException e) {
                     throw ObjectHelper.wrapRuntimeCamelException(e);
-				}
-			}
-		}
-		return true;
-	}
+                }
+            }
+        }
+        return true;
+    }
 
-	//TODO: this needs some checking!
-	private GenericFile<SmbFile> asGenericFile(String path, SmbFile file) throws IOException{
-		SmbGenericFile<SmbFile> answer = new SmbGenericFile<SmbFile>();
-		answer.setAbsoluteFilePath(path + answer.getFileSeparator() + file.getName());
-		answer.setAbsolute(true);
-		answer.setEndpointPath(endpointPath);
-		answer.setFileNameOnly(file.getName());
-		answer.setFileLength(file.getContentLength());
-		answer.setFile(file);
-		answer.setLastModified(file.getLastModified());
-		answer.setFileName(currentRelativePath + file.getName());
-		answer.setRelativeFilePath(file.getName());
+    //TODO: this needs some checking!
+    private GenericFile<SmbFile> asGenericFile(String path, SmbFile file) throws IOException {
+        SmbGenericFile<SmbFile> answer = new SmbGenericFile<SmbFile>();
+        answer.setAbsoluteFilePath(path + answer.getFileSeparator() + file.getName());
+        answer.setAbsolute(true);
+        answer.setEndpointPath(endpointPath);
+        answer.setFileNameOnly(file.getName());
+        answer.setFileLength(file.getContentLength());
+        answer.setFile(file);
+        answer.setLastModified(file.getLastModified());
+        answer.setFileName(currentRelativePath + file.getName());
+        answer.setRelativeFilePath(file.getName());
 
-		if (log.isTraceEnabled()) {
-			log.trace("asGenericFile():");
-			log.trace("absoluteFilePath[" + answer.getAbsoluteFilePath() +"] endpointpath[" + answer.getEndpointPath() + "] filenameonly["+ answer.getFileNameOnly() +"] filename[" + answer.getFileName() + "] relativepath[" + answer.getRelativeFilePath() + "]");
-			
-		}
-		return answer;
-	}
+        if (log.isTraceEnabled()) {
+            log.trace("asGenericFile():");
+            log.trace("absoluteFilePath[" + answer.getAbsoluteFilePath() + "] endpointpath[" + answer.getEndpointPath() 
+                + "] filenameonly[" + answer.getFileNameOnly() + "] filename[" + answer.getFileName() 
+                + "] relativepath[" + answer.getRelativeFilePath() + "]");
+        }
+        return answer;
+    }
 
-	@Override
+    @Override
     protected boolean isMatched(GenericFile<SmbFile> file, String doneFileName, List<SmbFile> files) {
         String onlyName = FileUtil.stripPath(doneFileName);
 

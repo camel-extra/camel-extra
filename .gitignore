@@ -36,7 +36,7 @@ atlassian-ide-plugin.xml
 ##
 # Ignore build files
 # #
-**/target/*
+target
 
 ##
 # Ignore Eclipse project files

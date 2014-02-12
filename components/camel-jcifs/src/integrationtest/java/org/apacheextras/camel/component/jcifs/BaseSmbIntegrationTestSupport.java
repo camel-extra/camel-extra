@@ -1,4 +1,4 @@
-/**************************************************************************************
+/**
  http://code.google.com/a/apache-extras.org/p/camel-extra
 
  This program is free software; you can redistribute it and/or
@@ -18,7 +18,7 @@
  02110-1301, USA.
 
  http://www.gnu.org/licenses/gpl-2.0-standalone.html
- ***************************************************************************************/
+ */
 package org.apacheextras.camel.component.jcifs;
 
 import java.io.File;
@@ -31,44 +31,44 @@ import org.junit.Before;
 
 public class BaseSmbIntegrationTestSupport extends CamelTestSupport {
 
-	private static Properties properties;
-	
-	@Before
-	public void setUp() throws Exception {
-		properties = new Properties();
-		File configFile = new File(System.getProperty("user.home")+File.separator+"camelsmb.prp");
-		if ( !configFile.exists() ) {
-			Assert.fail("Copy src/test/resources/camelsmb.prp.template to " +System.getProperty("user.home")+File.separator+"camelsmb.prp and edit for correct details.");
-		}
-		properties.load(new FileInputStream(configFile));
-		super.setUp();
-	}
-	
-	public String getUsername() {
-		return properties.getProperty("username");
-	}
-	
-	public String getDomain() {
-		return properties.getProperty("domain");
-	}
-	
-	public String getPassword() {
-		return properties.getProperty("password");
-	}
-	
-	public String getShare() {
-		return properties.getProperty("share");
-	}
-	
-	public String getAnonShare() {
-		return properties.getProperty("anonshare");
-	}
-	
-	public String getLocalSharePath() {
-		return properties.getProperty("localpath");
-	}
-	
-	public String getAnonLocalSharePath() {
-		return properties.getProperty("anonlocalpath");
-	}
+    private static Properties properties;
+    
+    @Before
+    public void setUp() throws Exception {
+        properties = new Properties();
+        File configFile = new File(System.getProperty("user.home") + File.separator + "camelsmb.prp");
+        if (!configFile.exists()) {
+            Assert.fail("Copy src/test/resources/camelsmb.prp.template to " + System.getProperty("user.home") + File.separator + "camelsmb.prp and edit for correct details.");
+        }
+        properties.load(new FileInputStream(configFile));
+        super.setUp();
+    }
+    
+    public String getUsername() {
+        return properties.getProperty("username");
+    }
+    
+    public String getDomain() {
+        return properties.getProperty("domain");
+    }
+    
+    public String getPassword() {
+        return properties.getProperty("password");
+    }
+    
+    public String getShare() {
+        return properties.getProperty("share");
+    }
+    
+    public String getAnonShare() {
+        return properties.getProperty("anonshare");
+    }
+    
+    public String getLocalSharePath() {
+        return properties.getProperty("localpath");
+    }
+    
+    public String getAnonLocalSharePath() {
+        return properties.getProperty("anonlocalpath");
+    }
 }
