@@ -22,7 +22,7 @@
 -->
 <features name='camel-extra-${project.version}' xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
 
-  <repository>mvn:org.apache.camel.karaf/apache-camel/${camel-version}/xml/features</repository>
+  <repository>mvn:${groupId}/${artifactId}/${project.version}/xml/features</repository>
 
   <feature name='camel-couchbase' version='${project.version}' resolver='(obr)' start-level='50'>
     <feature version='${camel-version}'>camel</feature>
