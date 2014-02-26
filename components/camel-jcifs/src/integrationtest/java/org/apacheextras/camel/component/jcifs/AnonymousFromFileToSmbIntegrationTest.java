@@ -28,9 +28,9 @@ import org.junit.Test;
 /**
  * Unit test to verify that we can pool an ASCII file from a local file path and store it on the SMB Server 
  */
-public class FromFileToSmbIntegrationTest extends BaseSmbIntegrationTestSupport {
+public class AnonymousFromFileToSmbIntegrationTest extends BaseSmbIntegrationTestSupport {
     private String getSmbUrl() {
-        return "smb://" + getDomain() + ";" + getUsername() + "@localhost/" + getShare() + "/camel/" + getClass().getSimpleName() + "?password=" + getPassword() + "&fileExist=Override";
+        return "smb://localhost/" + getAnonShare() + "/camel/" + getClass().getSimpleName() + "?fileExist=Override";
     }
     
     @Test

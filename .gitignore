@@ -32,7 +32,13 @@ Thumbs.db
 .idea
 *.iml
 
+# Ignore build files
+# #
+target
+
 ##
-## Ignore build files
-## #
-**/target/*
+# Ignore Eclipse project files
+# #
+*.project
+*.classpath
+*.settings

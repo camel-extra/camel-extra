@@ -1,5 +1,4 @@
-/**************************************************************************************
- Copyright (C) 2010 Redpill Linpro AB
+/**
  http://code.google.com/a/apache-extras.org/p/camel-extra
 
  This program is free software; you can redistribute it and/or
@@ -19,7 +18,7 @@
  02110-1301, USA.
 
  http://www.gnu.org/licenses/gpl-2.0-standalone.html
- ***************************************************************************************/
+ */
 package org.apacheextras.camel.component.jcifs;
 
 import java.net.URI;
@@ -32,8 +31,8 @@ import org.apache.camel.component.file.GenericFileComponent;
 import org.apache.camel.component.file.GenericFileEndpoint;
 
 public class SmbComponent extends GenericFileComponent<SmbFile> {
-	
-	private SmbApiFactory smbApiFactory;
+    
+    private SmbApiFactory smbApiFactory;
 
     public SmbComponent() {
 
@@ -45,14 +44,14 @@ public class SmbComponent extends GenericFileComponent<SmbFile> {
     
     
     public void setSmbApiFactoryClass(SmbApiFactory smbApiFactory) {
-		this.smbApiFactory = smbApiFactory;
-	}
+        this.smbApiFactory = smbApiFactory;
+    }
 
     @Override
     protected SmbEndpoint buildFileEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
-        if (log.isDebugEnabled())
+        if (log.isDebugEnabled()) {
             log.debug("buildFileEndpoint() uri[" + uri + "] remaining[" + remaining + "] parameters[" + parameters + "]");
-
+        }
         uri = fixSpaces(uri);
         SmbConfiguration config = new SmbConfiguration(new URI(uri), smbApiFactory);
         SmbEndpoint endpoint = new SmbEndpoint(uri, this, config);
@@ -61,8 +60,9 @@ public class SmbComponent extends GenericFileComponent<SmbFile> {
 
     @Override
     protected void afterPropertiesSet(GenericFileEndpoint<SmbFile> endpoint) throws Exception {
-        if (log.isDebugEnabled())
+        if (log.isDebugEnabled()) {
             log.debug("afterPropertiesSet()");
+        }
     }
 
     private String fixSpaces(String input) {

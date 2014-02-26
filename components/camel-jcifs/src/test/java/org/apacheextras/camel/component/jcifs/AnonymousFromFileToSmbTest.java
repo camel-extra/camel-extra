@@ -43,7 +43,7 @@ import static org.easymock.EasyMock.verify;
  * 
  * @author Pontus Ullgren 
  */
-public class FromFileToSmbTest extends BaseSmbTestSupport {
+public class AnonymousFromFileToSmbTest extends BaseSmbTestSupport {
     
     SmbFile rootDir;
     SmbFile logoOne;
@@ -55,7 +55,7 @@ public class FromFileToSmbTest extends BaseSmbTestSupport {
     }
     
     private String getSmbUrl() {
-        return "smb://" + getDomain() + ";" + getUsername() + "@localhost/" + getShare() + "/camel/" + getClass().getSimpleName() + "?password=" + getPassword() + "&fileExist=Override";
+        return "smb://localhost/" + getShare() + "/camel/" + getClass().getSimpleName() + "?password=" + getPassword() + "&fileExist=Override";
     }
     
     
