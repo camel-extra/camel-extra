@@ -1,5 +1,4 @@
-/**************************************************************************************
- Copyright (C) 2010 Redpill Linpro AB
+/**
  http://code.google.com/a/apache-extras.org/p/camel-extra
 
  This program is free software; you can redistribute it and/or
@@ -19,25 +18,25 @@
  02110-1301, USA.
 
  http://www.gnu.org/licenses/gpl-2.0-standalone.html
- ***************************************************************************************/
+ */
 package org.apacheextras.camel.component.jcifs;
+
+import java.net.URI;
 
 import org.apache.camel.component.file.GenericFileConfiguration;
 import org.apache.camel.util.ObjectHelper;
-
-import java.net.URI;
 
 public class SmbConfiguration extends GenericFileConfiguration {
 
     private static final String DOMAIN_SEPARATOR = ";";
     private static final String USER_PASS_SEPARATOR = ":";
 
-    private String domain = null;
-    private String username = null;
-    private String password = null;
-    private String host = null;
-    private String path = null;
-    private SmbApiFactory smbApiFactory = null;
+    private String domain;
+    private String username;
+    private String password;
+    private String host;
+    private String path;
+    private SmbApiFactory smbApiFactory;
 
     public SmbConfiguration(URI uri, SmbApiFactory smbApiFactory) {
         configure(uri);

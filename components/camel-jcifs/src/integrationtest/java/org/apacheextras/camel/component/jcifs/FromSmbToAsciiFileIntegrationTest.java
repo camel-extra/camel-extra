@@ -1,4 +1,4 @@
-/**************************************************************************************
+/**
  http://code.google.com/a/apache-extras.org/p/camel-extra
 
  This program is free software; you can redistribute it and/or
@@ -18,7 +18,7 @@
  02110-1301, USA.
 
  http://www.gnu.org/licenses/gpl-2.0-standalone.html
- ***************************************************************************************/
+ */
 package org.apacheextras.camel.component.jcifs;
 
 import java.io.File;
@@ -36,15 +36,15 @@ import org.junit.Test;
  */
 public class FromSmbToAsciiFileIntegrationTest extends BaseSmbIntegrationTestSupport {
 
-	private String getSmbUrl() {
-		return "smb://"+getDomain()+";"+getUsername()+"@localhost/"+getShare()+"/camel/"+getClass().getSimpleName()+"?password="+getPassword()+"&fileExist=Override";
+    private String getSmbUrl() {
+        return "smb://" + getDomain() + ";" + getUsername() + "@localhost/" + getShare() + "/camel/" + getClass().getSimpleName() + "?password=" + getPassword() + "&fileExist=Override";
     }
-	
-	@Override
-	@Before
-	public void setUp() throws Exception {
-		super.setUp();
-		// prepares the FTP Server by creating a file on the server that we want to unit
+    
+    @Override
+    @Before
+    public void setUp() throws Exception {
+        super.setUp();
+        // prepares the FTP Server by creating a file on the server that we want to unit
         // test that we can pool and store as a local file
         Endpoint endpoint = context.getEndpoint(getSmbUrl());
         Exchange exchange = endpoint.createExchange();
@@ -54,9 +54,9 @@ public class FromSmbToAsciiFileIntegrationTest extends BaseSmbIntegrationTestSup
         producer.start();
         producer.process(exchange);
         producer.stop();
-	}
-	
-	@Test
+    }
+    
+    @Test
     public void testFromSmbToFile() throws Exception {
         MockEndpoint resultEndpoint = getMockEndpoint("mock:result");
         resultEndpoint.expectedMinimumMessageCount(1);
@@ -69,8 +69,8 @@ public class FromSmbToAsciiFileIntegrationTest extends BaseSmbIntegrationTestSup
         assertTrue("The ASCII file should exists", file.exists());
         assertTrue("File size wrong", file.length() > 10);
     }
-	
-	protected RouteBuilder createRouteBuilder() throws Exception {
+    
+    protected RouteBuilder createRouteBuilder() throws Exception {
         return new RouteBuilder() {
             public void configure() throws Exception {
                 String fileUrl = "file:target/smbtest/?fileExist=Override&noop=true";

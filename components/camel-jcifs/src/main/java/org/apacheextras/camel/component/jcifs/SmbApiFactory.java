@@ -1,5 +1,4 @@
- /**************************************************************************************
- Copyright (C) 2010 Redpill Linpro AB
+/**
  http://code.google.com/a/apache-extras.org/p/camel-extra
 
  This program is free software; you can redistribute it and/or
@@ -19,8 +18,10 @@
  02110-1301, USA.
 
  http://www.gnu.org/licenses/gpl-2.0-standalone.html
- ***************************************************************************************/
+ */
 package org.apacheextras.camel.component.jcifs;
+
+import java.io.IOException;
 
 import java.net.MalformedURLException;
 import java.net.UnknownHostException;
@@ -36,8 +37,8 @@ import jcifs.smb.SmbFileOutputStream;
  */
 public interface SmbApiFactory {
 
-	SmbFile createSmbFile(String url, NtlmPasswordAuthentication authentication) throws MalformedURLException, SmbException;
+    SmbFile createSmbFile(String url, NtlmPasswordAuthentication authentication) throws IOException;
 
-	SmbFileOutputStream createSmbFileOutputStream(SmbFile smbFile, boolean b) throws SmbException, MalformedURLException, UnknownHostException;
+    SmbFileOutputStream createSmbFileOutputStream(SmbFile smbFile, boolean b) throws IOException;
 
 }
