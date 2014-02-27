@@ -73,7 +73,7 @@ public class SmbConsumer extends GenericFileConsumer<SmbFile> {
                 if (endpoint.isRecursive()) {
                     currentRelativePath = smbFile.getName().split("/")[0] + "/";
                     int nextDepth = depth++;
-                    pollDirectory(fileName + smbFile.getName(), fileList, nextDepth);
+                    pollDirectory(fileName + "/" + smbFile.getName(), fileList, nextDepth);
                 } else {
                     currentRelativePath = "";
                 }
