@@ -29,29 +29,29 @@ import org.junit.Test;
 
 public class ProduceMessagesWithAutoIDIntegrationTest extends CamelTestSupport {
 
-  @Test
-  public void testInsert() throws Exception {
-    MockEndpoint mock = getMockEndpoint("mock:result");
-    mock.expectedMessageCount(2);
+    @Test
+    public void testInsert() throws Exception {
+        MockEndpoint mock = getMockEndpoint("mock:result");
+        mock.expectedMessageCount(2);
 
-    template.sendBody("direct:start", "ugol1");
-    template.sendBody("direct:start", "ugol2");
+        template.sendBody("direct:start", "ugol1");
+        template.sendBody("direct:start", "ugol2");
 
-    assertMockEndpointsSatisfied();
+        assertMockEndpointsSatisfied();
 
-  }
+    }
 
-  @Override
-  protected RouteBuilder createRouteBuilder() throws Exception {
-    return new RouteBuilder() {
-      @Override
-      public void configure() throws Exception {
+    @Override
+    protected RouteBuilder createRouteBuilder() throws Exception {
+        return new RouteBuilder() {
+            @Override
+            public void configure() throws Exception {
 
-        // need couchbase installed on localhost
-        from("direct:start")
-            .to("couchbase:http://localhost/default?autoStartIdForInserts=true&startingIdForInsertsFrom=1000")
-            .to("mock:result");
-      }
-    };
-  }
+                // need couchbase installed on localhost
+                from("direct:start")
+                        .to("couchbase:http://localhost/default?autoStartIdForInserts=true&startingIdForInsertsFrom=1000")
+                        .to("mock:result");
+            }
+        };
+    }
 }

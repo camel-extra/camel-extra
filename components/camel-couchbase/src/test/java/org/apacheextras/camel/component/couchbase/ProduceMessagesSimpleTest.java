@@ -30,31 +30,31 @@ import org.junit.Test;
 
 public class ProduceMessagesSimpleTest extends CamelTestSupport {
 
-  // Ignore test since build environment does not have any couchbase instance
-  @Ignore
-  @Test
-  public void testInsert() throws Exception {
-    MockEndpoint mock = getMockEndpoint("mock:result");
-    mock.expectedMessageCount(1);
+    // Ignore test since build environment does not have any couchbase instance
+    @Ignore
+    @Test
+    public void testInsert() throws Exception {
+        MockEndpoint mock = getMockEndpoint("mock:result");
+        mock.expectedMessageCount(1);
 
-    template.sendBody("direct:start", "ugol");
-    assertMockEndpointsSatisfied();
+        template.sendBody("direct:start", "ugol");
+        assertMockEndpointsSatisfied();
 
-  }
+    }
 
-  @Override
-  protected RouteBuilder createRouteBuilder() throws Exception {
-    return new RouteBuilder() {
-      @Override
-      public void configure() throws Exception {
+    @Override
+    protected RouteBuilder createRouteBuilder() throws Exception {
+        return new RouteBuilder() {
+            @Override
+            public void configure() throws Exception {
 
-        // need couchbase installed on localhost
-        from("direct:start")
-            .setHeader(CouchbaseConstants.HEADER_ID, constant("120770"))
-            .to("couchbase:http://localhost/default")
-            .to("mock:result");
+                // need couchbase installed on localhost
+                from("direct:start")
+                        .setHeader(CouchbaseConstants.HEADER_ID, constant("120770"))
+                        .to("couchbase:http://localhost/default")
+                        .to("mock:result");
 
-      }
-    };
-  }
+            }
+        };
+    }
 }

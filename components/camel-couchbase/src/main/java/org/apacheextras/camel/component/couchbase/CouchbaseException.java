@@ -31,13 +31,13 @@ import org.apache.camel.Exchange;
 
 public class CouchbaseException extends CamelExchangeException {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  public CouchbaseException(String message, Exchange exchange) {
-    super(message, exchange);
-  }
+    public CouchbaseException(String message, Exchange exchange) {
+        super(message, exchange);
+    }
 
-  public CouchbaseException(String message, Exchange exchange, Throwable cause) {
-    super(message, exchange, cause);
-  }
+    public CouchbaseException(String message, Exchange exchange, Throwable cause) {
+        super(message, exchange, cause);
+    }
 }

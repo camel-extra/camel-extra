@@ -28,26 +28,28 @@ package org.apacheextras.camel.component.couchbase;
 
 public interface CouchbaseConstants {
 
-  static String COUCHBASE_URI_ERROR
-      = "Invalid URI. Format must be of the form couchbase:http[s]://hostname[:port]/bucket?[options...]";
-  static String COUCHBASE_PUT = "CCB_PUT";
-  static String COUCHBASE_GET = "CCB_GET";
-  static String COUCHBASE_DELETE = "CCB_DEL";
-  static String DEFAULT_DESIGN_DOCUMENT_NAME = "beer";
-  static String DEFAULT_VIEWNAME = "brewery_beers";
-  static String HEADER_KEY = "CCB_KEY";
-  static String HEADER_ID = "CCB_ID";
-  static String HEADER_DESIGN_DOCUMENT_NAME = "CCB_DDN";
-  static String HEADER_VIEWNAME = "CCB_VN";
+    static String COUCHBASE_URI_ERROR
+            = "Invalid URI. Format must be of the form couchbase:http[s]://hostname[:port]/bucket?[options...]";
+    static String COUCHBASE_PUT = "CCB_PUT";
+    static String COUCHBASE_GET = "CCB_GET";
+    static String COUCHBASE_DELETE = "CCB_DEL";
+    static String DEFAULT_DESIGN_DOCUMENT_NAME = "beer";
+    static String DEFAULT_VIEWNAME = "brewery_beers";
+    static String HEADER_KEY = "CCB_KEY";
+    static String HEADER_ID = "CCB_ID";
+    static String HEADER_TTL = "CCB_TTL";
+    static String HEADER_DESIGN_DOCUMENT_NAME = "CCB_DDN";
+    static String HEADER_VIEWNAME = "CCB_VN";
 
-  static int COUCHBASE_DEFAULT_PORT = 8091;
-  static long DEFAULT_OP_TIMEOUT = 2500;
-  static int DEFAULT_TIMEOUT_EXCEPTION_THRESHOLD = 998;
-  static int DEFAULT_READ_BUFFER_SIZE = 16384;
-  static long DEFAULT_OP_QUEUE_MAX_BLOCK_TIME = 10000;
-  static long DEFAULT_MAX_RECONNECT_DELAY = 30000;
-  static long DEFAULT_OBS_POLL_INTERVAL = 400;
-  static long DEFAULT_OBS_TIMEOUT = -1;
-  static String DEFAULT_CONSUME_PROCESSED_STRATEGY = "none";
+    static int COUCHBASE_DEFAULT_PORT = 8091;
+    static int DEFAULT_TTL = 0;
+    static long DEFAULT_OP_TIMEOUT = 2500;
+    static int DEFAULT_TIMEOUT_EXCEPTION_THRESHOLD = 998;
+    static int DEFAULT_READ_BUFFER_SIZE = 16384;
+    static long DEFAULT_OP_QUEUE_MAX_BLOCK_TIME = 10000;
+    static long DEFAULT_MAX_RECONNECT_DELAY = 30000;
+    static long DEFAULT_OBS_POLL_INTERVAL = 400;
+    static long DEFAULT_OBS_TIMEOUT = -1;
+    static String DEFAULT_CONSUME_PROCESSED_STRATEGY = "none";
 
 }

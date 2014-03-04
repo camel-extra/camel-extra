@@ -29,30 +29,30 @@ import org.junit.Test;
 
 public class RemoveMessagesIntegrationTest extends CamelTestSupport {
 
-  @Test
-  public void testInsert() throws Exception {
-    MockEndpoint mock = getMockEndpoint("mock:result");
-    mock.expectedMessageCount(2);
+    @Test
+    public void testInsert() throws Exception {
+        MockEndpoint mock = getMockEndpoint("mock:result");
+        mock.expectedMessageCount(2);
 
-    template.sendBody("direct:start", "ugol1");
-    template.sendBody("direct:start", "ugol2");
+        template.sendBody("direct:start", "ugol1");
+        template.sendBody("direct:start", "ugol2");
 
-    assertMockEndpointsSatisfied();
+        assertMockEndpointsSatisfied();
 
-  }
+    }
 
-  @Override
-  protected RouteBuilder createRouteBuilder() throws Exception {
-    return new RouteBuilder() {
-      @Override
-      public void configure() throws Exception {
+    @Override
+    protected RouteBuilder createRouteBuilder() throws Exception {
+        return new RouteBuilder() {
+            @Override
+            public void configure() throws Exception {
 
-        // need couchbase installed on localhost
-        from("direct:start")
-            .setHeader(CouchbaseConstants.HEADER_ID, constant("120770"))
-            .to("couchbase:http://localhost/default?operation='DELETE'")
-            .to("mock:result");
-      }
-    };
-  }
+                // need couchbase installed on localhost
+                from("direct:start")
+                        .setHeader(CouchbaseConstants.HEADER_ID, constant("120770"))
+                        .to("couchbase:http://localhost/default?operation='DELETE'")
+                        .to("mock:result");
+            }
+        };
+    }
 }

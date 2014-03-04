@@ -27,7 +27,6 @@ import com.couchbase.client.protocol.views.Query;
 import com.couchbase.client.protocol.views.View;
 import com.couchbase.client.protocol.views.ViewResponse;
 import com.couchbase.client.protocol.views.ViewRow;
-
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.impl.DefaultScheduledPollConsumer;
@@ -36,125 +35,125 @@ import static org.apacheextras.camel.component.couchbase.CouchbaseConstants.*;
 
 public class CouchbaseConsumer extends DefaultScheduledPollConsumer {
 
-  private final CouchbaseEndpoint endpoint;
-  private final CouchbaseClient client;
-  private final View view;
-  private final Query query;
+    private final CouchbaseEndpoint endpoint;
+    private final CouchbaseClient client;
+    private final View view;
+    private final Query query;
 
-  public CouchbaseConsumer(CouchbaseEndpoint endpoint, CouchbaseClient client, Processor processor) {
+    public CouchbaseConsumer(CouchbaseEndpoint endpoint, CouchbaseClient client, Processor processor) {
 
-    super(endpoint, processor);
-    this.client = client;
-    this.endpoint = endpoint;
-    this.view = client.getView(endpoint.getDesignDocumentName(), endpoint.getViewName());
-    this.query = new Query();
-    init();
+        super(endpoint, processor);
+        this.client = client;
+        this.endpoint = endpoint;
+        this.view = client.getView(endpoint.getDesignDocumentName(), endpoint.getViewName());
+        this.query = new Query();
+        init();
 
-  }
-
-  private void init() {
-
-    query.setIncludeDocs(true);
-
-    int limit = endpoint.getLimit();
-    if (limit > 0) {
-      query.setLimit(limit);
     }
 
-    int skip = endpoint.getSkip();
-    if (skip > 0) {
-      query.setSkip(skip);
-    }
+    private void init() {
 
-    query.setDescending(endpoint.isDescending());
+        query.setIncludeDocs(true);
 
-    String rangeStartKey = endpoint.getRangeStartKey();
-    String rangeEndKey = endpoint.getRangeEndKey();
-    if (rangeStartKey.equals("") || rangeEndKey.equals("")) {
-      return;
-    }
-    query.setRange(rangeStartKey, rangeEndKey);
-
-  }
-
-  @Override
-  protected void doStart() throws Exception {
-    log.info("Starting Couchbase consumer");
-    super.doStart();
-  }
-
-  @Override
-  protected void doStop() throws Exception {
-    log.info("Stopping Couchbase consumer");
-    super.doStop();
-  }
-
-  @Override
-  protected synchronized int poll() throws Exception {
-    ViewResponse result = client.query(view, query);
-    log.info("Received result set from Couchbase");
-
-    if (log.isTraceEnabled()) {
-      log.trace("ViewResponse = {}", result);
-    }
-
-    String consumerProcessedStrategy = endpoint.getConsumerProcessedStrategy();
-
-    for (ViewRow row : result) {
-
-      String id = row.getId();
-      Object doc = row.getDocument();
-
-      String key = row.getKey();
-      String designDocumentName = endpoint.getDesignDocumentName();
-      String viewName = endpoint.getViewName();
-
-      Exchange exchange = endpoint.createExchange();
-      exchange.getIn().setBody(doc);
-      exchange.getIn().setHeader(HEADER_ID, id);
-      exchange.getIn().setHeader(HEADER_KEY, key);
-      exchange.getIn().setHeader(HEADER_DESIGN_DOCUMENT_NAME, designDocumentName);
-      exchange.getIn().setHeader(HEADER_VIEWNAME, viewName);
-
-      if (consumerProcessedStrategy.equalsIgnoreCase("delete")) {
-        if (log.isTraceEnabled()) {
-          log.trace("Deleting doc with ID {}", id);
+        int limit = endpoint.getLimit();
+        if (limit > 0) {
+            query.setLimit(limit);
         }
-        client.delete(id);
-      } else if (consumerProcessedStrategy.equalsIgnoreCase("filter")) {
-        if (log.isTraceEnabled()) {
-          log.trace("Filtering out ID {}", id);
+
+        int skip = endpoint.getSkip();
+        if (skip > 0) {
+            query.setSkip(skip);
         }
-        // add filter for already processed docs
-      } else {
-        log.trace("No strategy set for already processed docs, beware of duplicates!");
-      }
 
-      logDetails(id, doc, key, designDocumentName, viewName, exchange);
+        query.setDescending(endpoint.isDescending());
 
-      try {
-        this.getProcessor().process(exchange);
-      } catch (Exception e) {
-        this.getExceptionHandler().handleException("Error processing exchange.", exchange, e);
-      }
+        String rangeStartKey = endpoint.getRangeStartKey();
+        String rangeEndKey = endpoint.getRangeEndKey();
+        if (rangeStartKey.equals("") || rangeEndKey.equals("")) {
+            return;
+        }
+        query.setRange(rangeStartKey, rangeEndKey);
+
     }
 
-    return result.size();
-  }
-
-  private void logDetails(String id, Object doc, String key, String designDocumentName, String viewName,
-                          Exchange exchange) {
-
-    if (log.isTraceEnabled()) {
-      log.trace("Created exchange = {}", exchange);
-      log.trace("Added Document in body = {}", doc);
-      log.trace("Adding to Header");
-      log.trace("ID = {}", id);
-      log.trace("Key = {}", key);
-      log.trace("Design Document Name = {}", designDocumentName);
-      log.trace("View Name = {}", viewName);
+    @Override
+    protected void doStart() throws Exception {
+        log.info("Starting Couchbase consumer");
+        super.doStart();
     }
 
-  }
+    @Override
+    protected void doStop() throws Exception {
+        log.info("Stopping Couchbase consumer");
+        super.doStop();
+    }
+
+    @Override
+    protected synchronized int poll() throws Exception {
+        ViewResponse result = client.query(view, query);
+        log.info("Received result set from Couchbase");
+
+        if (log.isTraceEnabled()) {
+            log.trace("ViewResponse = {}", result);
+        }
+
+        String consumerProcessedStrategy = endpoint.getConsumerProcessedStrategy();
+
+        for (ViewRow row : result) {
+
+            String id = row.getId();
+            Object doc = row.getDocument();
+
+            String key = row.getKey();
+            String designDocumentName = endpoint.getDesignDocumentName();
+            String viewName = endpoint.getViewName();
+
+            Exchange exchange = endpoint.createExchange();
+            exchange.getIn().setBody(doc);
+            exchange.getIn().setHeader(HEADER_ID, id);
+            exchange.getIn().setHeader(HEADER_KEY, key);
+            exchange.getIn().setHeader(HEADER_DESIGN_DOCUMENT_NAME, designDocumentName);
+            exchange.getIn().setHeader(HEADER_VIEWNAME, viewName);
+
+            if (consumerProcessedStrategy.equalsIgnoreCase("delete")) {
+                if (log.isTraceEnabled()) {
+                    log.trace("Deleting doc with ID {}", id);
+                }
+                client.delete(id);
+            } else if (consumerProcessedStrategy.equalsIgnoreCase("filter")) {
+                if (log.isTraceEnabled()) {
+                    log.trace("Filtering out ID {}", id);
+                }
+                // add filter for already processed docs
+            } else {
+                log.trace("No strategy set for already processed docs, beware of duplicates!");
+            }
+
+            logDetails(id, doc, key, designDocumentName, viewName, exchange);
+
+            try {
+                this.getProcessor().process(exchange);
+            } catch (Exception e) {
+                this.getExceptionHandler().handleException("Error processing exchange.", exchange, e);
+            }
+        }
+
+        return result.size();
+    }
+
+    private void logDetails(String id, Object doc, String key, String designDocumentName, String viewName,
+                            Exchange exchange) {
+
+        if (log.isTraceEnabled()) {
+            log.trace("Created exchange = {}", exchange);
+            log.trace("Added Document in body = {}", doc);
+            log.trace("Adding to Header");
+            log.trace("ID = {}", id);
+            log.trace("Key = {}", key);
+            log.trace("Design Document Name = {}", designDocumentName);
+            log.trace("View Name = {}", viewName);
+        }
+
+    }
 }
 

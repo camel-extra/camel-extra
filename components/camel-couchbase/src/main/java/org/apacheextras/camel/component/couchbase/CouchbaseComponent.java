@@ -33,19 +33,19 @@ import java.util.Map;
 
 public class CouchbaseComponent extends DefaultComponent {
 
-  public CouchbaseComponent() {
+    public CouchbaseComponent() {
 
-  }
+    }
 
-  public CouchbaseComponent(CamelContext context) {
-    super(context);
-  }
+    public CouchbaseComponent(CamelContext context) {
+        super(context);
+    }
 
-  @Override
-  protected CouchbaseEndpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters)
-      throws Exception {
-    CouchbaseEndpoint endpoint = new CouchbaseEndpoint(uri, remaining, this);
-    setProperties(endpoint, parameters);
-    return endpoint;
-  }
+    @Override
+    protected CouchbaseEndpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters)
+            throws Exception {
+        CouchbaseEndpoint endpoint = new CouchbaseEndpoint(uri, remaining, this);
+        setProperties(endpoint, parameters);
+        return endpoint;
+    }
 }

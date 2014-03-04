@@ -37,7 +37,7 @@ http://www.gnu.org/licenses/gpl-2.0-standalone.html
   <description>Camel Couchbase component</description>
 
   <properties>
-    <camel.osgi.export.pkg>org.apacheextras.camel.component.couchbase.*</camel.osgi.export.pkg>
+    <camel.osgi.export.pkg>org.apacheextras.camel.component.couchbase</camel.osgi.export.pkg>
     <camel.osgi.export.service>org.apache.camel.spi.ComponentResolver;component=couchbase
     </camel.osgi.export.service>
   </properties>

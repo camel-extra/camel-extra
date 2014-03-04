@@ -29,26 +29,26 @@ import org.junit.Test;
 
 public class ConsumeBeerMessagesWithLimitIntegrationTest extends CamelTestSupport {
 
-  @Test
-  public void testQueryForBeers() throws Exception {
-    MockEndpoint mock = getMockEndpoint("mock:result");
-    mock.expectedMessageCount(10);
+    @Test
+    public void testQueryForBeers() throws Exception {
+        MockEndpoint mock = getMockEndpoint("mock:result");
+        mock.expectedMessageCount(10);
 
-    assertMockEndpointsSatisfied();
+        assertMockEndpointsSatisfied();
 
-  }
+    }
 
-  @Override
-  protected RouteBuilder createRouteBuilder() throws Exception {
-    return new RouteBuilder() {
-      @Override
-      public void configure() throws Exception {
+    @Override
+    protected RouteBuilder createRouteBuilder() throws Exception {
+        return new RouteBuilder() {
+            @Override
+            public void configure() throws Exception {
 
-        // need couchbase installed on localhost with beer-sample data
-        from("couchbase:http://localhost/beer-sample?designDocumentName=beer&viewName=brewery_beers&limit=10")
-            .to("mock:result");
-      }
-    };
+                // need couchbase installed on localhost with beer-sample data
+                from("couchbase:http://localhost/beer-sample?designDocumentName=beer&viewName=brewery_beers&limit=10")
+                        .to("mock:result");
+            }
+        };
 
-  }
+    }
 }
