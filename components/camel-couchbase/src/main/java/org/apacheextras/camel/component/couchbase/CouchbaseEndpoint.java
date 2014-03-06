@@ -401,28 +401,25 @@ public class CouchbaseEndpoint extends ScheduledPollEndpoint {
     public URI[] makeBootstrapURI() throws URISyntaxException {
 
         if (additionalHosts == null || additionalHosts.equals("")) {
-
-            URI[] uriArray = {new URI(protocol + "://" + hostname + ":" + port + "/pools")};
-
-            return uriArray;
+            return new URI[]{new URI(protocol + "://" + hostname + ":" + port + "/pools")};
         }
+        return getAllUris();
 
-        // Splitting additionalHosts parameter into array values
+    }
+
+    private URI[] getAllUris() throws URISyntaxException {
+
         String[] hosts = additionalHosts.split(",");
-        ArrayList<String> hostList = new ArrayList();
+        ArrayList<String> hostList = new ArrayList<>();
         hostList.add(hostname);
         hostList.addAll(Arrays.asList(hosts));
-        Set<String> hostSet = new LinkedHashSet<String>(hostList);
-        hosts = hostSet.toArray(new String[0]);
+        Set<String> hostSet = new LinkedHashSet<>(hostList);
+        hosts = hostSet.toArray(new String[hostSet.size()]);
 
-
-        // Creating URI array with a room for a default URI
         URI[] uriArray = new URI[hosts.length];
 
-
         for (int i = 0; i < hosts.length; i++) {
-            // Since the default URI is already added we need to address that by adding 1 to the uriArray index
-            uriArray[i] = new URI(protocol + "://" + hosts[i] + ":" + port + "/pools");
+            uriArray[i] = new URI(protocol + "://" + hosts[i].trim() + ":" + port + "/pools");
         }
 
         return uriArray;

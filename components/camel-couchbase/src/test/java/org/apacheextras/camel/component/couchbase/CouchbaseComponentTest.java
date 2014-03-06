@@ -106,6 +106,27 @@ public class CouchbaseComponentTest {
         assertEquals(new URI("http://127.0.0.1:8091/pools"), endpointArray[1]);
         assertEquals(new URI("http://example.com:8091/pools"), endpointArray[2]);
         assertEquals(new URI("http://another-host:8091/pools"), endpointArray[3]);
+        assertEquals(4, endpointArray.length);
+
+    }
+
+    @Test
+    public void testCouchbaseAdditionalHostsWithSpaces() throws Exception {
+
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("additionalHosts", " 127.0.0.1, example.com, another-host ");
+        String uri = "couchbase:http://localhost/bucket?param=true";
+        String remaining = "http://localhost/bucket?param=true";
+
+        CouchbaseEndpoint endpoint = new CouchbaseComponent(context).createEndpoint(uri, remaining, params);
+
+        //System.out.print(endpoint.makeBootstrapURI()[0].toString() + " " +  endpoint.makeBootstrapURI().length + " ");
+        URI[] endpointArray = endpoint.makeBootstrapURI();
+        assertEquals(new URI("http://localhost:8091/pools"), endpointArray[0]);
+        assertEquals(new URI("http://127.0.0.1:8091/pools"), endpointArray[1]);
+        assertEquals(new URI("http://example.com:8091/pools"), endpointArray[2]);
+        assertEquals(new URI("http://another-host:8091/pools"), endpointArray[3]);
+        assertEquals(4, endpointArray.length);
 
     }
 
