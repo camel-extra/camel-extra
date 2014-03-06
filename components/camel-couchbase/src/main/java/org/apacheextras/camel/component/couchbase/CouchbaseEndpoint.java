@@ -77,6 +77,10 @@ public class CouchbaseEndpoint extends ScheduledPollEndpoint {
     private String operation = COUCHBASE_PUT;
     @UriParam
     private boolean autoStartIdForInserts = false;
+    @UriParam
+    private int producerRetryAttempts = DEFAULT_PRODUCER_RETRIES;
+    @UriParam
+    private int producerRetryPause = DEFAULT_PAUSE_BETWEEN_RETRIES;
 
     @UriParam
     private long startingIdForInsertsFrom = 0;
@@ -132,7 +136,7 @@ public class CouchbaseEndpoint extends ScheduledPollEndpoint {
             throw new IllegalArgumentException(COUCHBASE_URI_ERROR);
         }
 
-        port = remainingUri.getPort() == -1 ? COUCHBASE_DEFAULT_PORT : remainingUri.getPort();
+        port = remainingUri.getPort() == -1 ? DEFAULT_COUCHBASE_PORT : remainingUri.getPort();
 
         if (remainingUri.getPath() == null || remainingUri.getPath().trim().length() == 0) {
             throw new IllegalArgumentException(COUCHBASE_URI_ERROR);
@@ -268,6 +272,22 @@ public class CouchbaseEndpoint extends ScheduledPollEndpoint {
 
     public void setStartingIdForInsertsFrom(long startingIdForInsertsFrom) {
         this.startingIdForInsertsFrom = startingIdForInsertsFrom;
+    }
+
+    public int getProducerRetryAttempts() {
+        return producerRetryAttempts;
+    }
+
+    public void setProducerRetryAttempts(int producerRetryAttempts) {
+        this.producerRetryAttempts = producerRetryAttempts;
+    }
+
+    public int getProducerRetryPause() {
+        return producerRetryPause;
+    }
+
+    public void setProducerRetryPause(int producerRetryPause) {
+        this.producerRetryPause = producerRetryPause;
     }
 
     public String getDesignDocumentName() {

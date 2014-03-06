@@ -41,7 +41,9 @@ public interface CouchbaseConstants {
     static String HEADER_DESIGN_DOCUMENT_NAME = "CCB_DDN";
     static String HEADER_VIEWNAME = "CCB_VN";
 
-    static int COUCHBASE_DEFAULT_PORT = 8091;
+    static int DEFAULT_PRODUCER_RETRIES = 2;
+    static int DEFAULT_PAUSE_BETWEEN_RETRIES = 5000;
+    static int DEFAULT_COUCHBASE_PORT = 8091;
     static int DEFAULT_TTL = 0;
     static long DEFAULT_OP_TIMEOUT = 2500;
     static int DEFAULT_TIMEOUT_EXCEPTION_THRESHOLD = 998;

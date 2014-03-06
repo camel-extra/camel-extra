@@ -45,7 +45,8 @@ public class CouchbaseProducer extends DefaultProducer {
     private long startId;
     private PersistTo persistTo;
     private ReplicateTo replicateTo;
-    private int producerRetryAttempts = 2;
+    private int producerRetryAttempts;
+    private int producerRetryPause;
 
     public CouchbaseProducer(CouchbaseEndpoint endpoint, CouchbaseClientIF client, int persistTo, int replicateTo) throws Exception {
         super(endpoint);
@@ -54,6 +55,8 @@ public class CouchbaseProducer extends DefaultProducer {
         if (endpoint.isAutoStartIdForInserts()) {
             this.startId = endpoint.getStartingIdForInsertsFrom();
         }
+        this.producerRetryAttempts = endpoint.getProducerRetryAttempts();
+        this.producerRetryPause = endpoint.getProducerRetryPause();
 
         switch (persistTo) {
             case 0:
@@ -149,6 +152,7 @@ public class CouchbaseProducer extends DefaultProducer {
             if (retryAttempts <= 0) {
                 throw e;
             } else {
+                Thread.sleep(producerRetryPause);
                 return setDocument(id, expiry, obj, (retryAttempts - 1), persistTo, replicateTo);
             }
         }

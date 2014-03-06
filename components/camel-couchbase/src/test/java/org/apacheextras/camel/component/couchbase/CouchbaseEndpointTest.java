@@ -24,7 +24,7 @@ package org.apacheextras.camel.component.couchbase;
 
 import org.junit.Test;
 
-import static org.apacheextras.camel.component.couchbase.CouchbaseConstants.COUCHBASE_DEFAULT_PORT;
+import static org.apacheextras.camel.component.couchbase.CouchbaseConstants.DEFAULT_COUCHBASE_PORT;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -46,7 +46,7 @@ public class CouchbaseEndpointTest {
     public void testDefaultPortIsSet() throws Exception {
         CouchbaseEndpoint endpoint = new CouchbaseEndpoint("couchbase:http://localhost/bucket",
                 "http://localhost/bucket", new CouchbaseComponent());
-        assertEquals(COUCHBASE_DEFAULT_PORT, endpoint.getPort());
+        assertEquals(DEFAULT_COUCHBASE_PORT, endpoint.getPort());
     }
 
     @Test(expected = IllegalArgumentException.class)
