@@ -141,7 +141,7 @@ public class CouchbaseProducer extends DefaultProducer {
     }
 
     private Boolean setDocument(String id, int expiry, Object obj, int retryAttempts, PersistTo persistTo, ReplicateTo replicateTo) throws Exception {
-        Boolean status = false;
+
         OperationFuture<Boolean> result = client.set(id, expiry, obj, persistTo, replicateTo);
         try {
             if (!result.get()) {
@@ -159,8 +159,4 @@ public class CouchbaseProducer extends DefaultProducer {
         }
     }
 
-
-    public void setProducerRetryAttempts(int producerRetryAttempts) {
-        this.producerRetryAttempts = producerRetryAttempts;
-    }
 }
