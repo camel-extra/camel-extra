@@ -56,7 +56,7 @@ public class CouchbaseEndpointTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testSchemeRequired() throws Exception {
-        new CouchbaseEndpoint("couchdb:localhost:80/bucket", "localhost:80/bucket", new CouchbaseComponent());
+        new CouchbaseEndpoint("couchbase:localhost:80/bucket", "localhost:80/bucket", new CouchbaseComponent());
     }
 
 }
