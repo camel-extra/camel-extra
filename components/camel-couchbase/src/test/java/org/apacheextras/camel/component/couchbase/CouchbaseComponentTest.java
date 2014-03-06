@@ -134,7 +134,7 @@ public class CouchbaseComponentTest {
     public void testCouchbaseDuplicateAdditionalHosts() throws Exception {
 
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("additionalHosts", "127.0.0.1,localhost,localhost");
+        params.put("additionalHosts", "127.0.0.1,localhost, localhost");
         String uri = "couchbase:http://localhost/bucket?param=true";
         String remaining = "http://localhost/bucket?param=true";
 

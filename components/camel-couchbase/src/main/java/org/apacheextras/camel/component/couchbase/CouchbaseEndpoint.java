@@ -410,6 +410,11 @@ public class CouchbaseEndpoint extends ScheduledPollEndpoint {
     private URI[] getAllUris() throws URISyntaxException {
 
         String[] hosts = additionalHosts.split(",");
+
+        for (int i = 0; i < hosts.length; i++) {
+            hosts[i] = hosts[i].trim();
+        }
+
         ArrayList<String> hostList = new ArrayList<>();
         hostList.add(hostname);
         hostList.addAll(Arrays.asList(hosts));
@@ -419,7 +424,7 @@ public class CouchbaseEndpoint extends ScheduledPollEndpoint {
         URI[] uriArray = new URI[hosts.length];
 
         for (int i = 0; i < hosts.length; i++) {
-            uriArray[i] = new URI(protocol + "://" + hosts[i].trim() + ":" + port + "/pools");
+            uriArray[i] = new URI(protocol + "://" + hosts[i] + ":" + port + "/pools");
         }
 
         return uriArray;
