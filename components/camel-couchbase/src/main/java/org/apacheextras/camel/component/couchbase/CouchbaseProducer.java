@@ -145,13 +145,14 @@ public class CouchbaseProducer extends DefaultProducer {
         OperationFuture<Boolean> result = client.set(id, expiry, obj, persistTo, replicateTo);
         try {
             if (!result.get()) {
-                throw new Exception("Unable to Save Document. " + id);
+                throw new Exception("Unable to save Document. " + id);
             }
             return true;
         } catch (Exception e) {
             if (retryAttempts <= 0) {
                 throw e;
             } else {
+                log.info("Unable to save Document, retrying in " + producerRetryPause + "ms (" + retryAttempts + ")");
                 Thread.sleep(producerRetryPause);
                 return setDocument(id, expiry, obj, (retryAttempts - 1), persistTo, replicateTo);
             }
