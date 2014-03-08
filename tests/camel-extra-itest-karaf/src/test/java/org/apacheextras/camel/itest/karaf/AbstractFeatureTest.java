@@ -46,7 +46,7 @@ public class AbstractFeatureTest extends Assert {
 
   public static final String CAMEL_EXTRA_GROUP_ID = "org.apache-extras.camel-extra.karaf";
   public static final String CAMEL_EXTRA_ARTIFACT_ID = "camel-extra";
-  public static final String KARAF_VERSION = "2.3.2";
+  public static final String KARAF_VERSION = "2.3.3";
 
   private static final Logger LOGGER = LoggerFactory.getLogger(AbstractFeatureTest.class);
 
