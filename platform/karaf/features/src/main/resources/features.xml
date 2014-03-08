@@ -20,7 +20,7 @@
 
     http://www.gnu.org/licenses/gpl-2.0-standalone.html
 -->
-<features name='camel-extra-${project.version}' xmlns="http://karaf.apache.org/xmlns/features/v1.2.0">
+<features name='camel-extra-${project.version}'>
 
   <repository>mvn:org.apache.camel.karaf/apache-camel/${camel-version}/xml/features</repository>
 
