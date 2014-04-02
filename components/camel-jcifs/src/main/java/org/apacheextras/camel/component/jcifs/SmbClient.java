@@ -131,10 +131,15 @@ public class SmbClient {
     }
 
     public List<SmbFile> listFiles(String url) throws IOException  {
-        List<SmbFile> fileList = new ArrayList<SmbFile>();
-        SmbFile dir = smbApiFactory.createSmbFile(url, authentication);
-        for (SmbFile f : dir.listFiles()) {
-            fileList.add(f);
+        final List<SmbFile> fileList = new ArrayList<SmbFile>();
+        final SmbFile dir = smbApiFactory.createSmbFile(url, authentication);
+        // Catch NPE for empty folders, related to
+        try {
+            for (SmbFile f : dir.listFiles()) {
+              fileList.add(f);
+            }
+        } catch(NullPointerException ex) {
+            LOGGER.warn("No files are listed in the directory: {}", ex.getMessage());
         }
         return fileList;
     }    
