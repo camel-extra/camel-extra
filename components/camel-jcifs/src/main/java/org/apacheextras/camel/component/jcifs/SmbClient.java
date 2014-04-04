@@ -133,7 +133,8 @@ public class SmbClient {
     public List<SmbFile> listFiles(String url) throws IOException  {
         final List<SmbFile> fileList = new ArrayList<SmbFile>();
         final SmbFile dir = smbApiFactory.createSmbFile(url, authentication);
-        // Catch NPE for empty folders, related to
+        // Catch NPE for empty folders - see the following discussion for details:
+        // http://camel-extra.1091541.n5.nabble.com/NPE-on-SmbOperations-td256.html
         try {
             for (SmbFile f : dir.listFiles()) {
               fileList.add(f);
