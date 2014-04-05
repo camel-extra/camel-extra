@@ -37,39 +37,46 @@ import org.apache.camel.util.IOHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-
 /**
  *  
  */
 public class SmbClient {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SmbClient.class);
-    
+    private static final Logger LOGGER = LoggerFactory
+            .getLogger(SmbClient.class);
+
     private NtlmPasswordAuthentication authentication;
     private SmbApiFactory smbApiFactory = new JcifsSmbApiFactory();
-    
+
     /**
      * Allows for overriding the default {@link SmbApiFactory} implementation.
      * 
-     * @param smbApiFactory a {@link SmbApiFactory} to use instead of the default implementation.
+     * @param smbApiFactory
+     *            a {@link SmbApiFactory} to use instead of the default
+     *            implementation.
      */
     public void setSmbApiFactory(SmbApiFactory smbApiFactory) {
         this.smbApiFactory = smbApiFactory;
     }
 
-    /** 
-     * Creates the internal NtlmPasswordAuthentication, that is used for authentication, from the provided credentials. 
+    /**
+     * Creates the internal NtlmPasswordAuthentication, that is used for
+     * authentication, from the provided credentials.
      * 
-     * @param domain User domain to use at login
-     * @param username User name to use at login
-     * @param password The password for the provided user
+     * @param domain
+     *            User domain to use at login
+     * @param username
+     *            User name to use at login
+     * @param password
+     *            The password for the provided user
      */
     public void login(String domain, String username, String password) {
         if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("login() domain[" + domain + "] username[" + username + "] password[***]");
+            LOGGER.debug("login() domain[" + domain + "] username[" + username
+                    + "] password[***]");
         }
-        setAuthentication(new NtlmPasswordAuthentication(domain, username, password));
+        setAuthentication(new NtlmPasswordAuthentication(domain, username,
+                password));
     }
 
     /**
@@ -80,7 +87,8 @@ public class SmbClient {
      * @throws IOException
      * @throws MalformedURLException
      */
-    public boolean retrieveFile(String url, OutputStream out) throws IOException {
+    public boolean retrieveFile(String url, OutputStream out)
+        throws IOException {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("retrieveFile() path[" + url + "]");
         }
@@ -100,7 +108,9 @@ public class SmbClient {
                 smbFile.mkdirs();
             }
         } catch (IOException e) {
-            LOGGER.error("Could not locate or create direction '{}' due to '{}'", e.getMessage(), e);
+            LOGGER.error(
+                    "Could not locate or create direction '{}' due to '{}'",
+                    e.getMessage(), e);
             return false;
         }
         return true;
@@ -115,12 +125,14 @@ public class SmbClient {
         return smbFile.getInputStream();
     }
 
-    public boolean storeFile(String url, InputStream inputStream, boolean append) throws IOException {
+    public boolean storeFile(String url, InputStream inputStream, boolean append)
+        throws IOException {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("storeFile path[" + url + "]");
         }
         SmbFile smbFile = smbApiFactory.createSmbFile(url, authentication);
-        SmbFileOutputStream smbout = smbApiFactory.createSmbFileOutputStream(smbFile, append);
+        SmbFileOutputStream smbout = smbApiFactory.createSmbFileOutputStream(
+                smbFile, append);
         byte[] buf = new byte[512 * 1024];
         int numRead;
         while ((numRead = inputStream.read(buf)) >= 0) {
@@ -130,19 +142,31 @@ public class SmbClient {
         return true;
     }
 
-    public List<SmbFile> listFiles(String url) throws IOException  {
+    public List<SmbFile> listFiles(String url) throws IOException {
         final List<SmbFile> fileList = new ArrayList<SmbFile>();
         final SmbFile dir = smbApiFactory.createSmbFile(url, authentication);
-        // Catch NPE for empty folders, related to
+        // Catch NPE for empty folders - see the following discussion for
+        // details:
+        // http://camel-extra.1091541.n5.nabble.com/NPE-on-SmbOperations-td256.html
+        // Catch NPE for empty folders - see the following discussion for details:
+        // http://camel-extra.1091541.n5.nabble.com/NPE-on-SmbOperations-td256.html
         try {
             for (SmbFile f : dir.listFiles()) {
-              fileList.add(f);
+                fileList.add(f);
             }
-        } catch(NullPointerException ex) {
-            LOGGER.warn("No files are listed in the directory: {}", ex.getMessage());
+        } catch (NullPointerException ex) {
+            StackTraceElement[] elements = ex.getStackTrace();
+            if (elements != null && elements.length > 0 && elements[0] != null
+                    && elements[0].getClassName().equals("jcifs.smb.Dfs")
+                    && elements[0].getMethodName().equals("resolve")) {
+                LOGGER.warn("Ignoring NPE in jcifs.smb.Dfs.resolve: {}",
+                        ex.getMessage());
+            } else {
+                throw ex;
+            }
         }
         return fileList;
-    }    
+    }
 
     public boolean isExist(String url) throws Exception {
         SmbFile sFile = smbApiFactory.createSmbFile(url, authentication);
@@ -162,7 +186,8 @@ public class SmbClient {
 
     public boolean rename(String fromUrl, String toUrl) throws Exception {
         SmbFile sFile = smbApiFactory.createSmbFile(fromUrl, authentication);
-        SmbFile renamedFile = smbApiFactory.createSmbFile(toUrl, authentication);
+        SmbFile renamedFile = smbApiFactory
+                .createSmbFile(toUrl, authentication);
         try {
             sFile.renameTo(renamedFile);
         } catch (SmbException e) {

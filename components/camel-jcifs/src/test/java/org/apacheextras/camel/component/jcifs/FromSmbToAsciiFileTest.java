@@ -112,6 +112,7 @@ public class FromSmbToAsciiFileTest extends BaseSmbTestSupport {
         File file = new File("target/smbtest/deleteme.txt");
         assertTrue("The ASCII file should exists", file.exists());
         assertTrue("File size wrong", file.length() > 10);
+        file.delete();
     }
     
     protected RouteBuilder createRouteBuilder() throws Exception {
