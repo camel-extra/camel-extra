@@ -30,7 +30,6 @@
   </parent>
 
   <artifactId>camel-zeromq</artifactId>
-  <version>2.13-SNAPSHOT</version>
   <name>Camel Extra :: ZeroMQ</name>
   <packaging>bundle</packaging>
 
