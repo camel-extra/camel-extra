@@ -107,7 +107,6 @@
     <spring-data-commons-version>1.6.2.RELEASE</spring-data-commons-version>
     <spring-data-neo4j-version>2.2.2.RELEASE</spring-data-neo4j-version>
     <servicemix-jaxb-impl-version>2.2.6_1</servicemix-jaxb-impl-version>
-    <!--<servicemix-lucene-bundle-version>3.6.2_1</servicemix-lucene-bundle-version>-->
     <servicemix.bundles.cglib-version>2.2.2_1</servicemix.bundles.cglib-version>
     <servicemix.bundles.jdo2-api-version>2.2_1</servicemix.bundles.jdo2-api-version>
     <servicemix.bundles.jaxb-impl>2.2.6_1</servicemix.bundles.jaxb-impl>
