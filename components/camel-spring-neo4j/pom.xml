@@ -44,7 +44,7 @@
     <dependency>
       <groupId>org.springframework.data</groupId>
       <artifactId>spring-data-neo4j-rest</artifactId>
-      <version>${spring-neo4j-version}</version>
+      <version>${spring-data-neo4j-version}</version>
     </dependency>
 
     

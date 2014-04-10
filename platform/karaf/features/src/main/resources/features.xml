@@ -87,26 +87,33 @@
     <bundle>wrap:mvn:org.nuiton.thirdparty/Rserve/${rserve-version}</bundle>
     <bundle>mvn:org.apache-extras.camel-extra/camel-rcode/${project.version}</bundle>
   </feature>
-  <!--
   <feature name='camel-spring-neo4j' version='${project.version}' resolver='(obr)' start-level='50'>
     <feature version='${camel-version}'>camel</feature>
-    <feature version='3.1.4.RELEASE'>spring</feature>
-    <feature version='3.1.4.RELEASE'>spring-tx</feature>
-    <feature version='3.1.4.RELEASE'>spring-aspects</feature>
-    <feature version='2.7.6'>cxf-jaxrs</feature>
-    <bundle>mvn:org.springframework/spring-context-support/3.1.4.RELEASE</bundle>
-    <bundle>mvn:org.apache.geronimo.specs/geronimo-jta_1.1_spec/1.1.1</bundle>
-    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.jaxb-impl/2.2.6_1</bundle>
-    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.aopalliance/1.0_6</bundle>
-    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.lucene/3.6.2_1</bundle>
-    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.neo4j/1.9.2_1</bundle>
-    <bundle>mvn:org.springframework/spring-expression/3.1.4.RELEASE</bundle>
-    <bundle>mvn:org.springframework.data/spring-data-commons/1.6.2.RELEASE</bundle>
-    <bundle>mvn:org.springframework.data/spring-data-neo4j/2.3.2.RELEASE</bundle>
-    <bundle>mvn:org.springframework.data/spring-data-neo4j-rest/2.3.2.RELEASE</bundle>
-    <bundle>mvn:org.apache-extras.camel-extra/camel-spring-neo4j/2.12-SNAPSHOT</bundle>
+    <feature version='${spring-neo4j-version}'>spring</feature>
+    <feature version='${spring-neo4j-version}'>spring-tx</feature>
+    <feature version='${spring-neo4j-version}'>spring-jdbc</feature>
+    <feature version='${spring-neo4j-version}'>spring-orm</feature>
+    <feature version='${spring-neo4j-version}'>spring-web</feature>
+    <bundle>mvn:org.apache.geronimo.specs/geronimo-servlet_2.5_spec/${geronimo-servlet-spec12-version}</bundle>
+    <bundle>mvn:org.apache.geronimo.specs/geronimo-jta_1.1_spec/${geronimo-jta-spec-version}</bundle>
+    <bundle>mvn:org.apache.servicemix.specs/org.apache.servicemix.specs.jsr303-api-1.1.0/${servicemix.specs.jsr303-api-version}</bundle>
+    <bundle>mvn:org.apache.servicemix.specs/org.apache.servicemix.specs.java-persistence-api-1.1.1/${servicemix.specs.java-persistence-api-version}</bundle>
+    <bundle>mvn:org.apache.servicemix.specs/org.apache.servicemix.specs.activation-api-1.1/${servicemix.specs.activation-api-version}</bundle>
+    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.jaxb-impl/${servicemix.bundles.jaxb-impl}</bundle>
+    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.aopalliance/${aopalliance-bundle-version}</bundle>
+    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.lucene/${servicemix.bundles.lucene-version}</bundle>
+    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.neo4j/${servicemix.bundles.neo4j-version}</bundle>
+    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.aspectj/${servicemix.bundles.aspectj-version}</bundle>
+    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.guava/${servicemix.bundles.guava-version}</bundle>
+    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.javax-inject/${servicemix.bundles.javax-inject-version}</bundle>
+    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.jdo2-api/${servicemix.bundles.jdo2-api-version}</bundle>
+    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.cglib/${servicemix.bundles.cglib-version}</bundle>
+    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.jdt-core/${servicemix.bundles.jdt-core-version}</bundle>
+    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.joda-time/${jodatime2-bundle-version}</bundle>
+    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.querydsl/${servicemix.bundles.querydsl-version}</bundle>
+    <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.spring-data-neo4j/${servicemix.bundles.spring-data-neo4j-version}</bundle>
+    <bundle>mvn:org.apache-extras.camel-extra/camel-spring-neo4j/${project.version}</bundle>
   </feature>
-  -->
   <feature name='camel-virtualbox' version='${project.version}' resolver='(obr)' start-level='50'>
     <feature version='${camel-version}'>camel</feature>
     <bundle>mvn:org.virtualbox/vboxjws/${virtualbox-version}</bundle>
