@@ -302,7 +302,7 @@
             <useReleaseProfile>false</useReleaseProfile>
             <preparationGoals>clean install</preparationGoals>
             <goals>deploy</goals>
-            <arguments>-Psonatype-oss-release</arguments>
+            <arguments>${arguments} -Psonatype-oss-release</arguments>
             <autoVersionSubmodules>true</autoVersionSubmodules>
           </configuration>
         </plugin>
