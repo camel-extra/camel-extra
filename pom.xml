@@ -298,7 +298,7 @@
           <version>2.5</version>
           <configuration>
             <mavenExecutorId>forked-path</mavenExecutorId>
-            <pomFileName>camel-extra/pom.xml</pomFileName>
+            <pomFileName>./pom.xml</pomFileName>
             <useReleaseProfile>false</useReleaseProfile>
             <preparationGoals>clean install</preparationGoals>
             <goals>deploy</goals>
