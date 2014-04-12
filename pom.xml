@@ -195,9 +195,9 @@
 
   <scm>
     <connection>scm:git:http://code.google.com/a/apache-extras.org/p/camel-extra/</connection>
-    <developerConnection>scm:git:https://code.google.com/a/apache-extras.org/p/camel-extra/
-    </developerConnection>
-    <url>http://code.google.com/a/apache-extras.org/p/camel-extra/</url>
+    <developerConnection>scm:git:https://code.google.com/a/apache-extras.org/p/camel-extra/</developerConnection>
+    <url>https://code.google.com/a/apache-extras.org/p/camel-extra/source/browse?name=camel-extra-2.13.x</url>
+    <tag>HEAD</tag>
   </scm>
 
   <modules>
