@@ -57,8 +57,7 @@
     <camel-version>2.13.0</camel-version>
 
     <site-repo-url>scpexe://people.apache.org/www/activemq.apache.org/camel/maven/</site-repo-url>
-    <sonatypeOssDistMgmtSnapshotsUrl>https://oss.sonatype.org/content/repositories/snapshots/
-    </sonatypeOssDistMgmtSnapshotsUrl>
+    <sonatypeOssDistMgmtSnapshotsUrl>https://oss.sonatype.org/content/repositories/snapshots/</sonatypeOssDistMgmtSnapshotsUrl>
 
     <!-- OSGI bundles properties -->
     <camel.osgi.import.pkg>
@@ -296,9 +295,10 @@
           <artifactId>maven-release-plugin</artifactId>
           <version>2.5</version>
           <configuration>
+            <localCheckout>true</localCheckout>
+            <pushChanges>true</pushChanges>
+            <tagNameFormat>${project.artifactId}-${project.version}</tagNameFormat>
             <mavenExecutorId>forked-path</mavenExecutorId>
-            <pomFileName>./pom.xml</pomFileName>
-            <useReleaseProfile>false</useReleaseProfile>
             <preparationGoals>clean install</preparationGoals>
             <goals>deploy</goals>
             <arguments>${arguments} -Psonatype-oss-release</arguments>
