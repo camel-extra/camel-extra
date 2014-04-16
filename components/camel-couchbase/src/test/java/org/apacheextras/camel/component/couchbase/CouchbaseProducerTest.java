@@ -123,7 +123,7 @@ public class CouchbaseProducerTest {
         when(client.set(org.mockito.Matchers.anyString(), org.mockito.Matchers.anyInt(), org.mockito.Matchers.anyObject(), org.mockito.Matchers.any(PersistTo.class), org.mockito.Matchers.any(ReplicateTo.class))).thenReturn(of);
         //Mock out some headers so we can set an expiry
         int expiry = 5000;
-        Map<String, Object> testHeaders = new HashMap<>();
+        Map<String, Object> testHeaders = new HashMap<String, Object>();
         testHeaders.put("CCB_TTL", Integer.toString(expiry));
         when(msg.getHeaders()).thenReturn(testHeaders);
         when(msg.getHeader(HEADER_TTL, String.class)).thenReturn(Integer.toString(expiry));
