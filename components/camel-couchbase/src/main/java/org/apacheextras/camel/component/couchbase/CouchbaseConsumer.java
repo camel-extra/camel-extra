@@ -69,7 +69,7 @@ public class CouchbaseConsumer extends DefaultScheduledPollConsumer {
 
         String rangeStartKey = endpoint.getRangeStartKey();
         String rangeEndKey = endpoint.getRangeEndKey();
-        if (rangeStartKey.equals("") || rangeEndKey.equals("")) {
+        if ("".equals(rangeStartKey) || "".equals(rangeEndKey)) {
             return;
         }
         query.setRange(rangeStartKey, rangeEndKey);
@@ -115,12 +115,12 @@ public class CouchbaseConsumer extends DefaultScheduledPollConsumer {
             exchange.getIn().setHeader(HEADER_DESIGN_DOCUMENT_NAME, designDocumentName);
             exchange.getIn().setHeader(HEADER_VIEWNAME, viewName);
 
-            if (consumerProcessedStrategy.equalsIgnoreCase("delete")) {
+            if ("delete".equalsIgnoreCase(consumerProcessedStrategy)) {
                 if (log.isTraceEnabled()) {
                     log.trace("Deleting doc with ID {}", id);
                 }
                 client.delete(id);
-            } else if (consumerProcessedStrategy.equalsIgnoreCase("filter")) {
+            } else if ("filter".equalsIgnoreCase(consumerProcessedStrategy)) {
                 if (log.isTraceEnabled()) {
                     log.trace("Filtering out ID {}", id);
                 }
