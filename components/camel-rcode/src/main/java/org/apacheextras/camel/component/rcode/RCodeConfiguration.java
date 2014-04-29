@@ -25,6 +25,8 @@ import java.net.InetAddress;
 import java.net.URI;
 import java.net.UnknownHostException;
 import org.apache.camel.RuntimeCamelException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The RCodeConfiguration object contains all elements that can be configured
@@ -32,6 +34,10 @@ import org.apache.camel.RuntimeCamelException;
  */
 public final class RCodeConfiguration implements Cloneable {
 
+    /**
+     * Add logger to provide some level of detailed output.
+     * */
+    private static final Logger LOGGER = LoggerFactory.getLogger(RCodeConfiguration.class);
     /**
      * The default rServe host set to
      * <code>127.0.0.1</code>.
@@ -192,7 +198,10 @@ public final class RCodeConfiguration implements Cloneable {
     try {
       return InetAddress.getLocalHost().getHostAddress();
     } catch (UnknownHostException e) {
-      return "127.0.0.1"; // TURN_OFF_WARNINGS
+      final String default_host = "127.0.0.1";
+      LOGGER.info("Could not retrieve host information. Setting default to '{}'.\n" +
+          "Reason was: {}", default_host, e.getMessage());
+      return default_host; // TURN_OFF_WARNINGS
     }
   }
 }
