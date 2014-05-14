@@ -249,7 +249,7 @@ public class VtdXmlXPathBuilder implements Expression, Predicate, NamespaceAware
                 if (l != -1) {
                     int offset = (int) l;
                     int len = (int) (l >> 32);
-                    return vn.toString(offset, len);
+                    return vn.toRawString(offset, len);
                 } else {
                     return null;
                 }
