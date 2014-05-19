@@ -67,6 +67,7 @@ http://www.gnu.org/licenses/gpl-2.0-standalone.html
     <dependency>
       <groupId>org.apache.camel.karaf</groupId>
       <artifactId>apache-camel</artifactId>
+      <version>${camel-version}</version>
       <type>pom</type>
       <scope>test</scope>
     </dependency>
