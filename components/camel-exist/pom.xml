@@ -53,7 +53,7 @@
     <dependency>
       <groupId>exist</groupId>
       <artifactId>exist-xmldb</artifactId>
-      <version>${exist-version}</version>
+      <version>${xmlrpc-version}</version>
     </dependency>
 
     <!-- testing -->
