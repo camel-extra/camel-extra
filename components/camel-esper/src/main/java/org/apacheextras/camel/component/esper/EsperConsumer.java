@@ -33,7 +33,7 @@ import org.apache.camel.impl.DefaultConsumer;
  */
 public class EsperConsumer extends DefaultConsumer implements UpdateListener {
     private final EsperEndpoint endpoint;
-    private final EPStatement statement;
+    private EPStatement statement;
 
     public EsperConsumer(EsperEndpoint endpoint, EPStatement statement, Processor processor) {
         super(endpoint, processor);
@@ -44,13 +44,20 @@ public class EsperConsumer extends DefaultConsumer implements UpdateListener {
     @Override
     protected void doStart() throws Exception {
         super.doStart();
+        if (statement.isDestroyed()) {
+            //statement is destroyed! re-init it!
+            statement = endpoint.createStatement();
+        }
         statement.addListener(this);
     }
 
     @Override
     protected void doStop() throws Exception {
         super.doStop();
-        statement.removeListener(this);
+        if (!statement.isDestroyed()) {
+            //statement is not destroyed! remove the listener!
+            statement.removeListener(this);
+        }
         endpoint.removeConsumer();
     }
 
