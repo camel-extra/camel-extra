@@ -63,6 +63,7 @@ public class SmbEndpoint extends GenericFileEndpoint<SmbFile> {
         }
 
         consumer.setMaxMessagesPerPoll(getMaxMessagesPerPoll());
+        consumer.setEagerLimitMaxMessagesPerPoll(isEagerMaxMessagesPerPoll());
         configureConsumer(consumer);
         return consumer;
     }
