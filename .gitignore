@@ -34,6 +34,13 @@ Thumbs.db
 atlassian-ide-plugin.xml
 
 ##
+# Ignore Eclipse project files
+# #
+.classpath
+.project
+.settings
+
+##
 # Ignore build files
 # #
 **/target/*
