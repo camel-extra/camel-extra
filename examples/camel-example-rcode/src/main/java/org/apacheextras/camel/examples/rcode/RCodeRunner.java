@@ -130,7 +130,7 @@ public class RCodeRunner {
   public static void main(String... args) throws Exception {
     // Parse the command line arguments
     if (!parseCommandLine(args)) {
-      System.exit(1);  // TURN_OFF_WARNINGS
+      System.exit(1);  //NOSONAR
     }
     // Start the camel context
     CamelContext camelContext = new DefaultCamelContext();

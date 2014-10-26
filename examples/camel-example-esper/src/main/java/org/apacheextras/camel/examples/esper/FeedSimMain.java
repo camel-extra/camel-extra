@@ -41,7 +41,7 @@ public class FeedSimMain {
             System.out.println("  drop probability percent: a number between zero and 100 that dictates the ");
             System.out.println("                            probability that per second one of the feeds drops off");
             System.out.println("  number of seconds: the number of seconds the simulation runs");
-            System.exit(-1); // TURN_OFF_WARNINGS
+            System.exit(-1); //NOSONAR
         }
 
         int numberOfThreads;
@@ -50,7 +50,7 @@ public class FeedSimMain {
         } catch (NullPointerException e) {
             log.error("'{}' caused by '{}'", e.getMessage(), e);
             System.out.println("Invalid number of threads:" + args[0]);
-            System.exit(-2); // TURN_OFF_WARNINGS
+            System.exit(-2); //NOSONAR
             return;
         }
 
@@ -60,7 +60,7 @@ public class FeedSimMain {
         } catch (NumberFormatException e) {
             log.error("'{}' caused by '{}'", e.getMessage(), e);
             System.out.println("Invalid drop probability:" + args[1]);
-            System.exit(-2); // TURN_OFF_WARNINGS
+            System.exit(-2); //NOSONAR
             return;
         }
 
@@ -70,7 +70,7 @@ public class FeedSimMain {
         } catch (NullPointerException e) {
             log.error("'{}' caused by '{}'", e.getMessage(), e);
             System.out.println("Invalid number of seconds to run:" + args[2]);
-            System.exit(-2); // TURN_OFF_WARNINGS
+            System.exit(-2); //NOSONAR
             return;
         }
 
