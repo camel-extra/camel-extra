@@ -37,12 +37,14 @@ import jcifs.smb.SmbFileOutputStream;
  */
 public class JcifsSmbApiFactory implements SmbApiFactory {
 
+    @Override
     public SmbFile createSmbFile(String url,
             NtlmPasswordAuthentication authentication)
         throws IOException {
         return new SmbFile(url, authentication);
     }
 
+    @Override
     public SmbFileOutputStream createSmbFileOutputStream(SmbFile smbFile,
             boolean b) throws IOException {
         return new SmbFileOutputStream(smbFile, b);

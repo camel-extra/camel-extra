@@ -62,6 +62,7 @@ public class SmbProducer extends GenericFileProducer<SmbFile> implements Service
         return name.replace('\\', '/');
     }
 
+    @Override
     public void process(Exchange exchange) throws Exception {
 
         Exchange smbExchange = getEndpoint().createExchange(exchange);
@@ -176,6 +177,7 @@ public class SmbProducer extends GenericFileProducer<SmbFile> implements Service
         postWriteCheck();
     }
 
+    @Override
     public String createFileName(Exchange exchange) {
         String answer;
 

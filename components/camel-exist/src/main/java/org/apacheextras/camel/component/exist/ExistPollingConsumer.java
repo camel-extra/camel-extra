@@ -36,6 +36,7 @@ public class ExistPollingConsumer extends PollingConsumerSupport {
         this.endpoint = endpoint;
     }
 
+    @Override
     public Exchange receive() {
         try {
             if (iterator == null) {
@@ -54,17 +55,21 @@ public class ExistPollingConsumer extends PollingConsumerSupport {
         }
     }
 
+    @Override
     public Exchange receiveNoWait() {
         return receive();
     }
 
+    @Override
     public Exchange receive(long l) {
         return receive();
     }
 
+    @Override
     protected void doStart() throws Exception {
     }
 
+    @Override
     protected void doStop() throws Exception {
     }
 }

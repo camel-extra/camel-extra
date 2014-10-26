@@ -52,6 +52,7 @@ public class HibernateConsumer extends ScheduledPollConsumer {
         this.transactionStrategy = endpoint.getTransactionStrategy();
     }
 
+    @Override
     protected int poll() throws Exception {
         transactionStrategy.execute(new TransactionCallback() {
             @Override
@@ -100,6 +101,7 @@ public class HibernateConsumer extends ScheduledPollConsumer {
 
     // Properties
     // -------------------------------------------------------------------------
+    @Override
     public HibernateEndpoint getEndpoint() {
         return endpoint;
     }

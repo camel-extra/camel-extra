@@ -36,6 +36,7 @@ public class SpringTransactionStrategy extends ServiceSupport implements Transac
         this.transactionTemplate = transactionTemplate;
     }
 
+    @Override
     public <T> T execute(final TransactionCallback<T> callback) {
         return transactionTemplate.execute(new org.springframework.transaction.support.TransactionCallback<T>() {
             @Override
@@ -45,9 +46,11 @@ public class SpringTransactionStrategy extends ServiceSupport implements Transac
         });
     }
 
+    @Override
     protected void doStart() throws Exception {
     }
 
+    @Override
     protected void doStop() throws Exception {
     }
 

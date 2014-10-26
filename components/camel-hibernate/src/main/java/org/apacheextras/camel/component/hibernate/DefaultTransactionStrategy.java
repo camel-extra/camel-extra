@@ -33,6 +33,7 @@ public class DefaultTransactionStrategy extends ServiceSupport implements Transa
         this.sessionFactory = sessionFactory;
     }
 
+    @Override
     public <T> T execute(TransactionCallback<T> callback) {
         Session session = sessionFactory.getCurrentSession();
         Transaction transaction = null;
@@ -51,9 +52,11 @@ public class DefaultTransactionStrategy extends ServiceSupport implements Transa
         }
     }
 
+    @Override
     protected void doStart() throws Exception {
     }
 
+    @Override
     protected void doStop() throws Exception {
     }
 

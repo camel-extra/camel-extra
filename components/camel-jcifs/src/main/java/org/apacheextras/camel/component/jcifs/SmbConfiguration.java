@@ -123,6 +123,7 @@ public class SmbConfiguration extends GenericFileConfiguration {
     }
 
     // TODO: give this dirty handling some thinking.
+    @Override
     public String getDirectory() {
         String s = super.getDirectory();
         s = s.replace('\\', '/');

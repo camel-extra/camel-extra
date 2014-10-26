@@ -46,6 +46,7 @@ public class OpenTypeSupport {
         Map fields = f.getFields(message);
         return new CompositeDataSupport(ct, fields);
     }
+
     interface OpenTypeFactory {
         CompositeType getCompositeType() throws OpenDataException;
         Map getFields( Object o ) throws OpenDataException;
@@ -60,6 +61,7 @@ public class OpenTypeSupport {
         ArrayList itemDescriptionsList = new ArrayList();
         ArrayList itemTypesList = new ArrayList();
 
+        @Override
         public CompositeType getCompositeType() throws OpenDataException {
             if( compositeType == null ) {
                 init();
@@ -91,56 +93,10 @@ public class OpenTypeSupport {
             return getTypeName();
         }
 
+        @Override
         public Map getFields(Object o) throws OpenDataException {
             HashMap rc = new HashMap();
             return rc;
         }
     }
-
-    /*
-    static class MessageOpenTypeFactory extends AbstractOpenTypeFactory {
-
-        protected String getTypeName() {
-            return ActiveMQMessage.class.getName();
-        }
-
-        protected void init() throws OpenDataException {
-            super.init();
-            addItem("JMSCorrelationID", "JMSCorrelationID", SimpleType.STRING);
-            addItem("JMSDestination", "JMSDestination", SimpleType.STRING);
-            addItem("JMSMessageID", "JMSMessageID", SimpleType.STRING);
-            addItem("JMSReplyTo", "JMSReplyTo", SimpleType.STRING);
-            addItem("JMSType", "JMSType", SimpleType.STRING);
-            addItem("JMSDeliveryMode", "JMSDeliveryMode", SimpleType.STRING);
-            addItem("JMSExpiration", "JMSExpiration", SimpleType.LONG);
-            addItem("JMSPriority", "JMSPriority", SimpleType.INTEGER);
-            addItem("JMSRedelivered", "JMSRedelivered", SimpleType.BOOLEAN);
-            addItem("JMSTimestamp", "JMSTimestamp", SimpleType.DATE);
-            addItem("Properties", "Properties", SimpleType.STRING);
-        }
-
-        public Map getFields(Object o) throws OpenDataException {
-            ActiveMQMessage m = (ActiveMQMessage) o;
-            Map rc = super.getFields(o);
-            rc.put("JMSCorrelationID", m.getJMSCorrelationID());
-            rc.put("JMSDestination", ""+m.getJMSDestination());
-            rc.put("JMSMessageID", m.getJMSMessageID());
-            rc.put("JMSReplyTo", ""+m.getJMSReplyTo());
-            rc.put("JMSType", m.getJMSType());
-            rc.put("JMSDeliveryMode", m.getJMSDeliveryMode()==DeliveryMode.PERSISTENT ? "PERSISTENT" : "NON-PERSISTENT");
-            rc.put("JMSExpiration", Long.valueOf(m.getJMSExpiration()));
-            rc.put("JMSPriority", Integer.valueOf(m.getJMSPriority()));
-            rc.put("JMSRedelivered", Boolean.valueOf(m.getJMSRedelivered()));
-            rc.put("JMSTimestamp", new Date(m.getJMSTimestamp()));
-            try {
-                rc.put("Properties", ""+m.getProperties());
-            } catch (IOException e) {
-                rc.put("Properties", "");
-            }
-            return rc;
-        }
-    }
-    */
-
-
 }

@@ -53,16 +53,19 @@ public class HibernateEndpoint extends ScheduledPollEndpoint {
         this.transactionStrategy = component.getTransactionStrategy();
     }
 
+    @Override
     public Producer createProducer() throws Exception {
         return new HibernateProducer(this, getProducerExpression());
     }
 
+    @Override
     public Consumer createConsumer(Processor processor) throws Exception {
         HibernateConsumer consumer = new HibernateConsumer(this, processor);
         configureConsumer(consumer);
         return consumer;
     }
 
+    @Override
     public boolean isSingleton() {
         return true;
     }

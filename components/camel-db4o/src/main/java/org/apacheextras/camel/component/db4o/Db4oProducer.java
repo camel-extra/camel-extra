@@ -37,6 +37,7 @@ public class Db4oProducer extends DefaultProducer {
         this.endpoint = endpoint;
     }
 
+    @Override
     public void process(Exchange exchange) {
         Object msgObject = exchange.getIn().getBody();
         ObjectHelper.isAssignableFrom(msgObject.getClass(), this.endpoint.getStoredClass());

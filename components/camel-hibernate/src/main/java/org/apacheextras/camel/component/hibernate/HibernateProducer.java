@@ -41,6 +41,7 @@ public class HibernateProducer extends DefaultProducer {
         this.template = endpoint.getTransactionStrategy();
     }
 
+    @Override
     public void process(Exchange exchange) {
         final Object values = expression.evaluate(exchange, Object.class);
         if (values != null) {

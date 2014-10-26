@@ -31,12 +31,14 @@ import org.apache.camel.spi.Language;
  */
 public class VtdXmlLanguage implements Language, IsSingleton {
 
+    @Override
     public Predicate createPredicate(String expression) {
         VtdXmlXPathBuilder builder = VtdXmlXPathBuilder.xpath(expression);
         configureBuilder(builder);
         return builder;
     }
 
+    @Override
     public Expression createExpression(String expression) {
         VtdXmlXPathBuilder builder = VtdXmlXPathBuilder.xpath(expression);
         configureBuilder(builder);
@@ -47,6 +49,7 @@ public class VtdXmlLanguage implements Language, IsSingleton {
         // noop
     }
 
+    @Override
     public boolean isSingleton() {
         return true;
     }

@@ -43,10 +43,12 @@ public class ExistEndpoint extends DefaultPollingEndpoint {
         this.collection = collection;
     }
 
+    @Override
     public boolean isSingleton() {
         return true;
     }
 
+    @Override
     public ExistProducer createProducer() throws Exception {
         return new ExistProducer(this);
     }

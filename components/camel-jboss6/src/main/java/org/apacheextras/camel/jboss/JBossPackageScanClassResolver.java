@@ -88,6 +88,7 @@ public class JBossPackageScanClassResolver extends DefaultPackageScanClassResolv
             this.classes = classes;
         }
 
+        @Override
         public void visit(VirtualFile file) {
             if (file.getName().endsWith(".class")) {
                 String fqn = file.getPathName();

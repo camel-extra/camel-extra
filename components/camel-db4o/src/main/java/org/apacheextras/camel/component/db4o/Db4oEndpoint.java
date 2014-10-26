@@ -42,11 +42,13 @@ public class Db4oEndpoint extends ScheduledPollEndpoint {
         this.setStoredClass(storedClass);
     }
 
+    @Override
     public Producer createProducer() throws Exception {
         ObjectHelper.notNull(getObjectContainer(), "object container property");
         return new Db4oProducer(this);
     }
 
+    @Override
     public Consumer createConsumer(Processor processor) throws Exception {
         ObjectHelper.notNull(getObjectContainer(), "object container property");
         Db4oConsumer consumer = new Db4oConsumer(this, processor);
@@ -54,6 +56,7 @@ public class Db4oEndpoint extends ScheduledPollEndpoint {
         return consumer;
     }
 
+    @Override
     public boolean isSingleton() {
         return true;
     }

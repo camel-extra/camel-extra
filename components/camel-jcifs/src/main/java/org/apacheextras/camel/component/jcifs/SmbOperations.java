@@ -56,10 +56,12 @@ public class SmbOperations<SmbFile> implements GenericFileOperations<SmbFile> {
     this.client = smbClient;
   }
 
+  @Override
   public void setEndpoint(GenericFileEndpoint<SmbFile> endpoint) {
     this.endpoint = endpoint;
   }
 
+  @Override
   public boolean deleteFile(String name) {
     try {
       login();
@@ -70,6 +72,7 @@ public class SmbOperations<SmbFile> implements GenericFileOperations<SmbFile> {
     }
   }
 
+  @Override
   public boolean existsFile(String name) {
     try {
       login();
@@ -79,6 +82,7 @@ public class SmbOperations<SmbFile> implements GenericFileOperations<SmbFile> {
     }
   }
 
+  @Override
   public boolean renameFile(String from, String to) {
     final String fromPath = getPath(from);
     final String toPath = getPath(to);
@@ -90,6 +94,7 @@ public class SmbOperations<SmbFile> implements GenericFileOperations<SmbFile> {
     }
   }
 
+  @Override
   public boolean buildDirectory(String directory, boolean absolute) {
     try {
       login();
@@ -100,6 +105,7 @@ public class SmbOperations<SmbFile> implements GenericFileOperations<SmbFile> {
     }
   }
 
+  @Override
   public boolean retrieveFile(String name, Exchange exchange) {
     if (ObjectHelper.isNotEmpty(endpoint.getLocalWorkDirectory())) {
       return retrieveFileToFileInLocalWorkDirectory(name, exchange);
@@ -199,6 +205,7 @@ public class SmbOperations<SmbFile> implements GenericFileOperations<SmbFile> {
     return result;
   }
 
+  @Override
   public boolean storeFile(String name, Exchange exchange) {
     boolean append = false;
     // if an existing file already exists what should we do?
@@ -242,20 +249,25 @@ public class SmbOperations<SmbFile> implements GenericFileOperations<SmbFile> {
     }
   }
 
+  @Override
   public String getCurrentDirectory() {
     return null;
   }
 
+  @Override
   public void changeCurrentDirectory(String path) {
   }
 
+  @Override
   public void changeToParentDirectory() {
   }
 
+  @Override
   public List<SmbFile> listFiles() {
     return null;
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public List<SmbFile> listFiles(String path) {
     String listPath = getDirPath(path);
@@ -292,6 +304,7 @@ public class SmbOperations<SmbFile> implements GenericFileOperations<SmbFile> {
     return path.replace('\\', '/');
   }
 
+  @Override
   public void releaseRetreivedFileResources(Exchange exchange) {
     // Right now do nothing
   }

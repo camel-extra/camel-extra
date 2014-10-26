@@ -138,6 +138,7 @@ public abstract class QueryBuilder implements QueryFactory {
         }
     }
 
+    @Override
     public Query createQuery(Session entityManager) {
         Query query = makeQueryObject(entityManager);
         populateQuery(entityManager, query);

@@ -35,6 +35,7 @@ public class ExistProducer extends DefaultProducer {
         this.endpoint = endpoint;
     }
 
+    @Override
     public void process(Exchange exchange) throws Exception {
         Collection collection = endpoint.getCollection();
         XMLResource document = (XMLResource) collection.createResource(null, "XMLResource");

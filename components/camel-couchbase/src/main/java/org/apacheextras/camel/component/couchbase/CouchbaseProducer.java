@@ -97,6 +97,7 @@ public class CouchbaseProducer extends DefaultProducer {
 
     }
 
+    @Override
     public void process(Exchange exchange) throws Exception {
 
         Map<String, Object> headers = exchange.getIn().getHeaders();
