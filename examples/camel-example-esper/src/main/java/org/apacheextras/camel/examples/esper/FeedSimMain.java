@@ -32,15 +32,15 @@ import org.slf4j.LoggerFactory;
 
 public class FeedSimMain {
 
-    private static final Logger log = LoggerFactory.getLogger(FeedSimMain.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FeedSimMain.class);
 
     public static void main(String[] args) throws IOException, InterruptedException {
         if (args.length < 3) {
-            System.out.println("Arguments are: <number of threads> <drop probability percent> <number of seconds to run>");
-            System.out.println("  number of threads: the number of threads sending feed events into the engine");
-            System.out.println("  drop probability percent: a number between zero and 100 that dictates the ");
-            System.out.println("                            probability that per second one of the feeds drops off");
-            System.out.println("  number of seconds: the number of seconds the simulation runs");
+          LOGGER.info("Arguments are: <number of threads> <drop probability percent> <number of seconds to run>");
+          LOGGER.info("  number of threads: the number of threads sending feed events into the engine");
+          LOGGER.info("  drop probability percent: a number between zero and 100 that dictates the ");
+          LOGGER.info("                            probability that per second one of the feeds drops off");
+          LOGGER.info("  number of seconds: the number of seconds the simulation runs");
             System.exit(-1); //NOSONAR
         }
 
@@ -48,8 +48,8 @@ public class FeedSimMain {
         try {
             numberOfThreads = Integer.parseInt(args[0]);
         } catch (NullPointerException e) {
-            log.error("'{}' caused by '{}'", e.getMessage(), e);
-            System.out.println("Invalid number of threads:" + args[0]);
+            LOGGER.error("'{}' caused by '{}'", e.getMessage(), e);
+            LOGGER.info("Invalid number of threads:" + args[0]);
             System.exit(-2); //NOSONAR
             return;
         }
@@ -58,8 +58,8 @@ public class FeedSimMain {
         try {
             dropProbability = Double.parseDouble(args[1]);
         } catch (NumberFormatException e) {
-            log.error("'{}' caused by '{}'", e.getMessage(), e);
-            System.out.println("Invalid drop probability:" + args[1]);
+            LOGGER.error("'{}' caused by '{}'", e.getMessage(), e);
+            LOGGER.info("Invalid drop probability:" + args[1]);
             System.exit(-2); //NOSONAR
             return;
         }
@@ -68,14 +68,14 @@ public class FeedSimMain {
         try {
             numberOfSeconds = Integer.parseInt(args[2]);
         } catch (NullPointerException e) {
-            log.error("'{}' caused by '{}'", e.getMessage(), e);
-            System.out.println("Invalid number of seconds to run:" + args[2]);
+            LOGGER.error("'{}' caused by '{}'", e.getMessage(), e);
+            LOGGER.info("Invalid number of seconds to run:" + args[2]);
             System.exit(-2); //NOSONAR
             return;
         }
 
         // Run the sample
-        System.out.println("Using " + numberOfThreads + " threads with a drop probability of " + dropProbability + "%, for " + numberOfSeconds + " seconds");
+        LOGGER.info("Using " + numberOfThreads + " threads with a drop probability of " + dropProbability + "%, for " + numberOfSeconds + " seconds");
         FeedSimMain feedSimMain = new FeedSimMain(numberOfThreads, dropProbability, numberOfSeconds, true);
         feedSimMain.run();
     }
@@ -111,8 +111,8 @@ public class FeedSimMain {
                 if (random.nextBoolean()) {
                     feedToDropOff = FeedEnum.FEED_B;
                 }
-                log.info("Setting drop-off for feed " + feedToDropOff);
-                
+                LOGGER.info("Setting drop-off for feed " + feedToDropOff);
+
             } else {
                 feedToDropOff = null;
             }
@@ -121,7 +121,7 @@ public class FeedSimMain {
             }
         }
 
-        log.info("Shutting down threadpool");
+        LOGGER.info("Shutting down threadpool");
         for (int i = 0; i < runnables.length; i++) {
             runnables[i].setShutdown();
         }
