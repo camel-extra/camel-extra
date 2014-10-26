@@ -159,10 +159,8 @@ public class SmbProducer extends GenericFileProducer<SmbFile> implements Service
 
                 log.trace("Writing done file: [{}]", doneFileName);
                 // delete any existing done file
-                if (operations.existsFile(doneFileName)) {
-                    if (!operations.deleteFile(doneFileName)) {
-                        throw new GenericFileOperationFailedException("Cannot delete existing done file: " + doneFileName);
-                    }
+                if (operations.existsFile(doneFileName) && !operations.deleteFile(doneFileName)) {
+                    throw new GenericFileOperationFailedException("Cannot delete existing done file: " + doneFileName);
                 }
                 writeFile(empty, doneFileName);
             }
@@ -186,16 +184,14 @@ public class SmbProducer extends GenericFileProducer<SmbFile> implements Service
 
         // expression support
         Expression expression = endpoint.getFileName();
-        if (name != null) {
+        if (name != null && StringHelper.hasStartToken(name, "simple")) {
             // the header name can be an expression too, that should override
             // whatever configured on the endpoint
-            if (StringHelper.hasStartToken(name, "simple")) {
-                if (log.isDebugEnabled()) {
-                    log.debug(Exchange.FILE_NAME + " contains a Simple expression: " + name);
-                }
-                Language language = getEndpoint().getCamelContext().resolveLanguage("file");
-                expression = language.createExpression(name);
-            }
+             if (log.isDebugEnabled()) {
+               log.debug(Exchange.FILE_NAME + " contains a Simple expression: " + name);
+             }
+          Language language = getEndpoint().getCamelContext().resolveLanguage("file");
+          expression = language.createExpression(name);
         }
         if (expression != null) {
             if (log.isDebugEnabled()) {
@@ -258,12 +254,8 @@ public class SmbProducer extends GenericFileProducer<SmbFile> implements Service
             File file = new File(name);
             String directory = file.getParent();
             boolean absolute = FileUtil.isAbsolute(file);
-            if (directory != null) {
-                if (!operations.buildDirectory(directory, absolute)) {
-
-                    log.warn("Cannot build directory [" + directory + "] (could be because of denied permissions)");
-
-                }
+            if (directory != null && !operations.buildDirectory(directory, absolute)) {
+              log.warn("Cannot build directory [" + directory + "] (could be because of denied permissions)");
             }
         }
 
