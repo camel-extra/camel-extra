@@ -105,7 +105,7 @@ public class CouchbaseEndpointTest {
       assertTrue(endpoint.getHostname().equals("localhost"));
 
       endpoint.setPort(80);
-      assertTrue(endpoint.getProtocol().equals(80));
+      assertTrue(endpoint.getPort() == 80);
 
       endpoint.setOperation("PUT");
       assertTrue(endpoint.getOperation().equals("PUT"));
@@ -120,20 +120,50 @@ public class CouchbaseEndpointTest {
       assertTrue(endpoint.getProducerRetryPause() == 1);
 
       endpoint.setDesignDocumentName("beer");
-      assertTrue(endpoint.getDesignDocumentName().equals("beer");
+      assertTrue(endpoint.getDesignDocumentName().equals("beer"));
 
       endpoint.setViewName("brewery_beers");
-      assertTrue(endpoint.getViewName().equals("brewery_beers")));
+      assertTrue(endpoint.getViewName().equals("brewery_beers"));
 
       endpoint.setLimit(1);
       assertTrue(endpoint.getLimit() == 1);
 
-      endpoint.setDescending(false);
-
       endpoint.setSkip(1);
-      endpoint.setRangeStartKey("");
-      endpoint.setRangeEndKey("");
-      endpoint.setConsumerProcessedStrategy("delete");
+      assertTrue(endpoint.getSkip() == 1);
 
+      endpoint.setRangeStartKey("");
+      assertTrue(endpoint.getRangeStartKey().equals(""));
+
+      endpoint.setRangeEndKey("");
+      assertTrue(endpoint.getRangeEndKey().equals(""));
+
+      endpoint.setConsumerProcessedStrategy("delete");
+      assertTrue(endpoint.getConsumerProcessedStrategy().equals("delete"));
+
+      endpoint.setOpTimeOut(1L);
+      assertTrue(endpoint.getOpTimeOut() == 1L);
+
+      endpoint.setTimeoutExceptionThreshold(1);
+      assertTrue(endpoint.getTimeoutExceptionThreshold() == 1);
+
+      endpoint.setReadBufferSize(1);
+      assertTrue(endpoint.getReadBufferSize() == 1);
+
+      endpoint.setShouldOptimize(true);
+      assertTrue(endpoint.isShouldOptimize());
+
+      endpoint.setMaxReconnectDelay(1L);
+      assertTrue(endpoint.getMaxReconnectDelay() == 1L);
+
+      endpoint.setOpQueueMaxBlockTime(1L);
+      assertTrue(endpoint.getOpQueueMaxBlockTime() == 1L);
+
+      endpoint.setObsPollInterval(1L);
+      assertTrue(endpoint.getObsPollInterval() == 1L);
+
+      endpoint.setObsTimeout(1L);
+      assertTrue(endpoint.getObsTimeout() == 1L);
+
+      endpoint.setDescending(false);
     }
 }
