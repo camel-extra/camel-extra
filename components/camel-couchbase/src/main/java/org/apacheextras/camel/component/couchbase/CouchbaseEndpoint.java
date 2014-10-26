@@ -435,7 +435,7 @@ public class CouchbaseEndpoint extends ScheduledPollEndpoint {
             hosts[i] = hosts[i].trim();
         }
 
-        ArrayList<String> hostList = new ArrayList<String>();
+        List<String> hostList = new ArrayList<String>();
         hostList.add(hostname);
         hostList.addAll(Arrays.asList(hosts));
         Set<String> hostSet = new LinkedHashSet<String>(hostList);

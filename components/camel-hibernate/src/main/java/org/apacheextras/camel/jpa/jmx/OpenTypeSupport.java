@@ -29,6 +29,7 @@ import javax.management.openmbean.OpenDataException;
 import javax.management.openmbean.OpenType;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class OpenTypeSupport {
@@ -53,14 +54,14 @@ public class OpenTypeSupport {
         Map getFields( Object o ) throws OpenDataException;
     }
 
-    private static final HashMap OPEN_TYPE_FACTORIES = new HashMap();
+    private static final Map OPEN_TYPE_FACTORIES = new HashMap();
 
     abstract static class AbstractOpenTypeFactory implements OpenTypeFactory {
 
         private CompositeType compositeType;
-        ArrayList itemNamesList = new ArrayList();
-        ArrayList itemDescriptionsList = new ArrayList();
-        ArrayList itemTypesList = new ArrayList();
+        List itemNamesList = new ArrayList();
+        List itemDescriptionsList = new ArrayList();
+        List itemTypesList = new ArrayList();
 
         @Override
         public CompositeType getCompositeType() throws OpenDataException {
@@ -96,7 +97,7 @@ public class OpenTypeSupport {
 
         @Override
         public Map getFields(Object o) throws OpenDataException {
-            HashMap rc = new HashMap();
+            Map rc = new HashMap();
             return rc;
         }
     }
