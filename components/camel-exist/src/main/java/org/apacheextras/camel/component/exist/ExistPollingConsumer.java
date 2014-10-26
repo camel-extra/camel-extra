@@ -49,8 +49,7 @@ public class ExistPollingConsumer extends PollingConsumerSupport {
                 iterator = null;
                 return null;
             }
-        }
-        catch (XMLDBException e) {
+        } catch (XMLDBException e) {
             throw new RuntimeExistException(endpoint, e);
         }
     }

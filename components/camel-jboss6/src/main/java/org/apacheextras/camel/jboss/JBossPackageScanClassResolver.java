@@ -53,8 +53,7 @@ public class JBossPackageScanClassResolver extends DefaultPackageScanClassResolv
             if (!urls.hasMoreElements()) {
                 log.trace("No URLs returned by classloader");
             }
-        }
-        catch (IOException ioe) {
+        } catch (IOException ioe) {
             log.warn("Could not read package: " + packageName, ioe);
             return;
         }

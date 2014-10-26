@@ -54,8 +54,7 @@ public class JBossPackageScanClassResolver extends DefaultPackageScanClassResolv
             if (!urls.hasMoreElements()) {
                 log.trace("No URLs returned by classloader");
             }
-        }
-        catch (IOException ioe) {
+        } catch (IOException ioe) {
             log.warn("Could not read package: " + packageName, ioe);
             return;
         }
@@ -69,8 +68,7 @@ public class JBossPackageScanClassResolver extends DefaultPackageScanClassResolv
                 }
                 VirtualFile root = VFS.getRoot(url);
                 root.visit(new MatchingClassVisitor(test, classes));
-            }
-            catch (IOException ioe) {
+            } catch (IOException ioe) {
                 log.warn("Could not read entries in url: " + url, ioe);
             }
         }
