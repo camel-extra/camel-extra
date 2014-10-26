@@ -23,18 +23,24 @@ package org.apacheextras.camel.examples.esper;
 
 import java.util.Map;
 
+
 import com.espertech.esper.client.EventBean;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.spring.Main;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MyRouteBuilder extends RouteBuilder {
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(MyRouteBuilder.class);
 
     public static void main(String... args) throws Exception {
         Main.main(args);
     }
 
+    @Override
     public void configure() {
 
         from("activemq:EventStreamQueue").to("esper://feed");
@@ -48,7 +54,7 @@ public class MyRouteBuilder extends RouteBuilder {
                     public void process(Exchange exchange) throws Exception {
                         EventBean event = exchange.getIn().getBody(EventBean.class);
                         Map map = (Map) event.getUnderlying();
-                        System.out.println(map);
+                        LOGGER.info("Event map := {}", map);
                     }
                 });
 
