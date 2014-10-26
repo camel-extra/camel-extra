@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 
 public class ZeromqConsumer extends DefaultConsumer {
 
-    static final Logger LOGGER = LoggerFactory.getLogger(ZeromqConsumer.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ZeromqConsumer.class);
 
     private final Processor processor;
     private final ZeromqEndpoint endpoint;
