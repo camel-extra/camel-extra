@@ -59,4 +59,19 @@ public class CouchbaseEndpointTest {
         new CouchbaseEndpoint("couchbase:localhost:80/bucket", "localhost:80/bucket", new CouchbaseComponent());
     }
 
+    @Test
+    public void testCouchbaseEndpoint() {
+      new CouchbaseEndpoint();
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testCouchbaseEndpointWithoutProtocol() throws Exception {
+      new CouchbaseEndpoint("localhost:80/bucket", "localhost:80/bucket", new CouchbaseComponent());
+    }
+
+    @Test
+    public void test() {
+      new CouchbaseEndpoint("couchbase:localhost:80/bucket");
+    }
+
 }
