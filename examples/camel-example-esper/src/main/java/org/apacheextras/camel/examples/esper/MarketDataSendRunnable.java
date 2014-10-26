@@ -36,7 +36,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class MarketDataSendRunnable implements Runnable {
-    private static final Logger log = LoggerFactory.getLogger(MarketDataSendRunnable.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MarketDataSendRunnable.class);
 
     private volatile FeedEnum rateDropOffFeed;
     private volatile boolean isShutdown;
@@ -53,7 +53,7 @@ public class MarketDataSendRunnable implements Runnable {
 
     @Override
     public void run()     {
-        log.info(".call Thread " + Thread.currentThread() + " starting");
+        LOGGER.info(".call Thread " + Thread.currentThread() + " starting");
      
         try         {
             Connection connection = null;
@@ -80,12 +80,12 @@ public class MarketDataSendRunnable implements Runnable {
             session.close();
             connection.close();
         } catch (RuntimeException ex)         {
-            log.error("Error in send loop", ex);
+            LOGGER.error("Error in send loop", ex);
         } catch (JMSException e) {
-			    log.error("Detected a JMS error '{}' caused by '{}'", e.getMessage(), e);
+			    LOGGER.error("Detected a JMS error '{}' caused by '{}'", e.getMessage(), e);
 		}
 
-        log.info(".call Thread " + Thread.currentThread() + " done");
+        LOGGER.info(".call Thread " + Thread.currentThread() + " done");
     }
 
     public void setRateDropOffFeed(FeedEnum feedToDrop) {

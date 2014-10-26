@@ -35,7 +35,7 @@ public class OpenTypeSupport {
 
 
     public static OpenTypeFactory getFactory(Class clazz) throws OpenDataException {
-        return (OpenTypeFactory) openTypeFactories.get(clazz);
+        return (OpenTypeFactory) OPEN_TYPE_FACTORIES.get(clazz);
     }
 
     public static CompositeData convert(Object message) throws OpenDataException {
@@ -53,7 +53,7 @@ public class OpenTypeSupport {
         Map getFields( Object o ) throws OpenDataException;
     }
 
-    private static final HashMap openTypeFactories = new HashMap();
+    private static final HashMap OPEN_TYPE_FACTORIES = new HashMap();
 
     abstract static class AbstractOpenTypeFactory implements OpenTypeFactory {
 

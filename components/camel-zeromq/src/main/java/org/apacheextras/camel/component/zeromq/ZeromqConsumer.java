@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 
 public class ZeromqConsumer extends DefaultConsumer {
 
-    static final Logger logger = LoggerFactory.getLogger(ZeromqConsumer.class);
+    static final Logger LOGGER = LoggerFactory.getLogger(ZeromqConsumer.class);
 
     private final Processor processor;
     private final ZeromqEndpoint endpoint;
@@ -63,11 +63,11 @@ public class ZeromqConsumer extends DefaultConsumer {
             listener.stop();
         }
         if (executor != null) {
-            logger.debug("Shutdown of executor");
+            LOGGER.debug("Shutdown of executor");
             if (!executor.isShutdown()) {
                 executor.shutdownNow();
             }
-            logger.debug("Executor is now shutdown");
+            LOGGER.debug("Executor is now shutdown");
             executor = null;
         }
     }

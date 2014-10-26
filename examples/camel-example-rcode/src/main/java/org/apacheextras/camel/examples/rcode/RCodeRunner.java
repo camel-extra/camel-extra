@@ -48,18 +48,18 @@ public class RCodeRunner {
   /** Default file that points the user home target directory. */
   private static File target = new File(System.getProperty("user.home") + "/target");
 
-  /** A set of options that configures the Camel Routes */
-  private static final Options options;
+  /** A set of OPTIONS that configures the Camel Routes */
+  private static final Options OPTIONS;
   static  {
-    options = new Options();
-    options.addOption("h","help", false, "provides a list of availble command options.");
-    options.addOption("t","target", true, "specified the output directory where the generated graph will be stored.");
-    options.addOption("s","source", true, "defines the source directory that contains the data directory.");
+    OPTIONS = new Options();
+    OPTIONS.addOption("h", "help", false, "provides a list of availble command OPTIONS.");
+    OPTIONS.addOption("t", "target", true, "specified the output directory where the generated graph will be stored.");
+    OPTIONS.addOption("s", "source", true, "defines the source directory that contains the data directory.");
   }
   
   /**
    * Shows all commands in a formatted way to provide some guidance for specifying
-   * the correct options.
+   * the correct OPTIONS.
    */
   private static void showHelp(Options options) {
     final HelpFormatter formatter = new HelpFormatter();
@@ -75,34 +75,34 @@ public class RCodeRunner {
   private static boolean parseCommandLine(String... args) {
     // Initialize a basic parser
     final CommandLineParser parser = new BasicParser();
-    // Parse options from command line
+    // Parse OPTIONS from command line
 
     CommandLine commandLine;
     try {
-      commandLine = parser.parse(options, args);
+      commandLine = parser.parse(OPTIONS, args);
       // Catch any parse exception and show the help
     } catch (ParseException ex) {
-      LOGGER.error("Could not parse the specified options!");
-      showHelp(options);
+      LOGGER.error("Could not parse the specified OPTIONS!");
+      showHelp(OPTIONS);
       return false;
     }
 
     if (commandLine.hasOption("help")) {
-      showHelp(options);
+      showHelp(OPTIONS);
       return false;
     }
-    // If source has not been specified or is null show options, otherwise process the option
+    // If source has not been specified or is null show OPTIONS, otherwise process the option
     if(!commandLine.hasOption("source") || null == commandLine.getOptionValue("source")) {
-      showHelp(options);
+      showHelp(OPTIONS);
       return false;
     }
     if (commandLine.hasOption("source")) {
       LOGGER.debug("Command line option is: {}", commandLine.getOptionValue("source"));
       source = new File(commandLine.getOptionValue("source"));
     }
-    // If target has not been specified or is null show options, otherwise process the option
+    // If target has not been specified or is null show OPTIONS, otherwise process the option
     if(!commandLine.hasOption("target") || null == commandLine.getOptionValue("target")) {
-      showHelp(options);
+      showHelp(OPTIONS);
       return false;
     }
     if (commandLine.hasOption("target")) {
@@ -117,7 +117,7 @@ public class RCodeRunner {
    * Kicks of the main project to run an integration of Apache Camel and RCode.
    * Accepted parameters are:
    * <ul>
-   * <li><code>-help</code>: provides a list of available command options.</li>
+   * <li><code>-help</code>: provides a list of available command OPTIONS.</li>
    * <li><code>-source &lt;arg&gt;</code>: defines the source directory that contains the data directory.</li>
    * <li><code>-target &lt;arg&gt;</code>: specified the output directory where the generated graph will be stored.</li>
    * </ul>

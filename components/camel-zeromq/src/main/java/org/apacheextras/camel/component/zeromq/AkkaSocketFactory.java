@@ -29,7 +29,7 @@ import org.zeromq.ZMQ.Socket;
 
 public class AkkaSocketFactory implements SocketFactory {
 
-    private static final Logger logger = LoggerFactory.getLogger(AkkaSocketFactory.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AkkaSocketFactory.class);
 
     private final long highWaterMark;
     private final long linger;
@@ -50,7 +50,7 @@ public class AkkaSocketFactory implements SocketFactory {
 
     @Override
     public Socket createConsumerSocket(Context context, ZeromqSocketType socketType) {
-        logger.debug("Creating consumer socket [{}]", socketType);
+        LOGGER.debug("Creating consumer socket [{}]", socketType);
         Socket socket;
         switch (socketType) {
             default:
@@ -71,7 +71,7 @@ public class AkkaSocketFactory implements SocketFactory {
 
     @Override
     public Socket createProducerSocket(Context context, ZeromqSocketType socketType) {
-        logger.debug("Creating producer socket [{}]", socketType);
+        LOGGER.debug("Creating producer socket [{}]", socketType);
         Socket socket;
         switch (socketType) {
             case DEALER:
