@@ -55,35 +55,38 @@ public class ZeromqEndpoint extends DefaultEndpoint {
         URI uri = new URI(remaining);
 
         protocol = uri.getScheme();
-        if (protocol == null)
-            throw new ZeromqException(URI_ERROR);
+        if (protocol == null) {
+          throw new ZeromqException(URI_ERROR);
+        }
 
-        if (!protocol.equalsIgnoreCase("TCP") && !protocol.equalsIgnoreCase("IPC"))
-            throw new ZeromqException(URI_ERROR);
-
+        if (!protocol.equalsIgnoreCase("TCP") && !protocol.equalsIgnoreCase("IPC")) {
+          throw new ZeromqException(URI_ERROR);
+        }
         hostname = uri.getHost();
-        if (hostname == null)
-            throw new ZeromqException(URI_ERROR);
-
+        if (hostname == null) {
+          throw new ZeromqException(URI_ERROR);
+        }
         port = uri.getPort();
-        if (port < 0)
-            throw new ZeromqException(URI_ERROR);
-
+        if (port < 0) {
+          throw new ZeromqException(URI_ERROR);
+        }
         this.socketFactory = new AkkaSocketFactory(highWaterMark, linger);
         this.contextFactory = new AkkaContextFactory();
     }
 
     @Override
     public ZeromqConsumer createConsumer(Processor processor) throws Exception {
-        if (socketType == null)
-            throw new ZeromqException("Must specify socket type as a parameter, eg socketType=SUBSCRIBE");
+        if (socketType == null) {
+          throw new ZeromqException("Must specify socket type as a parameter, eg socketType=SUBSCRIBE");
+        }
         return new ZeromqConsumer(this, processor, contextFactory, socketFactory);
     }
 
     @Override
     public ZeromqProducer createProducer() throws Exception {
-        if (socketType == null)
-            throw new ZeromqException("Must specify socket type as a parameter, eg socketType=PUBLISH");
+        if (socketType == null) {
+          throw new ZeromqException("Must specify socket type as a parameter, eg socketType=PUBLISH");
+        }
         return new ZeromqProducer(this, socketFactory, contextFactory);
     }
 
@@ -99,9 +102,9 @@ public class ZeromqEndpoint extends DefaultEndpoint {
         message.setHeader(ZeromqConstants.HEADER_SOURCE, getSocketAddress());
         message.setHeader(ZeromqConstants.HEADER_SOCKET_TYPE, socketType);
         message.setHeader(ZeromqConstants.HEADER_TIMESTAMP, System.currentTimeMillis());
-        if (isMessageIdEnabled())
-            message.setHeader(ZeromqConstants.HEADER_MSG_ID, UUID.randomUUID().toString());
-
+        if (isMessageIdEnabled()) {
+          message.setHeader(ZeromqConstants.HEADER_MSG_ID, UUID.randomUUID().toString());
+        }
         message.setBody(body);
         exchange.setIn(message);
 

@@ -54,10 +54,12 @@ class Listener implements Runnable {
         this.endpoint = endpoint;
         this.akkaSocketFactory = akkaSocketFactory;
         this.akkaContextFactory = akkaContextFactory;
-        if (endpoint.isAsyncConsumer())
-            this.processor = AsyncProcessorConverterHelper.convert(processor);
-        else
-            this.processor = processor;
+        if (endpoint.isAsyncConsumer()) {
+          this.processor = AsyncProcessorConverterHelper.convert(processor);
+        }
+        else {
+          this.processor = processor;
+        }
     }
 
     void connect() {
@@ -79,8 +81,9 @@ class Listener implements Runnable {
         connect();
         while (running) {
             byte[] msg = socket.recv(0);
-            if (msg == null)
-                continue;
+            if (msg == null) {
+              continue;
+            }
             LOGGER.trace("Received message [length=" + msg.length + "]");
             Exchange exchange = endpoint.createZeromqExchange(msg);
             LOGGER.trace("Created exchange [exchange={}]", new Object[] {exchange});
@@ -117,12 +120,13 @@ class Listener implements Runnable {
         LOGGER.debug("Requesting shutdown of consumer thread");
         running = false;
         // we have to term the context to interrupt the recv call
-        if (context != null)
-            try {
-                context.term();
-            } catch (Exception e) {
-              LOGGER.error("Could not terminate context during stop() [{}]", e);
-            }
+        if (context != null) {
+          try {
+            context.term();
+          } catch (Exception e) {
+            LOGGER.error("Could not terminate context during stop() [{}]", e);
+          }
+        }
     }
 
     void subscribe() {

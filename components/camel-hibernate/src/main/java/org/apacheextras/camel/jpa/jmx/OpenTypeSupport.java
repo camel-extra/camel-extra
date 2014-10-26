@@ -40,8 +40,9 @@ public class OpenTypeSupport {
 
     public static CompositeData convert(Object message) throws OpenDataException {
         OpenTypeFactory f = getFactory(message.getClass());
-        if( f == null )
-            throw new OpenDataException("Cannot create a CompositeData for type: "+message.getClass().getName());
+        if( f == null ) {
+          throw new OpenDataException("Cannot create a CompositeData for type: " + message.getClass().getName());
+        }
         CompositeType ct = f.getCompositeType();
         Map fields = f.getFields(message);
         return new CompositeDataSupport(ct, fields);
