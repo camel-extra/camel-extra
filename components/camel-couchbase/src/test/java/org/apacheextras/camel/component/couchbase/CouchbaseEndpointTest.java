@@ -22,6 +22,8 @@
 
 package org.apacheextras.camel.component.couchbase;
 
+import org.apache.camel.Exchange;
+import org.apache.camel.Processor;
 import org.junit.Test;
 
 import static org.apacheextras.camel.component.couchbase.CouchbaseConstants.DEFAULT_COUCHBASE_PORT;
@@ -70,8 +72,68 @@ public class CouchbaseEndpointTest {
     }
 
     @Test
-    public void test() {
+    public void testCouchbaseEndpointUri() {
       new CouchbaseEndpoint("couchbase:localhost:80/bucket");
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testCouchbaseEndpointCreateProducer() throws Exception {
+      new CouchbaseEndpoint("couchbase:localhost:80/bucket").createProducer();
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testCouchbaseEndpointCreateConsumer() throws Exception {
+      new CouchbaseEndpoint("couchbase:localhost:80/bucket").createConsumer(new Processor() {
+        @Override
+        public void process(Exchange exchange) throws Exception {
+          // Nothing to do
+        }
+      });
+    }
+
+    @Test
+    public void testCouchbaseEndpontSettersAndGetters() {
+      CouchbaseEndpoint endpoint = new CouchbaseEndpoint();
+
+      endpoint.setProtocol("couchbase");
+      assertTrue(endpoint.getProtocol().equals("couchbase"));
+
+      endpoint.setBucket("bucket");
+      assertTrue(endpoint.getBucket().equals("bucket"));
+
+      endpoint.setHostname("localhost");
+      assertTrue(endpoint.getHostname().equals("localhost"));
+
+      endpoint.setPort(80);
+      assertTrue(endpoint.getProtocol().equals(80));
+
+      endpoint.setOperation("PUT");
+      assertTrue(endpoint.getOperation().equals("PUT"));
+
+      endpoint.setStartingIdForInsertsFrom(1L);
+      assertTrue(endpoint.getStartingIdForInsertsFrom() == (1L));
+
+      endpoint.setProducerRetryAttempts(5);
+      assertTrue(endpoint.getProducerRetryAttempts() == 5);
+
+      endpoint.setProducerRetryPause(1);
+      assertTrue(endpoint.getProducerRetryPause() == 1);
+
+      endpoint.setDesignDocumentName("beer");
+      assertTrue(endpoint.getDesignDocumentName().equals("beer");
+
+      endpoint.setViewName("brewery_beers");
+      assertTrue(endpoint.getViewName().equals("brewery_beers")));
+
+      endpoint.setLimit(1);
+      assertTrue(endpoint.getLimit() == 1);
+
+      endpoint.setDescending(false);
+
+      endpoint.setSkip(1);
+      endpoint.setRangeStartKey("");
+      endpoint.setRangeEndKey("");
+      endpoint.setConsumerProcessedStrategy("delete");
+
+    }
 }
