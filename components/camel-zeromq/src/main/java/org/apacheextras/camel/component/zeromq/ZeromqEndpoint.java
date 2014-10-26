@@ -59,7 +59,7 @@ public class ZeromqEndpoint extends DefaultEndpoint {
           throw new ZeromqException(URI_ERROR);
         }
 
-        if (!protocol.equalsIgnoreCase("TCP") && !protocol.equalsIgnoreCase("IPC")) {
+        if (!"TCP".equalsIgnoreCase(protocol) && !"IPC".equalsIgnoreCase(protocol)) {
           throw new ZeromqException(URI_ERROR);
         }
         hostname = uri.getHost();

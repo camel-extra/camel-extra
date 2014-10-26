@@ -152,8 +152,8 @@ public class SmbClient {
     } catch (NullPointerException ex) {
       StackTraceElement[] elements = ex.getStackTrace();
       if (elements != null && elements.length > 0 && elements[0] != null
-          && elements[0].getClassName().equals("jcifs.smb.Dfs")
-          && elements[0].getMethodName().equals("resolve")) {
+          && "jcifs.smb.Dfs".equals(elements[0].getClassName())
+          && "resolve".equals(elements[0].getMethodName())) {
         LOGGER.warn("Ignoring NPE in jcifs.smb.Dfs.resolve: {}",
             ex.getMessage());
       } else {
