@@ -203,8 +203,9 @@
 
   <modules>
     <module>components</module>
-    <module>platform</module>
     <module>examples</module>
+    <module>licenses</module>
+    <module>platform</module>
   </modules>
 
   <dependencyManagement>
