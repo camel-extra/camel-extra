@@ -85,7 +85,7 @@ public class SmbEndpoint extends GenericFileEndpoint<SmbFile> {
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public SmbOperations<SmbFile> createSmbOperations() {
-        SmbClient client = new SmbClient();
+        DefaultSmbClient client = new DefaultSmbClient();
         if (((SmbConfiguration)this.configuration).getSmbApiFactory() != null) {
             client.setSmbApiFactory(((SmbConfiguration)this.configuration).getSmbApiFactory());
         }
