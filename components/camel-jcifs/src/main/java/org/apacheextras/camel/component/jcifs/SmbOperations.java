@@ -199,6 +199,53 @@ public class SmbOperations<SmbFile> implements GenericFileOperations<SmbFile> {
         return result;
     }
 
+    private void doMoveExistingFile(String fileName) throws GenericFileOperationFailedException {
+        // need to evaluate using a dummy and simulate the file first, to have access to all the file attributes
+        // create a dummy exchange as Exchange is needed for expression evaluation
+        // we support only the following 3 tokens.
+        Exchange dummy = endpoint.createExchange();
+        String parent = FileUtil.onlyPath(fileName);
+        String onlyName = FileUtil.stripPath(fileName);
+        dummy.getIn().setHeader(Exchange.FILE_NAME, fileName);
+        dummy.getIn().setHeader(Exchange.FILE_NAME_ONLY, onlyName);
+        dummy.getIn().setHeader(Exchange.FILE_PARENT, parent);
+
+        String to = endpoint.getMoveExisting().evaluate(dummy, String.class);
+        // we must normalize it (to avoid having both \ and / in the name which confuses java.io.File)
+        to = FileUtil.normalizePath(to);
+        if (ObjectHelper.isEmpty(to)) {
+            throw new GenericFileOperationFailedException("moveExisting evaluated as empty String, cannot move existing file: " + fileName);
+        }
+
+        // ensure any paths is created before we rename as the renamed file may be in a different path (which may be non exiting)
+        // use java.io.File to compute the file path
+        File toFile = new File(to);
+        String directory = toFile.getParent();
+        boolean absolute = FileUtil.isAbsolute(toFile);
+        if (directory != null) {
+            if (!buildDirectory(directory, absolute)) {
+                LOGGER.debug("Cannot build directory [{}] (could be because of denied permissions)", directory);
+            }
+        }
+
+        // deal if there already exists a file
+        if (existsFile(to)) {
+            if (endpoint.isEagerDeleteTargetFile()) {
+                LOGGER.trace("Deleting existing file: {}", to);
+                if (!deleteFile(to)) {
+                    throw new GenericFileOperationFailedException("Cannot delete file: " + to);
+                }
+            } else {
+                throw new GenericFileOperationFailedException("Cannot moved existing file from: " + fileName + " to: " + to + " as there already exists a file: " + to);
+            }
+        }
+
+        LOGGER.trace("Moving existing file: {} to: {}", fileName, to);
+        if (!renameFile(fileName, to)) {
+            throw new GenericFileOperationFailedException("Cannot rename file from: " + fileName + " to: " + to);
+        }
+    }
+
     public boolean storeFile(String name, Exchange exchange) {
         boolean append = false;
         // if an existing file already exists what should we do?
@@ -211,6 +258,9 @@ public class SmbOperations<SmbFile> implements GenericFileOperations<SmbFile> {
                 return false;
             } else if (endpoint.getFileExist() == GenericFileExist.Fail) {
                 throw new GenericFileOperationFailedException("File already exist: " + name + ". Cannot write new file.");
+            } else if (endpoint.getFileExist() == GenericFileExist.Move) {
+                // move any existing file first
+                doMoveExistingFile(name);
             } else if (endpoint.isEagerDeleteTargetFile() && endpoint.getFileExist() == GenericFileExist.Override) {
                 // we override the target so we do this by deleting it so the temp file can be renamed later
                 // with success as the existing target file have been deleted
