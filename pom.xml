@@ -204,7 +204,6 @@
   <modules>
     <module>components</module>
     <module>examples</module>
-    <module>licenses</module>
     <module>platform</module>
   </modules>
 
@@ -362,10 +361,31 @@
           <configuration>
             <licenses>
               <license implementation="org.apache.rat.analysis.license.SimplePatternBasedLicense">
-                <licenseFamilyCategory>GNU</licenseFamilyCategory>
+                <licenseFamilyCategory>GPLv2</licenseFamilyCategory>
                 <licenseFamilyName>camel-extra</licenseFamilyName>
                 <patterns>
                   <pattern>http://www.gnu.org/licenses/gpl-2.0-standalone.html</pattern>
+                </patterns>
+              </license>
+              <license implementation="org.apache.rat.analysis.license.SimplePatternBasedLicense">
+                <licenseFamilyCategory>GPLv3</licenseFamilyCategory>
+                <licenseFamilyName>camel-extra</licenseFamilyName>
+                <patterns>
+                  <pattern>http://www.gnu.org/licenses/gpl-3.0-standalone.html</pattern>
+                </patterns>
+              </license>
+              <license implementation="org.apache.rat.analysis.license.SimplePatternBasedLicense">
+                <licenseFamilyCategory>LGPLv2</licenseFamilyCategory>
+                <licenseFamilyName>camel-extra</licenseFamilyName>
+                <patterns>
+                  <pattern>http://www.gnu.org/licenses/lgpl-2.0-standalone.html</pattern>
+                </patterns>
+              </license>
+              <license implementation="org.apache.rat.analysis.license.SimplePatternBasedLicense">
+                <licenseFamilyCategory>LGPLv3</licenseFamilyCategory>
+                <licenseFamilyName>camel-extra</licenseFamilyName>
+                <patterns>
+                  <pattern>http://www.gnu.org/licenses/lgpl-3.0-standalone.html</pattern>
                 </patterns>
               </license>
             </licenses>

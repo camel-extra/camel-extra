@@ -25,9 +25,8 @@
 
   <parent>
     <groupId>org.apache-extras.camel-extra</groupId>
-    <artifactId>camel-license-lgpl</artifactId>
+    <artifactId>components</artifactId>
     <version>2.14.0-SNAPSHOT</version>
-    <relativePath>../../licenses/camel-license-lgpl</relativePath>
   </parent>
 
   <artifactId>camel-rcode</artifactId>
