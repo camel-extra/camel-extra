@@ -24,16 +24,12 @@ package org.apacheextras.camel.examples.rcode.builder;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
 import static org.junit.Assert.fail;
 
 public class RCodeRouteBuilderTest {
-
-  private final static Logger LOGGER = LoggerFactory.getLogger(RCodeRouteBuilderTest.class);
 
   private RCodeRouteBuilder routeBuilder;
 
@@ -43,7 +39,6 @@ public class RCodeRouteBuilderTest {
   @Before
   public void setUp() {
     source = new File(RCodeRouteBuilderTest.class.getResource("data/").toString());
-    LOGGER.info(RCodeRouteBuilderTest.class.getResource("output/testout").toString());
     target = new File(RCodeRouteBuilderTest.class.getResource("output/testout").toString());
     routeBuilder = new RCodeRouteBuilder(source, target);
   }
