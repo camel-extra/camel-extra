@@ -4,7 +4,7 @@ This project is a Samba Camel component build on top of JCIFS (http://jcifs.samb
 
 It was originally developed by Redpill Linpro AB and Helsingborgs stad as part of a integration project.
 
-This component is licensed under the LGPL (http://www.gnu.org/licenses/lgpl-2.1.txt)
+This component is licensed under the LGPL (http://www.gnu.org/licenses/lgpl-3.0.txt)
 
 The unit testing is done by mocking out the jcifs library to be able to run automaticly.
 
