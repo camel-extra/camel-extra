@@ -26,7 +26,7 @@
   <parent>
     <groupId>org.apache-extras.camel-extra</groupId>
     <artifactId>camel-parent</artifactId>
-    <version>2.13.3</version>
+    <version>2.13.3-SNAPSHOT</version>
     <relativePath>..</relativePath>
   </parent>
 
