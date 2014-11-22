@@ -63,7 +63,7 @@ public class RCodeComponent extends DefaultComponent {
         RCodeEndpoint endpoint = new RCodeEndpoint(uri, this, newConfiguration, rCodeOperation);
         // Sett additional configuration parameters as properties
         setProperties(endpoint.getConfiguration(), parameters);
-        // retirn the endpoint
+        // return the endpoint
         return endpoint;
     }
 
