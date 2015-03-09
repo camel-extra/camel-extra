@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.camel.Exchange;
@@ -289,13 +290,27 @@ public class SmbOperations<SmbFile> implements GenericFileOperations<SmbFile> {
       is = ExchangeHelper.getMandatoryInBody(exchange, InputStream.class);
 
       login();
-      client.storeFile(storeName, is, append);
+      client.storeFile(storeName, is, append, lastModifiedDate(exchange));
       return true;
     } catch (Exception e) {
       throw new GenericFileOperationFailedException("Cannot store file " + storeName, e);
     } finally {
       IOHelper.close(is, "store: " + storeName);
     }
+  }
+
+  private Long lastModifiedDate(Exchange exchange) {
+    Long last = null;
+    if (endpoint.isKeepLastModified()) {
+        Date date = exchange.getIn().getHeader(Exchange.FILE_LAST_MODIFIED, Date.class);
+        if (date != null) {
+            last = date.getTime();
+        } else {
+            // fallback and try a long
+            last = exchange.getIn().getHeader(Exchange.FILE_LAST_MODIFIED, Long.class);
+        }
+    }
+    return last;
   }
 
   @Override

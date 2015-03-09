@@ -125,7 +125,7 @@ public class DefaultSmbClient implements SmbClient {
   }
 
   @Override
-  public boolean storeFile(String url, InputStream inputStream, boolean append)
+  public boolean storeFile(String url, InputStream inputStream, boolean append, Long lastModified)
       throws IOException {
     if (LOGGER.isDebugEnabled()) {
       LOGGER.debug("storeFile path[" + url + "]");
@@ -139,6 +139,12 @@ public class DefaultSmbClient implements SmbClient {
       smbout.write(buf, 0, numRead);
     }
     smbout.close();
+      if (lastModified != null) {
+          smbFile.setLastModified(lastModified);
+          if (LOGGER.isTraceEnabled()) {
+              LOGGER.trace("Keeping last modified timestamp: {} on file: {}", new Object[]{lastModified, smbFile});
+          }
+      }
     return true;
   }
 

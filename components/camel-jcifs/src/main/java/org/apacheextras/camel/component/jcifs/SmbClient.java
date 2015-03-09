@@ -26,6 +26,7 @@ import jcifs.smb.SmbFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Date;
 import java.util.List;
 
 public interface SmbClient {
@@ -38,7 +39,7 @@ public interface SmbClient {
 
     InputStream getInputStream(String url) throws IOException;
 
-    boolean storeFile(String url, InputStream inputStream, boolean append)
+    boolean storeFile(String url, InputStream inputStream, boolean append, Long lastModified)
             throws IOException;
 
     List<SmbFile> listFiles(String url) throws IOException;
