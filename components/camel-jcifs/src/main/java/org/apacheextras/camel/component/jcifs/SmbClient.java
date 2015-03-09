@@ -113,7 +113,7 @@ public class SmbClient {
         return smbFile.getInputStream();
     }
 
-    public boolean storeFile(String url, InputStream inputStream, boolean append) throws IOException {
+    public boolean storeFile(String url, InputStream inputStream, boolean append, Long lastModified) throws IOException {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("storeFile path[" + url + "]");
         }
@@ -125,6 +125,12 @@ public class SmbClient {
             smbout.write(buf, 0, numRead);
         }
         smbout.close();
+        if (lastModified != null) {
+            smbFile.setLastModified(lastModified);
+            if (LOGGER.isTraceEnabled()) {
+                LOGGER.trace("Keeping last modified timestamp: {} on file: {}", new Object[]{lastModified, smbFile});
+            }
+        }
         return true;
     }
 
