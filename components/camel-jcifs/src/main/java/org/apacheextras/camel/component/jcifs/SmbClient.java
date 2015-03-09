@@ -26,7 +26,6 @@ import jcifs.smb.SmbFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Date;
 import java.util.List;
 
 public interface SmbClient {
