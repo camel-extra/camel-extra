@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-    http://code.google.com/a/apache-extras.org/p/camel-extra
+    https://camel-extra.github.io
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -38,8 +38,8 @@
   <description>Camel Extra Parent POM</description>
 
   <issueManagement>
-    <system>JIRA</system>
-    <url>https://camel-extra.atlassian.net</url>
+    <system>GitHub Issues</system>
+    <url>https://github.com/camel-extra/camel-extra/issues</url>
   </issueManagement>
 
   <mailingLists>
@@ -126,7 +126,7 @@
     <zeromq-scala-binding-version>0.0.7</zeromq-scala-binding-version>
   </properties>
 
-  <url>http://code.google.com/a/apache-extras.org/p/camel-extra</url>
+  <url>https://camel-extra.github.io</url>
 
   <organization>
     <name>Apache Software Foundation</name>
@@ -153,14 +153,14 @@
         <enabled>true</enabled>
       </snapshots>
     </repository>
-    <repository>
+    <!--repository>
       <id>camel.extra.others</id>
       <name>Camel Extra - 3rd parties dependencies</name>
       <url>http://svn.codespot.com/a/apache-extras.org/camel-extra/maven2/others/</url>
       <snapshots>
         <enabled>false</enabled>
       </snapshots>
-    </repository>
+    </repository-->
     <repository>
       <id>neo4j.releases.repo</id>
       <url>http://m2.neo4j.org/content/repositories/releases/</url>
@@ -203,10 +203,10 @@
   </distributionManagement>
 
   <scm>
-    <connection>scm:git:http://code.google.com/a/apache-extras.org/p/camel-extra/</connection>
+    <connection>scm:git:https://camel-extra.github.io/</connection>
     <developerConnection>scm:git:https://code.google.com/a/apache-extras.org/p/camel-extra/
     </developerConnection>
-    <url>http://code.google.com/a/apache-extras.org/p/camel-extra/</url>
+    <url>https://camel-extra.github.io/</url>
     <tag>HEAD</tag>
   </scm>
 

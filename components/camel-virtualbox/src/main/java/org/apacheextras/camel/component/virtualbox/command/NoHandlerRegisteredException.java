@@ -1,7 +1,7 @@
 package org.apacheextras.camel.component.virtualbox.command;
 
 /**************************************************************************************
- http://code.google.com/a/apache-extras.org/p/camel-extra
+ https://camel-extra.github.io
 
  This program is free software; you can redistribute it and/or
  modify it under the terms of the GNU Lesser General Public License
