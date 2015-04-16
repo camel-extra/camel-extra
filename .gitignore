@@ -44,3 +44,5 @@ atlassian-ide-plugin.xml
 # Ignore build files
 # #
 **/target/*
+**/.gitignore
+.gitignore
