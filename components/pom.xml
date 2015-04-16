@@ -37,7 +37,7 @@
 
   <modules>
     <module>camel-couchbase</module>
-    <module>camel-db4o</module>
+    <!-- <module>camel-db4o</module> -->
     <module>camel-esper</module>
     <module>camel-exist</module>
     <module>camel-hibernate</module>
