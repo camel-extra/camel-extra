@@ -31,28 +31,28 @@ import static org.junit.Assert.*;
 
 public class RCodeConfigurationTest {
 
-  RCodeConfiguration rCodeConfiguration;
+    RCodeConfiguration rCodeConfiguration;
 
-  @Before
-  public void setUp() {
-    rCodeConfiguration = new RCodeConfiguration();
-  }
+    @Before
+    public void setUp() {
+        rCodeConfiguration = new RCodeConfiguration();
+    }
 
-  @Test
-  public void testRCodeConfigurationByURI() throws URISyntaxException {
-    URI uri = new URI("rcode://localhost:1234");
-    rCodeConfiguration = new RCodeConfiguration(uri);
-    assertNotNull(rCodeConfiguration);
-  }
+    @Test
+    public void testRCodeConfigurationByURI() throws URISyntaxException {
+        URI uri = new URI("rcode://localhost:1234");
+        rCodeConfiguration = new RCodeConfiguration(uri);
+        assertNotNull(rCodeConfiguration);
+    }
 
-  @Test
-  public void testRCodeConfigurationCopy() {
-    RCodeConfiguration copy = rCodeConfiguration.copy();
-    assertNotEquals(copy, rCodeConfiguration);
-    assertEquals(copy.getBufferSize(), rCodeConfiguration.getBufferSize());
-    assertEquals(copy.getHost(), rCodeConfiguration.getHost());
-    assertEquals(copy.getPassword(), rCodeConfiguration.getPassword());
-    assertEquals(copy.getPort(), rCodeConfiguration.getPort());
-    assertEquals(copy.getUser(), rCodeConfiguration.getUser());
-  }
+    @Test
+    public void testRCodeConfigurationCopy() {
+        RCodeConfiguration copy = rCodeConfiguration.copy();
+        assertNotEquals(copy, rCodeConfiguration);
+        assertEquals(copy.getBufferSize(), rCodeConfiguration.getBufferSize());
+        assertEquals(copy.getHost(), rCodeConfiguration.getHost());
+        assertEquals(copy.getPassword(), rCodeConfiguration.getPassword());
+        assertEquals(copy.getPort(), rCodeConfiguration.getPort());
+        assertEquals(copy.getUser(), rCodeConfiguration.getUser());
+    }
 }

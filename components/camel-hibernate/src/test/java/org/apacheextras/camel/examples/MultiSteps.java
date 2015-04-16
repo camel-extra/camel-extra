@@ -26,12 +26,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Represents a task which has multiple steps so that it can move from stage to stage
- * with the method annotated with {@link @Consumed} being invoked when the Camel consumer
- * has processed the entity bean
- *
+ * Represents a task which has multiple steps so that it can move from stage to
+ * stage with the method annotated with {@link @Consumed} being invoked when the
+ * Camel consumer has processed the entity bean
  */
-//@NamedQuery(name = "step1", query = "select x from MultiSteps x where x.step = 1")
+// @NamedQuery(name = "step1", query =
+// "select x from MultiSteps x where x.step = 1")
 public class MultiSteps {
     private static final transient Logger LOG = LoggerFactory.getLogger(MultiSteps.class);
     private Long id;
@@ -76,7 +76,8 @@ public class MultiSteps {
     }
 
     /**
-     * This method is invoked after the entity bean is processed successfully by a Camel endpoint
+     * This method is invoked after the entity bean is processed successfully by
+     * a Camel endpoint
      */
     @Consumed
     public void goToNextStep() {

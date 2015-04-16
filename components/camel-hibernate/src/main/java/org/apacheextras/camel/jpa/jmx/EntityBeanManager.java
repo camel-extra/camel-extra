@@ -40,9 +40,10 @@ public class EntityBeanManager {
     }
 
     public List getEntities() {
-    	// TODO: Not sure what this was trying to do...
-//        return sessionFactory.getCurrentSession().find("select x from " + entityType.getName() + " ");
-    	return sessionFactory.getCurrentSession().createQuery("from " + entityType.getName()).list();
+        // TODO: Not sure what this was trying to do...
+        // return sessionFactory.getCurrentSession().find("select x from " +
+        // entityType.getName() + " ");
+        return sessionFactory.getCurrentSession().createQuery("from " + entityType.getName()).list();
     }
 
     public CompositeData[] browse(String selector) throws OpenDataException {

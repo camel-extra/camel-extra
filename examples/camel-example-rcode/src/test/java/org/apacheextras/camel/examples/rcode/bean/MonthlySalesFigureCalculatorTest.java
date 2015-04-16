@@ -35,47 +35,40 @@ import org.junit.Test;
  */
 public class MonthlySalesFigureCalculatorTest extends Assert {
 
-  private MonthlySalesFigureCalculator salesCalculator = new MonthlySalesFigureCalculator();
+    private MonthlySalesFigureCalculator salesCalculator = new MonthlySalesFigureCalculator();
 
-  private List<List> salesDate = new ArrayList<List>();
+    private List<List> salesDate = new ArrayList<List>();
 
-  @Before
-  public void init() {
-    salesDate.clear();
-  }
-
-  @Test
-  public void summarizeWrongDate() {
-
-    final List date = new ArrayList<String>();
-    date.add(new StringBuilder().append(1).toString());
-    date.add(new StringBuilder().append(100).toString());
-    salesDate.add(date);
-
-    try {
-      salesCalculator.summarize(salesDate);
-    } catch (Exception ex) {
-      assertTrue("Did not receive an apropriate ", (ex instanceof ParseException));
-    }
-  }
-
-  @Test
-  public void summarizeValidDate() {
-    for (int i = 0; i < 10; i++) {
-      List date = new ArrayList<String>();
-      date.add(new StringBuilder()
-          .append('0')
-          .append(i)
-          .append("/01/2014")
-          .toString());
-      date.add(new StringBuilder()
-          .append(i * 100)
-          .toString());
-      salesDate.add(date);
+    @Before
+    public void init() {
+        salesDate.clear();
     }
 
-    String rCode = salesCalculator.summarize(salesDate);
-    assertEquals("Comma separated values not received",
-        "0,100,200,300,400,500,600,700,800,900", rCode);
-  }
+    @Test
+    public void summarizeWrongDate() {
+
+        final List date = new ArrayList<String>();
+        date.add(new StringBuilder().append(1).toString());
+        date.add(new StringBuilder().append(100).toString());
+        salesDate.add(date);
+
+        try {
+            salesCalculator.summarize(salesDate);
+        } catch (Exception ex) {
+            assertTrue("Did not receive an apropriate ", (ex instanceof ParseException));
+        }
+    }
+
+    @Test
+    public void summarizeValidDate() {
+        for (int i = 0; i < 10; i++) {
+            List date = new ArrayList<String>();
+            date.add(new StringBuilder().append('0').append(i).append("/01/2014").toString());
+            date.add(new StringBuilder().append(i * 100).toString());
+            salesDate.add(date);
+        }
+
+        String rCode = salesCalculator.summarize(salesDate);
+        assertEquals("Comma separated values not received", "0,100,200,300,400,500,600,700,800,900", rCode);
+    }
 }

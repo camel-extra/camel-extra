@@ -75,7 +75,7 @@ public class EsperPollingConsumer extends PollingConsumerSupport implements Upda
         try {
             bean = beanForwardQueue.take();
         } catch (InterruptedException e) {
-          log.error("Could not receive due to '{}', exception '{}'", e.getMessage(), e);
+            log.error("Could not receive due to '{}', exception '{}'", e.getMessage(), e);
             return null;
         }
         if (bean == null) {
@@ -99,7 +99,7 @@ public class EsperPollingConsumer extends PollingConsumerSupport implements Upda
         try {
             bean = beanForwardQueue.poll(timeout, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
-          log.error("Unable to receive '{}', exception '{}'", e.getMessage(), e);
+            log.error("Unable to receive '{}', exception '{}'", e.getMessage(), e);
             return null;
         }
         if (bean == null) {
@@ -107,5 +107,5 @@ public class EsperPollingConsumer extends PollingConsumerSupport implements Upda
         }
         return endpoint.createExchange(bean, null, statement);
     }
-    
+
 }

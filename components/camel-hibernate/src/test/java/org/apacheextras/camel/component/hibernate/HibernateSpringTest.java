@@ -21,7 +21,6 @@
  ***************************************************************************************/
 package org.apacheextras.camel.component.hibernate;
 
-
 import java.util.List;
 
 import org.apache.camel.EndpointInject;

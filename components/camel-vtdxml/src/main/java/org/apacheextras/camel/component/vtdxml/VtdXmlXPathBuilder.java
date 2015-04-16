@@ -79,7 +79,7 @@ public class VtdXmlXPathBuilder implements Expression, Predicate, NamespaceAware
      * prefix can be used in XPath expressions
      *
      * @param prefix is the namespace prefix that can be used in the XPath
-     *                expressions
+     *            expressions
      * @param uri is the namespace URI to which the prefix refers
      * @return the current builder
      */
@@ -97,7 +97,7 @@ public class VtdXmlXPathBuilder implements Expression, Predicate, NamespaceAware
             Object body = exchange.getIn().getMandatoryBody();
             if (body instanceof File) {
                 // optimize for file
-                File file = (File) body;
+                File file = (File)body;
                 return matchesFile(exchange, file);
             } else {
                 // should be a byte[] array
@@ -144,7 +144,7 @@ public class VtdXmlXPathBuilder implements Expression, Predicate, NamespaceAware
             Object body = exchange.getIn().getMandatoryBody();
             if (body instanceof File) {
                 // optimize for file
-                File file = (File) body;
+                File file = (File)body;
                 result = evaluateFile(exchange, file);
             } else {
                 // should be a byte[] array
@@ -240,15 +240,16 @@ public class VtdXmlXPathBuilder implements Expression, Predicate, NamespaceAware
         public Object next() {
             nextCalled = true;
             try {
-                // the code below can grab the namespace, to be included, but its much slower
+                // the code below can grab the namespace, to be included, but
+                // its much slower
                 // ElementFragmentNs ns = vn.getElementFragmentNs();
                 // return ns.toBytes();
 
                 // grab the next element, based on offset positioning
                 long l = vn.getElementFragment();
                 if (l != -1) {
-                    int offset = (int) l;
-                    int len = (int) (l >> 32);
+                    int offset = (int)l;
+                    int len = (int)(l >> 32);
                     return vn.toRawString(offset, len);
                 } else {
                     return null;

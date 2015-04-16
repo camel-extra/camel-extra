@@ -23,7 +23,6 @@ package org.apacheextras.camel.examples.esper;
 
 import java.util.Map;
 
-
 import com.espertech.esper.client.EventBean;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
@@ -45,18 +44,19 @@ public class MyRouteBuilder extends RouteBuilder {
 
         from("activemq:EventStreamQueue").to("esper://feed");
 
-        from("esper://feed?eql=insert into TicksPerSecond select feed, count(*) as cnt from org.apacheextras.camel.examples.esper.MarketDataEvent.win:time_batch(1 sec) group by feed")
-                .to("esper://feed");
+        from(
+             "esper://feed?eql=insert into TicksPerSecond select feed, count(*) as cnt from org.apacheextras.camel.examples.esper.MarketDataEvent.win:time_batch(1 sec) group by feed")
+            .to("esper://feed");
 
         from("esper://feed?eql=select feed, avg(cnt) as avgCnt, cnt as feedCnt from TicksPerSecond.win:time(10 sec) group by feed + having cnt < avg(cnt) * 0.75")
-                .process(new Processor() {
-                    @SuppressWarnings("unchecked")
-                    public void process(Exchange exchange) throws Exception {
-                        EventBean event = exchange.getIn().getBody(EventBean.class);
-                        Map map = (Map) event.getUnderlying();
-                        LOGGER.info("Event map := {}", map);
-                    }
-                });
+            .process(new Processor() {
+                @SuppressWarnings("unchecked")
+                public void process(Exchange exchange) throws Exception {
+                    EventBean event = exchange.getIn().getBody(EventBean.class);
+                    Map map = (Map)event.getUnderlying();
+                    LOGGER.info("Event map := {}", map);
+                }
+            });
 
     }
 }

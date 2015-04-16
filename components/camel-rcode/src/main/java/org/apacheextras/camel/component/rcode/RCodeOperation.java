@@ -22,9 +22,5 @@
 package org.apacheextras.camel.component.rcode;
 
 public enum RCodeOperation {
-    ASSIGN_CONTENT,
-    ASSIGN_EXPRESSION,
-    EVAL,
-    VOID_EVAL,
-    PARSE_AND_EVAL
+    ASSIGN_CONTENT, ASSIGN_EXPRESSION, EVAL, VOID_EVAL, PARSE_AND_EVAL
 }

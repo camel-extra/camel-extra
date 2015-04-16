@@ -43,7 +43,7 @@ public class DefaultTransactionStrategy extends ServiceSupport implements Transa
             transaction.commit();
             return result;
         } catch (Exception e) {
-            if(transaction != null) {
+            if (transaction != null) {
                 transaction.rollback();
             }
             throw new RuntimeException(e);

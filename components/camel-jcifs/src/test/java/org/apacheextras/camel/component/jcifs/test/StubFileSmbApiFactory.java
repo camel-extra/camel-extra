@@ -36,13 +36,11 @@ import jcifs.smb.SmbFileOutputStream;
 import org.apacheextras.camel.component.jcifs.SmbApiFactory;
 
 public class StubFileSmbApiFactory implements SmbApiFactory {
-    
+
     Map<String, SmbFile> smbFiles = new HashMap<String, SmbFile>();
     Map<String, SmbFileOutputStream> smbFileOutputStream = new HashMap<String, SmbFileOutputStream>();
 
-    public SmbFile createSmbFile(String urlString,
-            NtlmPasswordAuthentication authentication)
-        throws MalformedURLException, SmbException {
+    public SmbFile createSmbFile(String urlString, NtlmPasswordAuthentication authentication) throws MalformedURLException, SmbException {
         try {
             URI uri = new URI(urlString);
             return smbFiles.get(uri.getPath());
@@ -51,23 +49,20 @@ public class StubFileSmbApiFactory implements SmbApiFactory {
         }
     }
 
-    public SmbFileOutputStream createSmbFileOutputStream(SmbFile smbFile,
-            boolean b) throws SmbException, MalformedURLException,
-            UnknownHostException {
+    public SmbFileOutputStream createSmbFileOutputStream(SmbFile smbFile, boolean b) throws SmbException, MalformedURLException, UnknownHostException {
         return smbFileOutputStream.get(smbFile.getName());
-        
+
     }
 
     public void putSmbFiles(String urlString, SmbFile file) throws URISyntaxException {
         URI uri = new URI(urlString);
         this.smbFiles.put(uri.getPath(), file);
-        
+
     }
 
-    public void putSmbFileOutputStream(String string,
-            SmbFileOutputStream mockOutputStream) {
+    public void putSmbFileOutputStream(String string, SmbFileOutputStream mockOutputStream) {
         this.smbFileOutputStream.put(string, mockOutputStream);
-        
+
     }
 
 }

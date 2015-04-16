@@ -39,7 +39,8 @@ import java.util.*;
 import static org.apacheextras.camel.component.couchbase.CouchbaseConstants.*;
 
 /**
- * Represents a Couchbase endpoint that can query Views with a Poll strategy and/or produce various type of operations.
+ * Represents a Couchbase endpoint that can query Views with a Poll strategy
+ * and/or produce various type of operations.
  */
 @UriEndpoint(scheme = "couchbase", syntax = "couchbase:protocol://host[:port]/bucket", consumerClass = CouchbaseConsumer.class)
 public class CouchbaseEndpoint extends ScheduledPollEndpoint {
@@ -125,8 +126,7 @@ public class CouchbaseEndpoint extends ScheduledPollEndpoint {
     public CouchbaseEndpoint() {
     }
 
-    public CouchbaseEndpoint(String uri, String remaining, CouchbaseComponent component)
-            throws URISyntaxException {
+    public CouchbaseEndpoint(String uri, String remaining, CouchbaseComponent component) throws URISyntaxException {
         super(uri, component);
         URI remainingUri = new URI(remaining);
 
@@ -147,7 +147,6 @@ public class CouchbaseEndpoint extends ScheduledPollEndpoint {
             throw new IllegalArgumentException(COUCHBASE_URI_ERROR);
         }
     }
-
 
     public CouchbaseEndpoint(String endpointUri) {
         super(endpointUri);
@@ -183,7 +182,6 @@ public class CouchbaseEndpoint extends ScheduledPollEndpoint {
     public void setBucket(String bucket) {
         this.bucket = bucket;
     }
-
 
     public String getHostname() {
         return hostname;
@@ -420,7 +418,7 @@ public class CouchbaseEndpoint extends ScheduledPollEndpoint {
     public URI[] makeBootstrapURI() throws URISyntaxException {
 
         if (additionalHosts == null || "".equals(additionalHosts)) {
-            return new URI[]{new URI(protocol + "://" + hostname + ":" + port + "/pools")};
+            return new URI[] {new URI(protocol + "://" + hostname + ":" + port + "/pools")};
         }
         return getAllUris();
 

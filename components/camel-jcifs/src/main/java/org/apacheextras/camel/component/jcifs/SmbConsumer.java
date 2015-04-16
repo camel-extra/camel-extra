@@ -44,15 +44,15 @@ public class SmbConsumer extends GenericFileConsumer<SmbFile> {
         super(endpoint, processor, operations);
         this.endpointPath = endpoint.getConfiguration().getDirectory();
     }
-    
+
     @Override
     protected boolean pollDirectory(String fileName, List<GenericFile<SmbFile>> fileList, int depth) {
-        
+
         if (log.isTraceEnabled()) {
             log.trace("pollDirectory() running. My delay is [" + this.getDelay() + "] and my strategy is [" + this.getPollStrategy().getClass().toString() + "]");
             log.trace("pollDirectory() fileName[" + fileName + "]");
         }
-        
+
         List<SmbFile> smbFiles;
         boolean currentFileIsDir = false;
         smbFiles = operations.listFiles(fileName);
@@ -69,7 +69,7 @@ public class SmbConsumer extends GenericFileConsumer<SmbFile> {
             } catch (SmbException e1) {
                 throw ObjectHelper.wrapRuntimeCamelException(e1);
             }
-            if (currentFileIsDir) { 
+            if (currentFileIsDir) {
                 if (endpoint.isRecursive()) {
                     currentRelativePath = smbFile.getName().split("/")[0] + "/";
                     int nextDepth = depth++;
@@ -91,7 +91,7 @@ public class SmbConsumer extends GenericFileConsumer<SmbFile> {
         return true;
     }
 
-    //TODO: this needs some checking!
+    // TODO: this needs some checking!
     private GenericFile<SmbFile> asGenericFile(String path, SmbFile file) throws IOException {
         SmbGenericFile<SmbFile> answer = new SmbGenericFile<SmbFile>();
         answer.setAbsoluteFilePath(path + answer.getFileSeparator() + file.getName());
@@ -106,9 +106,8 @@ public class SmbConsumer extends GenericFileConsumer<SmbFile> {
 
         if (log.isTraceEnabled()) {
             log.trace("asGenericFile():");
-            log.trace("absoluteFilePath[" + answer.getAbsoluteFilePath() + "] endpointpath[" + answer.getEndpointPath() 
-                + "] filenameonly[" + answer.getFileNameOnly() + "] filename[" + answer.getFileName() 
-                + "] relativepath[" + answer.getRelativeFilePath() + "]");
+            log.trace("absoluteFilePath[" + answer.getAbsoluteFilePath() + "] endpointpath[" + answer.getEndpointPath() + "] filenameonly[" + answer.getFileNameOnly()
+                      + "] filename[" + answer.getFileName() + "] relativepath[" + answer.getRelativeFilePath() + "]");
         }
         return answer;
     }

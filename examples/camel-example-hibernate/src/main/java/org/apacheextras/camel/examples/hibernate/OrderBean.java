@@ -36,8 +36,8 @@ public class OrderBean {
      * Generates a new order structured as a {@link Map}
      */
     public Order generateOrder() {
-    	counter++;
-    	
+        counter++;
+
         Order answer = new Order();
         answer.setItem(counter % 2 == 0 ? 111 : 222);
         answer.setAmount(ran.nextInt(10) + 1);
@@ -48,7 +48,7 @@ public class OrderBean {
     /**
      * Processes the order
      *
-     * @param order  the order
+     * @param order the order
      * @return the transformed order
      */
     public String processOrder(Order order) {

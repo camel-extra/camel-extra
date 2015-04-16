@@ -39,68 +39,68 @@ import org.apache.camel.impl.DefaultComponent;
  */
 public class EsperComponent extends DefaultComponent {
 
-  /**
-   * Event processing service provider.
-   */
-  private EPServiceProvider esperService;
+    /**
+     * Event processing service provider.
+     */
+    private EPServiceProvider esperService;
 
-  /**
-   * Esper runtime environment.
-   */
-  private EPRuntime esperRuntime;
+    /**
+     * Esper runtime environment.
+     */
+    private EPRuntime esperRuntime;
 
-  /**
-   * Creates an Esper endpoint. {@inheritDoc}
-   *
-   * @param uri
-   * @param remaining
-   * @param parameters
-   * @return Endpoint
-   * @throws java.lang.Exception
-   */
-  @Override
-  protected Endpoint createEndpoint(String uri, String remaining, Map parameters) throws Exception {
-    return new EsperEndpoint(uri, this, remaining);
-  }
-
-  /**
-   * Returns the event processing service provider. If the provider is null an
-   * instance will be created via the EPServiceProviderManager.
-   *
-   * @return event processing service provider
-   */
-  public EPServiceProvider getEsperService(boolean configured) {
-    if (esperService == null) {
-      if (configured) {
-        Configuration configuration = new Configuration();
-        configuration.configure();
-        esperService = EPServiceProviderManager.getProvider("DefaultConfiguredProvider", configuration);
-      } else {
-        esperService = EPServiceProviderManager.getDefaultProvider();
-      }
+    /**
+     * Creates an Esper endpoint. {@inheritDoc}
+     *
+     * @param uri
+     * @param remaining
+     * @param parameters
+     * @return Endpoint
+     * @throws java.lang.Exception
+     */
+    @Override
+    protected Endpoint createEndpoint(String uri, String remaining, Map parameters) throws Exception {
+        return new EsperEndpoint(uri, this, remaining);
     }
-    return esperService;
-  }
 
-  /**
-   * Sets the Esper service provider.
-   *
-   * @param esperService
-   */
-  public void setEsperService(EPServiceProvider esperService) {
-    this.esperService = esperService;
-  }
-
-  /**
-   * Returns the Esper runtime object.
-   *
-   * @return EPRuntime
-   */
-  public EPRuntime getEsperRuntime(boolean configured) {
-    if (esperRuntime == null) {
-      esperRuntime = getEsperService(configured).getEPRuntime();
+    /**
+     * Returns the event processing service provider. If the provider is null an
+     * instance will be created via the EPServiceProviderManager.
+     *
+     * @return event processing service provider
+     */
+    public EPServiceProvider getEsperService(boolean configured) {
+        if (esperService == null) {
+            if (configured) {
+                Configuration configuration = new Configuration();
+                configuration.configure();
+                esperService = EPServiceProviderManager.getProvider("DefaultConfiguredProvider", configuration);
+            } else {
+                esperService = EPServiceProviderManager.getDefaultProvider();
+            }
+        }
+        return esperService;
     }
-    return esperRuntime;
-  }
+
+    /**
+     * Sets the Esper service provider.
+     *
+     * @param esperService
+     */
+    public void setEsperService(EPServiceProvider esperService) {
+        this.esperService = esperService;
+    }
+
+    /**
+     * Returns the Esper runtime object.
+     *
+     * @return EPRuntime
+     */
+    public EPRuntime getEsperRuntime(boolean configured) {
+        if (esperRuntime == null) {
+            esperRuntime = getEsperService(configured).getEPRuntime();
+        }
+        return esperRuntime;
+    }
 
 }

@@ -23,21 +23,21 @@ package org.apacheextras.camel.component.esper;
 
 public class StockTick {
 
-  private String symbol;
+    private String symbol;
 
-  private double price;
+    private double price;
 
-  public StockTick(String symbol, double price) {
-    this.symbol = symbol;
-    this.price = price;
-  }
+    public StockTick(String symbol, double price) {
+        this.symbol = symbol;
+        this.price = price;
+    }
 
-  public double getPrice() {
-    return price;
-  }
+    public double getPrice() {
+        return price;
+    }
 
-  public String getSymbol() {
-    return symbol;
-  }
+    public String getSymbol() {
+        return symbol;
+    }
 
 }

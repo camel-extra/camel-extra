@@ -35,32 +35,32 @@ import static org.junit.Assert.assertNotNull;
 
 public class RCodeComponentTest {
 
-  RCodeComponent component;
+    RCodeComponent component;
 
-  @Before
-  public void setUp() {
-    CamelContext context = new DefaultCamelContext();
-    component = new RCodeComponent();
-    component.setCamelContext(context);
-  }
+    @Before
+    public void setUp() {
+        CamelContext context = new DefaultCamelContext();
+        component = new RCodeComponent();
+        component.setCamelContext(context);
+    }
 
-  private static Map<String, Object> createParameters() {
-    Map<String, Object> params = new HashMap<String, Object>();
-    params.put("user", "test");
-    params.put("password", "test123");
-    params.put("bufferSize", new Long(4194304));
-    return params;
-  }
+    private static Map<String, Object> createParameters() {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("user", "test");
+        params.put("password", "test123");
+        params.put("bufferSize", new Long(4194304));
+        return params;
+    }
 
-  @Test
-  public void testRCodeComponentCreateEndpoint() throws Exception {
-    Map<String,Object> params = createParameters();
-    String uri = "rcode://localhost:1234";
-    Endpoint endpoint = component.createEndpoint(uri, "/eval", params);
-    assertNotNull(endpoint);
-    assertEquals(uri, endpoint.getEndpointUri());
-    assertEquals(params.get("user"), endpoint.getEndpointConfiguration().getParameter("user"));
-    assertEquals(params.get("password"), endpoint.getEndpointConfiguration().getParameter("password"));
-    assertEquals(params.get("bufferSize"), endpoint.getEndpointConfiguration().getParameter("bufferSize"));
-  }
+    @Test
+    public void testRCodeComponentCreateEndpoint() throws Exception {
+        Map<String, Object> params = createParameters();
+        String uri = "rcode://localhost:1234";
+        Endpoint endpoint = component.createEndpoint(uri, "/eval", params);
+        assertNotNull(endpoint);
+        assertEquals(uri, endpoint.getEndpointUri());
+        assertEquals(params.get("user"), endpoint.getEndpointConfiguration().getParameter("user"));
+        assertEquals(params.get("password"), endpoint.getEndpointConfiguration().getParameter("password"));
+        assertEquals(params.get("bufferSize"), endpoint.getEndpointConfiguration().getParameter("bufferSize"));
+    }
 }

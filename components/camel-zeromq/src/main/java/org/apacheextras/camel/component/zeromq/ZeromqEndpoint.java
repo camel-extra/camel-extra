@@ -58,19 +58,19 @@ public class ZeromqEndpoint extends DefaultEndpoint {
 
         protocol = uri.getScheme();
         if (protocol == null) {
-          throw new ZeromqException(URI_ERROR);
+            throw new ZeromqException(URI_ERROR);
         }
 
         if (!"TCP".equalsIgnoreCase(protocol) && !"IPC".equalsIgnoreCase(protocol)) {
-          throw new ZeromqException(URI_ERROR);
+            throw new ZeromqException(URI_ERROR);
         }
         hostname = uri.getHost();
         if (hostname == null) {
-          throw new ZeromqException(URI_ERROR);
+            throw new ZeromqException(URI_ERROR);
         }
         port = uri.getPort();
         if (port < 0) {
-          throw new ZeromqException(URI_ERROR);
+            throw new ZeromqException(URI_ERROR);
         }
         this.socketFactory = new AkkaSocketFactory(highWaterMark, linger);
         this.contextFactory = new AkkaContextFactory();
@@ -79,7 +79,7 @@ public class ZeromqEndpoint extends DefaultEndpoint {
     @Override
     public ZeromqConsumer createConsumer(Processor processor) throws Exception {
         if (socketType == null) {
-          throw new ZeromqException("Must specify socket type as a parameter, eg socketType=SUBSCRIBE");
+            throw new ZeromqException("Must specify socket type as a parameter, eg socketType=SUBSCRIBE");
         }
         return new ZeromqConsumer(this, processor, contextFactory, socketFactory);
     }
@@ -87,7 +87,7 @@ public class ZeromqEndpoint extends DefaultEndpoint {
     @Override
     public ZeromqProducer createProducer() throws Exception {
         if (socketType == null) {
-          throw new ZeromqException("Must specify socket type as a parameter, eg socketType=PUBLISH");
+            throw new ZeromqException("Must specify socket type as a parameter, eg socketType=PUBLISH");
         }
         return new ZeromqProducer(this, socketFactory, contextFactory);
     }
@@ -105,7 +105,7 @@ public class ZeromqEndpoint extends DefaultEndpoint {
         message.setHeader(ZeromqConstants.HEADER_SOCKET_TYPE, socketType);
         message.setHeader(ZeromqConstants.HEADER_TIMESTAMP, System.currentTimeMillis());
         if (isMessageIdEnabled()) {
-          message.setHeader(ZeromqConstants.HEADER_MSG_ID, UUID.randomUUID().toString());
+            message.setHeader(ZeromqConstants.HEADER_MSG_ID, UUID.randomUUID().toString());
         }
         message.setBody(body);
         exchange.setIn(message);

@@ -33,46 +33,45 @@ import org.junit.Test;
 
 public class EsperPojoRouteTest extends CamelTestSupport {
 
-  @Test
-  public void testSendMessagesIntoEsper() throws Exception {
-    MockEndpoint endpoint = getMockEndpoint("mock:results");
-    endpoint.expectedMessageCount(2);
+    @Test
+    public void testSendMessagesIntoEsper() throws Exception {
+        MockEndpoint endpoint = getMockEndpoint("mock:results");
+        endpoint.expectedMessageCount(2);
 
-    template.sendBody("direct:start", new MyEvent("a", 1));
-    template.sendBody("direct:start", new MyEvent("b", 5));
-    template.sendBody("direct:start", new MyEvent("c", 1));
-    template.sendBody("direct:start", new MyEvent("d", 5));
+        template.sendBody("direct:start", new MyEvent("a", 1));
+        template.sendBody("direct:start", new MyEvent("b", 5));
+        template.sendBody("direct:start", new MyEvent("c", 1));
+        template.sendBody("direct:start", new MyEvent("d", 5));
 
-    String[] expectedFoos = {"b", "d"};
+        String[] expectedFoos = {"b", "d"};
 
-    assertMockEndpointsSatisfied();
-    List<Exchange> list = endpoint.getReceivedExchanges();
-    int counter = 0;
-    for (Exchange exchange : list) {
-      EventBean newEvent = exchange.getIn(EsperMessage.class).getNewEvent();
-      assertNotNull(newEvent);
-      EventBean oldEvent = exchange.getIn(EsperMessage.class).getOldEvent();
-      assertNull(oldEvent);
+        assertMockEndpointsSatisfied();
+        List<Exchange> list = endpoint.getReceivedExchanges();
+        int counter = 0;
+        for (Exchange exchange : list) {
+            EventBean newEvent = exchange.getIn(EsperMessage.class).getNewEvent();
+            assertNotNull(newEvent);
+            EventBean oldEvent = exchange.getIn(EsperMessage.class).getOldEvent();
+            assertNull(oldEvent);
 
-      Object value = exchange.getIn().getBody();
-      EventBean eventBean = assertIsInstanceOf(EventBean.class, value);
-      Object event = eventBean.get("event");
-      log.info("Received " + event);
-      MyEvent myEvent = assertIsInstanceOf(MyEvent.class, event);
+            Object value = exchange.getIn().getBody();
+            EventBean eventBean = assertIsInstanceOf(EventBean.class, value);
+            Object event = eventBean.get("event");
+            log.info("Received " + event);
+            MyEvent myEvent = assertIsInstanceOf(MyEvent.class, event);
 
-      assertEquals("foo[" + counter + "]", expectedFoos[counter++], myEvent.getFoo());
+            assertEquals("foo[" + counter + "]", expectedFoos[counter++], myEvent.getFoo());
+        }
     }
-  }
-  
-  @Override
-  protected RouteBuilder createRouteBuilder() throws Exception {
-    return new RouteBuilder() {
-      public void configure() throws Exception {
-        from("direct:start").to("esper://cheese");
 
-        from("esper://cheese?pattern=every event=org.apacheextras.camel.component.esper.MyEvent(bar=5)")
-                .to("mock:results");
-      }
-    };
-  }
+    @Override
+    protected RouteBuilder createRouteBuilder() throws Exception {
+        return new RouteBuilder() {
+            public void configure() throws Exception {
+                from("direct:start").to("esper://cheese");
+
+                from("esper://cheese?pattern=every event=org.apacheextras.camel.component.esper.MyEvent(bar=5)").to("mock:results");
+            }
+        };
+    }
 }

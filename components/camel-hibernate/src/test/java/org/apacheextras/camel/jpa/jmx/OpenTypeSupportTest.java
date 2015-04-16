@@ -29,12 +29,12 @@ import static org.junit.Assert.fail;
 
 public class OpenTypeSupportTest {
 
-  @Test
-  public void getFactoryTest() {
-    try {
-      OpenTypeSupport.getFactory(OpenTypeSupportTest.class);
-    } catch (OpenDataException e) {
-      fail("Failed to great OpenTypeSupport factory:\n" + e.getMessage());
+    @Test
+    public void getFactoryTest() {
+        try {
+            OpenTypeSupport.getFactory(OpenTypeSupportTest.class);
+        } catch (OpenDataException e) {
+            fail("Failed to great OpenTypeSupport factory:\n" + e.getMessage());
+        }
     }
-  }
 }

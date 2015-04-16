@@ -33,20 +33,16 @@ import jcifs.smb.SmbFileOutputStream;
 
 /**
  * Default implementation of the the {@link SmbApiFactory} uses the JCIFS API.
- *
  */
 public class JcifsSmbApiFactory implements SmbApiFactory {
 
     @Override
-    public SmbFile createSmbFile(String url,
-            NtlmPasswordAuthentication authentication)
-        throws IOException {
+    public SmbFile createSmbFile(String url, NtlmPasswordAuthentication authentication) throws IOException {
         return new SmbFile(url, authentication);
     }
 
     @Override
-    public SmbFileOutputStream createSmbFileOutputStream(SmbFile smbFile,
-            boolean b) throws IOException {
+    public SmbFileOutputStream createSmbFileOutputStream(SmbFile smbFile, boolean b) throws IOException {
         return new SmbFileOutputStream(smbFile, b);
     }
 

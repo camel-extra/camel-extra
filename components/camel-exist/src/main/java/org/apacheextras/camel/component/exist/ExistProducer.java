@@ -38,10 +38,10 @@ public class ExistProducer extends DefaultProducer {
     @Override
     public void process(Exchange exchange) throws Exception {
         Collection collection = endpoint.getCollection();
-        XMLResource document = (XMLResource) collection.createResource(null, "XMLResource");
+        XMLResource document = (XMLResource)collection.createResource(null, "XMLResource");
         Object body = exchange.getIn().getBody();
         if (body instanceof Node) {
-            document.setContentAsDOM((Node) body);
+            document.setContentAsDOM((Node)body);
         } else {
             document.setContent(body);
         }

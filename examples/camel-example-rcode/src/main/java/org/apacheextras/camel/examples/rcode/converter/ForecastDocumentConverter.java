@@ -30,10 +30,10 @@ import org.apacheextras.camel.examples.rcode.types.ForecastDocument;
  */
 @Converter
 public class ForecastDocumentConverter {
-  
-  @Converter
-  public ForecastDocument convertByteArrayToForecastDocument(byte[] jpegDate) {
-    return new ForecastDocument(jpegDate);
-  }
-  
+
+    @Converter
+    public ForecastDocument convertByteArrayToForecastDocument(byte[] jpegDate) {
+        return new ForecastDocument(jpegDate);
+    }
+
 }

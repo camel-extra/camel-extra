@@ -30,7 +30,6 @@ import org.hibernate.SessionFactory;
 
 /**
  * A Hibernate Component
- *
  */
 public class HibernateComponent extends DefaultComponent {
     private SessionFactory sessionFactory;
@@ -39,13 +38,13 @@ public class HibernateComponent extends DefaultComponent {
     @Override
     protected void doStart() throws Exception {
         super.doStart();
-        if(transactionStrategy == null) {
+        if (transactionStrategy == null) {
             transactionStrategy = resolveTransactionStrategy();
         }
     }
 
     // Properties
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     public SessionFactory getSessionFactory() {
         return sessionFactory;
@@ -70,7 +69,7 @@ public class HibernateComponent extends DefaultComponent {
     }
 
     // Implementation methods
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     @Override
     protected Endpoint createEndpoint(String uri, String path, Map options) throws Exception {

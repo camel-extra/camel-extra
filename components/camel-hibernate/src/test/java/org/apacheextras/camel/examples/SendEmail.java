@@ -22,7 +22,8 @@
 package org.apacheextras.camel.examples;
 
 /**
- * Represents a task which is added to the database, then removed from the database when it is consumed
+ * Represents a task which is added to the database, then removed from the
+ * database when it is consumed
  */
 public class SendEmail {
     private Long id;

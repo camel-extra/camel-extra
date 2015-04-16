@@ -36,40 +36,38 @@ import org.junit.Test;
 
 public class ForecastDocumentConverterTest extends CamelTestSupport {
 
-  @EndpointInject(uri="direct:start")
-  ProducerTemplate producerTemplate;
+    @EndpointInject(uri = "direct:start")
+    ProducerTemplate producerTemplate;
 
-  @EndpointInject(uri="mock:beforeConversion")
-  MockEndpoint beforeConversion;
+    @EndpointInject(uri = "mock:beforeConversion")
+    MockEndpoint beforeConversion;
 
-  @EndpointInject(uri="mock:afterConversion")
-  MockEndpoint afterConversion;
+    @EndpointInject(uri = "mock:afterConversion")
+    MockEndpoint afterConversion;
 
-  @Test
-  public void convertByteArrayToForecastDocumentTest() throws Exception {
-    final byte[] bytes = ("Test bytes for document conversion").getBytes();
+    @Test
+    public void convertByteArrayToForecastDocumentTest() throws Exception {
+        final byte[] bytes = ("Test bytes for document conversion").getBytes();
 
-    beforeConversion.expectedBodiesReceived(bytes);
-    List<Exchange> exchanges = afterConversion.getExchanges();
+        beforeConversion.expectedBodiesReceived(bytes);
+        List<Exchange> exchanges = afterConversion.getExchanges();
 
-    producerTemplate.sendBody(bytes);
+        producerTemplate.sendBody(bytes);
 
-    for(Exchange exchange : exchanges) {
-      assertTrue("Did not receive converted object.", (exchange.getIn().getBody() instanceof ForecastDocument));
+        for (Exchange exchange : exchanges) {
+            assertTrue("Did not receive converted object.", (exchange.getIn().getBody() instanceof ForecastDocument));
+        }
+        beforeConversion.assertIsSatisfied();
+        ;
     }
-    beforeConversion.assertIsSatisfied();;
-  }
 
-  @Override
-  protected RouteBuilder createRouteBuilder() throws Exception {
-    return new RouteBuilder() {
-      @Override
-      public void configure() throws Exception {
-        from("direct:start")
-            .to("mock:beforeConversion")
-            .convertBodyTo(ForecastDocument.class)
-            .to("mock:afterConversion");
-      }
-    };
-  }
+    @Override
+    protected RouteBuilder createRouteBuilder() throws Exception {
+        return new RouteBuilder() {
+            @Override
+            public void configure() throws Exception {
+                from("direct:start").to("mock:beforeConversion").convertBodyTo(ForecastDocument.class).to("mock:afterConversion");
+            }
+        };
+    }
 }

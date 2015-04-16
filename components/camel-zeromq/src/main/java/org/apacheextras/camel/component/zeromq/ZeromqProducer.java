@@ -41,13 +41,12 @@ public class ZeromqProducer extends DefaultProducer {
     private int shutdownWait = 5000;
     private String[] topics;
 
-    public ZeromqProducer(ZeromqEndpoint endpoint, SocketFactory socketFactory, ContextFactory contextFactory)
-            throws InstantiationException, IllegalAccessException {
+    public ZeromqProducer(ZeromqEndpoint endpoint, SocketFactory socketFactory, ContextFactory contextFactory) throws InstantiationException, IllegalAccessException {
         super(endpoint);
         this.endpoint = endpoint;
         this.socketFactory = socketFactory;
         this.contextFactory = contextFactory;
-        this.messageConvertor = (MessageConverter) endpoint.getMessageConvertor().newInstance();
+        this.messageConvertor = (MessageConverter)endpoint.getMessageConvertor().newInstance();
     }
 
     public ContextFactory getContextFactory() {
@@ -108,7 +107,7 @@ public class ZeromqProducer extends DefaultProducer {
                 try {
                     socket.close();
                 } catch (Exception e) {
-                  LOGGER.error("Could not close socket during stop() [{}]", e);
+                    LOGGER.error("Could not close socket during stop() [{}]", e);
                 }
             }
         });
@@ -118,7 +117,7 @@ public class ZeromqProducer extends DefaultProducer {
         try {
             context.term();
         } catch (Exception e) {
-          LOGGER.error("Could not terminate the context during stop() [{}]", e);
+            LOGGER.error("Could not terminate the context during stop() [{}]", e);
         }
     }
 }

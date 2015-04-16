@@ -38,7 +38,7 @@ import org.springframework.data.neo4j.rest.SpringRestGraphDatabase;
 
 @Ignore("This test need to start the neo4j server first")
 public class RestNeo4jProducerCreateNodeIntegrationTest extends CamelTestSupport {
-   
+
     @Produce(uri = "direct:start")
     protected ProducerTemplate template;
 
@@ -46,7 +46,6 @@ public class RestNeo4jProducerCreateNodeIntegrationTest extends CamelTestSupport
 
     private final SpringRestGraphDatabase db = new SpringRestGraphDatabase("http://localhost:7474/db/data/");
 
-   
     @EndpointInject(uri = "mock:end")
     private MockEndpoint end;
 
@@ -81,8 +80,7 @@ public class RestNeo4jProducerCreateNodeIntegrationTest extends CamelTestSupport
             @Override
             public void run() {
                 for (int k = 0; k < messageCount; k++) {
-                    template.sendBodyAndHeader(null, Neo4jEndpoint.HEADER_OPERATION,
-                                               Neo4jOperation.CREATE_NODE);
+                    template.sendBodyAndHeader(null, Neo4jEndpoint.HEADER_OPERATION, Neo4jOperation.CREATE_NODE);
                 }
             }
         });

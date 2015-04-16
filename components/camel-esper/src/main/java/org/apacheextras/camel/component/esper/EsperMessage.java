@@ -31,48 +31,47 @@ import org.apache.camel.impl.DefaultMessage;
  */
 public class EsperMessage extends DefaultMessage {
 
-  private final EventBean newEvent;
-  private final EventBean oldEvent;
+    private final EventBean newEvent;
+    private final EventBean oldEvent;
 
-  /**
-   * Creates a new instance of an EsperMessage.
-   *
-   * @param newEvent EventBean
-   * @param oldEvent EventBean
-   */
-  public EsperMessage(EventBean newEvent, EventBean oldEvent) {
-    this.newEvent = newEvent;
-    this.oldEvent = oldEvent;
-    // use new event as the default body
-    setBody(newEvent);
-  }
+    /**
+     * Creates a new instance of an EsperMessage.
+     *
+     * @param newEvent EventBean
+     * @param oldEvent EventBean
+     */
+    public EsperMessage(EventBean newEvent, EventBean oldEvent) {
+        this.newEvent = newEvent;
+        this.oldEvent = oldEvent;
+        // use new event as the default body
+        setBody(newEvent);
+    }
 
-  /**
-   * Returns the new EventBean.
-   *
-   * @return newEvent
-   */
-  public EventBean getNewEvent() {
-    return newEvent;
-  }
+    /**
+     * Returns the new EventBean.
+     *
+     * @return newEvent
+     */
+    public EventBean getNewEvent() {
+        return newEvent;
+    }
 
-  /**
-   * Returns the old EventBean.
-   *
-   * @return oldEvent
-   */
-  public EventBean getOldEvent() {
-    return oldEvent;
-  }
-  
-  /**
-   * {@inheritDoc}
-   * Returns the EsperMessage as DefaultMessage.
-   * 
-   * @return EsperMessage
-   */
-  @Override
-  public DefaultMessage newInstance() {
-    return new EsperMessage(newEvent, oldEvent);
-  }
+    /**
+     * Returns the old EventBean.
+     *
+     * @return oldEvent
+     */
+    public EventBean getOldEvent() {
+        return oldEvent;
+    }
+
+    /**
+     * {@inheritDoc} Returns the EsperMessage as DefaultMessage.
+     * 
+     * @return EsperMessage
+     */
+    @Override
+    public DefaultMessage newInstance() {
+        return new EsperMessage(newEvent, oldEvent);
+    }
 }

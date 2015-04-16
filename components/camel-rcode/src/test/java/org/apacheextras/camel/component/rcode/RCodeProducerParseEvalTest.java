@@ -35,9 +35,7 @@ public class RCodeProducerParseEvalTest extends RCodeProducerTest {
     @Test
     public void sendParseAndEvalMatrixTest() throws Exception {
 
-        final String command = "seq <- seq(1:9);\n"
-                + "mat <- matrix(seq, 3);\n"
-                + "mat3 <- mat * 3;";
+        final String command = "seq <- seq(1:9);\n" + "mat <- matrix(seq, 3);\n" + "mat3 <- mat * 3;";
 
         final double[] expected = {3.0, 6.0, 9.0, 12.0, 15.0, 18.0, 21.0, 24.0, 27.0};
 
@@ -46,14 +44,13 @@ public class RCodeProducerParseEvalTest extends RCodeProducerTest {
         when(rConnection.isConnected()).thenReturn(Boolean.TRUE);
         when(rConnection.parseAndEval(command)).thenReturn(rexpd);
 
-
         // Initialize a mock endpoint that receives at least one message
         final MockEndpoint mockEndpoint = getMockEndpoint("mock:rcode");
         mockEndpoint.whenAnyExchangeReceived(new Processor() {
             @Override
             public void process(Exchange exchange) throws Exception {
                 try {
-                    assertTrue(expected == ((REXPDouble) exchange.getIn().getBody()).asDoubles());
+                    assertTrue(expected == ((REXPDouble)exchange.getIn().getBody()).asDoubles());
                 } catch (Exception ex) {
                     fail("Did not receive the expected result " + ex.getMessage());
                 }
@@ -68,14 +65,12 @@ public class RCodeProducerParseEvalTest extends RCodeProducerTest {
         return new RouteBuilder() {
             @Override
             public void configure() throws Exception {
-                // Handle exceptions by sending the exceptions to the mock endpoint
-                onException(Exception.class)
-                        .handled(true)
-                        .to("mock:error");
-                // Send commands to the RCode endpoint, operation is 'parse_and_eval'
-                from("direct:rcode")
-                        .to("rcode:localhost:6311/parse_and_eval?user=" + user + "&password=" + password + "&bufferSize=4194304")
-                        .to("mock:rcode");
+                // Handle exceptions by sending the exceptions to the mock
+                // endpoint
+                onException(Exception.class).handled(true).to("mock:error");
+                // Send commands to the RCode endpoint, operation is
+                // 'parse_and_eval'
+                from("direct:rcode").to("rcode:localhost:6311/parse_and_eval?user=" + user + "&password=" + password + "&bufferSize=4194304").to("mock:rcode");
             }
         };
     }

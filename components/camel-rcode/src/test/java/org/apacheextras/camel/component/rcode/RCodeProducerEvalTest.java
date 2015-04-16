@@ -88,7 +88,7 @@ public class RCodeProducerEvalTest extends RCodeProducerTest {
             @Override
             public void process(Exchange exchng) throws Exception {
                 try {
-                    assertTrue(expected == ((REXPDouble) exchng.getIn().getBody()).asDouble());
+                    assertTrue(expected == ((REXPDouble)exchng.getIn().getBody()).asDouble());
                 } catch (Exception ex) {
                     fail("Did not receive the expected result " + ex.getMessage());
                 }
@@ -104,14 +104,12 @@ public class RCodeProducerEvalTest extends RCodeProducerTest {
         return new RouteBuilder() {
             @Override
             public void configure() throws Exception {
-                // Handle exceptions by sending the exceptions to the mock endpoint
-                onException(Exception.class)
-                        .handled(true)
-                        .to("mock:error");
-                // Send commands to the RCode endpoint, operation is 'parse_and_eval'
-                from("direct:rcode")
-                        .to("rcode:localhost:6311/eval?user=test&password=test123&bufferSize=4194304")
-                        .to("mock:rcode");
+                // Handle exceptions by sending the exceptions to the mock
+                // endpoint
+                onException(Exception.class).handled(true).to("mock:error");
+                // Send commands to the RCode endpoint, operation is
+                // 'parse_and_eval'
+                from("direct:rcode").to("rcode:localhost:6311/eval?user=test&password=test123&bufferSize=4194304").to("mock:rcode");
             }
         };
     }

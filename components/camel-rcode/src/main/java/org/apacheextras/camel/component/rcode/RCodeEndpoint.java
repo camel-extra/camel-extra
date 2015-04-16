@@ -62,7 +62,7 @@ public class RCodeEndpoint extends DefaultEndpoint {
      * Creates an endpoint based on the uri and the given component.
      *
      * @param endpointUri String
-     * @param component   RCodeComponent
+     * @param component RCodeComponent
      */
     public RCodeEndpoint(String endpointUri, RCodeComponent component) {
         super(endpointUri, component);
@@ -72,10 +72,10 @@ public class RCodeEndpoint extends DefaultEndpoint {
      * Creates an endpoint based on the uri, component, configuration and
      * operation.
      *
-     * @param endpointUri   String
-     * @param component     RCodeComponent
+     * @param endpointUri String
+     * @param component RCodeComponent
      * @param configuration RCodeConfiguration
-     * @param operation     RCodeOperation
+     * @param operation RCodeOperation
      */
     public RCodeEndpoint(String endpointUri, RCodeComponent component, RCodeConfiguration configuration, RCodeOperation operation) {
         super(endpointUri, component);
@@ -199,7 +199,6 @@ public class RCodeEndpoint extends DefaultEndpoint {
         return rConnection.eval(command);
     }
 
-
     /**
      * Sends a command to 'R' without getting a response back.
      *
@@ -213,7 +212,7 @@ public class RCodeEndpoint extends DefaultEndpoint {
     /**
      * Sends a symbol and a String expression to the R code environment.
      *
-     * @param symbol  String
+     * @param symbol String
      * @param content String
      * @throws RserveException
      */
@@ -225,7 +224,7 @@ public class RCodeEndpoint extends DefaultEndpoint {
      * Sends a symbol and an R expression to the R code environment.
      *
      * @param symbol String
-     * @param rexp   REXP
+     * @param rexp REXP
      * @throws RserveException
      */
     public void sendAssign(String symbol, REXP rexp) throws RserveException {
@@ -233,8 +232,8 @@ public class RCodeEndpoint extends DefaultEndpoint {
     }
 
     /**
-     * Sends an R command as String, parses and executes the code before it returns
-     * the result as R expression.
+     * Sends an R command as String, parses and executes the code before it
+     * returns the result as R expression.
      *
      * @param command String
      * @return REXP

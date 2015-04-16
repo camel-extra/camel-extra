@@ -107,7 +107,6 @@ public class CouchbaseProducerTest {
         }
     }
 
-
     @Test
     public void testExpiryTimeIsSet() throws Exception {
         OperationFuture of = mock(OperationFuture.class);
@@ -119,9 +118,10 @@ public class CouchbaseProducerTest {
             }
         });
 
-
-        when(client.set(org.mockito.Matchers.anyString(), org.mockito.Matchers.anyInt(), org.mockito.Matchers.anyObject(), org.mockito.Matchers.any(PersistTo.class), org.mockito.Matchers.any(ReplicateTo.class))).thenReturn(of);
-        //Mock out some headers so we can set an expiry
+        when(
+             client.set(org.mockito.Matchers.anyString(), org.mockito.Matchers.anyInt(), org.mockito.Matchers.anyObject(), org.mockito.Matchers.any(PersistTo.class),
+                        org.mockito.Matchers.any(ReplicateTo.class))).thenReturn(of);
+        // Mock out some headers so we can set an expiry
         int expiry = 5000;
         Map<String, Object> testHeaders = new HashMap<String, Object>();
         testHeaders.put("CCB_TTL", Integer.toString(expiry));
@@ -135,7 +135,8 @@ public class CouchbaseProducerTest {
 
         producer.process(exchange);
 
-        verify(client).set(org.mockito.Matchers.anyString(), Mockito.eq(expiry), org.mockito.Matchers.anyObject(), org.mockito.Matchers.any(PersistTo.class), org.mockito.Matchers.any(ReplicateTo.class));
+        verify(client).set(org.mockito.Matchers.anyString(), Mockito.eq(expiry), org.mockito.Matchers.anyObject(), org.mockito.Matchers.any(PersistTo.class),
+                           org.mockito.Matchers.any(ReplicateTo.class));
 
     }
 
@@ -151,13 +152,15 @@ public class CouchbaseProducerTest {
             }
         });
 
-        when(client.set(org.mockito.Matchers.anyString(), org.mockito.Matchers.anyInt(), org.mockito.Matchers.anyObject(), org.mockito.Matchers.any(PersistTo.class), org.mockito.Matchers.any(ReplicateTo.class))).thenReturn(of);
+        when(
+             client.set(org.mockito.Matchers.anyString(), org.mockito.Matchers.anyInt(), org.mockito.Matchers.anyObject(), org.mockito.Matchers.any(PersistTo.class),
+                        org.mockito.Matchers.any(ReplicateTo.class))).thenReturn(of);
         when(endpoint.getId()).thenReturn("123");
         when(endpoint.getOperation()).thenReturn("CCB_PUT");
         try {
             producer.process(exchange);
         } catch (Exception e) {
-            //do nothing
+            // do nothing
             verify(of, times(3)).get();
         }
 
@@ -181,18 +184,18 @@ public class CouchbaseProducerTest {
             }
         });
 
-        when(client.set(org.mockito.Matchers.anyString(), org.mockito.Matchers.anyInt(), org.mockito.Matchers.anyObject(), org.mockito.Matchers.any(PersistTo.class), org.mockito.Matchers.any(ReplicateTo.class))).thenReturn(of);
+        when(
+             client.set(org.mockito.Matchers.anyString(), org.mockito.Matchers.anyInt(), org.mockito.Matchers.anyObject(), org.mockito.Matchers.any(PersistTo.class),
+                        org.mockito.Matchers.any(ReplicateTo.class))).thenReturn(of);
         when(endpoint.getId()).thenReturn("123");
         when(endpoint.getOperation()).thenReturn("CCB_PUT");
         when(exchange.getOut()).thenReturn(msg);
-
 
         producer.process(exchange);
 
         verify(of, times(2)).get();
         verify(msg).setBody(true);
     }
-
 
     @Test
     public void testTimeOutRetryTwiceThenSuccess() throws Exception {
@@ -218,7 +221,9 @@ public class CouchbaseProducerTest {
             }
         });
 
-        when(client.set(org.mockito.Matchers.anyString(), org.mockito.Matchers.anyInt(), org.mockito.Matchers.anyObject(), org.mockito.Matchers.any(PersistTo.class), org.mockito.Matchers.any(ReplicateTo.class))).thenReturn(of);
+        when(
+             client.set(org.mockito.Matchers.anyString(), org.mockito.Matchers.anyInt(), org.mockito.Matchers.anyObject(), org.mockito.Matchers.any(PersistTo.class),
+                        org.mockito.Matchers.any(ReplicateTo.class))).thenReturn(of);
         when(endpoint.getId()).thenReturn("123");
         when(endpoint.getOperation()).thenReturn("CCB_PUT");
         when(exchange.getOut()).thenReturn(msg);

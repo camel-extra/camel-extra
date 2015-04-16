@@ -29,8 +29,7 @@ public class SpringDataRelationship<R> {
     private final String relationshipType;
     private final boolean allowDuplicates;
 
-    public SpringDataRelationship(Object start, Object end, Class<R> relationshipEntityClass,
-                                  String relationshipType, boolean allowDuplicates) {
+    public SpringDataRelationship(Object start, Object end, Class<R> relationshipEntityClass, String relationshipType, boolean allowDuplicates) {
         this.start = start;
         this.end = end;
         this.relationshipEntityClass = relationshipEntityClass;

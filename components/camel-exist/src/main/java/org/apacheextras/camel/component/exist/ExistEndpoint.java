@@ -66,8 +66,7 @@ public class ExistEndpoint extends DefaultPollingEndpoint {
 
     public ResourceIterator createResourceIterator() throws XMLDBException {
         if (xpath != null) {
-            XPathQueryService service =
-                    (XPathQueryService) getCollection().getService("XPathQueryService", "1.0");
+            XPathQueryService service = (XPathQueryService)getCollection().getService("XPathQueryService", "1.0");
             service.setProperty("indent", "yes");
 
             ResourceSet result = service.query(xpath);
@@ -90,7 +89,7 @@ public class ExistEndpoint extends DefaultPollingEndpoint {
     }
 
     // Properties
-    //-------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
     public String getXpath() {
         return xpath;

@@ -28,25 +28,13 @@ import org.ops4j.pax.exam.junit.PaxExam;
 @RunWith(PaxExam.class)
 public class CamelJboss6Test extends AbstractFeatureTest {
 
-  public static final String COMPONENT = extractName(CamelJboss6Test.class);
+    public static final String COMPONENT = extractName(CamelJboss6Test.class);
 
-  @Test
-  public void test() {
-    assertTrue(getKarafFeatureUrl().toString().contains(KARAF_VERSION));
-    assertEquals("camel-" + COMPONENT,
-        getFeature(
-            new StringBuilder()
-                .append("camel-")
-                .append(COMPONENT)
-                .toString())
-            .getName()
-    );
-    assertTrue(isInstalled(getFeature(
-        new StringBuilder()
-            .append("camel-")
-            .append(COMPONENT)
-            .toString()
-    )));
-  }
+    @Test
+    public void test() {
+        assertTrue(getKarafFeatureUrl().toString().contains(KARAF_VERSION));
+        assertEquals("camel-" + COMPONENT, getFeature(new StringBuilder().append("camel-").append(COMPONENT).toString()).getName());
+        assertTrue(isInstalled(getFeature(new StringBuilder().append("camel-").append(COMPONENT).toString())));
+    }
 
 }

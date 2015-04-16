@@ -45,14 +45,12 @@ public class ZeromqEndpointTest {
 
     @Before
     public void before() throws URISyntaxException {
-        endpoint = new ZeromqEndpoint("zeromq:tcp://localhost:1234?socketType=PUBLISH", "tcp://localhost:1234?socketType=PUBLISH",
-                new ZeromqComponent());
+        endpoint = new ZeromqEndpoint("zeromq:tcp://localhost:1234?socketType=PUBLISH", "tcp://localhost:1234?socketType=PUBLISH", new ZeromqComponent());
     }
 
     @Test
     public void createConsumer() throws Exception {
-        ZeromqEndpoint endpoint = new ZeromqEndpoint("zeromq:tcp://localhost:80?socketType=PUSH", "tcp://localhost:80?socketType=PUSH",
-                new ZeromqComponent());
+        ZeromqEndpoint endpoint = new ZeromqEndpoint("zeromq:tcp://localhost:80?socketType=PUSH", "tcp://localhost:80?socketType=PUSH", new ZeromqComponent());
         endpoint.setSocketType(ZeromqSocketType.PUSH);
         endpoint.createConsumer(new Processor() {
 
@@ -77,8 +75,7 @@ public class ZeromqEndpointTest {
 
     @Test
     public void createProducer() throws Exception {
-        ZeromqEndpoint endpoint = new ZeromqEndpoint("zeromq:tcp://localhost:80?socketType=PUSH", "tcp://localhost:80?socketType=PUSH",
-                new ZeromqComponent());
+        ZeromqEndpoint endpoint = new ZeromqEndpoint("zeromq:tcp://localhost:80?socketType=PUSH", "tcp://localhost:80?socketType=PUSH", new ZeromqComponent());
         endpoint.setSocketType(ZeromqSocketType.PUSH);
         endpoint.createProducer();
     }
@@ -98,8 +95,8 @@ public class ZeromqEndpointTest {
 
     @Test(expected = ZeromqException.class)
     public void topicsErrorWithoutSubscribeType() throws Exception {
-        ZeromqEndpoint endpoint = new ZeromqEndpoint("zeromq:tcp://localhost:80?socketType=PUSH&topics=coldplay",
-                "tcp://localhost:80?socketType=PUSH&topics=coldplay", new ZeromqComponent());
+        ZeromqEndpoint endpoint = new ZeromqEndpoint("zeromq:tcp://localhost:80?socketType=PUSH&topics=coldplay", "tcp://localhost:80?socketType=PUSH&topics=coldplay",
+                                                     new ZeromqComponent());
         endpoint.createConsumer(new Processor() {
 
             @Override
@@ -125,16 +122,13 @@ public class ZeromqEndpointTest {
 
     @Test(expected = ZeromqException.class)
     public void uriPortValid() throws URISyntaxException {
-        new ZeromqEndpoint("zeromq://tcp:localhost:-44?socketType=PUBLISH", "tcp:localhost:-44?socketType=PUBLISH",
-                new ZeromqComponent());
+        new ZeromqEndpoint("zeromq://tcp:localhost:-44?socketType=PUBLISH", "tcp:localhost:-44?socketType=PUBLISH", new ZeromqComponent());
     }
 
     @Test
     public void uriProtocolAccepted() throws URISyntaxException {
-        new ZeromqEndpoint("zeromq:tcp://localhost:80?socketType=PUBLISH", "tcp://localhost:80?socketType=PUBLISH",
-                new ZeromqComponent());
-        new ZeromqEndpoint("zeromq:ipc://localhost:80?socketType=PUBLISH", "ipc://localhost:80?socketType=PUBLISH",
-                new ZeromqComponent());
+        new ZeromqEndpoint("zeromq:tcp://localhost:80?socketType=PUBLISH", "tcp://localhost:80?socketType=PUBLISH", new ZeromqComponent());
+        new ZeromqEndpoint("zeromq:ipc://localhost:80?socketType=PUBLISH", "ipc://localhost:80?socketType=PUBLISH", new ZeromqComponent());
     }
 
     @Test(expected = ZeromqException.class)
@@ -144,8 +138,7 @@ public class ZeromqEndpointTest {
 
     @Test(expected = ZeromqException.class)
     public void whenCreatingProducerAndSocketTypeIsNullThenThrowException() throws Exception {
-        ZeromqEndpoint endpoint = new ZeromqEndpoint("zeromq:tcp://localhost:80?socketType=PUSH", "tcp://localhost:80?socketType=PUSH",
-                new ZeromqComponent());
+        ZeromqEndpoint endpoint = new ZeromqEndpoint("zeromq:tcp://localhost:80?socketType=PUSH", "tcp://localhost:80?socketType=PUSH", new ZeromqComponent());
         endpoint.createProducer();
     }
 

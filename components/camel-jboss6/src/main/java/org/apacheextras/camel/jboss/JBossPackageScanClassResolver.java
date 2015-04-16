@@ -43,8 +43,7 @@ public class JBossPackageScanClassResolver extends DefaultPackageScanClassResolv
     @Override
     protected void find(PackageScanFilter test, String packageName, ClassLoader loader, Set<Class<?>> classes) {
         if (log.isTraceEnabled()) {
-            log.trace("Searching for: " + test + " in package: " + packageName
-                    + " using classloader: " + loader.getClass().getName());
+            log.trace("Searching for: " + test + " in package: " + packageName + " using classloader: " + loader.getClass().getName());
         }
 
         Enumeration<URL> urls;

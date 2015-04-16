@@ -35,7 +35,6 @@ import org.hibernate.SessionFactory;
 
 /**
  * A Hibernate endpoint
- * 
  */
 @UriEndpoint(scheme = "hibernate", syntax = "hibernate://entityName", consumerClass = HibernateConsumer.class)
 public class HibernateEndpoint extends ScheduledPollEndpoint {

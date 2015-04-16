@@ -45,7 +45,7 @@ public class EsperConsumer extends DefaultConsumer implements UpdateListener {
     protected void doStart() throws Exception {
         super.doStart();
         if (statement.isDestroyed()) {
-            //statement is destroyed! re-init it!
+            // statement is destroyed! re-init it!
             statement = endpoint.createStatement();
         }
         statement.addListener(this);
@@ -55,7 +55,7 @@ public class EsperConsumer extends DefaultConsumer implements UpdateListener {
     protected void doStop() throws Exception {
         super.doStop();
         if (!statement.isDestroyed()) {
-            //statement is not destroyed! remove the listener!
+            // statement is not destroyed! remove the listener!
             statement.removeListener(this);
         }
         endpoint.removeConsumer();

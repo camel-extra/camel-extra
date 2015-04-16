@@ -35,33 +35,32 @@ import org.apache.camel.impl.DefaultProducer;
  */
 public class EsperProducer extends DefaultProducer {
 
-  private final EsperEndpoint endpoint;
+    private final EsperEndpoint endpoint;
 
-  public EsperProducer(EsperEndpoint endpoint) {
-    super(endpoint);
-    this.endpoint = endpoint;
-  }
-
-  /**
-   *
-   * @param exchange
-   * @throws Exception
-   */
-  @SuppressWarnings("unchecked")
-  @Override
-  public void process(Exchange exchange) throws Exception {
-    final Message in = exchange.getIn();
-    final Object body = in.getBody();
-    if (endpoint.isMapEvents()) {
-      Map map = new HashMap(in.getHeaders());
-      map.put("body", body);
-      getEsperRuntime().sendEvent(map, endpoint.getName());
-    } else {
-      getEsperRuntime().sendEvent(body);
+    public EsperProducer(EsperEndpoint endpoint) {
+        super(endpoint);
+        this.endpoint = endpoint;
     }
-  }
 
-  public EPRuntime getEsperRuntime() {
-    return endpoint.getEsperRuntime();
-  }
+    /**
+     * @param exchange
+     * @throws Exception
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public void process(Exchange exchange) throws Exception {
+        final Message in = exchange.getIn();
+        final Object body = in.getBody();
+        if (endpoint.isMapEvents()) {
+            Map map = new HashMap(in.getHeaders());
+            map.put("body", body);
+            getEsperRuntime().sendEvent(map, endpoint.getName());
+        } else {
+            getEsperRuntime().sendEvent(body);
+        }
+    }
+
+    public EPRuntime getEsperRuntime() {
+        return endpoint.getEsperRuntime();
+    }
 }

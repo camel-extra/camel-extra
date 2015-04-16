@@ -44,14 +44,10 @@ public class StaticCommandHandlersResolver implements CommandHandlersResolver {
 
     @Override
     public Iterable<VirtualBoxCommandHandler<?, ?>> resolveCommandHandlers() {
-        return Arrays.asList(
-                new GetStateCommandHandler(virtualBoxTemplate),
-                new GetVersionCommandHandler(virtualBoxTemplate),
-                new PowerDownCommandHandler(virtualBoxTemplate, progressListener),
-                new RestoreCurrentSnapshotCommandHandler(virtualBoxTemplate, progressListener),
-                new SetBiosSystemTimeOffsetCommandHandler(virtualBoxTemplate),
-                new StartVmCommandHandler(virtualBoxTemplate)
-        );
+        return Arrays.asList(new GetStateCommandHandler(virtualBoxTemplate), new GetVersionCommandHandler(virtualBoxTemplate), new PowerDownCommandHandler(virtualBoxTemplate,
+                                                                                                                                                           progressListener),
+                             new RestoreCurrentSnapshotCommandHandler(virtualBoxTemplate, progressListener), new SetBiosSystemTimeOffsetCommandHandler(virtualBoxTemplate),
+                             new StartVmCommandHandler(virtualBoxTemplate));
     }
 
 }

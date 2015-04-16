@@ -29,99 +29,99 @@ import java.util.Date;
  */
 public class ForecastDocument {
 
-  private String title = "";
-  private String path = "";
-  private Date date = null;
-  private byte[] jpegGraph = null;
+    private String title = "";
+    private String path = "";
+    private Date date = null;
+    private byte[] jpegGraph = null;
 
-  /**
+    /**
    *
    */
-  public ForecastDocument() {
-  }
-
-  /**
-   * @param jpegGraph
-   */
-  public ForecastDocument(byte[] jpegGraph) {
-    setJpegGraph(jpegGraph);
-  }
-
-  /**
-   * @param title
-   * @param path
-   * @param date
-   * @param jpegGraph
-   */
-  public ForecastDocument(String title, String path, Date date, byte[] jpegGraph) {
-    this.title = title;
-    this.path = path;
-    setDate(date);
-    setJpegGraph(jpegGraph);
-  }
-
-  /**
-   * @return the title
-   */
-  public String getTitle() {
-    return title;
-  }
-
-  /**
-   * @param title the title to set
-   */
-  public void setTitle(String title) {
-    this.title = title;
-  }
-
-  /**
-   * @return the path
-   */
-  public String getPath() {
-    return path;
-  }
-
-  /**
-   * @param path the path to set
-   */
-  public void setPath(String path) {
-    this.path = path;
-  }
-
-  /**
-   * @return the date
-   */
-  public Date getDate() {
-    return (Date)date.clone();
-  }
-
-  /**
-   * @param date the date to set
-   */
-  public void setDate(Date date) {
-    this.date = new Date();
-    if(null != date) {
-      this.date.setTime(date.getTime());
-    } else {
-      this.date = new Date();
+    public ForecastDocument() {
     }
-  }
 
-  /**
-   * @return the jpegGraph
-   */
-  public byte[] getJpegGraph() {
-    return (byte[])jpegGraph.clone();
-  }
-
-  /**
-   * @param jpegGraph the jpegGraph to set
-   */
-  public void setJpegGraph(byte[] jpegGraph) {
-    // Avoid malicious code vulnerability and create a copy
-    this.jpegGraph = new byte[jpegGraph.length];
-    for (int i = 0; i < jpegGraph.length; i++) {
-      this.jpegGraph[i] = jpegGraph[i];
+    /**
+     * @param jpegGraph
+     */
+    public ForecastDocument(byte[] jpegGraph) {
+        setJpegGraph(jpegGraph);
     }
-  }
+
+    /**
+     * @param title
+     * @param path
+     * @param date
+     * @param jpegGraph
+     */
+    public ForecastDocument(String title, String path, Date date, byte[] jpegGraph) {
+        this.title = title;
+        this.path = path;
+        setDate(date);
+        setJpegGraph(jpegGraph);
+    }
+
+    /**
+     * @return the title
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * @param title the title to set
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    /**
+     * @return the path
+     */
+    public String getPath() {
+        return path;
+    }
+
+    /**
+     * @param path the path to set
+     */
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    /**
+     * @return the date
+     */
+    public Date getDate() {
+        return (Date)date.clone();
+    }
+
+    /**
+     * @param date the date to set
+     */
+    public void setDate(Date date) {
+        this.date = new Date();
+        if (null != date) {
+            this.date.setTime(date.getTime());
+        } else {
+            this.date = new Date();
+        }
+    }
+
+    /**
+     * @return the jpegGraph
+     */
+    public byte[] getJpegGraph() {
+        return (byte[])jpegGraph.clone();
+    }
+
+    /**
+     * @param jpegGraph the jpegGraph to set
+     */
+    public void setJpegGraph(byte[] jpegGraph) {
+        // Avoid malicious code vulnerability and create a copy
+        this.jpegGraph = new byte[jpegGraph.length];
+        for (int i = 0; i < jpegGraph.length; i++) {
+            this.jpegGraph[i] = jpegGraph[i];
+        }
+    }
 }

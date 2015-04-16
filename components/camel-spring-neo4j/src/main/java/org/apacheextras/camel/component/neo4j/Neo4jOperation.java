@@ -21,7 +21,6 @@
  ***************************************************************************************/
 package org.apacheextras.camel.component.neo4j;
 
-
 public enum Neo4jOperation {
 
     CREATE_NODE,

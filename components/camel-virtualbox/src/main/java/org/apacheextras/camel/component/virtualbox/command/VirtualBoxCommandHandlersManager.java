@@ -28,18 +28,18 @@ import java.util.Map;
 
 public class VirtualBoxCommandHandlersManager {
 
-    private final Map<Class<?>, VirtualBoxCommandHandler<?,?>> commandHandlers;
+    private final Map<Class<?>, VirtualBoxCommandHandler<?, ?>> commandHandlers;
 
-    public VirtualBoxCommandHandlersManager(Iterable<VirtualBoxCommandHandler<?,?>> commandHandlers) {
-        this.commandHandlers = new HashMap<Class<?>, VirtualBoxCommandHandler<?,?>>();
-        for (VirtualBoxCommandHandler<?,?> commandHandler : commandHandlers) {
+    public VirtualBoxCommandHandlersManager(Iterable<VirtualBoxCommandHandler<?, ?>> commandHandlers) {
+        this.commandHandlers = new HashMap<Class<?>, VirtualBoxCommandHandler<?, ?>>();
+        for (VirtualBoxCommandHandler<?, ?> commandHandler : commandHandlers) {
             this.commandHandlers.put(commandHandler.commandClass(), commandHandler);
         }
     }
 
     public <C extends VirtualBoxCommand<R>, R> R handleCommand(C command) {
         @SuppressWarnings("unchecked")
-        VirtualBoxCommandHandler<C,R> handler = (VirtualBoxCommandHandler<C, R>) resolveCommandHandler(command.getClass());
+        VirtualBoxCommandHandler<C, R> handler = (VirtualBoxCommandHandler<C, R>)resolveCommandHandler(command.getClass());
         return handler.handle(command);
     }
 
@@ -47,7 +47,7 @@ public class VirtualBoxCommandHandlersManager {
         Object body = exchange.getIn().getBody();
         if (VirtualBoxCommand.class.isAssignableFrom(body.getClass())) {
             @SuppressWarnings("unchecked")
-            VirtualBoxCommand<T> command = (VirtualBoxCommand) body;
+            VirtualBoxCommand<T> command = (VirtualBoxCommand)body;
             return handleCommand(command);
         } else {
             String commandName = exchange.getIn().getBody(String.class);
@@ -55,14 +55,14 @@ public class VirtualBoxCommandHandlersManager {
             Class<?> commandClass = exchange.getContext().getClassResolver().resolveClass(commandClassName);
             VirtualBoxCommandHandler<?, ?> handler = resolveCommandHandler(commandClass);
             @SuppressWarnings("unchecked")
-            VirtualBoxCommand<T> command = (VirtualBoxCommand<T>) handler.resolveCommand(exchange, defaultMachineId);
+            VirtualBoxCommand<T> command = (VirtualBoxCommand<T>)handler.resolveCommand(exchange, defaultMachineId);
             return handleCommand(command);
         }
     }
 
-    private VirtualBoxCommandHandler<?,?> resolveCommandHandler(Class<?> commandClass) {
-        VirtualBoxCommandHandler<?,?> commandHandler = commandHandlers.get(commandClass);
-        if(commandHandler == null) {
+    private VirtualBoxCommandHandler<?, ?> resolveCommandHandler(Class<?> commandClass) {
+        VirtualBoxCommandHandler<?, ?> commandHandler = commandHandlers.get(commandClass);
+        if (commandHandler == null) {
             throw new NoHandlerRegisteredException(commandClass);
         }
         return commandHandler;

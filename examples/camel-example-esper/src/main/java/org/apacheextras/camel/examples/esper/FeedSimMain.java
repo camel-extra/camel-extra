@@ -36,12 +36,12 @@ public class FeedSimMain {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         if (args.length < 3) {
-          LOGGER.info("Arguments are: <number of threads> <drop probability percent> <number of seconds to run>");
-          LOGGER.info("  number of threads: the number of threads sending feed events into the engine");
-          LOGGER.info("  drop probability percent: a number between zero and 100 that dictates the ");
-          LOGGER.info("                            probability that per second one of the feeds drops off");
-          LOGGER.info("  number of seconds: the number of seconds the simulation runs");
-            System.exit(-1); //NOSONAR
+            LOGGER.info("Arguments are: <number of threads> <drop probability percent> <number of seconds to run>");
+            LOGGER.info("  number of threads: the number of threads sending feed events into the engine");
+            LOGGER.info("  drop probability percent: a number between zero and 100 that dictates the ");
+            LOGGER.info("                            probability that per second one of the feeds drops off");
+            LOGGER.info("  number of seconds: the number of seconds the simulation runs");
+            System.exit(-1); // NOSONAR
         }
 
         int numberOfThreads;
@@ -50,7 +50,7 @@ public class FeedSimMain {
         } catch (NullPointerException e) {
             LOGGER.error("'{}' caused by '{}'", e.getMessage(), e);
             LOGGER.info("Invalid number of threads:" + args[0]);
-            System.exit(-2); //NOSONAR
+            System.exit(-2); // NOSONAR
             return;
         }
 
@@ -60,7 +60,7 @@ public class FeedSimMain {
         } catch (NumberFormatException e) {
             LOGGER.error("'{}' caused by '{}'", e.getMessage(), e);
             LOGGER.info("Invalid drop probability:" + args[1]);
-            System.exit(-2); //NOSONAR
+            System.exit(-2); // NOSONAR
             return;
         }
 
@@ -70,7 +70,7 @@ public class FeedSimMain {
         } catch (NullPointerException e) {
             LOGGER.error("'{}' caused by '{}'", e.getMessage(), e);
             LOGGER.info("Invalid number of seconds to run:" + args[2]);
-            System.exit(-2); //NOSONAR
+            System.exit(-2); // NOSONAR
             return;
         }
 
@@ -91,7 +91,7 @@ public class FeedSimMain {
     }
 
     public void run() throws IOException, InterruptedException {
-    	// Send events
+        // Send events
         ExecutorService threadPool = Executors.newFixedThreadPool(numberOfThreads);
         MarketDataSendRunnable runnables[] = new MarketDataSendRunnable[numberOfThreads];
         for (int i = 0; i < numberOfThreads; i++) {
@@ -101,7 +101,7 @@ public class FeedSimMain {
 
         int seconds = 0;
         Random random = new Random();
-        while(seconds < numSeconds) {
+        while (seconds < numSeconds) {
             seconds++;
             Thread.sleep(1000);
 

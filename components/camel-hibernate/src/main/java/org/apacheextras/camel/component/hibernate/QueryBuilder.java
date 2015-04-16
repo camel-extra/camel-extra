@@ -29,10 +29,8 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-
 /**
  * A builder of query expressions
- * 
  */
 public abstract class QueryBuilder implements QueryFactory {
     ParameterBuilder parameterBuilder;
@@ -55,7 +53,6 @@ public abstract class QueryBuilder implements QueryFactory {
             }
         };
     }
-
 
     /**
      * Creates a native SQL query

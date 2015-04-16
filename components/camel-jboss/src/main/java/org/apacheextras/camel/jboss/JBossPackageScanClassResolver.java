@@ -44,8 +44,7 @@ public class JBossPackageScanClassResolver extends DefaultPackageScanClassResolv
     @Override
     protected void find(PackageScanFilter test, String packageName, ClassLoader loader, Set<Class<?>> classes) {
         if (log.isTraceEnabled()) {
-            log.trace("Searching for: " + test + " in package: " + packageName
-                    + " using classloader: " + loader.getClass().getName());
+            log.trace("Searching for: " + test + " in package: " + packageName + " using classloader: " + loader.getClass().getName());
         }
 
         Enumeration<URL> urls;
@@ -95,14 +94,12 @@ public class JBossPackageScanClassResolver extends DefaultPackageScanClassResolv
                     // vfszip:/C:/prj/bin/jboss-5.0.0.GA/server/default/deploy/fpu.war/WEB-INF/lib/camel-ftp-2.4.0.jar/org/apache/camel/component/file/remote/FtpComponent.class
                 } catch (MalformedURLException e) {
                     if (log.isWarnEnabled()) {
-                        log.warn("Error while trying resolving uri for resource " + file.getName()
-                        + "\nContinuing resource resolving throug simple name.", e);
+                        log.warn("Error while trying resolving uri for resource " + file.getName() + "\nContinuing resource resolving throug simple name.", e);
                     }
                     pathName = file.getPathName();
                 } catch (URISyntaxException e) {
                     if (log.isWarnEnabled()) {
-                        log.warn("Error while trying resolving uri for resource " + file.getName()
-                        + "\nContinuing resource resolving throug simple name.", e);
+                        log.warn("Error while trying resolving uri for resource " + file.getName() + "\nContinuing resource resolving throug simple name.", e);
                     }
                     pathName = file.getPathName();
                 }

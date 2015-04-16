@@ -29,9 +29,9 @@ public class DefaultMessageConvertor implements MessageConverter {
     public byte[] convert(Exchange arg0) {
         Object msg = arg0.getIn().getBody();
         if (msg instanceof String) {
-            return ((String) msg).getBytes();
+            return ((String)msg).getBytes();
         } else if (msg instanceof byte[]) {
-            return (byte[]) msg;
+            return (byte[])msg;
         } else {
             return msg.toString().getBytes();
         }

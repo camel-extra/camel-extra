@@ -21,7 +21,6 @@
  ***************************************************************************************/
 package org.apacheextras.camel.component.esper;
 
-
 import org.apache.camel.EndpointInject;
 import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
@@ -32,33 +31,31 @@ import org.junit.Test;
 
 public class EsperConfigurationTest extends CamelTestSupport {
 
-  @Produce(uri = "direct://feed")
-  ProducerTemplate template;
+    @Produce(uri = "direct://feed")
+    ProducerTemplate template;
 
-  @EndpointInject(uri = "mock:EsperStockTickerMock")
-  MockEndpoint mockEndpoint;
+    @EndpointInject(uri = "mock:EsperStockTickerMock")
+    MockEndpoint mockEndpoint;
 
-  @Test
-  public void sendStockTickToLogTest() throws InterruptedException {
-    final StockTick stockTick = new StockTick("GOOG", 1141.23);
+    @Test
+    public void sendStockTickToLogTest() throws InterruptedException {
+        final StockTick stockTick = new StockTick("GOOG", 1141.23);
 
-    mockEndpoint.expectedMessageCount(1);
-    template.sendBody(stockTick);
+        mockEndpoint.expectedMessageCount(1);
+        template.sendBody(stockTick);
 
-    assertMockEndpointsSatisfied();
-  }
+        assertMockEndpointsSatisfied();
+    }
 
-  @Override
-  protected RouteBuilder createRouteBuilder() throws Exception {
-    return new RouteBuilder() {
-      @Override
-      public void configure() throws Exception {
-        from("direct:feed")
-            .to("esper:StockTicker");
+    @Override
+    protected RouteBuilder createRouteBuilder() throws Exception {
+        return new RouteBuilder() {
+            @Override
+            public void configure() throws Exception {
+                from("direct:feed").to("esper:StockTicker");
 
-        from("esper:StockTicker?configured=true&eql=select avg(price) from StockTick.win:time(1 sec) where symbol='GOOG'")
-          .to("mock:EsperStockTickerMock");
-      }
-    };
-  }
+                from("esper:StockTicker?configured=true&eql=select avg(price) from StockTick.win:time(1 sec) where symbol='GOOG'").to("mock:EsperStockTickerMock");
+            }
+        };
+    }
 }

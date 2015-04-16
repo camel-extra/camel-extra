@@ -58,17 +58,12 @@ public class FromSmbEmptyFolderTest extends BaseSmbTestSupport {
     }
 
     private String getSmbBaseUrl() {
-        return "smb://localhost/" + getShare() + "/camel/"
-                + getClass().getSimpleName();
+        return "smb://localhost/" + getShare() + "/camel/" + getClass().getSimpleName();
     }
 
     private String getSmbUrl() throws UnsupportedEncodingException {
-        final String uri = "smb://" + getDomain() + ";" + getUsername()
-                + "@localhost/" + getShare() + "/camel/"
-                + getClass().getSimpleName() + "?delete=true"
-                + "&include=test.txt" + "&localWorkDirectory=/temp/folder/"
-                + "&password=" + getPassword()
-                + "&sortBy=file:name;file:modified";
+        final String uri = "smb://" + getDomain() + ";" + getUsername() + "@localhost/" + getShare() + "/camel/" + getClass().getSimpleName() + "?delete=true"
+                           + "&include=test.txt" + "&localWorkDirectory=/temp/folder/" + "&password=" + getPassword() + "&sortBy=file:name;file:modified";
         return uri;
     }
 
@@ -109,8 +104,7 @@ public class FromSmbEmptyFolderTest extends BaseSmbTestSupport {
         }
 
         @Override
-        public SmbFile[] listFiles(SmbFilenameFilter filter)
-            throws SmbException {
+        public SmbFile[] listFiles(SmbFilenameFilter filter) throws SmbException {
             return null;
         }
 
@@ -133,27 +127,18 @@ public class FromSmbEmptyFolderTest extends BaseSmbTestSupport {
                 newStackTraceList.add(stackTrace[j]);
             }
             // Add the JCIFS API stacktrace
-            final StackTraceElement[] newStackTrace = new StackTraceElement[newStackTraceList
-                    .size() + 7];
-            newStackTrace[0] = new StackTraceElement("jcifs.smb.Dfs",
-                    "resolve", "Dfs.java", 169);
-            newStackTrace[1] = new StackTraceElement("jcifs.smb.SmbFile",
-                    "resolveDfs", "SmbFile.java", 671);
-            newStackTrace[2] = new StackTraceElement("jcifs.smb.SmbFile",
-                    "send", "SmbFile.java", 773);
-            newStackTrace[3] = new StackTraceElement("jcifs.smb.SmbFile",
-                    "doFindFirstNext", "SmbFile.java", 1986);
-            newStackTrace[4] = new StackTraceElement("jcifs.smb.SmbFile",
-                    "doEnum", "SmbFile.java", 1738);
-            newStackTrace[5] = new StackTraceElement("jcifs.smb.SmbFile",
-                    "listFiles", "SmbFile.java", 1715);
-            newStackTrace[6] = new StackTraceElement("jcifs.smb.SmbFile",
-                    "listFiles", "SmbFile.java", 1648);
+            final StackTraceElement[] newStackTrace = new StackTraceElement[newStackTraceList.size() + 7];
+            newStackTrace[0] = new StackTraceElement("jcifs.smb.Dfs", "resolve", "Dfs.java", 169);
+            newStackTrace[1] = new StackTraceElement("jcifs.smb.SmbFile", "resolveDfs", "SmbFile.java", 671);
+            newStackTrace[2] = new StackTraceElement("jcifs.smb.SmbFile", "send", "SmbFile.java", 773);
+            newStackTrace[3] = new StackTraceElement("jcifs.smb.SmbFile", "doFindFirstNext", "SmbFile.java", 1986);
+            newStackTrace[4] = new StackTraceElement("jcifs.smb.SmbFile", "doEnum", "SmbFile.java", 1738);
+            newStackTrace[5] = new StackTraceElement("jcifs.smb.SmbFile", "listFiles", "SmbFile.java", 1715);
+            newStackTrace[6] = new StackTraceElement("jcifs.smb.SmbFile", "listFiles", "SmbFile.java", 1648);
 
             int k = 7;
-            for (Iterator<StackTraceElement> it = newStackTraceList.iterator(); it
-                    .hasNext(); k++) {
-                final StackTraceElement element = (StackTraceElement) it.next();
+            for (Iterator<StackTraceElement> it = newStackTraceList.iterator(); it.hasNext(); k++) {
+                final StackTraceElement element = (StackTraceElement)it.next();
                 newStackTrace[k] = element;
             }
             exception.setStackTrace(newStackTrace);

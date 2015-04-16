@@ -45,8 +45,7 @@ public abstract class MachineAwareVirtualBoxCommand<R> implements VirtualBoxComm
     public static String resolveMachineId(Exchange exchange, String defaultMachineId) {
         String messageMachineId = exchange.getIn().getHeader(HEADER_MACHINE, String.class);
         if (messageMachineId == null) {
-            LOG.debug("Machine ID specified in the header: {} ID will be used instead of default {}",
-                    messageMachineId, defaultMachineId);
+            LOG.debug("Machine ID specified in the header: {} ID will be used instead of default {}", messageMachineId, defaultMachineId);
             return messageMachineId;
         } else {
             LOG.debug("Machine ID not specified in header, using default machine ID: {}", defaultMachineId);

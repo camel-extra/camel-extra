@@ -46,156 +46,156 @@ import org.apache.camel.util.ObjectHelper;
 @UriEndpoint(scheme = "esper", syntax = "esper:name[?options]", consumerClass = EsperConsumer.class)
 public class EsperEndpoint extends DefaultEndpoint {
 
-  private final EsperComponent component;
-  private final String name;
-  private boolean mapEvents;
-  private boolean configured = false;
-  private String pattern;
-  private String eql;
-  private EPStatement statement;
-  private final AtomicInteger consumers = new AtomicInteger(0);
+    private final EsperComponent component;
+    private final String name;
+    private boolean mapEvents;
+    private boolean configured = false;
+    private String pattern;
+    private String eql;
+    private EPStatement statement;
+    private final AtomicInteger consumers = new AtomicInteger(0);
 
-  public EsperEndpoint(String uri, EsperComponent component, String name) {
-    super(uri, component);
-    this.component = component;
-    this.name = name;
-  }
-
-  @Override
-  public boolean isSingleton() {
-    return true;
-  }
-
-  @Override
-  public EsperProducer createProducer() throws Exception {
-    return new EsperProducer(this);
-  }
-
-  @Override
-  public EsperConsumer createConsumer(Processor processor) throws Exception {
-    EPStatement stat = getStatement();
-    consumers.incrementAndGet();
-    return new EsperConsumer(this, statement, processor);
-  }
-
-  @Override
-  public PollingConsumer createPollingConsumer() throws Exception {
-    EPStatement stat = getStatement();
-    consumers.incrementAndGet();
-    return new EsperPollingConsumer(this, statement);
-  }
-
-  private EPStatement getStatement() {
-    if (statement == null) {
-      statement = createStatement();
-      //statement.start();
+    public EsperEndpoint(String uri, EsperComponent component, String name) {
+        super(uri, component);
+        this.component = component;
+        this.name = name;
     }
-    return statement;
-  }
 
-  protected EPStatement createStatement() {
-    if (pattern != null) {
-      return getEsperAdministrator().createPattern(pattern);
-    } else {
-      ObjectHelper.notNull(eql, "eql or pattern");
-      return getEsperAdministrator().createEPL(eql);
+    @Override
+    public boolean isSingleton() {
+        return true;
     }
-  }
 
-  public synchronized void removeConsumer() {
-    if (0 == consumers.decrementAndGet()) {
-      statement.stop();
-      statement.destroy();
+    @Override
+    public EsperProducer createProducer() throws Exception {
+        return new EsperProducer(this);
     }
-  }
 
-  /**
-   * Creates a Camel {@link Exchange} from an Esper {@link EventBean} instance
-   *
-   * @param newEventBean
-   * @param oldEventBean
-   * @param statement
-   * @return Exchange
-   */
-  public Exchange createExchange(EventBean newEventBean, EventBean oldEventBean, EPStatement statement) {
-    Exchange exchange = createExchange(ExchangePattern.InOnly);
-    Message in = new EsperMessage(newEventBean, oldEventBean);
-    in.setHeader("CamelEsperName", name);
-    in.setHeader("CamelEsperStatement", statement);
-    if (pattern != null) {
-      in.setHeader("CamelEsperPattern", pattern);
+    @Override
+    public EsperConsumer createConsumer(Processor processor) throws Exception {
+        EPStatement stat = getStatement();
+        consumers.incrementAndGet();
+        return new EsperConsumer(this, statement, processor);
     }
-    if (eql != null) {
-      in.setHeader("CamelEsperEql", eql);
+
+    @Override
+    public PollingConsumer createPollingConsumer() throws Exception {
+        EPStatement stat = getStatement();
+        consumers.incrementAndGet();
+        return new EsperPollingConsumer(this, statement);
     }
-    exchange.setIn(in);
-    return exchange;
-  }
 
-  // Properties
-  //-------------------------------------------------------------------------
-  public String getName() {
-    return name;
-  }
+    private EPStatement getStatement() {
+        if (statement == null) {
+            statement = createStatement();
+            // statement.start();
+        }
+        return statement;
+    }
 
-  public EPRuntime getEsperRuntime() {
-    return component.getEsperRuntime(isConfigured());
-  }
+    protected EPStatement createStatement() {
+        if (pattern != null) {
+            return getEsperAdministrator().createPattern(pattern);
+        } else {
+            ObjectHelper.notNull(eql, "eql or pattern");
+            return getEsperAdministrator().createEPL(eql);
+        }
+    }
 
-  public EPServiceProvider getEsperService() {
-    return component.getEsperService(isConfigured());
-  }
+    public synchronized void removeConsumer() {
+        if (0 == consumers.decrementAndGet()) {
+            statement.stop();
+            statement.destroy();
+        }
+    }
 
-  public EPAdministrator getEsperAdministrator() {
-    return getEsperService().getEPAdministrator();
-  }
+    /**
+     * Creates a Camel {@link Exchange} from an Esper {@link EventBean} instance
+     *
+     * @param newEventBean
+     * @param oldEventBean
+     * @param statement
+     * @return Exchange
+     */
+    public Exchange createExchange(EventBean newEventBean, EventBean oldEventBean, EPStatement statement) {
+        Exchange exchange = createExchange(ExchangePattern.InOnly);
+        Message in = new EsperMessage(newEventBean, oldEventBean);
+        in.setHeader("CamelEsperName", name);
+        in.setHeader("CamelEsperStatement", statement);
+        if (pattern != null) {
+            in.setHeader("CamelEsperPattern", pattern);
+        }
+        if (eql != null) {
+            in.setHeader("CamelEsperEql", eql);
+        }
+        exchange.setIn(in);
+        return exchange;
+    }
 
-  public boolean isMapEvents() {
-    return mapEvents;
-  }
+    // Properties
+    // -------------------------------------------------------------------------
+    public String getName() {
+        return name;
+    }
 
-  /**
-   * Should we use Map events (the default approach) containing all the message
-   * headers and the message body in the "body" entry, or should we just send
-   * the body of the message as the event.
-   *
-   * @param mapEvents whether or not we should send map events.
-   */
-  public void setMapEvents(boolean mapEvents) {
-    this.mapEvents = mapEvents;
-  }
+    public EPRuntime getEsperRuntime() {
+        return component.getEsperRuntime(isConfigured());
+    }
 
-  public String getEql() {
-    return eql;
-  }
+    public EPServiceProvider getEsperService() {
+        return component.getEsperService(isConfigured());
+    }
 
-  /**
-   * Sets the EQL statement used for consumers
-   *
-   * @param eql
-   */
-  public void setEql(String eql) {
-    this.eql = eql;
-  }
+    public EPAdministrator getEsperAdministrator() {
+        return getEsperService().getEPAdministrator();
+    }
 
-  public String getPattern() {
-    return pattern;
-  }
+    public boolean isMapEvents() {
+        return mapEvents;
+    }
 
-  /**
-   * Sets the Esper pattern used for consumers
-   *
-   * @param pattern
-   */
-  public void setPattern(String pattern) {
-    this.pattern = pattern;
-  }
+    /**
+     * Should we use Map events (the default approach) containing all the
+     * message headers and the message body in the "body" entry, or should we
+     * just send the body of the message as the event.
+     *
+     * @param mapEvents whether or not we should send map events.
+     */
+    public void setMapEvents(boolean mapEvents) {
+        this.mapEvents = mapEvents;
+    }
 
-  public boolean isConfigured() {
-    return configured;
-  }
+    public String getEql() {
+        return eql;
+    }
 
-  public void setConfigured(boolean configured) {
-    this.configured = configured;
-  }
+    /**
+     * Sets the EQL statement used for consumers
+     *
+     * @param eql
+     */
+    public void setEql(String eql) {
+        this.eql = eql;
+    }
+
+    public String getPattern() {
+        return pattern;
+    }
+
+    /**
+     * Sets the Esper pattern used for consumers
+     *
+     * @param pattern
+     */
+    public void setPattern(String pattern) {
+        this.pattern = pattern;
+    }
+
+    public boolean isConfigured() {
+        return configured;
+    }
+
+    public void setConfigured(boolean configured) {
+        this.configured = configured;
+    }
 }

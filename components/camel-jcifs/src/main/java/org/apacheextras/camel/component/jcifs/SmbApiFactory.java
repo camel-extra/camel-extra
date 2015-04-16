@@ -31,9 +31,8 @@ import jcifs.smb.SmbException;
 import jcifs.smb.SmbFile;
 import jcifs.smb.SmbFileOutputStream;
 
-/** 
- * Factory interface for creating jcifs API objects. 
- *
+/**
+ * Factory interface for creating jcifs API objects.
  */
 public interface SmbApiFactory {
 

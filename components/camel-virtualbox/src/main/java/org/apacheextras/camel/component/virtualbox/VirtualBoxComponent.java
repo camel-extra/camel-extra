@@ -47,10 +47,8 @@ public class VirtualBoxComponent extends DefaultComponent {
     @Override
     protected VirtualBoxEndpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
         String resolvedMachineId = machineId = (machineId != null ? machineId : remaining);
-        return new VirtualBoxEndpoint(uri, this, virtualBoxTemplate, commandHandlersManager,
-                resolvedMachineId, vboxManagerFactoryClass, url, username, password);
+        return new VirtualBoxEndpoint(uri, this, virtualBoxTemplate, commandHandlersManager, resolvedMachineId, vboxManagerFactoryClass, url, username, password);
     }
-
 
     public VirtualBoxTemplate getVirtualBoxTemplate() {
         return virtualBoxTemplate;

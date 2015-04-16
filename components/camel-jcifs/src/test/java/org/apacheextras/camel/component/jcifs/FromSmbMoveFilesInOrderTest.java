@@ -45,7 +45,8 @@ import static org.easymock.EasyMock.replay;
 import static org.easymock.EasyMock.verify;
 
 /**
- * Unit test to test both consumer.moveNamePrefix and consumer.moveNamePostfix options.
+ * Unit test to test both consumer.moveNamePrefix and consumer.moveNamePostfix
+ * options.
  */
 public class FromSmbMoveFilesInOrderTest extends BaseSmbTestSupport {
 
@@ -53,7 +54,6 @@ public class FromSmbMoveFilesInOrderTest extends BaseSmbTestSupport {
     private SmbFile sub2Dir;
     private List<Object> mocks;
     private List<String> fileContents;
-
 
     @EndpointInject(uri = "mock:result")
     private MockEndpoint mockResult;
@@ -63,14 +63,11 @@ public class FromSmbMoveFilesInOrderTest extends BaseSmbTestSupport {
     }
 
     private String getSmbUrl() {
-        return "smb://" + getDomain() + ";" + getUsername() + "@localhost/"
-                + getShare() + "/camel/" + getClass().getSimpleName()
-                + "?password=" + getPassword()
-                + "&maxMessagesPerPoll=1"
-                + "&sortBy=file:modified"
-                + "&eagerMaxMessagesPerPoll=false"
-                // + "&consumer.eagerLimitMaxMessagesPerPoll=false"  // this is an alternatiwe which worked
-                + "&delete=true"; // &consumer.delay=5000
+        return "smb://" + getDomain() + ";" + getUsername() + "@localhost/" + getShare() + "/camel/" + getClass().getSimpleName() + "?password=" + getPassword()
+               + "&maxMessagesPerPoll=1" + "&sortBy=file:modified" + "&eagerMaxMessagesPerPoll=false"
+               // + "&consumer.eagerLimitMaxMessagesPerPoll=false" // this is an
+               // alternatiwe which worked
+               + "&delete=true"; // &consumer.delay=5000
     }
 
     public void setUpFileSystem() throws Exception {
@@ -82,13 +79,13 @@ public class FromSmbMoveFilesInOrderTest extends BaseSmbTestSupport {
         final ListSmbDirAnswer listDirAnswer = new ListSmbDirAnswer();
         listDirAnswer.sourceFilesMocks = new ArrayList<SmbFile>();
 
-        expect(sub2Dir.listFiles()).andReturn(new SmbFile[]{}).anyTimes();
+        expect(sub2Dir.listFiles()).andReturn(new SmbFile[] {}).anyTimes();
         expect(sub2Dir.exists()).andReturn(true).anyTimes();
         expect(sub2Dir.isDirectory()).andReturn(true).anyTimes();
 
         Date initialDate = new Date();
 
-        for(int i = 0; i < 10 ; i++){
+        for (int i = 0; i < 10; i++) {
 
             TestableSmbFile sourceFile = createMock(TestableSmbFile.class);
             SmbFileInputStream mockInputStream = createMock(SmbFileInputStream.class);
@@ -102,38 +99,37 @@ public class FromSmbMoveFilesInOrderTest extends BaseSmbTestSupport {
             fileContents.add(stringContent);
 
             expect(sourceFile.isDirectory()).andReturn(false).anyTimes();
-            expect(sourceFile.getName()).andReturn("hello"+i+".txt").anyTimes();
+            expect(sourceFile.getName()).andReturn("hello" + i + ".txt").anyTimes();
             expect(sourceFile.getContentLength()).andReturn(content.length).anyTimes();
-            // files will be in reversed order so we can test if sorting works well
-            expect(sourceFile.getLastModified()).andReturn(initialDate.getTime() - i*100).anyTimes();
+            // files will be in reversed order so we can test if sorting works
+            // well
+            expect(sourceFile.getLastModified()).andReturn(initialDate.getTime() - i * 100).anyTimes();
             expect(sourceFile.getInputStream()).andReturn(mockInputStream).anyTimes();
             sourceFile.delete(anyString());
             expectLastCall().anyTimes();
             sourceFile.delete();
             expectLastCall().anyTimes();
 
-
             expect(mockInputStream.available()).andReturn(content.length).anyTimes();
 
             final InpotReadAnswer readAnswer = new InpotReadAnswer(content);
             final InputClosedAnswer closeAnswer = new InputClosedAnswer(readAnswer);
 
-            expect(mockInputStream.read((byte[]) anyObject())).andAnswer(readAnswer).anyTimes();
-            mockInputStream.close(); expectLastCall().andAnswer(closeAnswer).anyTimes();
+            expect(mockInputStream.read((byte[])anyObject())).andAnswer(readAnswer).anyTimes();
+            mockInputStream.close();
+            expectLastCall().andAnswer(closeAnswer).anyTimes();
 
             smbApiFactory.putSmbFiles(getSmbBaseUrl() + "/hello" + i + ".txt", sourceFile);
         }
 
-
         expect(rootDir.listFiles()).andAnswer(listDirAnswer).anyTimes();
         smbApiFactory.putSmbFiles(getSmbBaseUrl() + "/", rootDir);
-
 
     }
 
     @Test
     public void testPollFileAndShouldBeMoved() throws Exception {
-        replay(rootDir,  sub2Dir);
+        replay(rootDir, sub2Dir);
         replay(mocks.toArray());
 
         mockResult.expectedMessageCount(10);
@@ -165,9 +161,10 @@ public class FromSmbMoveFilesInOrderTest extends BaseSmbTestSupport {
         }
 
         public Integer answer() throws Throwable {
-            if(!hasBytes) return -1;
+            if (!hasBytes)
+                return -1;
             hasBytes = false;
-            byte[] b = (byte[]) EasyMock.getCurrentArguments()[0];
+            byte[] b = (byte[])EasyMock.getCurrentArguments()[0];
             System.arraycopy(FILE_CONTENT, 0, b, 0, FILE_CONTENT.length);
             return FILE_CONTENT.length;
         }
@@ -188,11 +185,12 @@ public class FromSmbMoveFilesInOrderTest extends BaseSmbTestSupport {
     }
 
     private class ListSmbDirAnswer implements IAnswer<SmbFile[]> {
-        List<SmbFile> sourceFilesMocks ;
+        List<SmbFile> sourceFilesMocks;
+
         @Override
         public SmbFile[] answer() throws Throwable {
-            final SmbFile[] smbFiles = sourceFilesMocks.toArray(new SmbFile[]{});
-            sourceFilesMocks.remove(smbFiles.length -1);
+            final SmbFile[] smbFiles = sourceFilesMocks.toArray(new SmbFile[] {});
+            sourceFilesMocks.remove(smbFiles.length - 1);
             return smbFiles;
         }
     }

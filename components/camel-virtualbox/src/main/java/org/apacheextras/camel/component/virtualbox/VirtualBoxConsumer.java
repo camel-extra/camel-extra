@@ -97,8 +97,7 @@ public class VirtualBoxConsumer extends ScheduledPollConsumer {
                     return null;
                 }
             }
-        }
-        );
+        });
         if (event != null) {
             Exchange exchange = getEndpoint().createExchange();
             exchange.getIn().setBody(event);

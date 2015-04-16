@@ -55,10 +55,9 @@ class Listener implements Runnable {
         this.akkaSocketFactory = akkaSocketFactory;
         this.akkaContextFactory = akkaContextFactory;
         if (endpoint.isAsyncConsumer()) {
-          this.processor = AsyncProcessorConverterHelper.convert(processor);
-        }
-        else {
-          this.processor = processor;
+            this.processor = AsyncProcessorConverterHelper.convert(processor);
+        } else {
+            this.processor = processor;
         }
     }
 
@@ -82,14 +81,14 @@ class Listener implements Runnable {
         while (running) {
             byte[] msg = socket.recv(0);
             if (msg == null) {
-              continue;
+                continue;
             }
             LOGGER.trace("Received message [length=" + msg.length + "]");
             Exchange exchange = endpoint.createZeromqExchange(msg);
             LOGGER.trace("Created exchange [exchange={}]", new Object[] {exchange});
             try {
                 if (processor instanceof AsyncProcessor) {
-                    ((AsyncProcessor) processor).process(exchange, callback);
+                    ((AsyncProcessor)processor).process(exchange, callback);
                 } else {
                     processor.process(exchange);
                 }
@@ -102,13 +101,13 @@ class Listener implements Runnable {
             LOGGER.info("Closing socket");
             socket.close();
         } catch (Exception e) {
-          LOGGER.error("Could not close socket during run() [{}]", e);
+            LOGGER.error("Could not close socket during run() [{}]", e);
         }
         try {
             LOGGER.info("Terminating context");
             context.term();
         } catch (Exception e) {
-          LOGGER.error("Could not terminate context during run() [{}]", e);
+            LOGGER.error("Could not terminate context during run() [{}]", e);
         }
     }
 
@@ -121,11 +120,11 @@ class Listener implements Runnable {
         running = false;
         // we have to term the context to interrupt the recv call
         if (context != null) {
-          try {
-            context.term();
-          } catch (Exception e) {
-            LOGGER.error("Could not terminate context during stop() [{}]", e);
-          }
+            try {
+                context.term();
+            } catch (Exception e) {
+                LOGGER.error("Could not terminate context during stop() [{}]", e);
+            }
         }
     }
 
@@ -133,8 +132,7 @@ class Listener implements Runnable {
         if (endpoint.getTopics() == null) {
             // subscribe all by using
             // empty filter
-            LOGGER.debug("Subscribing to all messages (topics option was not specified)",
-                endpoint.getTopics());
+            LOGGER.debug("Subscribing to all messages (topics option was not specified)", endpoint.getTopics());
             socket.subscribe("".getBytes());
         } else {
             LOGGER.debug("Subscribing to topics: {}", endpoint.getTopics());

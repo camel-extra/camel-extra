@@ -141,8 +141,7 @@ public class CouchbaseConsumer extends DefaultScheduledPollConsumer {
         return result.size();
     }
 
-    private void logDetails(String id, Object doc, String key, String designDocumentName, String viewName,
-                            Exchange exchange) {
+    private void logDetails(String id, Object doc, String key, String designDocumentName, String viewName, Exchange exchange) {
 
         if (log.isTraceEnabled()) {
             log.trace("Created exchange = {}", exchange);
@@ -156,4 +155,3 @@ public class CouchbaseConsumer extends DefaultScheduledPollConsumer {
 
     }
 }
-

@@ -40,8 +40,8 @@ public class RCodeComponent extends DefaultComponent {
     /**
      * Creates an endpoint instance by checking the configuration parameters.
      *
-     * @param uri        String
-     * @param remaining  String
+     * @param uri String
+     * @param remaining String
      * @param parameters Map<String, Object>
      * @return Endpoint
      */
@@ -55,11 +55,13 @@ public class RCodeComponent extends DefaultComponent {
         } else {
             newConfiguration = configuration.copy();
         }
-        // Take the suffix of the URI element and fetch the operation after the '/'
+        // Take the suffix of the URI element and fetch the operation after the
+        // '/'
         String operation = remaining.substring(remaining.indexOf('/') + 1);
         // Set the RCodeOperation value
         RCodeOperation rCodeOperation = RCodeOperation.valueOf(operation.toUpperCase());
-        // Create the RCodeEndpoint based on uri, component, configuration and operation
+        // Create the RCodeEndpoint based on uri, component, configuration and
+        // operation
         RCodeEndpoint endpoint = new RCodeEndpoint(uri, this, newConfiguration, rCodeOperation);
         // Sett additional configuration parameters as properties
         setProperties(endpoint.getConfiguration(), parameters);

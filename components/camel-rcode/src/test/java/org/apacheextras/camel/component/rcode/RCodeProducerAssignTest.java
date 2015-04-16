@@ -61,14 +61,12 @@ public class RCodeProducerAssignTest extends RCodeProducerTest {
         return new RouteBuilder() {
             @Override
             public void configure() throws Exception {
-                // Handle exceptions by sending the exceptions to the mock endpoint
-                onException(Exception.class)
-                        .handled(true)
-                        .to("mock:error");
-                // Send commands to the RCode endpoint, operation is 'assign_content'
-                from("direct:rcode")
-                        .to("rcode:localhost:6311/assign_content?user=test&password=test123&bufferSize=10")
-                        .to("mock:rcode");
+                // Handle exceptions by sending the exceptions to the mock
+                // endpoint
+                onException(Exception.class).handled(true).to("mock:error");
+                // Send commands to the RCode endpoint, operation is
+                // 'assign_content'
+                from("direct:rcode").to("rcode:localhost:6311/assign_content?user=test&password=test123&bufferSize=10").to("mock:rcode");
             }
         };
     }

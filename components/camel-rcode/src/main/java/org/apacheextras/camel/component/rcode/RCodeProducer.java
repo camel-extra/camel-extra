@@ -43,7 +43,7 @@ public class RCodeProducer extends DefaultProducer {
      * Creates an RCodeProducer with and endpoint and operation.
      *
      * @param rCodeEndpoint RCodeEndpoint
-     * @param operation     RCodeOperation
+     * @param operation RCodeOperation
      */
     public RCodeProducer(RCodeEndpoint rCodeEndpoint, RCodeOperation operation) {
         super(rCodeEndpoint);
@@ -78,58 +78,57 @@ public class RCodeProducer extends DefaultProducer {
         exchange.getOut().setAttachments(in.getAttachments());
     }
 
-    private void executeOperation(Message in)
-            throws Exception {
+    private void executeOperation(Message in) throws Exception {
         switch (operation) {
-            case ASSIGN_CONTENT:
-              assignContent(in);
-              break;
-            case ASSIGN_EXPRESSION:
-              assignExpression(in);
-              break;
-            case EVAL:
-              eval(in);
-              break;
-            case VOID_EVAL:
-              voidEval(in);
-              break;
-            case PARSE_AND_EVAL:
-              parseAndEval(in);
-              break;
-            default:
-              LOGGER.info("Nothing to do since operation has not been configured yet");
-              break;
+        case ASSIGN_CONTENT:
+            assignContent(in);
+            break;
+        case ASSIGN_EXPRESSION:
+            assignExpression(in);
+            break;
+        case EVAL:
+            eval(in);
+            break;
+        case VOID_EVAL:
+            voidEval(in);
+            break;
+        case PARSE_AND_EVAL:
+            parseAndEval(in);
+            break;
+        default:
+            LOGGER.info("Nothing to do since operation has not been configured yet");
+            break;
         }
     }
 
-  private void assignContent(Message in) throws Exception {
-    final Entry<String, String> assignment = in.getMandatoryBody(Entry.class);
-    endpoint.sendAssign(assignment.getKey(), assignment.getValue());
-  }
+    private void assignContent(Message in) throws Exception {
+        final Entry<String, String> assignment = in.getMandatoryBody(Entry.class);
+        endpoint.sendAssign(assignment.getKey(), assignment.getValue());
+    }
 
-  private void assignExpression(Message in) throws Exception {
-    final Entry<String, REXP> assignment = in.getMandatoryBody(Entry.class);
-    endpoint.sendAssign(assignment.getKey(), assignment.getValue());
-  }
+    private void assignExpression(Message in) throws Exception {
+        final Entry<String, REXP> assignment = in.getMandatoryBody(Entry.class);
+        endpoint.sendAssign(assignment.getKey(), assignment.getValue());
+    }
 
-  private void eval(Message in) throws Exception {
-    final Exchange exchange = in.getExchange();
-    final String command = in.getMandatoryBody(String.class);
-    final REXP rexp = endpoint.sendEval(command);
-    exchange.getOut().getHeaders().putAll(exchange.getIn().getHeaders());
-    exchange.getOut().setBody(rexp);
-  }
+    private void eval(Message in) throws Exception {
+        final Exchange exchange = in.getExchange();
+        final String command = in.getMandatoryBody(String.class);
+        final REXP rexp = endpoint.sendEval(command);
+        exchange.getOut().getHeaders().putAll(exchange.getIn().getHeaders());
+        exchange.getOut().setBody(rexp);
+    }
 
-  private void voidEval(Message in) throws Exception {
-    final String command = in.getMandatoryBody(String.class);
-    endpoint.sendVoidEval(command);
-  }
+    private void voidEval(Message in) throws Exception {
+        final String command = in.getMandatoryBody(String.class);
+        endpoint.sendVoidEval(command);
+    }
 
-  private void parseAndEval(Message in) throws Exception {
-    final Exchange exchange = in.getExchange();
-    final String command = in.getMandatoryBody(String.class);
-    REXP rexp = endpoint.sendParseAndEval(command);
-    exchange.getOut().getHeaders().putAll(exchange.getIn().getHeaders());
-    exchange.getOut().setBody(rexp);
-  }
+    private void parseAndEval(Message in) throws Exception {
+        final Exchange exchange = in.getExchange();
+        final String command = in.getMandatoryBody(String.class);
+        REXP rexp = endpoint.sendParseAndEval(command);
+        exchange.getOut().getHeaders().putAll(exchange.getIn().getHeaders());
+        exchange.getOut().setBody(rexp);
+    }
 }

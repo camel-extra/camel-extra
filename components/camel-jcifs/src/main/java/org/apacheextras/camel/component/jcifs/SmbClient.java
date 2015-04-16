@@ -31,15 +31,13 @@ import java.util.List;
 public interface SmbClient {
     void login(String domain, String username, String password);
 
-    boolean retrieveFile(String url, OutputStream out)
-        throws IOException;
+    boolean retrieveFile(String url, OutputStream out) throws IOException;
 
     boolean createDirs(String url);
 
     InputStream getInputStream(String url) throws IOException;
 
-    boolean storeFile(String url, InputStream inputStream, boolean append, Long lastModified)
-            throws IOException;
+    boolean storeFile(String url, InputStream inputStream, boolean append, Long lastModified) throws IOException;
 
     List<SmbFile> listFiles(String url) throws IOException;
 

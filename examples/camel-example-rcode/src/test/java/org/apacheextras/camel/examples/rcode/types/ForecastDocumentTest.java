@@ -32,18 +32,13 @@ import static org.junit.Assert.assertNotNull;
 
 public class ForecastDocumentTest {
 
-  @Test
-  public void createInitializedForecastDocument() {
-    final ForecastDocument forecastDocument = new ForecastDocument(
-        "Test ForecastDocument",
-        "tmp/path",
-        new Date(),
-        new byte[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}
-    );
-    assertEquals("Test ForecastDocument", forecastDocument.getTitle());
-    assertEquals("tmp/path", forecastDocument.getPath());
-    assertNotNull(forecastDocument.getDate());
-    assertArrayEquals(new byte[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}, forecastDocument.getJpegGraph());
-  }
+    @Test
+    public void createInitializedForecastDocument() {
+        final ForecastDocument forecastDocument = new ForecastDocument("Test ForecastDocument", "tmp/path", new Date(), new byte[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 0});
+        assertEquals("Test ForecastDocument", forecastDocument.getTitle());
+        assertEquals("tmp/path", forecastDocument.getPath());
+        assertNotNull(forecastDocument.getDate());
+        assertArrayEquals(new byte[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 0}, forecastDocument.getJpegGraph());
+    }
 
 }

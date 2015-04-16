@@ -29,28 +29,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The RCodeConfiguration object contains all elements that can be configured
- * on an endpoint or component.
+ * The RCodeConfiguration object contains all elements that can be configured on
+ * an endpoint or component.
  */
 public final class RCodeConfiguration implements Cloneable {
 
     /**
      * Add logger to provide some level of detailed output.
-     * */
+     */
     private static final Logger LOGGER = LoggerFactory.getLogger(RCodeConfiguration.class);
     /**
-     * The default rServe host set to
-     * <code>127.0.0.1</code>.
+     * The default rServe host set to <code>127.0.0.1</code>.
      */
     public static final String DEFAULT_RSERVE_HOST = getHostAddress();
     /**
-     * The default rServe port set to
-     * <code>6311</code>.
+     * The default rServe port set to <code>6311</code>.
      */
     public static final int DEFAULT_RSERVE_PORT = 6311;
     /**
-     * Default buffer size set to
-     * <code>2MB</code> in bytes.
+     * Default buffer size set to <code>2MB</code> in bytes.
      */
     public static final long DEFAULT_BUFFER_SIZE = 1024 * 1024 * 2;
     /**
@@ -74,8 +71,8 @@ public final class RCodeConfiguration implements Cloneable {
     private long bufferSize = DEFAULT_BUFFER_SIZE;
 
     /**
-     * Creates a new RCodeConfiguration object with default values.
-     * The default values are:</br>
+     * Creates a new RCodeConfiguration object with default values. The default
+     * values are:</br>
      * <ul>
      * <li>host = 127.0.0.1</li>
      * <li>port = 6311</li>
@@ -104,14 +101,14 @@ public final class RCodeConfiguration implements Cloneable {
     }
 
     /**
-     * Copies the existing RCodeConfiguration into a new object.
-     * The new object is an actual clone of the original.
+     * Copies the existing RCodeConfiguration into a new object. The new object
+     * is an actual clone of the original.
      *
      * @return RCodeConfiguration
      */
     public RCodeConfiguration copy() {
         try {
-            return (RCodeConfiguration) clone();
+            return (RCodeConfiguration)clone();
         } catch (CloneNotSupportedException ex) {
             throw new RuntimeCamelException(ex);
         }
@@ -194,14 +191,13 @@ public final class RCodeConfiguration implements Cloneable {
         this.bufferSize = bufferSize;
     }
 
-  private static String getHostAddress() {
-    try {
-      return InetAddress.getLocalHost().getHostAddress();
-    } catch (UnknownHostException e) {
-      final String default_host = "127.0.0.1";
-      LOGGER.info("Could not retrieve host information. Setting default to '{}'.\n" +
-          "Reason was: {}", default_host, e.getMessage());
-      return default_host; // TURN_OFF_WARNINGS
+    private static String getHostAddress() {
+        try {
+            return InetAddress.getLocalHost().getHostAddress();
+        } catch (UnknownHostException e) {
+            final String default_host = "127.0.0.1";
+            LOGGER.info("Could not retrieve host information. Setting default to '{}'.\n" + "Reason was: {}", default_host, e.getMessage());
+            return default_host; // TURN_OFF_WARNINGS
+        }
     }
-  }
 }

@@ -33,17 +33,8 @@ public class VtdXPathRouteDslTest extends VtdXPathRouteTest {
         return new RouteBuilder() {
             @Override
             public void configure() throws Exception {
-                from("file:src/test/data?noop=true")
-                    .split()
-                        .language("vtdxml", "/persons/person")
-                        .to("log:line")
-                        .choice()
-                            .when().language("vtdxml", "/person/name = 'James Strachan'")
-                                .to("mock:james")
-                            .otherwise()
-                                .to("mock:other")
-                        .end()
-                    .end();
+                from("file:src/test/data?noop=true").split().language("vtdxml", "/persons/person").to("log:line").choice().when()
+                    .language("vtdxml", "/person/name = 'James Strachan'").to("mock:james").otherwise().to("mock:other").end().end();
             }
         };
     }

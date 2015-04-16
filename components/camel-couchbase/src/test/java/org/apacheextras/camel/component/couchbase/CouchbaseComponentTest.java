@@ -100,7 +100,8 @@ public class CouchbaseComponentTest {
 
         CouchbaseEndpoint endpoint = new CouchbaseComponent(context).createEndpoint(uri, remaining, params);
 
-        //System.out.print(endpoint.makeBootstrapURI()[0].toString() + " " +  endpoint.makeBootstrapURI().length + " ");
+        // System.out.print(endpoint.makeBootstrapURI()[0].toString() + " " +
+        // endpoint.makeBootstrapURI().length + " ");
         URI[] endpointArray = endpoint.makeBootstrapURI();
         assertEquals(new URI("http://localhost:8091/pools"), endpointArray[0]);
         assertEquals(new URI("http://127.0.0.1:8091/pools"), endpointArray[1]);
@@ -120,7 +121,8 @@ public class CouchbaseComponentTest {
 
         CouchbaseEndpoint endpoint = new CouchbaseComponent(context).createEndpoint(uri, remaining, params);
 
-        //System.out.print(endpoint.makeBootstrapURI()[0].toString() + " " +  endpoint.makeBootstrapURI().length + " ");
+        // System.out.print(endpoint.makeBootstrapURI()[0].toString() + " " +
+        // endpoint.makeBootstrapURI().length + " ");
         URI[] endpointArray = endpoint.makeBootstrapURI();
         assertEquals(new URI("http://localhost:8091/pools"), endpointArray[0]);
         assertEquals(new URI("http://127.0.0.1:8091/pools"), endpointArray[1]);
@@ -156,7 +158,8 @@ public class CouchbaseComponentTest {
 
         CouchbaseEndpoint endpoint = new CouchbaseComponent(context).createEndpoint(uri, remaining, params);
 
-        //System.out.print(endpoint.makeBootstrapURI()[0].toString() + " " +  endpoint.makeBootstrapURI().length + " ");
+        // System.out.print(endpoint.makeBootstrapURI()[0].toString() + " " +
+        // endpoint.makeBootstrapURI().length + " ");
         URI[] endpointArray = endpoint.makeBootstrapURI();
 
         assertEquals(1, endpointArray.length);

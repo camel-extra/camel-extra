@@ -81,7 +81,7 @@ public class SmbProducer extends GenericFileProducer<SmbFile> implements Service
 
     @Override
     public void postWriteCheck() {
-        //not at this time
+        // not at this time
     }
 
     protected void processExchange(Exchange exchange) throws Exception {
@@ -97,7 +97,8 @@ public class SmbProducer extends GenericFileProducer<SmbFile> implements Service
 
             preWriteCheck();
 
-            // should we write to a temporary name and then afterwards rename to real target
+            // should we write to a temporary name and then afterwards rename to
+            // real target
             boolean writeAsTempAndRename = ObjectHelper.isNotEmpty(endpoint.getTempFileName());
             String tempTarget = null;
             if (writeAsTempAndRename) {
@@ -125,11 +126,13 @@ public class SmbProducer extends GenericFileProducer<SmbFile> implements Service
             // name after we have written the file
             if (tempTarget != null) {
 
-                // if we should not eager delete the target file then do it now just before renaming
-                if (!endpoint.isEagerDeleteTargetFile() && operations.existsFile(target)
-                        && endpoint.getFileExist() == GenericFileExist.Override) {
-                    // we override the target so we do this by deleting it so the temp file can be renamed later
-                    // with success as the existing target file have been deleted
+                // if we should not eager delete the target file then do it now
+                // just before renaming
+                if (!endpoint.isEagerDeleteTargetFile() && operations.existsFile(target) && endpoint.getFileExist() == GenericFileExist.Override) {
+                    // we override the target so we do this by deleting it so
+                    // the temp file can be renamed later
+                    // with success as the existing target file have been
+                    // deleted
                     if (log.isDebugEnabled()) {
                         log.debug("Deleting existing file: " + target);
                     }
@@ -153,7 +156,8 @@ public class SmbProducer extends GenericFileProducer<SmbFile> implements Service
                 String doneFileName = getEndpoint().createDoneFileName(target);
                 ObjectHelper.notEmpty(doneFileName, "doneFileName", endpoint);
 
-                // create empty exchange with empty body to write as the done file
+                // create empty exchange with empty body to write as the done
+                // file
                 Exchange empty = new DefaultExchange(exchange);
                 empty.getIn().setBody("");
 
@@ -181,17 +185,16 @@ public class SmbProducer extends GenericFileProducer<SmbFile> implements Service
 
         String name = exchange.getIn().getHeader(Exchange.FILE_NAME, String.class);
 
-
         // expression support
         Expression expression = endpoint.getFileName();
         if (name != null && StringHelper.hasStartToken(name, "simple")) {
             // the header name can be an expression too, that should override
             // whatever configured on the endpoint
-             if (log.isDebugEnabled()) {
-               log.debug(Exchange.FILE_NAME + " contains a Simple expression: " + name);
-             }
-          Language language = getEndpoint().getCamelContext().resolveLanguage("file");
-          expression = language.createExpression(name);
+            if (log.isDebugEnabled()) {
+                log.debug(Exchange.FILE_NAME + " contains a Simple expression: " + name);
+            }
+            Language language = getEndpoint().getCamelContext().resolveLanguage("file");
+            expression = language.createExpression(name);
         }
         if (expression != null) {
             if (log.isDebugEnabled()) {
@@ -219,7 +222,8 @@ public class SmbProducer extends GenericFileProducer<SmbFile> implements Service
             log.debug("createFileName() enpointPath [" + endpointPath + "]");
         }
         // Its a directory so we should use it as a base path for the filename
-        // If the path isn't empty, we need to add a trailing / if it isn't already there
+        // If the path isn't empty, we need to add a trailing / if it isn't
+        // already there
         String baseDir = "";
         if (endpointPath.length() > 0) {
             baseDir = endpointPath + (endpointPath.endsWith(getFileSeparator()) ? "" : getFileSeparator());
@@ -247,7 +251,8 @@ public class SmbProducer extends GenericFileProducer<SmbFile> implements Service
         }
         // build directory if auto create is enabled
         if (endpoint.isAutoCreate()) {
-            // we must normalize it (to avoid having both \ and / in the name which confuses java.io.File)
+            // we must normalize it (to avoid having both \ and / in the name
+            // which confuses java.io.File)
             String name = FileUtil.normalizePath(fileName);
 
             // use java.io.File to compute the file path
@@ -255,7 +260,7 @@ public class SmbProducer extends GenericFileProducer<SmbFile> implements Service
             String directory = file.getParent();
             boolean absolute = FileUtil.isAbsolute(file);
             if (directory != null && !operations.buildDirectory(directory, absolute)) {
-              log.warn("Cannot build directory [" + directory + "] (could be because of denied permissions)");
+                log.warn("Cannot build directory [" + directory + "] (could be because of denied permissions)");
             }
         }
 
@@ -275,7 +280,7 @@ public class SmbProducer extends GenericFileProducer<SmbFile> implements Service
 
     @Override
     public SmbEndpoint getEndpoint() {
-        return (SmbEndpoint) super.getEndpoint();
+        return (SmbEndpoint)super.getEndpoint();
     }
 
 }

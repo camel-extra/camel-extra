@@ -67,8 +67,7 @@ public class VirtualBoxConsumerTest extends CamelTestSupport {
         return new RouteBuilder() {
             @Override
             public void configure() throws Exception {
-                from("virtualbox:" + machine + "?vboxManagerFactoryClass=org.apacheextras.camel.component.virtualbox.MockVirtualBoxManagerFactory").
-                        to(mockEndpoint);
+                from("virtualbox:" + machine + "?vboxManagerFactoryClass=org.apacheextras.camel.component.virtualbox.MockVirtualBoxManagerFactory").to(mockEndpoint);
             }
         };
     }

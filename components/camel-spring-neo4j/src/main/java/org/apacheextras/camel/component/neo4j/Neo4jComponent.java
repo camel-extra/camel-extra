@@ -29,26 +29,26 @@ import org.apache.camel.impl.DefaultComponent;
 
 public class Neo4jComponent extends DefaultComponent {
 
-  public Neo4jComponent() {
-  }
+    public Neo4jComponent() {
+    }
 
-  public Neo4jComponent(CamelContext context) {
-    super(context);
-  }
+    public Neo4jComponent(CamelContext context) {
+        super(context);
+    }
 
-  /**
-   * {@inheritDoc}
-   * Creates a Neo4J Endpoint
-   * @param uri instantiates the neo4j endpoint
-   * @param remaining defines the transport protocol, e.g. http
-   * @param params optional parameters
-   * @return Neo4jEndpoint
-   * @throws java.lang.Exception
-   */
-  @Override
-  protected Neo4jEndpoint createEndpoint(String uri, String remaining, Map<String, Object> params) throws Exception {
-    Neo4jEndpoint endpoint = new Neo4jEndpoint(uri, remaining, this);
-    setProperties(endpoint, params);
-    return endpoint;
-  }
+    /**
+     * {@inheritDoc} Creates a Neo4J Endpoint
+     * 
+     * @param uri instantiates the neo4j endpoint
+     * @param remaining defines the transport protocol, e.g. http
+     * @param params optional parameters
+     * @return Neo4jEndpoint
+     * @throws java.lang.Exception
+     */
+    @Override
+    protected Neo4jEndpoint createEndpoint(String uri, String remaining, Map<String, Object> params) throws Exception {
+        Neo4jEndpoint endpoint = new Neo4jEndpoint(uri, remaining, this);
+        setProperties(endpoint, params);
+        return endpoint;
+    }
 }

@@ -35,7 +35,8 @@ import java.util.concurrent.Future;
 import static org.apacheextras.camel.component.couchbase.CouchbaseConstants.*;
 
 /**
- * Couchbase producer generates various type of operations. PUT, GET, and DELETE are currently supported
+ * Couchbase producer generates various type of operations. PUT, GET, and DELETE
+ * are currently supported
  */
 
 public class CouchbaseProducer extends DefaultProducer {
@@ -59,40 +60,40 @@ public class CouchbaseProducer extends DefaultProducer {
         this.producerRetryPause = endpoint.getProducerRetryPause();
 
         switch (persistTo) {
-            case 0:
-                this.persistTo = PersistTo.ZERO;
-                break;
-            case 1:
-                this.persistTo = PersistTo.MASTER;
-                break;
-            case 2:
-                this.persistTo = PersistTo.TWO;
-                break;
-            case 3:
-                this.persistTo = PersistTo.THREE;
-                break;
-            case 4:
-                this.persistTo = PersistTo.FOUR;
-                break;
-            default:
-                throw new IllegalArgumentException("Unsupported persistTo parameter. Supported values are 0 to 4. Currently provided: " + persistTo);
+        case 0:
+            this.persistTo = PersistTo.ZERO;
+            break;
+        case 1:
+            this.persistTo = PersistTo.MASTER;
+            break;
+        case 2:
+            this.persistTo = PersistTo.TWO;
+            break;
+        case 3:
+            this.persistTo = PersistTo.THREE;
+            break;
+        case 4:
+            this.persistTo = PersistTo.FOUR;
+            break;
+        default:
+            throw new IllegalArgumentException("Unsupported persistTo parameter. Supported values are 0 to 4. Currently provided: " + persistTo);
         }
 
         switch (replicateTo) {
-            case 0:
-                this.replicateTo = ReplicateTo.ZERO;
-                break;
-            case 1:
-                this.replicateTo = ReplicateTo.ONE;
-                break;
-            case 2:
-                this.replicateTo = ReplicateTo.TWO;
-                break;
-            case 3:
-                this.replicateTo = ReplicateTo.THREE;
-                break;
-            default:
-                throw new IllegalArgumentException("Unsupported replicateTo parameter. Supported values are 0 to 3. Currently provided: " + replicateTo);
+        case 0:
+            this.replicateTo = ReplicateTo.ZERO;
+            break;
+        case 1:
+            this.replicateTo = ReplicateTo.ONE;
+            break;
+        case 2:
+            this.replicateTo = ReplicateTo.TWO;
+            break;
+        case 3:
+            this.replicateTo = ReplicateTo.THREE;
+            break;
+        default:
+            throw new IllegalArgumentException("Unsupported replicateTo parameter. Supported values are 0 to 3. Currently provided: " + replicateTo);
         }
 
     }
@@ -102,20 +103,15 @@ public class CouchbaseProducer extends DefaultProducer {
 
         Map<String, Object> headers = exchange.getIn().getHeaders();
 
-        String id = (headers.containsKey(HEADER_ID))
-                ? exchange.getIn().getHeader(HEADER_ID, String.class)
-                : endpoint.getId();
+        String id = (headers.containsKey(HEADER_ID)) ? exchange.getIn().getHeader(HEADER_ID, String.class) : endpoint.getId();
 
-        int ttl = (headers.containsKey(HEADER_TTL))
-                ? Integer.parseInt(exchange.getIn().getHeader(HEADER_TTL, String.class))
-                : DEFAULT_TTL;
+        int ttl = (headers.containsKey(HEADER_TTL)) ? Integer.parseInt(exchange.getIn().getHeader(HEADER_TTL, String.class)) : DEFAULT_TTL;
 
         if (endpoint.isAutoStartIdForInserts()) {
             id = Long.toString(startId);
             startId++;
         } else if (id == null) {
-            throw new CouchbaseException(HEADER_ID + " is not specified in message header or endpoint URL.",
-                    exchange);
+            throw new CouchbaseException(HEADER_ID + " is not specified in message header or endpoint URL.", exchange);
         }
 
         if (endpoint.getOperation().equals(COUCHBASE_PUT)) {
@@ -132,7 +128,7 @@ public class CouchbaseProducer extends DefaultProducer {
             exchange.getOut().setBody(result.get());
         }
 
-        //cleanup the cache headers
+        // cleanup the cache headers
         exchange.getIn().removeHeader(HEADER_ID);
 
     }

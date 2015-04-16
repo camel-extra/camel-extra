@@ -26,7 +26,6 @@ import org.hibernate.Session;
 
 /**
  * A Strategy to create a query to search for objects in a database
- *
  */
 public interface QueryFactory {
     /**

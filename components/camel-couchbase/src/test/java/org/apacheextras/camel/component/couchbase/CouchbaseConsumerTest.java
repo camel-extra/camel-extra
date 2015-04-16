@@ -30,24 +30,15 @@ import org.junit.Test;
 import java.net.URI;
 import java.util.ArrayList;
 
-
 public class CouchbaseConsumerTest {
 
-  @Test(expected = ConfigurationException.class)
-  public void testNewCouchbaseConsumer() throws Exception{
-    CouchbaseConsumer couchbaseConsumer = new CouchbaseConsumer(
-        new CouchbaseEndpoint(),
-        new CouchbaseClient(
-            new ArrayList<URI>(),
-            "bucketName",
-            "pwd"
-        ),
-        new Processor() {
-          @Override
-          public void process(Exchange exchange) throws Exception {
-            // Nothing to do
-          }
-        }
-    );
-  }
+    @Test(expected = ConfigurationException.class)
+    public void testNewCouchbaseConsumer() throws Exception {
+        CouchbaseConsumer couchbaseConsumer = new CouchbaseConsumer(new CouchbaseEndpoint(), new CouchbaseClient(new ArrayList<URI>(), "bucketName", "pwd"), new Processor() {
+            @Override
+            public void process(Exchange exchange) throws Exception {
+                // Nothing to do
+            }
+        });
+    }
 }

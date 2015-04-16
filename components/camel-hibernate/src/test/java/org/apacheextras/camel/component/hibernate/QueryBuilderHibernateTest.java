@@ -50,17 +50,10 @@ public class QueryBuilderHibernateTest {
 
     @Before
     public void setUp() {
-        Configuration configuration
-            = new Configuration().
-                setProperty(Environment.DIALECT,"org.hibernate.dialect.DerbyDialect").
-                setProperty(Environment.URL, "jdbc:derby:target/testdb;create=true").
-                setProperty(Environment.USER, "").
-                setProperty(Environment.PASS, "").
-                setProperty(Environment.HBM2DDL_AUTO, "create").
-                addResource("org/apacheextras/camel/examples/SendEmail.hbm.xml");
-        ServiceRegistry serviceRegistry = new ServiceRegistryBuilder()
-            .applySettings(configuration.getProperties())
-            .buildServiceRegistry();
+        Configuration configuration = new Configuration().setProperty(Environment.DIALECT, "org.hibernate.dialect.DerbyDialect")
+            .setProperty(Environment.URL, "jdbc:derby:target/testdb;create=true").setProperty(Environment.USER, "").setProperty(Environment.PASS, "")
+            .setProperty(Environment.HBM2DDL_AUTO, "create").addResource("org/apacheextras/camel/examples/SendEmail.hbm.xml");
+        ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
         SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
         session = sessionFactory.openSession();
 
@@ -77,12 +70,10 @@ public class QueryBuilderHibernateTest {
     @Test
     public void shouldPopulateQueryWithParameter() {
         // Given
-        Query query = QueryBuilder.
-                query(queryString).parameters(address).
-                createQuery(session);
+        Query query = QueryBuilder.query(queryString).parameters(address).createQuery(session);
 
         // When
-        SendEmail sendEmail = (SendEmail) query.uniqueResult();
+        SendEmail sendEmail = (SendEmail)query.uniqueResult();
 
         // Then
         assertEquals(address, sendEmail.getAddress());

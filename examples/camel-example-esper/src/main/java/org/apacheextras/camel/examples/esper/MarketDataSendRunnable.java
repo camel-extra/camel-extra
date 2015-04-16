@@ -47,19 +47,19 @@ public class MarketDataSendRunnable implements Runnable {
     private boolean transacted = false;
     private String subject = "EventStreamQueue";
     private boolean persistent = true;
-    
-    public MarketDataSendRunnable()     {
+
+    public MarketDataSendRunnable() {
     }
 
     @Override
-    public void run()     {
+    public void run() {
         LOGGER.info(".call Thread " + Thread.currentThread() + " starting");
-     
-        try         {
+
+        try {
             Connection connection = null;
             Destination destination = null;
             ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(user, password, url);
-     		connection = connectionFactory.createConnection();
+            connection = connectionFactory.createConnection();
             connection.start();
             Session session = connection.createSession(transacted, Session.AUTO_ACKNOWLEDGE);
             destination = session.createQueue(subject);
@@ -67,23 +67,23 @@ public class MarketDataSendRunnable implements Runnable {
             if (persistent) {
                 producer.setDeliveryMode(DeliveryMode.PERSISTENT);
             }
-            while(!isShutdown)             {
+            while (!isShutdown) {
                 int nextFeed = Math.abs(random.nextInt() % 2);
                 FeedEnum feed = FeedEnum.values()[nextFeed];
-                if (rateDropOffFeed != feed)                 {
-                	ObjectMessage message = session.createObjectMessage();
-                	message.setObject(new MarketDataEvent("SYM", feed));
-           			producer.send(message);
+                if (rateDropOffFeed != feed) {
+                    ObjectMessage message = session.createObjectMessage();
+                    message.setObject(new MarketDataEvent("SYM", feed));
+                    producer.send(message);
                 }
             }
             producer.close();
             session.close();
             connection.close();
-        } catch (RuntimeException ex)         {
+        } catch (RuntimeException ex) {
             LOGGER.error("Error in send loop", ex);
         } catch (JMSException e) {
-			    LOGGER.error("Detected a JMS error '{}' caused by '{}'", e.getMessage(), e);
-		}
+            LOGGER.error("Detected a JMS error '{}' caused by '{}'", e.getMessage(), e);
+        }
 
         LOGGER.info(".call Thread " + Thread.currentThread() + " done");
     }

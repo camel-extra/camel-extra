@@ -56,7 +56,7 @@ public class ExistRouteTest extends CamelTestSupport {
     public void setUp() throws Exception {
         database = new DatabaseImpl();
         database.setProperty("create-database", "true");
-        //database.setProperty("configuration", "src/test/resources/conf.xml");
+        // database.setProperty("configuration", "src/test/resources/conf.xml");
         database.setProperty("database-id", "test");
         DatabaseManager.registerDatabase(database);
         super.setUp();

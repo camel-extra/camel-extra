@@ -127,7 +127,7 @@ public class ZeromqProducerTest {
     @Test
     public void stopInterruptsBlockedSender() throws Exception {
         producer.start();
-        when(socket.send((byte[]) any(), anyInt())).then(new Answer() {
+        when(socket.send((byte[])any(), anyInt())).then(new Answer() {
 
             @Override
             public Object answer(InvocationOnMock invocation) throws Throwable {

@@ -43,9 +43,9 @@ public class SmbEndpoint extends GenericFileEndpoint<SmbFile> {
 
     @Override
     public SmbConfiguration getConfiguration() {
-        return (SmbConfiguration) configuration;
+        return (SmbConfiguration)configuration;
     }
-    
+
     @Override
     public SmbConsumer createConsumer(Processor processor) throws Exception {
         SmbConsumer consumer = new SmbConsumer(this, processor, createSmbOperations());
@@ -86,8 +86,7 @@ public class SmbEndpoint extends GenericFileEndpoint<SmbFile> {
         return answer;
     }
 
-
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public SmbOperations<SmbFile> createSmbOperations() {
         DefaultSmbClient client = new DefaultSmbClient();
         if (((SmbConfiguration)this.configuration).getSmbApiFactory() != null) {
@@ -112,7 +111,7 @@ public class SmbEndpoint extends GenericFileEndpoint<SmbFile> {
     public boolean isAbsolute(String name) {
         return true;
     }
-    
+
     @Override
     public boolean isSingleton() {
         return false;

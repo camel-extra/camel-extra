@@ -53,17 +53,17 @@ public class AkkaSocketFactory implements SocketFactory {
         LOGGER.debug("Creating consumer socket [{}]", socketType);
         Socket socket;
         switch (socketType) {
-            default:
-                throw new ZeromqException("Unsupported socket type for consumer: " + this);
-            case ROUTER:
-                socket = context.socket(ZMQ.ROUTER);
-                break;
-            case SUBSCRIBE:
-                socket = context.socket(ZMQ.SUB);
-                break;
-            case PULL:
-                socket = context.socket(ZMQ.PULL);
-                break;
+        default:
+            throw new ZeromqException("Unsupported socket type for consumer: " + this);
+        case ROUTER:
+            socket = context.socket(ZMQ.ROUTER);
+            break;
+        case SUBSCRIBE:
+            socket = context.socket(ZMQ.SUB);
+            break;
+        case PULL:
+            socket = context.socket(ZMQ.PULL);
+            break;
         }
         applySocketOptions(socket);
         return socket;
@@ -74,17 +74,17 @@ public class AkkaSocketFactory implements SocketFactory {
         LOGGER.debug("Creating producer socket [{}]", socketType);
         Socket socket;
         switch (socketType) {
-            case DEALER:
-                socket = context.socket(ZMQ.DEALER);
-                break;
-            case PUBLISH:
-                socket = context.socket(ZMQ.PUB);
-                break;
-            case PUSH:
-                socket = context.socket(ZMQ.PUSH);
-                break;
-            default:
-                throw new ZeromqException("Unsupported socket type for producer: " + socketType);
+        case DEALER:
+            socket = context.socket(ZMQ.DEALER);
+            break;
+        case PUBLISH:
+            socket = context.socket(ZMQ.PUB);
+            break;
+        case PUSH:
+            socket = context.socket(ZMQ.PUSH);
+            break;
+        default:
+            throw new ZeromqException("Unsupported socket type for producer: " + socketType);
         }
         applySocketOptions(socket);
         return socket;

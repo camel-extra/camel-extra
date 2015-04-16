@@ -21,7 +21,6 @@
  ***************************************************************************************/
 package org.apacheextras.camel.jpa.jmx;
 
-
 import javax.management.openmbean.CompositeData;
 import javax.management.openmbean.CompositeDataSupport;
 import javax.management.openmbean.CompositeType;
@@ -34,15 +33,14 @@ import java.util.Map;
 
 public class OpenTypeSupport {
 
-
     public static OpenTypeFactory getFactory(Class clazz) throws OpenDataException {
-        return (OpenTypeFactory) OPEN_TYPE_FACTORIES.get(clazz);
+        return (OpenTypeFactory)OPEN_TYPE_FACTORIES.get(clazz);
     }
 
     public static CompositeData convert(Object message) throws OpenDataException {
         OpenTypeFactory f = getFactory(message.getClass());
-        if( f == null ) {
-          throw new OpenDataException("Cannot create a CompositeData for type: " + message.getClass().getName());
+        if (f == null) {
+            throw new OpenDataException("Cannot create a CompositeData for type: " + message.getClass().getName());
         }
         CompositeType ct = f.getCompositeType();
         Map fields = f.getFields(message);
@@ -51,7 +49,8 @@ public class OpenTypeSupport {
 
     interface OpenTypeFactory {
         CompositeType getCompositeType() throws OpenDataException;
-        Map getFields( Object o ) throws OpenDataException;
+
+        Map getFields(Object o) throws OpenDataException;
     }
 
     private static final Map OPEN_TYPE_FACTORIES = new HashMap();
@@ -65,7 +64,7 @@ public class OpenTypeSupport {
 
         @Override
         public CompositeType getCompositeType() throws OpenDataException {
-            if( compositeType == null ) {
+            if (compositeType == null) {
                 init();
                 compositeType = createCompositeType();
             }
@@ -76,9 +75,9 @@ public class OpenTypeSupport {
         }
 
         protected CompositeType createCompositeType() throws OpenDataException {
-            String[] itemNames = (String[]) itemNamesList.toArray(new String[itemNamesList.size()]);
-            String[] itemDescriptions = (String[]) itemDescriptionsList.toArray(new String[itemDescriptionsList.size()]);
-            OpenType[] itemTypes = (OpenType[]) itemTypesList.toArray(new OpenType[itemTypesList.size()]);
+            String[] itemNames = (String[])itemNamesList.toArray(new String[itemNamesList.size()]);
+            String[] itemDescriptions = (String[])itemDescriptionsList.toArray(new String[itemDescriptionsList.size()]);
+            OpenType[] itemTypes = (OpenType[])itemTypesList.toArray(new OpenType[itemTypesList.size()]);
             return new CompositeType(getTypeName(), getDescription(), itemNames, itemDescriptions, itemTypes);
         }
 
@@ -89,7 +88,6 @@ public class OpenTypeSupport {
             itemDescriptionsList.add(description);
             itemTypesList.add(type);
         }
-
 
         protected String getDescription() {
             return getTypeName();

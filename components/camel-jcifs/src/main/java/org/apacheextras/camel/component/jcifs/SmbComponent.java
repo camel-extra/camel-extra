@@ -31,18 +31,17 @@ import org.apache.camel.component.file.GenericFileComponent;
 import org.apache.camel.component.file.GenericFileEndpoint;
 
 public class SmbComponent extends GenericFileComponent<SmbFile> {
-    
+
     private SmbApiFactory smbApiFactory;
 
     public SmbComponent() {
 
     }
-    
+
     public SmbComponent(CamelContext context) {
         super(context);
     }
-    
-    
+
     public void setSmbApiFactoryClass(SmbApiFactory smbApiFactory) {
         this.smbApiFactory = smbApiFactory;
     }
@@ -68,6 +67,5 @@ public class SmbComponent extends GenericFileComponent<SmbFile> {
     private String fixSpaces(String input) {
         return input.replace(" ", "%20");
     }
-
 
 }

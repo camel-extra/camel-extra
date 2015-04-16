@@ -30,8 +30,8 @@ import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
 
 /**
- * VirtualBox producer sends commands to the VirtualBox manager. It may be used to interact with and control the
- * behavior of the virtual machines.
+ * VirtualBox producer sends commands to the VirtualBox manager. It may be used
+ * to interact with and control the behavior of the virtual machines.
  */
 public class VirtualBoxProducer extends DefaultProducer {
 
@@ -41,8 +41,7 @@ public class VirtualBoxProducer extends DefaultProducer {
 
     private final String machineId;
 
-    public VirtualBoxProducer(VirtualBoxEndpoint endpoint,
-                              VirtualBoxCommandHandlersManager handlersManager, String machineId) {
+    public VirtualBoxProducer(VirtualBoxEndpoint endpoint, VirtualBoxCommandHandlersManager handlersManager, String machineId) {
         super(endpoint);
         this.handlersManager = handlersManager;
         this.machineId = machineId;
@@ -55,9 +54,8 @@ public class VirtualBoxProducer extends DefaultProducer {
         LOG.debug("Received exchange: {}", exchange);
         try {
             Object commandResult = handlersManager.handleCommand(exchange, machineId);
-            if(commandResult == null) {
-                LOG.warn("Null result returned by the VirtualBox command handler for exchange {}.",
-                        exchange.getExchangeId());
+            if (commandResult == null) {
+                LOG.warn("Null result returned by the VirtualBox command handler for exchange {}.", exchange.getExchangeId());
             }
             exchange.getIn().setBody(commandResult);
         } catch (NoHandlerRegisteredException e) {

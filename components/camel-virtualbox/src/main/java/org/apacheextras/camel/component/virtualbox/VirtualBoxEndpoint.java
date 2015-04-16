@@ -65,10 +65,8 @@ public class VirtualBoxEndpoint extends DefaultEndpoint {
 
     private String password;
 
-    public VirtualBoxEndpoint(String endpointUri, VirtualBoxComponent component, VirtualBoxTemplate virtualBoxTemplate,
-                              VirtualBoxCommandHandlersManager commandHandlersManager, String machineId,
-                              Class<? extends VirtualBoxManagerFactory> vboxManagerFactoryClass,
-                              String url, String username, String password) {
+    public VirtualBoxEndpoint(String endpointUri, VirtualBoxComponent component, VirtualBoxTemplate virtualBoxTemplate, VirtualBoxCommandHandlersManager commandHandlersManager,
+                              String machineId, Class<? extends VirtualBoxManagerFactory> vboxManagerFactoryClass, String url, String username, String password) {
         super(endpointUri, component);
         this.commandHandlersManager = commandHandlersManager;
         this.virtualBoxTemplate = virtualBoxTemplate;
@@ -91,14 +89,13 @@ public class VirtualBoxEndpoint extends DefaultEndpoint {
         if (vboxManagerFactoryClass != null) {
             return INJECTOR.newInstance(vboxManagerFactoryClass);
         } else {
-            LOG.debug("No vboxManagerFactoryClass specified - default {} with URL {} will be used.",
-                    WebServiceVirtualBoxManagerFactory.class, url);
+            LOG.debug("No vboxManagerFactoryClass specified - default {} with URL {} will be used.", WebServiceVirtualBoxManagerFactory.class, url);
             return new WebServiceVirtualBoxManagerFactory(url, username, password);
         }
     }
 
     private VirtualBoxTemplate resolveVirtualBoxTemplate() {
-        if(virtualBoxTemplate != null) {
+        if (virtualBoxTemplate != null) {
             return virtualBoxTemplate;
         } else {
             return new VirtualBoxTemplate(resolvedVirtualBoxManagerFactory);
@@ -106,9 +103,9 @@ public class VirtualBoxEndpoint extends DefaultEndpoint {
     }
 
     private VirtualBoxCommandHandlersManager resolveCommandHandlersManager() {
-        if(commandHandlersManager != null) {
+        if (commandHandlersManager != null) {
             return commandHandlersManager;
-        } else  {
+        } else {
             LOG.debug("Resolving available command handlers using {}", StaticCommandHandlersResolver.class);
             CommandHandlersResolver handlersResolver = new StaticCommandHandlersResolver(resolvedVirtualBoxTemplate, new EmptyProgressListener());
             Iterable<VirtualBoxCommandHandler<?, ?>> commandHandlers = handlersResolver.resolveCommandHandlers();
@@ -133,7 +130,7 @@ public class VirtualBoxEndpoint extends DefaultEndpoint {
 
     @Override
     public VirtualBoxComponent getComponent() {
-        return (VirtualBoxComponent) super.getComponent();
+        return (VirtualBoxComponent)super.getComponent();
     }
 
     public VirtualBoxCommandHandlersManager getCommandHandlersManager() {

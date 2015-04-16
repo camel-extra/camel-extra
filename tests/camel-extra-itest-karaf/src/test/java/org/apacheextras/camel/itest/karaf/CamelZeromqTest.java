@@ -29,12 +29,12 @@ import org.ops4j.pax.exam.junit.PaxExam;
 @RunWith(PaxExam.class)
 public class CamelZeromqTest extends AbstractFeatureTest {
 
-  @Test
-  public void test() {
-    assertTrue(getKarafFeatureUrl().toString().contains(KARAF_VERSION));
-    Feature feature = getFeature(fullComponentName());
-    assertEquals(fullComponentName(), feature.getName());
-    assertTrue(isInstalled(feature));
-  }
+    @Test
+    public void test() {
+        assertTrue(getKarafFeatureUrl().toString().contains(KARAF_VERSION));
+        Feature feature = getFeature(fullComponentName());
+        assertEquals(fullComponentName(), feature.getName());
+        assertTrue(isInstalled(feature));
+    }
 
 }

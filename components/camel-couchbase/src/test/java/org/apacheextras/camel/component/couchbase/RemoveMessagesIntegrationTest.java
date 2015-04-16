@@ -48,10 +48,7 @@ public class RemoveMessagesIntegrationTest extends CamelTestSupport {
             public void configure() throws Exception {
 
                 // need couchbase installed on localhost
-                from("direct:start")
-                        .setHeader(CouchbaseConstants.HEADER_ID, constant("120770"))
-                        .to("couchbase:http://localhost/default?operation='DELETE'")
-                        .to("mock:result");
+                from("direct:start").setHeader(CouchbaseConstants.HEADER_ID, constant("120770")).to("couchbase:http://localhost/default?operation='DELETE'").to("mock:result");
             }
         };
     }

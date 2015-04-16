@@ -29,19 +29,19 @@ import org.ops4j.pax.exam.junit.PaxExam;
 @RunWith(PaxExam.class)
 public class CamelCouchbaseTest extends AbstractFeatureTest {
 
-  @Test
-  public void shouldInstallFeature() {
-    assertIsFeatureInstalled();
-  }
+    @Test
+    public void shouldInstallFeature() {
+        assertIsFeatureInstalled();
+    }
 
-  @Test
-  public void shouldInstallFeatureOnValidKaraf() {
-    assertTrue(getKarafFeatureUrl().toString().contains(KARAF_VERSION));
-  }
+    @Test
+    public void shouldInstallFeatureOnValidKaraf() {
+        assertTrue(getKarafFeatureUrl().toString().contains(KARAF_VERSION));
+    }
 
-  @Test
-  public void shouldUseProperFeatureName() {
-    Feature feature = getFeature(fullComponentName());
-    assertEquals(fullComponentName(), feature.getName());
-  }
+    @Test
+    public void shouldUseProperFeatureName() {
+        Feature feature = getFeature(fullComponentName());
+        assertEquals(fullComponentName(), feature.getName());
+    }
 }

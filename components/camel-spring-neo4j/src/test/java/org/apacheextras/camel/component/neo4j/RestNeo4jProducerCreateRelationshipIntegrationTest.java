@@ -48,7 +48,7 @@ public class RestNeo4jProducerCreateRelationshipIntegrationTest extends CamelTes
 
     private final String neo4jEndpoint = "spring-neo4j:http://localhost:7474/db/data/";
 
-    private final Neo4jTemplate neo = new Neo4jTemplate((GraphDatabase) new SpringRestGraphDatabase("http://localhost:7474/db/data/"));
+    private final Neo4jTemplate neo = new Neo4jTemplate((GraphDatabase)new SpringRestGraphDatabase("http://localhost:7474/db/data/"));
 
     @EndpointInject(uri = "mock:end")
     private MockEndpoint end;
@@ -88,8 +88,7 @@ public class RestNeo4jProducerCreateRelationshipIntegrationTest extends CamelTes
                     Node start = neo.createNode();
                     Node end = neo.createNode();
                     BasicRelationship r = new BasicRelationship(start, end, "tickles");
-                    template.sendBodyAndHeader(r, Neo4jEndpoint.HEADER_OPERATION,
-                                               Neo4jOperation.CREATE_RELATIONSHIP);
+                    template.sendBodyAndHeader(r, Neo4jEndpoint.HEADER_OPERATION, Neo4jOperation.CREATE_RELATIONSHIP);
                 }
             }
         });

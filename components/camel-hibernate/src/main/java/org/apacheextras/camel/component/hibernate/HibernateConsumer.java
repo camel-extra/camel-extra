@@ -167,7 +167,7 @@ public class HibernateConsumer extends ScheduledPollConsumer {
      * A strategy method to lock an object with an exclusive lock so that it can
      * be processed
      *
-     * @param entity  the entity to be locked
+     * @param entity the entity to be locked
      * @param session
      * @return true if the entity was locked
      */
@@ -179,9 +179,7 @@ public class HibernateConsumer extends ScheduledPollConsumer {
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Acquiring exclusive lock on entity: " + entity);
             }
-            session.buildLockRequest(LockOptions.UPGRADE)
-            		.setLockMode(LockMode.PESSIMISTIC_WRITE)
-            		.setTimeOut(60000).lock(entity);
+            session.buildLockRequest(LockOptions.UPGRADE).setLockMode(LockMode.PESSIMISTIC_WRITE).setTimeOut(60000).lock(entity);
             return true;
         } catch (Exception e) {
             if (LOG.isDebugEnabled()) {
@@ -196,7 +194,7 @@ public class HibernateConsumer extends ScheduledPollConsumer {
             return QueryBuilder.query(query);
         } else if (namedQuery != null) {
             // TODO
-            //return QueryBuilder.namedQuery(namedQuery);
+            // return QueryBuilder.namedQuery(namedQuery);
             throw new IllegalArgumentException("named queries are not yet implemented!");
         } else if (nativeQuery != null) {
             return QueryBuilder.nativeQuery(nativeQuery);

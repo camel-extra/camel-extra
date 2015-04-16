@@ -38,8 +38,8 @@ public abstract class VirtualBoxCommandHandler<C extends VirtualBoxCommand<?>, R
      * Executes a command against the VirtualBox installation.
      *
      * @param command VirtualBox command to be executed. Cannot be null.
-     * @return Result of the execution or {@link NoReturnValue} to indicate that operation do not return meaningful
-     * value. Null can be returned.
+     * @return Result of the execution or {@link NoReturnValue} to indicate that
+     *         operation do not return meaningful value. Null can be returned.
      */
     public abstract R handle(C command);
 

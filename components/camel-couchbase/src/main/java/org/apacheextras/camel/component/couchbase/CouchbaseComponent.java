@@ -41,8 +41,7 @@ public class CouchbaseComponent extends DefaultComponent {
     }
 
     @Override
-    protected CouchbaseEndpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters)
-            throws Exception {
+    protected CouchbaseEndpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
         CouchbaseEndpoint endpoint = new CouchbaseEndpoint(uri, remaining, this);
         setProperties(endpoint, parameters);
         return endpoint;

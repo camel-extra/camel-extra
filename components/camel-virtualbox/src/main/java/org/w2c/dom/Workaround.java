@@ -22,11 +22,11 @@
 package org.w2c.dom;
 
 /**
- * This interface is an workaround around the fact that VirtualBox OSGI manifest requires 'org.w2c.dom' package
- * while it is impossible to find one almost anywhere. The workaround around this issue is to make camel-virtualbox
- * exports the 'org.w2c.dom' package itself.
- *
- * 'org.w2c.dom' workaround is explained here -
+ * This interface is an workaround around the fact that VirtualBox OSGI manifest
+ * requires 'org.w2c.dom' package while it is impossible to find one almost
+ * anywhere. The workaround around this issue is to make camel-virtualbox
+ * exports the 'org.w2c.dom' package itself. 'org.w2c.dom' workaround is
+ * explained here -
  * https://code.google.com/a/apache-extras.org/p/camel-extra/issues/detail?id=53
  */
 public interface Workaround {

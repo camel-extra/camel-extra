@@ -23,7 +23,6 @@ package org.apacheextras.camel.examples.esper;
 
 public enum FeedEnum {
 
-    FEED_A,
-    FEED_B;
+    FEED_A, FEED_B;
 
 }
