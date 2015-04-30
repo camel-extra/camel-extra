@@ -126,5 +126,10 @@ public class SmbConsumer extends GenericFileConsumer<SmbFile> {
         log.trace("Done file: {} does not exist", doneFileName);
         return false;
     }
+    
+    @Override
+    protected boolean isRetrieveFile() {
+        return ((SmbEndpoint)getEndpoint()).isDownload();
+    }
 
 }
