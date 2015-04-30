@@ -31,6 +31,8 @@ import org.apache.camel.impl.DefaultExchange;
 import org.apache.camel.processor.idempotent.MemoryIdempotentRepository;
 
 public class SmbEndpoint extends GenericFileEndpoint<SmbFile> {
+    
+    private boolean download = true;
 
     public SmbEndpoint(String uri, SmbComponent smbComponent, SmbConfiguration configuration) {
         super(uri, smbComponent);
@@ -112,7 +114,15 @@ public class SmbEndpoint extends GenericFileEndpoint<SmbFile> {
     public boolean isSingleton() {
         return false;
     }
+    
+    public boolean isDownload() {
+        return download;
+    }
 
+    public void setDownload(boolean download) {
+        this.download = download;
+    }
+    
     @Override
     protected String createDoneFileName(String fileName) {
         return super.createDoneFileName(fileName);
