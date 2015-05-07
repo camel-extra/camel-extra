@@ -108,7 +108,7 @@ public class DefaultSmbClient implements SmbClient {
     } catch (IOException e) {
       LOGGER.error(
           "Could not locate or create direction '{}' due to '{}'",
-          e.getMessage(), e);
+          url, e);
       return false;
     }
     return true;
