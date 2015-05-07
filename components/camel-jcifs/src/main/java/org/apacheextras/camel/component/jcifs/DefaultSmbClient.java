@@ -187,7 +187,7 @@ public class DefaultSmbClient implements SmbClient {
     try {
       sFile.delete();
     } catch (SmbException e) {
-      LOGGER.error("Could not delete '{}' due to '{}'", e.getMessage(), e);
+      LOGGER.error("Could not delete '{}' due to '{}'", url, e);
       return false;
     }
     return true;
@@ -207,7 +207,7 @@ public class DefaultSmbClient implements SmbClient {
         sFile.renameTo(renamedFile);
       }
     } catch (SmbException e) {
-      LOGGER.error("Could not rename '{}' due to '{}'", e.getMessage(), e);
+      LOGGER.error("Could not rename '{}' to '{}' due to '{}'", new Object[]{ fromUrl, toUrl, e});
       return false;
     }
     return true;
