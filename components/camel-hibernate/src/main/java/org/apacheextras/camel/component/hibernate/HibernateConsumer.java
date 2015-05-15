@@ -37,7 +37,11 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 public class HibernateConsumer extends ScheduledPollConsumer {
+
     private static final transient Logger LOG = LoggerFactory.getLogger(HibernateConsumer.class);
+
+    public static final String CAMEL_HIBERNATE_LAST_ELEMENT_IN_BATCH = "CamelHibernateLastElementInBatch";
+
     private final HibernateEndpoint endpoint;
     private final TransactionStrategy transactionStrategy;
     private QueryFactory queryFactory;
@@ -54,22 +58,24 @@ public class HibernateConsumer extends ScheduledPollConsumer {
 
     @Override
     protected int poll() throws Exception {
-        transactionStrategy.execute(new TransactionCallback() {
+        return transactionStrategy.execute(new TransactionCallback<Integer>() {
             @Override
-            public Object doInTransaction(Session session) {
+            public Integer doInTransaction(Session session) {
                 Query query = getQueryFactory().createQuery(session);
                 configureParameters(query);
                 List results = query.list();
-                for (Object result : results) {
+                for (int i = 0; i < results.size(); i++) {
+                    Object result = results.get(i);
                     if (LOG.isDebugEnabled()) {
                         LOG.debug("Processing new entity: " + result);
                     }
 
+                    boolean lastElementInBatch = (i == (results.size() - 1));
                     if (endpoint.isDeleteFirstOnConsume()) {
                         getDeleteHandler().deleteObject(session, result);
-                        processResult(result);
+                        processResult(result, lastElementInBatch);
                     } else if (lockEntity(result, session)) {
-                        processResult(result);
+                        processResult(result, lastElementInBatch);
                         getDeleteHandler().deleteObject(session, result);
                     }
                 }
@@ -77,13 +83,12 @@ public class HibernateConsumer extends ScheduledPollConsumer {
                 return results.size();
             }
         });
-        return 0;
     }
 
-    protected void processResult(Object result) {
+    protected void processResult(Object result, boolean lastElementInBatch) {
         // lets turn the result into an exchange and fire it
         // into the processor
-        Exchange exchange = createExchange(result);
+        Exchange exchange = createExchange(result, lastElementInBatch);
         try {
             getProcessor().process(exchange);
             if (exchange.isFailed()) {
@@ -245,9 +250,11 @@ public class HibernateConsumer extends ScheduledPollConsumer {
         }
     }
 
-    protected Exchange createExchange(Object result) {
+    protected Exchange createExchange(Object result, boolean lastElementInBatch) {
         Exchange exchange = endpoint.createExchange();
         exchange.getIn().setBody(result);
+        exchange.getIn().setHeader(CAMEL_HIBERNATE_LAST_ELEMENT_IN_BATCH, lastElementInBatch);
         return exchange;
     }
+
 }
