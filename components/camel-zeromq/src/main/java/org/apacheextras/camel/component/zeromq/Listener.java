@@ -66,9 +66,15 @@ class Listener implements Runnable {
         socket = akkaSocketFactory.createConsumerSocket(context, endpoint.getSocketType());
 
         String addr = endpoint.getSocketAddress();
-        LOGGER.info("Connecting to server [{}]", addr);
-        socket.connect(addr);
-        LOGGER.info("Connected OK");
+        if (endpoint.getMode() == null || endpoint.getMode().equals("CONNECT")) {
+            LOGGER.info("Connecting to server [{}]", addr);
+            socket.connect(addr);
+            LOGGER.info("Connected OK");
+        } else {
+            LOGGER.info("Binding to server [{}]", addr);
+            socket.bind(addr);
+            LOGGER.info("Bound OK");
+        }
 
         if (endpoint.getSocketType() == ZeromqSocketType.SUBSCRIBE) {
             subscribe();

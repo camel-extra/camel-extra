@@ -93,9 +93,15 @@ public class ZeromqProducer extends DefaultProducer {
         this.topics = endpoint.getTopics() == null ? null : endpoint.getTopics().split(",");
 
         String addr = endpoint.getSocketAddress();
-        LOGGER.info("Binding client to [{}]", addr);
-        socket.bind(addr);
-        LOGGER.info("Client bound OK");
+        if (endpoint.getMode() == null || endpoint.getMode().equals("BIND")) {
+            LOGGER.info("Binding client to [{}]", addr);
+            socket.bind(addr);
+            LOGGER.info("Bound OK");
+        } else {
+            LOGGER.info("Connecting client to [{}]", addr);
+            socket.connect(addr);
+            LOGGER.info("Connected OK");
+        }
     }
 
     @Override
