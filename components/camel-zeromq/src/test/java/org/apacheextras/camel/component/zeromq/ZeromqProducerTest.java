@@ -165,4 +165,18 @@ public class ZeromqProducerTest {
         producer.stop();
         t.join();
     }
+
+    @Test
+    public void bind() throws Exception {
+    	// BIND mode by default
+    	producer.start();
+    	verify(socket).bind(endpoint.getSocketAddress());
+    }
+
+    @Test
+    public void connect() throws Exception {
+    	when(endpoint.getMode()).thenReturn("CONNECT");
+    	producer.start();
+    	verify(socket).connect(endpoint.getSocketAddress());
+    }
 }

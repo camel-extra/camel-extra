@@ -22,6 +22,7 @@
 package org.apacheextras.camel.component.zeromq;
 
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.Endpoint;
@@ -36,7 +37,10 @@ import org.apache.camel.spi.ExecutorServiceManager;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
+import org.zeromq.ZMQ.Context;
+import org.zeromq.ZMQ.Socket;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
@@ -76,14 +80,55 @@ public class ZeromqConsumerTest extends CamelTestSupport {
     @Mock
     private ExecutorService executor;
 
+    @Mock
+    private AkkaSocketFactory akkaSocketFactory;
+
+    @Mock
+    private Socket socket;
+
+    @Mock
+    private AkkaContextFactory akkaContextFactory;
+
+    @Mock
+    private Context context;
+
     @Before
     public void before() {
         initMocks(this);
 
-        consumer = new ZeromqConsumer(endpoint, processor, new AkkaContextFactory(), new AkkaSocketFactory(-1, -1));
         when(endpoint.getCamelContext()).thenReturn(ctx);
+        when(endpoint.getSocketType()).thenReturn(ZeromqSocketType.SUBSCRIBE);
+        when(endpoint.getSocketAddress()).thenReturn("tcp://localhost:5555");
+
+        when(akkaContextFactory.createContext(anyInt())).thenReturn(context);
+        when(akkaSocketFactory.createConsumerSocket(context, ZeromqSocketType.SUBSCRIBE)).thenReturn(socket);
+
         when(ctx.getExecutorServiceManager()).thenReturn(manager);
         when(manager.newFixedThreadPool(any(ZeromqConsumer.class), anyString(), anyInt())).thenReturn(executor);
+
+        consumer = new ZeromqConsumer(endpoint, processor, akkaContextFactory, akkaSocketFactory);
+    }
+
+    @Test
+    public void connect() throws Exception {
+    	ExecutorService executor = Executors.newFixedThreadPool(1);
+    	when(manager.newFixedThreadPool(any(ZeromqConsumer.class), anyString(), anyInt())).thenReturn(executor);
+
+    	// CONNECT mode by default
+    	consumer.doStart();
+    	Thread.sleep(50);
+    	verify(socket).connect(endpoint.getSocketAddress());
+    }
+
+    @Test
+    public void bind() throws Exception {
+    	ExecutorService executor = Executors.newFixedThreadPool(1);
+    	when(manager.newFixedThreadPool(any(ZeromqConsumer.class), anyString(), anyInt())).thenReturn(executor);
+
+    	when(endpoint.getMode()).thenReturn("BIND");
+    	consumer.doStart();
+    	Thread.sleep(50);
+    	verify(socket).bind(endpoint.getSocketAddress());
     }
 
     @Test
