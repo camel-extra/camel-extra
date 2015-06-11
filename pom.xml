@@ -82,7 +82,7 @@
     <couchbase-client-version>1.4.9</couchbase-client-version>
     <spymemcached-couchbase-client-version>2.11.7</spymemcached-couchbase-client-version>
     <db4o-version>8.0</db4o-version>
-    <esper-version>4.11.0</esper-version>
+    <esper-version>5.2.0</esper-version>
     <exist-version>0.9.2</exist-version>
     <geronimo-servlet-spec12-version>1.2</geronimo-servlet-spec12-version>
     <hibernate-commons-annotation-version>4.0.2.Final</hibernate-commons-annotation-version>
