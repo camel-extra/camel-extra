@@ -128,7 +128,7 @@ public class DefaultSmbClient implements SmbClient {
   public boolean storeFile(String url, InputStream inputStream, boolean append, Long lastModified)
       throws IOException {
     if (LOGGER.isDebugEnabled()) {
-      LOGGER.debug("storeFile path[" + url + "]");
+      LOGGER.debug("storeFile() path[" + url + "]");
     }
     SmbFile smbFile = smbApiFactory.createSmbFile(url, authentication);
     SmbFileOutputStream smbout = smbApiFactory.createSmbFileOutputStream(
@@ -185,7 +185,14 @@ public class DefaultSmbClient implements SmbClient {
   public boolean delete(String url) throws Exception {
     SmbFile sFile = smbApiFactory.createSmbFile(url, authentication);
     try {
-      sFile.delete();
+      // Only try to delete if the file do exists to avoid error message
+      if ( sFile.exists() ) {
+        sFile.delete();
+      } else {
+        if (LOGGER.isDebugEnabled()) {
+          LOGGER.debug("File '{}' did not exist, skipped delete", url);
+        }
+      }
     } catch (SmbException e) {
       LOGGER.error("Could not delete '{}' due to '{}'", url, e);
       return false;

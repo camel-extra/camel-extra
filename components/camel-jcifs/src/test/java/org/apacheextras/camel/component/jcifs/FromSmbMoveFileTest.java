@@ -88,8 +88,9 @@ public class FromSmbMoveFileTest extends BaseSmbTestSupport {
     expect(sourceFile.getContentLength()).andReturn(FILE_CONTENT.length).anyTimes();
     expect(sourceFile.getLastModified()).andReturn(startTime).anyTimes();
     expect(sourceFile.getInputStream()).andReturn(mockInputStream).anyTimes();
+    expect(renamedFile.exists()).andReturn(false);
     expect(sourceFile.exists()).andReturn(true);
-    expect(renamedFile.exists()).andDelegateTo(false);
+    expect(renamedFile.exists()).andReturn(false);
     sourceFile.renameTo(renamedFile);
 
 
@@ -118,15 +119,15 @@ public class FromSmbMoveFileTest extends BaseSmbTestSupport {
 
   @Test
   public void testPollFileAndShouldBeMoved() throws Exception {
-    replay(rootDir, sourceFile, sub2Dir, mockInputStream, mockOutputStream);
+    replay(rootDir, sourceFile, renamedFile, sub2Dir, mockInputStream, mockOutputStream);
 
     mockResult.expectedMessageCount(1);
     mockResult.expectedBodiesReceived("Hello World this file will be moved");
 
     assertMockEndpointsSatisfied();
-    Thread.sleep(1000); // Sleep an extra second to make sure we capture the rename
+    Thread.sleep(1500); // Sleep an extra second to make sure we capture the rename
 
-    verify(rootDir, sourceFile, sub2Dir, mockInputStream, mockOutputStream);
+    verify(rootDir, sourceFile, renamedFile, sub2Dir, mockInputStream, mockOutputStream);
   }
 
   protected RouteBuilder createRouteBuilder() throws Exception {
