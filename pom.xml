@@ -75,7 +75,7 @@
 
     <!-- gpg passphrase for releases -->
     <gpg.passphrase/>
-    <akka-version>2.3.3</akka-version>
+    <akka-version>2.3.11</akka-version>
     <antlr-bundle-version>3.5.1_1</antlr-bundle-version>
     <antlr-bundle-hibernate-version>2.7.7_5</antlr-bundle-hibernate-version>
     <cobertura-maven-plugin-version>2.6</cobertura-maven-plugin-version>
