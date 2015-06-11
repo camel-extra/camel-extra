@@ -319,8 +319,9 @@
               <exclude>**/avro/**/*.avpr</exclude>
               <exclude>**/OSGI-INF/bundle.info</exclude>
               <exclude>**/test_rsa*</exclude>
-
+              <exclude>**/.gitignore</exclude>
               <exclude>**/*.csv</exclude>
+              <exclude>atlassian-ide-plugin.xml</exclude>
             </excludes>
           </configuration>
         </plugin>
