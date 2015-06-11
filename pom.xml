@@ -60,7 +60,7 @@
     <camel.osgi.symbolic.name>${project.groupId}.${project.artifactId}</camel.osgi.symbolic.name>
 
     <akka-version>2.2.1</akka-version>
-    <antlr-bundle-version>4.5</antlr-bundle-version>
+    <antlr-bundle-version>3.5_1</antlr-bundle-version>
     <antlr-bundle-hibernate-version>2.7.7_5</antlr-bundle-hibernate-version>
     <db4o-version>8.0</db4o-version>
     <esper-version>4.10.0</esper-version>
