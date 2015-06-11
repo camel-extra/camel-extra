@@ -39,14 +39,13 @@ import java.io.File;
 
 import static org.ops4j.pax.exam.CoreOptions.maven;
 import static org.ops4j.pax.exam.CoreOptions.mavenBundle;
-import static org.ops4j.pax.exam.CoreOptions.repositories;
 import static org.ops4j.pax.exam.karaf.options.KarafDistributionOption.*;
 
 public class AbstractFeatureTest extends Assert {
 
   public static final String CAMEL_EXTRA_GROUP_ID = "org.apache-extras.camel-extra.karaf";
   public static final String CAMEL_EXTRA_ARTIFACT_ID = "camel-extra";
-  public static final String KARAF_VERSION = "2.3.3";
+  public static final String KARAF_VERSION = "2.3.7";
 
   private static final Logger LOGGER = LoggerFactory.getLogger(AbstractFeatureTest.class);
 
