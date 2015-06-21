@@ -74,7 +74,6 @@
     <camel.osgi.symbolic.name>${project.groupId}.${project.artifactId}</camel.osgi.symbolic.name>
 
     <!-- gpg passphrase for releases -->
-    <gpg.passphrase/>
     <akka-version>2.3.11</akka-version>
     <antlr-bundle-version>4.5</antlr-bundle-version>
     <antlr-bundle-hibernate-version>2.7.7_5</antlr-bundle-hibernate-version>
@@ -519,7 +518,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-gpg-plugin</artifactId>
-            <version>1.6</version>
+            <version>1.4</version>
             <configuration>
               <passphrase>${gpg.passphrase}</passphrase>
               <useAgent>${gpg.useagent}</useAgent>
