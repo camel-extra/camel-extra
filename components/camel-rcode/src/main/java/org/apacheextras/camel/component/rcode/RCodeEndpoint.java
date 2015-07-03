@@ -26,6 +26,7 @@ import org.apache.camel.Processor;
 import org.apache.camel.Producer;
 import org.apache.camel.RuntimeCamelException;
 import org.apache.camel.impl.DefaultEndpoint;
+import org.apache.camel.spi.UriEndpoint;
 import org.rosuda.REngine.REXP;
 import org.rosuda.REngine.REXPMismatchException;
 import org.rosuda.REngine.REngineException;
@@ -37,6 +38,7 @@ import org.slf4j.LoggerFactory;
 /**
  * The RCodeEndpoint is the components Camel endpoint.
  */
+@UriEndpoint(scheme = "esper", syntax = "rcode://host[:port]/operation[?options]")
 public class RCodeEndpoint extends DefaultEndpoint {
 
     // Logger to provide a certain level of information

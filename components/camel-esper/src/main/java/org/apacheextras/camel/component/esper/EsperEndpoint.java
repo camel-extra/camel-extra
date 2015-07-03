@@ -35,6 +35,7 @@ import org.apache.camel.Message;
 import org.apache.camel.PollingConsumer;
 import org.apache.camel.Processor;
 import org.apache.camel.impl.DefaultEndpoint;
+import org.apache.camel.spi.UriEndpoint;
 import org.apache.camel.util.ObjectHelper;
 
 /**
@@ -42,6 +43,7 @@ import org.apache.camel.util.ObjectHelper;
  *
  * @version $Revision: 1.1 $
  */
+@UriEndpoint(scheme = "esper", syntax = "esper:name[?options]", consumerClass = EsperConsumer.class)
 public class EsperEndpoint extends DefaultEndpoint {
 
   private final EsperComponent component;

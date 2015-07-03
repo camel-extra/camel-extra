@@ -25,9 +25,11 @@ import org.apache.camel.Consumer;
 import org.apache.camel.Processor;
 import org.apache.camel.Producer;
 import org.apache.camel.impl.DefaultEndpoint;
+import org.apache.camel.spi.UriEndpoint;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.springframework.data.neo4j.rest.SpringRestGraphDatabase;
 
+@UriEndpoint(scheme = "spring-neo4j", syntax = "spring-neo4j:http://hostname[:port]/database[?options]")
 public class Neo4jEndpoint extends DefaultEndpoint {
 
     public static final String HEADER_OPERATION = "Neo4jOperation";

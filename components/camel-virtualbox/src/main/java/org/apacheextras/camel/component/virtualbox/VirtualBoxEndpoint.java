@@ -24,6 +24,7 @@ package org.apacheextras.camel.component.virtualbox;
 import org.apache.camel.Processor;
 import org.apache.camel.impl.DefaultEndpoint;
 import org.apache.camel.spi.Injector;
+import org.apache.camel.spi.UriEndpoint;
 import org.apache.camel.util.ReflectionInjector;
 import org.apacheextras.camel.component.virtualbox.command.CommandHandlersResolver;
 import org.apacheextras.camel.component.virtualbox.command.StaticCommandHandlersResolver;
@@ -37,6 +38,7 @@ import org.slf4j.Logger;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
+@UriEndpoint(scheme = "virtualbox", syntax = "virtualbox:machine[?options]", consumerClass = VirtualBoxConsumer.class)
 public class VirtualBoxEndpoint extends DefaultEndpoint {
 
     private static final Logger LOG = getLogger(VirtualBoxEndpoint.class);

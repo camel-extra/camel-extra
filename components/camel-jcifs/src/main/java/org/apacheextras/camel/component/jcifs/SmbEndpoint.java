@@ -29,7 +29,9 @@ import org.apache.camel.component.file.GenericFileEndpoint;
 import org.apache.camel.component.file.GenericFileProducer;
 import org.apache.camel.impl.DefaultExchange;
 import org.apache.camel.processor.idempotent.MemoryIdempotentRepository;
+import org.apache.camel.spi.UriEndpoint;
 
+@UriEndpoint(scheme = "smb", syntax = "smb://user@server.example.com/sharename?password=secret&localWorkDirectory=/tmp", consumerClass = SmbConsumer.class)
 public class SmbEndpoint extends GenericFileEndpoint<SmbFile> {
     
     private boolean download = true;

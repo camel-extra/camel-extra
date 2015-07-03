@@ -26,11 +26,13 @@ import org.apache.camel.Consumer;
 import org.apache.camel.Processor;
 import org.apache.camel.Producer;
 import org.apache.camel.impl.ScheduledPollEndpoint;
+import org.apache.camel.spi.UriEndpoint;
 import org.apache.camel.util.ObjectHelper;
 
 /**
  * @version $Revision$
  */
+@UriEndpoint(scheme = "db4o", syntax = "db4o://className", consumerClass = Db4oConsumer.class)
 public class Db4oEndpoint extends ScheduledPollEndpoint {
     private ObjectContainer objectContainer;
     private Class storedClass;

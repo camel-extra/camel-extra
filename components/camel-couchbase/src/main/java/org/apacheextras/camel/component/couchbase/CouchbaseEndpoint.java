@@ -41,7 +41,7 @@ import static org.apacheextras.camel.component.couchbase.CouchbaseConstants.*;
 /**
  * Represents a Couchbase endpoint that can query Views with a Poll strategy and/or produce various type of operations.
  */
-@UriEndpoint(scheme = "couchbase", syntax = "couchbase://protocoll/host:port/bucket", consumerClass = CouchbaseConsumer.class)
+@UriEndpoint(scheme = "couchbase", syntax = "couchbase:protocol://host[:port]/bucket", consumerClass = CouchbaseConsumer.class)
 public class CouchbaseEndpoint extends ScheduledPollEndpoint {
 
     // URL stuff

@@ -26,6 +26,7 @@ import org.apache.camel.ExchangePattern;
 import org.apache.camel.Message;
 import org.apache.camel.PollingConsumer;
 import org.apache.camel.impl.DefaultPollingEndpoint;
+import org.apache.camel.spi.UriEndpoint;
 import org.apache.camel.util.ObjectHelper;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.base.Resource;
@@ -34,6 +35,7 @@ import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XPathQueryService;
 
+@UriEndpoint(scheme = "xmldb", syntax = "xmldb:test:///[database]?xpath=[path]", consumerClass = ExistPollingConsumer.class)
 public class ExistEndpoint extends DefaultPollingEndpoint {
     private Collection collection;
     private String xpath;

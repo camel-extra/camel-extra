@@ -29,6 +29,7 @@ import org.apache.camel.Processor;
 import org.apache.camel.Producer;
 import org.apache.camel.builder.ExpressionBuilder;
 import org.apache.camel.impl.ScheduledPollEndpoint;
+import org.apache.camel.spi.UriEndpoint;
 import org.apache.camel.util.ObjectHelper;
 import org.hibernate.SessionFactory;
 
@@ -36,6 +37,7 @@ import org.hibernate.SessionFactory;
  * A Hibernate endpoint
  * 
  */
+@UriEndpoint(scheme = "hibernate", syntax = "hibernate://entityName", consumerClass = HibernateConsumer.class)
 public class HibernateEndpoint extends ScheduledPollEndpoint {
     private SessionFactory sessionFactory;
     private TransactionStrategy transactionStrategy;
