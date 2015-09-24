@@ -36,15 +36,15 @@ import org.junit.Test;
 public class RouteTest extends CamelTestSupport {
 
 	/** CTG Host */
-	private static final String CTG_HOST = "arde.intrallianz.es";
+	private static final String CTG_HOST = "ctghost";
 	
 	/** CTG Port */
 	private static final String CTG_PORT = "2006";
 
 	/** CTG Server */
-	private static final String CTG_SERVER = "CI0ARDE";
+	private static final String CTG_SERVER = "ctgserver";
 
-	@Test
+	@Test(expected = Exception.class)	
 	public void testRoute() throws Exception {
 		MockEndpoint mock = getMockEndpoint("mock:result");
 		mock.expectedMinimumMessageCount(1);
@@ -65,7 +65,7 @@ public class RouteTest extends CamelTestSupport {
 						.setHeader("commAreaSize", constant("18"))
 						.setBody(method(EC01Impl.class, "getData"))
 						.log("Calling EC01 Program")
-						.to("cics://arde.intrallianz.es:2006/CI0ARDE")
+						.to("cics://" + CTG_HOST + ":" + CTG_PORT + "/" + CTG_SERVER)
 						.log("Called EC01 Program").to("mock:result");
 			}
 		};
