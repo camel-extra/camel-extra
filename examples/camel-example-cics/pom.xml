@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    https://camel-extra.github.io
+
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation; either version 2
+    of the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+    02110-1301, USA.
+
+    http://www.gnu.org/licenses/gpl-2.0-standalone.html
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.apache-extras.camel-extra</groupId>
+    <artifactId>examples</artifactId>
+    <version>2.14.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>camel-example-cics</artifactId>
+  <packaging>jar</packaging>
+
+  <name>Camel Extra :: Component Examples :: A Camel CICS Sample</name>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		
+		<!-- Versions -->
+		<org.apache.camel.version>2.15.2</org.apache.camel.version>
+    <org.slf4j.version>1.7.5</org.slf4j.version>
+    <log4j.version>1.2.17</log4j.version>
+
+		<!-- Features -->
+		<fabric8.features>camel-jetty camel-core</fabric8.features>
+		<fabric8.bundles>mvn:com.ibm.ctg/client/1.0.0 mvn:org.apache-extras.camel-extra/camel-cics/2.14.0-SNAPSHOT</fabric8.bundles>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-core</artifactId>
+			<version>${org.apache.camel.version}</version><!--$NO-MVN-MAN-VER$-->
+		</dependency>
+
+		<!-- Camel CICS Component -->
+		<dependency> 
+			<groupId>com.ibm.ctg</groupId><!--$NO-MVN-MAN-VER$--> 
+			<artifactId>client</artifactId> 
+			<version>1.0.0</version> 
+		</dependency>
+		<dependency> 
+			<groupId>org.apache-extras.camel-extra</groupId> 
+			<artifactId>camel-cics</artifactId> 
+			<version>${project.version}</version> 
+		</dependency>
+
+		<!-- logging -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${org.slf4j.version}</version><!--$NO-MVN-MAN-VER$-->
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${org.slf4j.version}</version><!--$NO-MVN-MAN-VER$-->
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<version>${org.slf4j.version}</version><!--$NO-MVN-MAN-VER$-->
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<defaultGoal>install</defaultGoal>
+		
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+			<resource>
+				<directory>src/main/fabric8</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>		
+
+		<plugins>
+			<!-- to run the example using mvn camel:run -->
+			<plugin>
+				<groupId>org.apache.camel</groupId>
+				<artifactId>camel-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

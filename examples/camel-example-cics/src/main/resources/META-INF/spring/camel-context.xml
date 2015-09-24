@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    https://camel-extra.github.io
+
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation; either version 2
+    of the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+    02110-1301, USA.
+
+    http://www.gnu.org/licenses/gpl-2.0-standalone.html
+-->
+
+<!-- Configures the Camel Context-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:amq="http://activemq.apache.org/schema/core"
+	xmlns:camel="http://camel.apache.org/schema/spring"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd
+       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+       
+  <!-- Communication Areas (CommAreas) -->  
+  <bean id="EC01" class="org.apacheextras.camel.examples.cics.commareas.EC01Impl"/>
+
+  <camelContext trace="false" id="camelcics-blueprintContext" xmlns="http://camel.apache.org/schema/blueprint">
+    <camel:propertyPlaceholder location="classpath:config.properties"/>
+    
+    <camel:endpoint id="cicsEndpoint" uri="cics://{{ctg.host}}:{{ctg.port}}/{{ctg.server}}">
+        <camel:property key="ctgDebug" value="false"/>
+        <camel:property key="TraceLevel" value="8"/>
+      </camel:endpoint>
+
+      <route id="timerToCICS-EC01" autoStartup="true">
+          <from uri="timer:cics?period=60000"/>
+          <log message="CTG Environment: ${properties:ctg.host}:${properties:ctg.port}/${properties:ctg.server}"/>
+
+          <setHeader id="programName-EC01" headerName="programName">
+            <constant>EC01</constant>
+          </setHeader>
+          <setHeader id="commAreaSize-EC01" headerName="commAreaSize">
+            <constant>18</constant>
+          </setHeader>
+
+          <log message="Calling EC01 using String Data"/>
+          <setBody id="commArea-EC01">
+              <method ref="EC01" method="getData"/>
+          </setBody>
+          <to uri="ref:cicsEndpoint"/>
+          <log message="Called EC01 using String Data. Output: ${body}"/>
+      </route>
+  </camelContext>
+
+</beans>
