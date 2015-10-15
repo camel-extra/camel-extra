@@ -36,7 +36,7 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>camel-cics</module>  
+    <!-- <module>camel-cics</module> --> 
     <module>camel-couchbase</module>
     <!-- <module>camel-db4o</module> -->
     <module>camel-esper</module>
