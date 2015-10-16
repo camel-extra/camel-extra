@@ -187,8 +187,8 @@ public class RCodeRouteBuilder extends RouteBuilder {
         // Configure CSV data format with ';' as separator and skipping of the
         // header
         final CsvDataFormat csv = new CsvDataFormat();
-        csv.setDelimiter(";");
-        csv.setSkipFirstLine(true);
+        csv.setDelimiter(';');
+        csv.setSkipHeaderRecord(true);
         from("file://" + source.getPath() + "?noop=TRUE").unmarshal(csv)
         // Call the processor to calculate the daily figures into monthly
         // results

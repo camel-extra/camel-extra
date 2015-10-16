@@ -35,6 +35,7 @@ import org.apacheextras.camel.component.neo4j.Neo4jOperation;
 import org.apacheextras.camel.component.neo4j.Neo4jProducer;
 import org.apacheextras.camel.component.neo4j.SpringDataRelationship;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.neo4j.graphdb.Node;
@@ -49,6 +50,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
+@Ignore
 public class Neo4jProducerTest {
 
     private EmbeddedGraphDatabase db;

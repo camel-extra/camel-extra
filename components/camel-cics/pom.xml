@@ -27,7 +27,7 @@
   <parent>
     <groupId>org.apache-extras.camel-extra</groupId>
     <artifactId>components</artifactId>
-    <version>2.14.0-SNAPSHOT</version>
+    <version>2.15.0-SNAPSHOT</version>
   </parent>
 
   <artifactId>camel-cics</artifactId>
@@ -43,11 +43,7 @@
 		<!-- Camel OSGi Component -->
   		<camel.osgi.export.pkg>org.apache.camel.component.cics.*</camel.osgi.export.pkg>
 		<camel.osgi.export.service>org.apache.camel.spi.ComponentResolver;component=cics</camel.osgi.export.service>
-		
-		<!-- Versions -->
-		<org.apache.camel.version>2.15.2</org.apache.camel.version>
-		<org.slf4j.version>1.7.5</org.slf4j.version>
-		<log4j.version>1.2.17</log4j.version>
+
 	</properties>
 
 	<dependencies>
@@ -55,14 +51,12 @@
 		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-core</artifactId>
-			<version>${org.apache.camel.version}</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
 
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
-			<version>${org.slf4j.version}</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
 
 		<!-- CTG v.9.1 -->
@@ -76,19 +70,16 @@
 		<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-test</artifactId>
-			<version>${org.apache.camel.version}</version><!--$NO-MVN-MAN-VER$-->
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<version>${org.slf4j.version}</version><!--$NO-MVN-MAN-VER$-->
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-			<version>${log4j.version}</version><!--$NO-MVN-MAN-VER$-->
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
