@@ -36,7 +36,7 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>camel-example-cics</module>
+    <!-- <module>camel-example-cics</module> -->
     <module>camel-example-esper</module>
     <module>camel-example-hibernate</module>
     <module>camel-example-rcode</module>
