@@ -44,7 +44,7 @@ public class WMQComponent extends UriEndpointComponent {
                     LOGGER.debug("mq.properties not found from etc folder, falling to default");
                     loadedProperties.put("hostname", "localhost");
                     loadedProperties.put("port", "7777");
-                    loadedProperties.put("channel", "QM_TEST.SVRCONN");
+                    loadedProperties.put("channel", "QM_TEST");
                     loadedProperties.put("name", "QM_TEST");
                 }
             }
