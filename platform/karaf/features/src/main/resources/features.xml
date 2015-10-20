@@ -126,6 +126,10 @@
     <bundle>wrap:mvn:com.ximpleware/vtd-xml/${vtd-xml-version}</bundle>
     <bundle>mvn:org.apache-extras.camel-extra/camel-vtdxml/${project.version}</bundle>
   </feature>
+  <feature name='camel-wmq' version='${project.version}' resolver='(obr)'>
+    <feature version='${camel-version}'>camel</feature>
+    <bundle>mvn:org.apache-extras.camel-extra/camel-wmq/${project.version}</bundle>
+  </feature>
   <feature name='camel-zeromq' version='${project.version}' resolver='(obr)' start-level='50'>
     <feature version='${camel-version}'>camel</feature>
     <bundle>wrap:mvn:org.zeromq/zeromq-scala-binding_2.10/${zeromq-scala-binding-version}</bundle>
