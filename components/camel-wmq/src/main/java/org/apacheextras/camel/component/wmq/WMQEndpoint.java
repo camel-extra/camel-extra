@@ -1,3 +1,24 @@
+/**************************************************************************************
+ https://camel-extra.github.io
+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Lesser General Public License
+ as published by the Free Software Foundation; either version 3
+ of the License, or (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU Lesser General Public License for more details.
+
+
+ You should have received a copy of the GNU Lesser General Public
+ License along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+ 02110-1301, USA.
+
+ http://www.gnu.org/licenses/lgpl-3.0-standalone.html
+ ***************************************************************************************/
 package org.apacheextras.camel.component.wmq;
 
 import org.apache.camel.Component;
@@ -17,7 +38,16 @@ public class WMQEndpoint extends DefaultEndpoint {
     private String destinationName;
 
     @UriParam
-    private String destinationType;
+    private String queueManagerName;
+
+    @UriParam
+    private String queueManagerHostname;
+
+    @UriParam
+    private String queueManagerPort;
+
+    @UriParam
+    private String queueManagerChannel;
 
     public String getDestinationName() {
         return destinationName;
@@ -27,14 +57,36 @@ public class WMQEndpoint extends DefaultEndpoint {
         this.destinationName = destinationName;
     }
 
-    @ManagedAttribute(description = "MQ destination type (queue or topic)")
-    public String getDestinationType() {
-        return destinationType;
+    public String getQueueManagerName() {
+        return queueManagerName;
     }
 
-    @ManagedAttribute(description = "MQ destination type (queue or topic)")
-    public void setDestinationType(String destinationType) {
-        this.destinationType = destinationType;
+    public void setQueueManagerName(String queueManagerName) {
+        this.queueManagerName = queueManagerName;
+    }
+
+    public String getQueueManagerHostname() {
+        return queueManagerHostname;
+    }
+
+    public void setQueueManagerHostname(String queueManagerHostname) {
+        this.queueManagerHostname = queueManagerHostname;
+    }
+
+    public String getQueueManagerPort() {
+        return queueManagerPort;
+    }
+
+    public void setQueueManagerPort(String queueManagerPort) {
+        this.queueManagerPort = queueManagerPort;
+    }
+
+    public String getQueueManagerChannel() {
+        return queueManagerChannel;
+    }
+
+    public void setQueueManagerChannel(String queueManagerChannel) {
+        this.queueManagerChannel = queueManagerChannel;
     }
 
     public WMQEndpoint() {
@@ -50,7 +102,9 @@ public class WMQEndpoint extends DefaultEndpoint {
     }
 
     public WMQConsumer createConsumer(Processor processor) throws Exception {
-        return new WMQConsumer(this, processor);
+        WMQConsumer consumer = new WMQConsumer(this, processor);
+        consumer.setDelay(5);
+        return consumer;
     }
 
     @ManagedAttribute

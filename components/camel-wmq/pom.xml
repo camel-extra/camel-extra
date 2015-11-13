@@ -64,7 +64,11 @@
             <artifactId>connector</artifactId>
             <version>7.5</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.ibm.mq</groupId>
+            <artifactId>headers</artifactId>
+            <version>7.5</version>
+        </dependency>
 
         <dependency>
             <groupId>org.apache.camel</groupId>
