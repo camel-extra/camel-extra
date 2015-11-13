@@ -36,6 +36,7 @@ import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.spi.ExecutorServiceManager;
 import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
@@ -110,6 +111,7 @@ public class ZeromqConsumerTest extends CamelTestSupport {
     }
 
     @Test
+    @Ignore
     public void connect() throws Exception {
     	ExecutorService executor = Executors.newFixedThreadPool(1);
     	when(manager.newFixedThreadPool(any(ZeromqConsumer.class), anyString(), anyInt())).thenReturn(executor);
