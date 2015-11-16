@@ -43,7 +43,7 @@ import org.apache.camel.util.ObjectHelper;
  *
  * @version $Revision: 1.1 $
  */
-@UriEndpoint(scheme = "esper", syntax = "esper:name[?options]", consumerClass = EsperConsumer.class)
+@UriEndpoint(scheme = "esper", title = "Esper", syntax = "esper:name[?options]", consumerClass = EsperConsumer.class)
 public class EsperEndpoint extends DefaultEndpoint {
 
     private final EsperComponent component;

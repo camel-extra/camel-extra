@@ -35,7 +35,7 @@ import org.xmldb.api.base.ResourceSet;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XPathQueryService;
 
-@UriEndpoint(scheme = "xmldb", syntax = "xmldb:test:///[database]?xpath=[path]", consumerClass = ExistPollingConsumer.class)
+@UriEndpoint(scheme = "xmldb", title = "xmldb exists", syntax = "xmldb:test:///[database]?xpath=[path]", consumerClass = ExistPollingConsumer.class)
 public class ExistEndpoint extends DefaultPollingEndpoint {
     private Collection collection;
     private String xpath;

@@ -38,7 +38,7 @@ import org.slf4j.Logger;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
-@UriEndpoint(scheme = "virtualbox", syntax = "virtualbox:machine[?options]", consumerClass = VirtualBoxConsumer.class)
+@UriEndpoint(scheme = "virtualbox", title = "VirtuaBox", syntax = "virtualbox:machine[?options]", consumerClass = VirtualBoxConsumer.class)
 public class VirtualBoxEndpoint extends DefaultEndpoint {
 
     private static final Logger LOG = getLogger(VirtualBoxEndpoint.class);

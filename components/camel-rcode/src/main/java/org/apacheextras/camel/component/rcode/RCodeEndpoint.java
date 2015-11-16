@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
 /**
  * The RCodeEndpoint is the components Camel endpoint.
  */
-@UriEndpoint(scheme = "esper", syntax = "rcode://host[:port]/operation[?options]")
+@UriEndpoint(scheme = "rcode", title = "RCode", syntax = "rcode://host[:port]/operation[?options]")
 public class RCodeEndpoint extends DefaultEndpoint {
 
     // Logger to provide a certain level of information

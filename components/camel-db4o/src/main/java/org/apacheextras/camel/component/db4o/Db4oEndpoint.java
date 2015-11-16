@@ -32,7 +32,7 @@ import org.apache.camel.util.ObjectHelper;
 /**
  * @version $Revision$
  */
-@UriEndpoint(scheme = "db4o", syntax = "db4o://className", consumerClass = Db4oConsumer.class)
+@UriEndpoint(scheme = "db4o", title = "DB4O", syntax = "db4o://className", consumerClass = Db4oConsumer.class)
 public class Db4oEndpoint extends ScheduledPollEndpoint {
     private ObjectContainer objectContainer;
     private Class storedClass;

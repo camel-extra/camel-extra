@@ -33,7 +33,7 @@ import org.apache.camel.impl.DefaultExchange;
 import org.apache.camel.impl.DefaultMessage;
 import org.apache.camel.spi.UriEndpoint;
 
-@UriEndpoint(scheme = "zeromq", syntax = "zeromq:(tcp|ipc)://hostname:port", consumerClass = ZeromqConsumer.class)
+@UriEndpoint(scheme = "zeromq", title = "ZeroMQ", syntax = "zeromq:(tcp|ipc)://hostname:port", consumerClass = ZeromqConsumer.class)
 public class ZeromqEndpoint extends DefaultEndpoint {
 
     private static final String URI_ERROR = "Invalid URI. Format must be of the form zeromq:(tcp|icp)://hostname:port[?options...]";
