@@ -49,10 +49,10 @@ public class WMQComponent extends UriEndpointComponent {
     }
 
     public MQQueueManager getQueueManager() {
-        return getQueueManager("default", null, null, null);
+        return getQueueManager("default", null, null, null, null, null, null);
     }
 
-    public MQQueueManager getQueueManager(String name, String hostname, String port, String channel) {
+    public MQQueueManager getQueueManager(String name, String hostname, String port, String channel, String userID, String password, String CCSID) {
         if (name == null) {
             LOGGER.warn("QueueManager name not defined, fallback to default");
             name = "default";
@@ -64,6 +64,15 @@ public class WMQComponent extends UriEndpointComponent {
                 qmProperties.put(name + ".hostname", hostname);
                 qmProperties.put(name + ".port", port);
                 qmProperties.put(name + ".channel", channel);
+                if (userID != null) {
+                    qmProperties.put(name + ".userID", userID);
+                }
+                if (password != null) {
+                    qmProperties.put(name + ".password", password);
+                }
+                if (CCSID != null) {
+                    qmProperties.put(name + ".CCSID", CCSID);
+                }
             } else {
                 InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("mq.properties");
                 try {
@@ -96,6 +105,15 @@ public class WMQComponent extends UriEndpointComponent {
             connectionProperties.put("hostname", (String) qmProperties.get(name + ".hostname"));
             connectionProperties.put("port", Integer.parseInt((String) qmProperties.get(name + ".port")));
             connectionProperties.put("channel", (String) qmProperties.get(name + ".channel"));
+            if (qmProperties.get(name + ".userID") != null) {
+                connectionProperties.put("userID", (String) qmProperties.get(name + ".userID"));
+            }
+            if (qmProperties.get(name + ".password") != null) {
+                connectionProperties.put("password", (String) qmProperties.get(name + ".password"));
+            }
+            if (qmProperties.get(name + ".CCSID") != null) {
+                connectionProperties.put("CCSID", (String) qmProperties.get(name + ".CCSID"));
+            }
             try {
                 LOGGER.info("Connecting to MQQueueManager {} on {}:{} (channel {})", new String[]{name,
                         (String) qmProperties.get(name + ".hostname"),

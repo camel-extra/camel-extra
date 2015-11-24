@@ -49,6 +49,15 @@ public class WMQEndpoint extends DefaultEndpoint {
     @UriParam
     private String queueManagerChannel;
 
+    @UriParam
+    private String queueManagerUserID;
+
+    @UriParam
+    private String queueManagerPassword;
+
+    @UriParam
+    private String queueManagerCCSID;
+
     public String getDestinationName() {
         return destinationName;
     }
@@ -87,6 +96,30 @@ public class WMQEndpoint extends DefaultEndpoint {
 
     public void setQueueManagerChannel(String queueManagerChannel) {
         this.queueManagerChannel = queueManagerChannel;
+    }
+
+    public String getQueueManagerUserID() {
+        return queueManagerUserID;
+    }
+
+    public void setQueueManagerUserID(String queueManagerUserID) {
+        this.queueManagerUserID = queueManagerUserID;
+    }
+
+    public String getQueueManagerPassword() {
+        return queueManagerPassword;
+    }
+
+    public void setQueueManagerPassword(String queueManagerPassword) {
+        this.queueManagerPassword = queueManagerPassword;
+    }
+
+    public String getQueueManagerCCSID() {
+        return queueManagerCCSID;
+    }
+
+    public void setQueueManagerCCSID(String queueManagerCCSID) {
+        this.queueManagerCCSID = queueManagerCCSID;
     }
 
     public WMQEndpoint() {

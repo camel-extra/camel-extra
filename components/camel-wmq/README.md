@@ -54,6 +54,9 @@ You can specify the MQ QueueManager connection properties directly on the URI:
 * `queueManagerHostname` is the hostname of the MQ QueueManager.
 * `queueManagerPort` is the port of the MQ QueueManager.
 * `queueManagerChannel` is the channel of the MQ QueueManager.
+* `queueManagerUserID` is the user ID (optional, only required for authentication)
+* `queueManagerPassword` is the user ID (optional, only required for authentication)
+* `queueManagerCCSID` is the CCSID (optional, only required for authentication)
 
 The component manages multiple MQ QueueManager connection, identified by the QueueManager name.
 
@@ -92,6 +95,17 @@ default.channel=DEFAULT.SVRCONN
 test.hostname=localhost
 test.port=7778
 test.channel=QM_TEST.SVRCONN
+```
+
+The `mq.properties` also supports the userID, password, and CCSID properties (optional):
+
+```
+default.hostname=localhost
+default.port=7777
+default.channel=DEFAULT.SVRCONN
+default.userID=mqm
+default.password=mqm
+default.CCSID=1208
 ```
 
 ## Message Body & Headers

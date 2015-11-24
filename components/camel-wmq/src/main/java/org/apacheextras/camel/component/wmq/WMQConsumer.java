@@ -53,7 +53,10 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
         MQQueueManager queueManager = component.getQueueManager(getEndpoint().getQueueManagerName(),
                 getEndpoint().getQueueManagerHostname(),
                 getEndpoint().getQueueManagerPort(),
-                getEndpoint().getQueueManagerChannel());
+                getEndpoint().getQueueManagerChannel(),
+                getEndpoint().getQueueManagerUserID(),
+                getEndpoint().getQueueManagerPassword(),
+                getEndpoint().getQueueManagerCCSID());
 
         MQDestination destination = null;
         try {

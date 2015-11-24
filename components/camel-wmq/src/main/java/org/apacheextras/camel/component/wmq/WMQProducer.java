@@ -54,7 +54,10 @@ public class WMQProducer extends DefaultProducer {
         MQQueueManager queueManager = component.getQueueManager(getEndpoint().getQueueManagerName(),
                 getEndpoint().getQueueManagerHostname(),
                 getEndpoint().getQueueManagerPort(),
-                getEndpoint().getQueueManagerChannel());
+                getEndpoint().getQueueManagerChannel(),
+                getEndpoint().getQueueManagerUserID(),
+                getEndpoint().getQueueManagerPassword(),
+                getEndpoint().getQueueManagerCCSID());
 
         Message in = exchange.getIn();
 
