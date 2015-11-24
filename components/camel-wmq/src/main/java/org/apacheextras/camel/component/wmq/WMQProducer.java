@@ -83,16 +83,26 @@ public class WMQProducer extends DefaultProducer {
         MQMessage message = new MQMessage();
 
         LOGGER.info("Populating MQMD headers");
-        message.format = (String) in.getHeader("mq.mqmd.format");
-        message.characterSet = (Integer) in.getHeader("mq.mqmd.charset");
-        message.expiry = (Integer) in.getHeader("mq.mqmd.expiry");
-        message.putApplicationName = (String) in.getHeader("mq.mqmd.put.appl.name");
-        message.groupId = (byte[]) in.getHeader("mq.mqmd.group.id");
-        message.messageSequenceNumber = (Integer) in.getHeader("mq.mqmd.msg.seq.number");
-        message.accountingToken = (byte[]) in.getHeader("mq.mqmd.msg.accounting.token");
-        message.correlationId = (byte[]) in.getHeader("mq.mqmd.correl.id");
-        message.replyToQueueName = (String) in.getHeader("mq.mqmd.replyto.q");
-        message.replyToQueueManagerName = (String) in.getHeader("mq.mqmd.replyto.q.mgr");
+        if (in.getHeader("mq.mqmd.format") != null)
+            message.format = (String) in.getHeader("mq.mqmd.format");
+        if (in.getHeader("mq.mqmd.charset") != null)
+            message.characterSet = (Integer) in.getHeader("mq.mqmd.charset");
+        if (in.getHeader("mq.mqmd.expiry") != null)
+            message.expiry = (Integer) in.getHeader("mq.mqmd.expiry");
+        if (in.getHeader("mq.mqmd.put.appl.name") != null)
+            message.putApplicationName = (String) in.getHeader("mq.mqmd.put.appl.name");
+        if (in.getHeader("mq.mqmd.group.id") != null)
+            message.groupId = (byte[]) in.getHeader("mq.mqmd.group.id");
+        if (in.getHeader("mq.mqmd.msg.seq.number") != null)
+            message.messageSequenceNumber = (Integer) in.getHeader("mq.mqmd.msg.seq.number");
+        if (in.getHeader("mq.mqmd.msg.accounting.token") != null)
+            message.accountingToken = (byte[]) in.getHeader("mq.mqmd.msg.accounting.token");
+        if (in.getHeader("mq.mqmd.correl.id") != null)
+            message.correlationId = (byte[]) in.getHeader("mq.mqmd.correl.id");
+        if (in.getHeader("mq.mqmd.replyto.q") != null)
+            message.replyToQueueName = (String) in.getHeader("mq.mqmd.replyto.q");
+        if (in.getHeader("mq.mqmd.replyto.q.mgr") != null)
+            message.replyToQueueManagerName = (String) in.getHeader("mq.mqmd.replyto.q.mgr");
 
         boolean rfh2 = false;
         if (in.getHeaders().containsKey("mq.rfh2.format")) {

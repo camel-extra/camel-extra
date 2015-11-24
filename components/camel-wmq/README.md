@@ -115,7 +115,7 @@ The WMQ consumer endpoint populates the body of the Camel in message with the pa
 On the other hand, the WMQ producer endpoint sends a MQ message with payload populated with the Camel in message body.
 
 Additionally, both endpoints support the following headers (the consumer populates these headers, and the producer
-uses it):
+uses it if present):
 
 * `mq.mqmd.format`: the message MQMD format
 * `mq.mqmd.charset`: the message MQMD character set
