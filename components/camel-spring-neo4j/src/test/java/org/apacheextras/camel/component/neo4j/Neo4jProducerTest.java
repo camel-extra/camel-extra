@@ -39,7 +39,8 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Relationship;
-import org.neo4j.kernel.EmbeddedGraphDatabase;
+import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import org.springframework.data.neo4j.support.DelegatingGraphDatabase;
 import org.springframework.data.neo4j.support.Neo4jTemplate;
 
@@ -51,7 +52,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 public class Neo4jProducerTest {
 
-    private EmbeddedGraphDatabase db;
+    private GraphDatabaseService db;
 
     @Mock
     private Neo4jEndpoint endpoint;
@@ -71,7 +72,7 @@ public class Neo4jProducerTest {
     public void before() throws IOException {
         initMocks(this);
         when(exchange.getIn()).thenReturn(msg);
-        db = new EmbeddedGraphDatabase(getRandomStore());
+        db = new GraphDatabaseFactory().newEmbeddedDatabase(getRandomStore());
         producer = new Neo4jProducer(endpoint, new DelegatingGraphDatabase(db), template);
     }
 
