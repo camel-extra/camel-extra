@@ -46,6 +46,12 @@
       <artifactId>spring-data-neo4j-rest</artifactId>
       <version>${spring-data-neo4j-version}</version>
     </dependency>
+    
+    <dependency>
+        <groupId>org.apache.lucene</groupId>
+        <artifactId>lucene-core</artifactId>
+        <version>${servicemix.bundles.lucene-version}</version>
+    </dependency>
 
     
     <dependency>

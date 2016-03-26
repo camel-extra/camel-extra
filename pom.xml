@@ -100,9 +100,9 @@
     <protobuf-java-bundle-version>2.4.1_1</protobuf-java-bundle-version>
     <rserve-version>1.7-3</rserve-version>
     <scala-version>2.10.1</scala-version>
-    <spring-neo4j-version>3.1.4.RELEASE</spring-neo4j-version>
-    <spring-data-commons-version>1.6.2.RELEASE</spring-data-commons-version>
-    <spring-data-neo4j-version>2.2.2.RELEASE</spring-data-neo4j-version>
+    <spring-neo4j-version>4.1.9.RELEASE</spring-neo4j-version>
+    <spring-data-commons-version>1.11.4.RELEASE</spring-data-commons-version>
+    <spring-data-neo4j-version>3.4.4.RELEASE</spring-data-neo4j-version>
     <servicemix-jaxb-impl-version>2.2.6_1</servicemix-jaxb-impl-version>
     <!--<servicemix-lucene-bundle-version>3.6.2_1</servicemix-lucene-bundle-version>-->
     <servicemix.bundles.cglib-version>2.2.2_1</servicemix.bundles.cglib-version>
@@ -112,7 +112,7 @@
     <servicemix.bundles.jdt-core-version>3.2.3_5</servicemix.bundles.jdt-core-version>
     <servicemix.bundles.guava-version>11.0.2_2</servicemix.bundles.guava-version>
     <servicemix.bundles.aspectj-version>1.7.2_1</servicemix.bundles.aspectj-version>
-    <servicemix.bundles.lucene-version>3.0.3_2</servicemix.bundles.lucene-version>
+    <servicemix.bundles.lucene-version>3.6.2</servicemix.bundles.lucene-version>
     <servicemix.bundles.neo4j-version>1.8_2</servicemix.bundles.neo4j-version>
     <servicemix.bundles.spring-data-neo4j-version>2.2.2.RELEASE_1</servicemix.bundles.spring-data-neo4j-version>
     <servicemix.bundles.querydsl-version>2.9.0_1</servicemix.bundles.querydsl-version>
