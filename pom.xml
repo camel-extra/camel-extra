@@ -203,10 +203,10 @@
   </distributionManagement>
 
   <scm>
-    <connection>scm:git:https://camel-extra.github.io/</connection>
-    <developerConnection>scm:git:https://code.google.com/a/apache-extras.org/p/camel-extra/
+    <connection>scm:git:https://github.com/camel-extra/camel-extra.git</connection>
+    <developerConnection>scm:git:git@github.com:camel-extra/camel-extra.git
     </developerConnection>
-    <url>https://camel-extra.github.io/</url>
+    <url>https://github.com/camel-extra/camel-extra</url>
     <tag>HEAD</tag>
   </scm>
 
