@@ -21,6 +21,7 @@
  ***************************************************************************************/
 package org.apacheextras.camel.component.wmq;
 
+import com.ibm.mq.MQException;
 import com.ibm.mq.MQQueueManager;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Endpoint;
@@ -46,6 +47,10 @@ public class WMQComponent extends UriEndpointComponent {
 
     public WMQComponent(CamelContext camelContext) {
         super(camelContext, WMQEndpoint.class);
+    }
+    
+    public MQQueueManager getBindingQueueManager(String name) throws MQException{
+    	return new MQQueueManager(name);
     }
 
     public MQQueueManager getQueueManager() {
@@ -101,7 +106,7 @@ public class WMQComponent extends UriEndpointComponent {
             if (qmProperties.get(name + ".channel") == null) {
                 throw new IllegalArgumentException(name + ".channel property is missing");
             }
-            Hashtable connectionProperties = new Hashtable();
+            Hashtable<String, Object> connectionProperties = new Hashtable<String,Object>();
             connectionProperties.put("hostname", (String) qmProperties.get(name + ".hostname"));
             connectionProperties.put("port", Integer.parseInt((String) qmProperties.get(name + ".port")));
             connectionProperties.put("channel", (String) qmProperties.get(name + ".channel"));

@@ -23,7 +23,6 @@ package org.apacheextras.camel.component.wmq;
 
 import com.ibm.mq.MQDestination;
 import com.ibm.mq.MQMessage;
-import com.ibm.mq.MQQueue;
 import com.ibm.mq.MQQueueManager;
 import com.ibm.mq.constants.MQConstants;
 import org.apache.camel.Exchange;
@@ -51,13 +50,17 @@ public class WMQProducer extends DefaultProducer {
     public void process(Exchange exchange) throws Exception {
         WMQComponent component = (WMQComponent) this.getEndpoint().getComponent();
 
-        MQQueueManager queueManager = component.getQueueManager(getEndpoint().getQueueManagerName(),
+        LOGGER.info("QueueManagerName -> " + getEndpoint().getQueueManagerName());
+        
+        MQQueueManager queueManager = component.getBindingQueueManager(getEndpoint().getQueueManagerName());
+        //MQQueueManager queueManager = component.getQueueManager(getEndpoint().getQueueManagerName());
+       /* MQQueueManager queueManager = component.getQueueManager(getEndpoint().getQueueManagerName(),
                 getEndpoint().getQueueManagerHostname(),
                 getEndpoint().getQueueManagerPort(),
                 getEndpoint().getQueueManagerChannel(),
                 getEndpoint().getQueueManagerUserID(),
                 getEndpoint().getQueueManagerPassword(),
-                getEndpoint().getQueueManagerCCSID());
+                getEndpoint().getQueueManagerCCSID());*/
 
         Message in = exchange.getIn();
 
