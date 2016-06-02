@@ -23,9 +23,12 @@ package org.apacheextras.camel.component.wmq;
 
 import com.ibm.mq.MQException;
 import com.ibm.mq.MQQueueManager;
+import com.ibm.mq.constants.CMQC;
+
 import org.apache.camel.CamelContext;
 import org.apache.camel.Endpoint;
 import org.apache.camel.impl.UriEndpointComponent;
+import org.apache.camel.spi.UriParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,93 +52,158 @@ public class WMQComponent extends UriEndpointComponent {
         super(camelContext, WMQEndpoint.class);
     }
     
-    public MQQueueManager getBindingQueueManager(String name) throws MQException{
-    	return new MQQueueManager(name);
+    private String connectionMode;
+    private String queueManagerName;
+    private String queueManagerHostname;
+    private String queueManagerPort;
+    private String queueManagerChannel;
+    private String queueManagerUserID;
+    private String queueManagerPassword;
+    private String queueManagerCCSID;
+    
+    /**
+     * Gets hostname
+     * @return
+     */
+    public String getQueueManagerHostname() {
+		return queueManagerHostname;
+	}
+    
+    /**
+     * Sets hostname
+     * @param hostname
+     */
+    public void setQueueManagerHostname(String hostname) {
+		this.queueManagerHostname = hostname;
+	}
+    
+    /**
+     * Returns whether we are in binding mode or client mode 
+     * @return
+     */
+    public String getConnectionMode() {
+		return connectionMode;
+	}
+    
+    /**
+     * Sets the binding mode
+     * @param connectionMode
+     */
+    public void setConnectionMode(String connectionMode) {
+		this.connectionMode = connectionMode;
+	}
+    
+    /**
+     * Get the queue manager name
+     * @return
+     */
+    public String getQueueManagerName() {
+		return queueManagerName;
+	}
+
+    /**
+     * Get queue manager port
+     * @return
+     */
+    public String getQueueManagerPort() {
+        return queueManagerPort;
     }
 
-    public MQQueueManager getQueueManager() {
-        return getQueueManager("default", null, null, null, null, null, null);
+    /**
+     * Set queue mananger port
+     * @param queueManagerPort
+     */
+    public void setQueueManagerPort(String queueManagerPort) {
+        this.queueManagerPort = queueManagerPort;
     }
 
-    public MQQueueManager getQueueManager(String name, String hostname, String port, String channel, String userID, String password, String CCSID) {
-        if (name == null) {
-            LOGGER.warn("QueueManager name not defined, fallback to default");
-            name = "default";
-        }
-        if (queueManagers.get(name) == null) {
-            LOGGER.debug("Connecting to MQQueueManager {} ...", name);
-            Properties qmProperties = new Properties();
-            if (hostname != null && port != null && channel != null) {
-                qmProperties.put(name + ".hostname", hostname);
-                qmProperties.put(name + ".port", port);
-                qmProperties.put(name + ".channel", channel);
-                if (userID != null) {
-                    qmProperties.put(name + ".userID", userID);
-                }
-                if (password != null) {
-                    qmProperties.put(name + ".password", password);
-                }
-                if (CCSID != null) {
-                    qmProperties.put(name + ".CCSID", CCSID);
-                }
-            } else {
-                InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream("mq.properties");
-                try {
-                    LOGGER.debug("Loading mq.properties from the classloader ...");
-                    qmProperties.load(inputStream);
-                } catch (Exception e) {
-                    LOGGER.debug("mq.properties not found in the classloader, trying from etc folder");
-                    try {
-                        FileInputStream fileInputStream = new FileInputStream(new File(new File(new File(System.getProperty("karaf.home")), "etc"), "mq.properties"));
-                        qmProperties.load(fileInputStream);
-                        LOGGER.debug("mq.properties loaded from etc/mq.properties");
-                    } catch (Exception e1) {
-                        LOGGER.debug("mq.properties not found from etc folder, falling to default");
-                        qmProperties.put(name + ".hostname", "localhost");
-                        qmProperties.put(name + ".port", "7777");
-                        qmProperties.put(name + ".channel", "QM_TEST.SVRCONN");
-                    }
-                }
-            }
-            if (qmProperties.get(name + ".hostname") == null) {
-                throw new IllegalArgumentException(name + ".hostname property is missing");
-            }
-            if (qmProperties.get(name + ".port") == null) {
-                throw new IllegalArgumentException(name + ".port property is missing");
-            }
-            if (qmProperties.get(name + ".channel") == null) {
-                throw new IllegalArgumentException(name + ".channel property is missing");
-            }
-            Hashtable<String, Object> connectionProperties = new Hashtable<String,Object>();
-            connectionProperties.put("hostname", (String) qmProperties.get(name + ".hostname"));
-            connectionProperties.put("port", Integer.parseInt((String) qmProperties.get(name + ".port")));
-            connectionProperties.put("channel", (String) qmProperties.get(name + ".channel"));
-            if (qmProperties.get(name + ".userID") != null) {
-                connectionProperties.put("userID", (String) qmProperties.get(name + ".userID"));
-            }
-            if (qmProperties.get(name + ".password") != null) {
-                connectionProperties.put("password", (String) qmProperties.get(name + ".password"));
-            }
-            if (qmProperties.get(name + ".CCSID") != null) {
-                connectionProperties.put("CCSID", (String) qmProperties.get(name + ".CCSID"));
-            }
-            try {
-                LOGGER.info("Connecting to MQQueueManager {} on {}:{} (channel {})", new String[]{name,
-                        (String) qmProperties.get(name + ".hostname"),
-                        (String) qmProperties.get(name + ".port"),
-                        (String) qmProperties.get(name + ".channel")});
-                queueManagers.put(name, new MQQueueManager(name, connectionProperties));
-            } catch (Exception e) {
-                throw new IllegalStateException("Can't create MQQueueManager", e);
-            }
-        }
+    /**
+     * Get queue manager channel
+     * @return
+     */
+    public String getQueueManagerChannel() {
+        return queueManagerChannel;
+    }
 
-        return queueManagers.get(name);
+    /**
+     * Set queue mananger channel
+     * @param queueManagerChannel
+     */
+    public void setQueueManagerChannel(String queueManagerChannel) {
+        this.queueManagerChannel = queueManagerChannel;
+    }
+
+    /**
+     * Get queue manager user id
+     * @return
+     */
+    public String getQueueManagerUserID() {
+        return queueManagerUserID;
+    }
+
+    /**
+     * Set queue mananger user id
+     * @param queueManagerUserID
+     */
+    public void setQueueManagerUserID(String queueManagerUserID) {
+        this.queueManagerUserID = queueManagerUserID;
+    }
+
+    /**
+     * Get queue mananger password
+     * @return
+     */
+    public String getQueueManagerPassword() {
+        return queueManagerPassword;
+    }
+    
+    /**
+     * Set queue mananger password
+     * @param queueManagerPassword
+     */
+    public void setQueueManagerPassword(String queueManagerPassword) {
+        this.queueManagerPassword = queueManagerPassword;
+    }
+
+    /**
+     * Get queue manager CCSID
+     * @return
+     */
+    public String getQueueManagerCCSID() {
+        return queueManagerCCSID;
+    }
+
+    /**
+     * Set Queue mananger CCSID
+     * @param queueManagerCCSID
+     */
+    public void setQueueManagerCCSID(String queueManagerCCSID) {
+        this.queueManagerCCSID = queueManagerCCSID;
+    }
+    
+    /**
+     * Create a MQQueueMananger for this Endpoint
+     * @return
+     * @throws MQException
+     */
+    public MQQueueManager createQueueManager() throws MQException {
+    	Hashtable<String,Object> properties = new Hashtable<String,Object>();
+    	//properties.put("hostname", get);
+         //connectionProperties.put(CMQC.TRANSPORT_PROPERTY, CMQC.TRANSPORT_MQSERIES_BINDINGS);
+    	if (getConnectionMode().equals("binding")) {
+    		properties.put(CMQC.TRANSPORT_PROPERTY, CMQC.TRANSPORT_MQSERIES_BINDINGS);
+    	} else {
+    		properties.put("hostname",getQueueManagerHostname());
+    	}
+    	
+    	return new MQQueueManager(getQueueManagerName(),properties);
     }
 
     @Override
     public Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
-        return new WMQEndpoint(uri, this, remaining);
+       WMQEndpoint endpoint = new WMQEndpoint(uri, this, remaining);
+       endpoint.setMQQueueManager(createQueueManager());
+       return endpoint;
     }
 
 }

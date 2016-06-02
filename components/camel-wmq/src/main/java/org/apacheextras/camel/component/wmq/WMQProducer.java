@@ -22,9 +22,13 @@
 package org.apacheextras.camel.component.wmq;
 
 import com.ibm.mq.MQDestination;
+import com.ibm.mq.MQException;
 import com.ibm.mq.MQMessage;
 import com.ibm.mq.MQQueueManager;
 import com.ibm.mq.constants.MQConstants;
+
+import java.io.IOException;
+
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.impl.DefaultProducer;
@@ -46,46 +50,28 @@ public class WMQProducer extends DefaultProducer {
     public WMQEndpoint getEndpoint() {
         return (WMQEndpoint) super.getEndpoint();
     }
+    
+    private MQQueueManager queueManager;
+    private WMQUtilities wmqUtilities;
+    
+    public WMQUtilities getWmqUtilities() {
+		return wmqUtilities;
+	}
+    
+    public void setWmqUtilities(WMQUtilities wmqUtilities) {
+		this.wmqUtilities = wmqUtilities;
+	}
+    
+    public void setQueueManager(MQQueueManager queueManager) {
+		this.queueManager = queueManager;
+	}
+    
+    public MQQueueManager getQueueManager() {
+		return queueManager;
+	}
 
-    public void process(Exchange exchange) throws Exception {
-        WMQComponent component = (WMQComponent) this.getEndpoint().getComponent();
-
-        LOGGER.info("QueueManagerName -> " + getEndpoint().getQueueManagerName());
-        
-        MQQueueManager queueManager = component.getBindingQueueManager(getEndpoint().getQueueManagerName());
-        //MQQueueManager queueManager = component.getQueueManager(getEndpoint().getQueueManagerName());
-       /* MQQueueManager queueManager = component.getQueueManager(getEndpoint().getQueueManagerName(),
-                getEndpoint().getQueueManagerHostname(),
-                getEndpoint().getQueueManagerPort(),
-                getEndpoint().getQueueManagerChannel(),
-                getEndpoint().getQueueManagerUserID(),
-                getEndpoint().getQueueManagerPassword(),
-                getEndpoint().getQueueManagerCCSID());*/
-
-        Message in = exchange.getIn();
-
-        LOGGER.debug("Accessing to MQQueue {}", endpoint.getDestinationName());
-        int MQOO = MQConstants.MQOO_OUTPUT;
-        if (in.getHeader("MQOO") != null) {
-            LOGGER.debug("MQOO defined to {}", in.getHeader("MQOO"));
-            MQOO = (Integer) in.getHeader("MQOO");
-        }
-        MQDestination destination;
-        if (getEndpoint().getDestinationName().startsWith("topic:")) {
-            String destinationName = getEndpoint().getDestinationName().substring("topic:".length());
-            destination = queueManager.accessTopic(destinationName, null, MQOO, null, null);
-        } else {
-            String destinationName = getEndpoint().getDestinationName();
-            if (destinationName.startsWith("queue:")) {
-                destinationName = destinationName.substring("queue:".length());
-            }
-            destination = queueManager.accessQueue(destinationName, MQOO, null, null, null);
-        }
-
-        LOGGER.info("Creating MQMessage");
-        MQMessage message = new MQMessage();
-
-        LOGGER.info("Populating MQMD headers");
+    public void populateHeaders(Message in, MQMessage message) throws IOException {
+    	LOGGER.info("Populating MQMD headers");
         if (in.getHeader("mq.mqmd.format") != null)
             message.format = (String) in.getHeader("mq.mqmd.format");
         if (in.getHeader("mq.mqmd.charset") != null)
@@ -106,7 +92,6 @@ public class WMQProducer extends DefaultProducer {
             message.replyToQueueName = (String) in.getHeader("mq.mqmd.replyto.q");
         if (in.getHeader("mq.mqmd.replyto.q.mgr") != null)
             message.replyToQueueManagerName = (String) in.getHeader("mq.mqmd.replyto.q.mgr");
-
         boolean rfh2 = false;
         if (in.getHeaders().containsKey("mq.rfh2.format")) {
             LOGGER.info("mq.rfh2.format");
@@ -249,14 +234,50 @@ public class WMQProducer extends DefaultProducer {
             message.writeInt4(other.length());
             message.writeString(other);
         }
+    }
+    
+    /**
+     * Enable segmentation by default
+     * @return
+     */
+    public boolean isSegmented() {
+    	return true;
+    }
+    
+    public void process(Exchange exchange) throws Exception {
+        
+        Message in = exchange.getIn();
 
-        // TODO push all other in.headers in the MQ Message ?
-
-        message.writeString(in.getBody(String.class));
-
-        LOGGER.debug("Putting the message ...");
-        destination.put(message);
-        destination.close();
+        LOGGER.debug("Accessing to MQQueue {}", endpoint.getDestinationName());
+        int MQOO = MQConstants.MQOO_OUTPUT;
+        if (in.getHeader("MQOO") != null) {
+            LOGGER.debug("MQOO defined to {}", in.getHeader("MQOO"));
+            MQOO = (Integer) in.getHeader("MQOO");
+        }
+        
+        MQDestination destination = null;
+        try {
+	        destination = wmqUtilities.accessDestination(getEndpoint().getDestinationName(), MQOO, getQueueManager());
+	
+	        LOGGER.info("Creating MQMessage");
+	        MQMessage message = new MQMessage();        
+	        populateHeaders(in, message);
+	        
+	        if (isSegmented()) {        	
+	        	message.messageFlags = MQConstants.MQMF_SEGMENTATION_ALLOWED;
+	        	message.groupId = null;
+	        }
+	
+	        message.writeString(in.getBody(String.class));
+	
+	        LOGGER.debug("Putting the message ...");
+        	destination.put(message);
+        	destination.close();
+        } finally {
+            if (destination != null) {
+               destination.close();
+            }
+        }
     }
 
 }

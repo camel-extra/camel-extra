@@ -21,6 +21,8 @@
  ***************************************************************************************/
 package org.apacheextras.camel.component.wmq;
 
+import java.util.Hashtable;
+
 import org.apache.camel.Component;
 import org.apache.camel.Processor;
 import org.apache.camel.Producer;
@@ -30,33 +32,18 @@ import org.apache.camel.impl.DefaultEndpoint;
 import org.apache.camel.spi.UriEndpoint;
 import org.apache.camel.spi.UriParam;
 
+import com.ibm.mq.MQException;
+import com.ibm.mq.MQQueueManager;
+import com.ibm.mq.constants.CMQC;
+
 @ManagedResource(description = "Managed WMQ Endpoint")
 @UriEndpoint(scheme = "wmq", title = "IBM WebSphere MQ", syntax = "wmq:destinationName", consumerClass = WMQConsumer.class)
 public class WMQEndpoint extends DefaultEndpoint {
 
+	private MQQueueManager MQQueueManager;
+	
     @UriParam
     private String destinationName;
-
-    @UriParam
-    private String queueManagerName;
-
-    @UriParam
-    private String queueManagerHostname;
-
-    @UriParam
-    private String queueManagerPort;
-
-    @UriParam
-    private String queueManagerChannel;
-
-    @UriParam
-    private String queueManagerUserID;
-
-    @UriParam
-    private String queueManagerPassword;
-
-    @UriParam
-    private String queueManagerCCSID;
 
     public String getDestinationName() {
         return destinationName;
@@ -66,62 +53,6 @@ public class WMQEndpoint extends DefaultEndpoint {
         this.destinationName = destinationName;
     }
 
-    public String getQueueManagerName() {
-        return queueManagerName;
-    }
-
-    public void setQueueManagerName(String queueManagerName) {
-        this.queueManagerName = queueManagerName;
-    }
-
-    public String getQueueManagerHostname() {
-        return queueManagerHostname;
-    }
-
-    public void setQueueManagerHostname(String queueManagerHostname) {
-        this.queueManagerHostname = queueManagerHostname;
-    }
-
-    public String getQueueManagerPort() {
-        return queueManagerPort;
-    }
-
-    public void setQueueManagerPort(String queueManagerPort) {
-        this.queueManagerPort = queueManagerPort;
-    }
-
-    public String getQueueManagerChannel() {
-        return queueManagerChannel;
-    }
-
-    public void setQueueManagerChannel(String queueManagerChannel) {
-        this.queueManagerChannel = queueManagerChannel;
-    }
-
-    public String getQueueManagerUserID() {
-        return queueManagerUserID;
-    }
-
-    public void setQueueManagerUserID(String queueManagerUserID) {
-        this.queueManagerUserID = queueManagerUserID;
-    }
-
-    public String getQueueManagerPassword() {
-        return queueManagerPassword;
-    }
-
-    public void setQueueManagerPassword(String queueManagerPassword) {
-        this.queueManagerPassword = queueManagerPassword;
-    }
-
-    public String getQueueManagerCCSID() {
-        return queueManagerCCSID;
-    }
-
-    public void setQueueManagerCCSID(String queueManagerCCSID) {
-        this.queueManagerCCSID = queueManagerCCSID;
-    }
-
     public WMQEndpoint() {
     }
 
@@ -129,9 +60,19 @@ public class WMQEndpoint extends DefaultEndpoint {
         super(uri, component);
         this.destinationName = destinationName;
     }
+    
+    public void setMQQueueManager(MQQueueManager mQQueueManager) {
+		MQQueueManager = mQQueueManager;
+	}
+    
+    public MQQueueManager getMQQueueManager() {
+		return MQQueueManager;
+	}
 
     public Producer createProducer() throws Exception {
-        return new WMQProducer(this);
+    	WMQProducer producer = new WMQProducer(this);
+    	producer.setQueueManager(getMQQueueManager());    	
+        return producer;
     }
 
     public WMQConsumer createConsumer(Processor processor) throws Exception {
