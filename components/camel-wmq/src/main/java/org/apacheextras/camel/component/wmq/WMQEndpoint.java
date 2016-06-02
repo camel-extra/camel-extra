@@ -31,6 +31,8 @@ import org.apache.camel.api.management.ManagedResource;
 import org.apache.camel.impl.DefaultEndpoint;
 import org.apache.camel.spi.UriEndpoint;
 import org.apache.camel.spi.UriParam;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.ibm.mq.MQException;
 import com.ibm.mq.MQQueueManager;
@@ -40,6 +42,8 @@ import com.ibm.mq.constants.CMQC;
 @UriEndpoint(scheme = "wmq", title = "IBM WebSphere MQ", syntax = "wmq:destinationName", consumerClass = WMQConsumer.class)
 public class WMQEndpoint extends DefaultEndpoint {
 
+	private final static Logger LOGGER = LoggerFactory.getLogger(WMQComponent.class);
+	
 	private MQQueueManager MQQueueManager;
 	
     @UriParam
@@ -71,14 +75,46 @@ public class WMQEndpoint extends DefaultEndpoint {
 
     public Producer createProducer() throws Exception {
     	WMQProducer producer = new WMQProducer(this);
-    	producer.setQueueManager(getMQQueueManager());    	
+    	producer.setQueueManager(createMQQueueManager());
+    	producer.setWmqUtilities(new WMQUtilities());
         return producer;
     }
 
     public WMQConsumer createConsumer(Processor processor) throws Exception {
         WMQConsumer consumer = new WMQConsumer(this, processor);
+        consumer.setQueueManager(createMQQueueManager());
+        consumer.setWmqUtilities(new WMQUtilities());
         consumer.setDelay(5);
         return consumer;
+    }
+    
+    
+    private WMQConfig wmqConfig;
+    
+    public WMQConfig getWmqConfig() {
+		return wmqConfig;
+	}
+    
+    public void setWmqConfig(WMQConfig wmqConfig) {
+		this.wmqConfig = wmqConfig;
+	}
+    
+    /**
+     * Create a MQQueueMananger for this Endpoint
+     * @return
+     * @throws MQException
+     */
+    public MQQueueManager createMQQueueManager() throws MQException {
+    	Hashtable<String,Object> properties = new Hashtable<String,Object>();
+    	//properties.put("hostname", get);
+         //connectionProperties.put(CMQC.TRANSPORT_PROPERTY, CMQC.TRANSPORT_MQSERIES_BINDINGS);
+    	if (getWmqConfig().getConnectionMode().equals("binding")) {
+    		properties.put(CMQC.TRANSPORT_PROPERTY, CMQC.TRANSPORT_MQSERIES_BINDINGS);
+    	} else {
+    		properties.put("hostname",getWmqConfig().getQueueManagerHostname());
+    	}
+    	LOGGER.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>" + getWmqConfig().getQueueManagerName());
+    	return new MQQueueManager(getWmqConfig().getQueueManagerName(),properties);
     }
 
     @ManagedAttribute

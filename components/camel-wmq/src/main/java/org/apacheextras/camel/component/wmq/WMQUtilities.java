@@ -5,6 +5,10 @@ import com.ibm.mq.MQException;
 import com.ibm.mq.MQQueueManager;
 
 public class WMQUtilities {
+	
+	public WMQUtilities() {
+		
+	}
 
 	public MQDestination accessDestination(String destinationName, int MQOO, MQQueueManager queueMananger) throws MQException {
     	MQDestination destination;

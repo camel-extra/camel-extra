@@ -100,6 +100,14 @@ public class WMQComponent extends UriEndpointComponent {
     public String getQueueManagerName() {
 		return queueManagerName;
 	}
+    
+    /**
+     * Set the queue mananger name
+     * @param queueManagerName
+     */
+    public void setQueueManagerName(String queueManagerName) {
+		this.queueManagerName = queueManagerName;
+	}
 
     /**
      * Get queue manager port
@@ -180,29 +188,18 @@ public class WMQComponent extends UriEndpointComponent {
     public void setQueueManagerCCSID(String queueManagerCCSID) {
         this.queueManagerCCSID = queueManagerCCSID;
     }
-    
-    /**
-     * Create a MQQueueMananger for this Endpoint
-     * @return
-     * @throws MQException
-     */
-    public MQQueueManager createQueueManager() throws MQException {
-    	Hashtable<String,Object> properties = new Hashtable<String,Object>();
-    	//properties.put("hostname", get);
-         //connectionProperties.put(CMQC.TRANSPORT_PROPERTY, CMQC.TRANSPORT_MQSERIES_BINDINGS);
-    	if (getConnectionMode().equals("binding")) {
-    		properties.put(CMQC.TRANSPORT_PROPERTY, CMQC.TRANSPORT_MQSERIES_BINDINGS);
-    	} else {
-    		properties.put("hostname",getQueueManagerHostname());
-    	}
-    	
-    	return new MQQueueManager(getQueueManagerName(),properties);
-    }
 
+    public WMQConfig createConfig() {
+    	WMQConfig conf = new WMQConfig();
+    	conf.setConnectionMode(getConnectionMode());
+    	conf.setQueueManagerName(getQueueManagerName());
+    	return conf;
+    }
+    
     @Override
     public Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
        WMQEndpoint endpoint = new WMQEndpoint(uri, this, remaining);
-       endpoint.setMQQueueManager(createQueueManager());
+       endpoint.setWmqConfig(createConfig());
        return endpoint;
     }
 

@@ -131,10 +131,15 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
             } else {            
                 if (destinationName.startsWith("queue:")) {
                     MQOO = MQConstants.MQOO_INPUT_AS_Q_DEF;
+                } else {
+                	MQOO = -1;
                 }
-                MQOO = -1;
             }
-			destination = wmqUtilities.accessDestination(getEndpoint().getDestinationName(), MQOO, getQueueManager());
+            
+            LOGGER.debug("Destination name is {}", destinationName);
+            LOGGER.debug("MQOO is {}", MQOO);
+            LOGGER.debug("QueueManager is {}", getQueueManager().getName());
+			destination = wmqUtilities.accessDestination(destinationName, MQOO, getQueueManager());
                  
             MQMessage message = new MQMessage();
             MQGetMessageOptions options = new MQGetMessageOptions();
