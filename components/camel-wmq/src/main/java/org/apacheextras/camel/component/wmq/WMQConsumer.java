@@ -115,6 +115,7 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
     
     @Override
     protected int poll() throws Exception {
+    	LOGGER.debug("Poll invoked on WMQConsumer");
         Exchange exchange = getEndpoint().createExchange();
 
         Message in = exchange.getIn();        
@@ -177,6 +178,20 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
     @Override
     public WMQEndpoint getEndpoint() {
         return (WMQEndpoint) super.getEndpoint();
+    }
+    
+    @Override
+    public void doShutdown() throws Exception{
+    	LOGGER.debug("Checking if queue mananger is open / connected");
+    	if(queueManager.isConnected() || queueManager.isOpen()) {
+    		LOGGER.debug("Shutting down queue mananger");
+    		try {
+    			queueManager.disconnect();
+    		} catch (MQException e) {
+    			LOGGER.error(e.getMessage(),e.getCause());
+    		}
+    	}
+    	super.doShutdown();
     }
 
 }
