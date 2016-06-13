@@ -106,13 +106,14 @@ public class WMQEndpoint extends DefaultEndpoint {
      * @throws MQException
      */
     public MQQueueManager createMQQueueManager() throws MQException {
+    	LOGGER.debug("Creating MQQueueManager");
     	Hashtable<String,Object> properties = new Hashtable<String,Object>();
     	//properties.put("hostname", get);
          //connectionProperties.put(CMQC.TRANSPORT_PROPERTY, CMQC.TRANSPORT_MQSERIES_BINDINGS);
     	if (getWmqConfig().getConnectionMode().equals("binding")) {
     		properties.put(CMQC.TRANSPORT_PROPERTY, CMQC.TRANSPORT_MQSERIES_BINDINGS);
     	} else {
-    		LOGGER.debug("Client connection being used");
+    		LOGGER.debug("ELSEBLOCK: Client connection being used");
     		properties.put("hostname",getWmqConfig().getQueueManagerHostname());
     		properties.put("port", Integer.parseInt(getWmqConfig().getQueueManagerPort()));
     		properties.put("channel", getWmqConfig().getQueueManagerChannel());
