@@ -37,6 +37,7 @@ import org.slf4j.LoggerFactory;
 import com.ibm.mq.MQException;
 import com.ibm.mq.MQQueueManager;
 import com.ibm.mq.constants.CMQC;
+import com.ibm.mq.constants.MQConstants;
 
 @ManagedResource(description = "Managed WMQ Endpoint")
 @UriEndpoint(scheme = "wmq", title = "IBM WebSphere MQ", syntax = "wmq:destinationName", consumerClass = WMQConsumer.class)
@@ -111,10 +112,19 @@ public class WMQEndpoint extends DefaultEndpoint {
     	if (getWmqConfig().getConnectionMode().equals("binding")) {
     		properties.put(CMQC.TRANSPORT_PROPERTY, CMQC.TRANSPORT_MQSERIES_BINDINGS);
     	} else {
+    		LOGGER.debug("Client connection being used");
     		properties.put("hostname",getWmqConfig().getQueueManagerHostname());
+    		properties.put("port", Integer.parseInt(getWmqConfig().getQueueManagerPort()));
+    		properties.put("channel", getWmqConfig().getQueueManagerChannel());
+    		properties.put(MQConstants.USER_ID_PROPERTY, getWmqConfig().getQueueUsername());
+    		properties.put(MQConstants.USE_MQCSP_AUTHENTICATION_PROPERTY, true);
+    		properties.put(MQConstants.PASSWORD_PROPERTY, getWmqConfig().getQueuePassword());
+    		
     	}
-    	LOGGER.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>" + getWmqConfig().getQueueManagerName());
-    	return new MQQueueManager(getWmqConfig().getQueueManagerName(),properties);
+    	LOGGER.debug("Attempting to create MQQueueManager with queue name: " + getWmqConfig().getQueueManagerName());
+    	MQQueueManager manager = new MQQueueManager(getWmqConfig().getQueueManagerName(),properties);
+    	LOGGER.debug("Manager successfully created");
+    	return manager;
     }
 
     @ManagedAttribute

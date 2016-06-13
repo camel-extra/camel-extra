@@ -5,6 +5,10 @@ public class WMQConfig {
 	private String connectionMode;
 	private String queueManagerName;
 	private String queueManagerHostname;
+	private String queueManagerPort;
+	private String queueManagerChannel;
+	private String queueUsername;
+	private String queuePassword;
 	
 	public String getConnectionMode() {
 		return connectionMode;
@@ -24,6 +28,31 @@ public class WMQConfig {
 	public void setQueueManagerHostname(String queueManagerHostname) {
 		this.queueManagerHostname = queueManagerHostname;
 	}
+	public String getQueueManagerPort() {
+		return queueManagerPort;
+	}
+	public void setQueueManagerPort(String queueManagerPort) {
+		this.queueManagerPort = queueManagerPort;
+	}
+	public String getQueueManagerChannel() {
+		return queueManagerChannel;
+	}
+	public void setQueueManagerChannel(String queueManagerChannel) {
+		this.queueManagerChannel = queueManagerChannel;
+	}
+	public String getQueueUsername() {
+		return queueUsername;
+	}
+	public void setQueueUsername(String queueUsername) {
+		this.queueUsername = queueUsername;
+	}
+	public String getQueuePassword() {
+		return queuePassword;
+	}
+	public void setQueuePassword(String queuePassword) {
+		this.queuePassword = queuePassword;
+	}
+	
 	
 	
 

@@ -193,6 +193,10 @@ public class WMQComponent extends UriEndpointComponent {
     	WMQConfig conf = new WMQConfig();
     	conf.setConnectionMode(getConnectionMode());
     	conf.setQueueManagerName(getQueueManagerName());
+    	conf.setQueueManagerChannel(getQueueManagerChannel());
+    	conf.setQueueManagerPort(getQueueManagerPort());
+    	conf.setQueueUsername(getQueueManagerUserID());
+    	conf.setQueuePassword(getQueueManagerPassword());
     	return conf;
     }
     
