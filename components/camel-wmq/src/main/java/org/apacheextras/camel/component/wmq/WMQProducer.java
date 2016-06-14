@@ -24,6 +24,7 @@ package org.apacheextras.camel.component.wmq;
 import com.ibm.mq.MQDestination;
 import com.ibm.mq.MQException;
 import com.ibm.mq.MQMessage;
+import com.ibm.mq.MQPutMessageOptions;
 import com.ibm.mq.MQQueueManager;
 import com.ibm.mq.constants.MQConstants;
 
@@ -244,6 +245,23 @@ public class WMQProducer extends DefaultProducer {
     	return true;
     }
     
+    public MQPutMessageOptions createPutMessageOptions(Message in) {
+    	MQPutMessageOptions options = new MQPutMessageOptions();
+    	// check if header exists, if it does then use values otherwise return null
+    	if (in.getHeader("mq.put.options") != null ) {
+    		String[] optionsA = ((String) in.getHeader("mq.put.options")).split(",");
+    	
+    		int optionValue = 0;
+    		for(int i = 0; i < optionsA.length; i++) {
+    			optionValue += MQConstants.getIntValue(optionsA[i]);
+    		}
+    		options.options = optionValue;
+    		return options;
+    	} else {
+    		return null;
+    	}
+    }
+    
     public void process(Exchange exchange) throws Exception {
         
         Message in = exchange.getIn();
@@ -267,11 +285,18 @@ public class WMQProducer extends DefaultProducer {
 	        	message.messageFlags = MQConstants.MQMF_SEGMENTATION_ALLOWED;
 	        	message.groupId = null;
 	        }
-	
+	        
 	        message.writeString(in.getBody(String.class));
-	
-	        LOGGER.debug("Putting the message ...");
-        	destination.put(message);
+	        
+	        LOGGER.debug("Putting the message ...");        	
+	        MQPutMessageOptions putOptions = createPutMessageOptions(in);
+	        if (putOptions != null) {
+	        	LOGGER.debug("PutOptions are present");
+	        	destination.put(message, putOptions);
+	        } else {
+	        	destination.put(message);
+	        }
+		      
         	destination.close();
         } finally {
             if (destination != null) {
@@ -279,5 +304,21 @@ public class WMQProducer extends DefaultProducer {
             }
         }
     }
+    
+    @Override
+    public void doShutdown() throws Exception{
+    	LOGGER.debug("Checking if queue mananger is open / connected");
+    	if(queueManager.isConnected() || queueManager.isOpen()) {
+    		LOGGER.debug("Shutting down queue mananger");
+    		try {
+    			queueManager.backout();
+    			queueManager.disconnect();
+    		} catch (MQException e) {
+    			LOGGER.error(e.getMessage(),e.getCause());
+    		}
+    	}
+    	super.doShutdown();
+    }
+
 
 }

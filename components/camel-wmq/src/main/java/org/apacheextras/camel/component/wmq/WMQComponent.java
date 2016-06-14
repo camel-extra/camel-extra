@@ -21,28 +21,17 @@
  ***************************************************************************************/
 package org.apacheextras.camel.component.wmq;
 
-import com.ibm.mq.MQException;
-import com.ibm.mq.MQQueueManager;
-import com.ibm.mq.constants.CMQC;
-
 import org.apache.camel.CamelContext;
 import org.apache.camel.Endpoint;
 import org.apache.camel.impl.UriEndpointComponent;
-import org.apache.camel.spi.UriParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
-import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Map;
-import java.util.Properties;
 
 public class WMQComponent extends UriEndpointComponent {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(WMQComponent.class);
-
-    private Map<String, MQQueueManager> queueManagers = new HashMap<String, MQQueueManager>();
 
     public WMQComponent() {
         super(WMQEndpoint.class);

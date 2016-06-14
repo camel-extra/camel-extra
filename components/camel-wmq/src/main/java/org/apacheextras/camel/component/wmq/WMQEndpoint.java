@@ -75,6 +75,7 @@ public class WMQEndpoint extends DefaultEndpoint {
 	}
 
     public Producer createProducer() throws Exception {
+    	LOGGER.debug("Creating producer");
     	WMQProducer producer = new WMQProducer(this);
     	producer.setQueueManager(createMQQueueManager());
     	producer.setWmqUtilities(new WMQUtilities());
@@ -82,6 +83,7 @@ public class WMQEndpoint extends DefaultEndpoint {
     }
 
     public WMQConsumer createConsumer(Processor processor) throws Exception {
+    	LOGGER.debug("Creating consumer");
         WMQConsumer consumer = new WMQConsumer(this, processor);
         consumer.setQueueManager(createMQQueueManager());
         consumer.setWmqUtilities(new WMQUtilities());

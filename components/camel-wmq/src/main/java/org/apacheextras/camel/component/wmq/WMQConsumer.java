@@ -147,6 +147,10 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
             options.options = MQConstants.MQGMO_WAIT + MQConstants.MQGMO_PROPERTIES_COMPATIBILITY + MQConstants.MQGMO_ALL_SEGMENTS_AVAILABLE + MQConstants.MQGMO_COMPLETE_MSG + MQConstants.MQGMO_ALL_MSGS_AVAILABLE;
             options.waitInterval = MQConstants.MQWI_UNLIMITED;
             LOGGER.info("Waiting for message ...");
+            
+            LOGGER.debug("DESTINATION OPEN? " + destination.isOpen());
+            LOGGER.debug("QUEUE MANAGER OPEN? CONNECTED?" + queueManager.isConnected() + ", " + queueManager.isOpen());
+            
             destination.get(message, options);
 
             LOGGER.info("Message consumed");
@@ -162,6 +166,8 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
             in.setBody(body, String.class);
             getProcessor().process(exchange);
         } catch (Exception e) {
+        	 LOGGER.debug("DESTINATION OPEN? " + destination.isOpen());
+             LOGGER.debug("QUEUE MANAGER OPEN? CONNECTED?" + queueManager.isConnected() + ", " + queueManager.isOpen());
             exchange.setException(e);
         } finally {
             if (destination != null)
@@ -186,6 +192,7 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
     	if(queueManager.isConnected() || queueManager.isOpen()) {
     		LOGGER.debug("Shutting down queue mananger");
     		try {
+    			queueManager.backout();
     			queueManager.disconnect();
     		} catch (MQException e) {
     			LOGGER.error(e.getMessage(),e.getCause());
