@@ -37,7 +37,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.transaction.support.TransactionTemplate;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
 
 public class WMQProducer extends DefaultProducer {
 
@@ -53,6 +58,7 @@ public class WMQProducer extends DefaultProducer {
         super(endpoint);
         this.endpoint = endpoint;
         LOGGER.debug("WMQ producer created");
+        
     }
 
     @Override
@@ -327,6 +333,27 @@ public class WMQProducer extends DefaultProducer {
 		      
         	destination.close();
 
+        	LOGGER.debug("Syn active? " + TransactionSynchronizationManager.isSynchronizationActive());
+        	if (TransactionSynchronizationManager.isSynchronizationActive()) {
+        		
+        		@SuppressWarnings("unchecked")
+        		Set<MQQueueManager> queueManangers = (Set<MQQueueManager>) TransactionSynchronizationManager.getResource("queueManagers");
+        		if (queueManangers == null) {
+        			Set<MQQueueManager> queueManagers = new HashSet<MQQueueManager>();
+        			queueManagers.add(getQueueManager());
+        			TransactionSynchronizationManager.bindResource("queueManagers", queueManagers);
+        		} else {
+        			LOGGER.debug("Set already exists, adding queue manager to this set, may have to implement comparable");
+        			queueManangers.add(getQueueManager());
+        		}
+        		       		
+        		LOGGER.debug("NAME ------> " + getQueueManager().getName());
+        		getQueueManager().alternateUserId = "QueueManager:"+UUID.randomUUID().toString();
+        		LOGGER.debug("ALT NAME ---> " + getQueueManager().getAlternateUserId());
+        		//TransactionSynchronizationManager.bindResource("queueManager", getQueueManager());
+        		
+        	}
+        	
         } finally {
             if (destination != null) {
                destination.close();

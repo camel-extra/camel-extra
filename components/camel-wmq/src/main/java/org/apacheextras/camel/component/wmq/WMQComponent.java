@@ -82,7 +82,7 @@ public class WMQComponent extends UriEndpointComponent {
     	WMQEndpoint endpoint = new WMQEndpoint(uri, this, remaining);
     	
     	// need to refactor this, ugly to check it works before designing how we get the queue mananger to transaction mananger
-    	getTransactionManager().setQueueManager(getConfig().createMQQueueManager());
+    	//getTransactionManager().setQueueManager(getConfig().createMQQueueManager());
     	
     	
     	
