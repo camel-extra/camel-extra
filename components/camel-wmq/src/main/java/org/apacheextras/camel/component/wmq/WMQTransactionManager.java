@@ -33,8 +33,10 @@ public class WMQTransactionManager extends AbstractPlatformTransactionManager{
 	protected void doBegin(Object arg0, TransactionDefinition arg1) throws TransactionException {
 		// TODO Auto-generated method stub
 		//setTransactionSynchronizationName("WMQTransaction:"+UUID.randomUUID().toString());
+		WMQTransactionObject obj = (WMQTransactionObject) arg0;
 		LOGGER.info("begin called");
-		LOGGER.info("begin name -> " + arg1.getName());
+		LOGGER.info("begin name -> " + arg1.getIsolationLevel());
+		LOGGER.info("obj id -> " + obj.getId());
 	}
 
 	@Override

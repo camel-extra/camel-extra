@@ -9,7 +9,7 @@ public class WMQUtilities {
 	public WMQUtilities() {
 		
 	}
-
+	
 	public MQDestination accessDestination(String destinationName, int MQOO, MQQueueManager queueMananger) throws MQException {
     	MQDestination destination;
         if (destinationName.startsWith("topic:")) {
