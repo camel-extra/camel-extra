@@ -37,19 +37,29 @@ import org.apache.camel.SuspendableService;
 import org.apache.camel.impl.ScheduledPollConsumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.support.TransactionTemplate;
 
 public class WMQConsumer extends ScheduledPollConsumer implements SuspendableService {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(WMQConsumer.class);
 
+  /*  private MQQueueManager queueManager;
+    private WMQUtilities wmqUtilities;
+    private TransactionTemplate transactionTemplate;
+    */
     public WMQConsumer(WMQEndpoint endpoint, Processor processor) {
         super(endpoint, processor);
     }
     
-    private MQQueueManager queueManager;
-    private WMQUtilities wmqUtilities;
-    
-    public void setWmqUtilities(WMQUtilities wmqUtilities) {
+   /* public TransactionTemplate getTransactionTemplate() {
+		return transactionTemplate;
+	}
+
+	public void setTransactionTemplate(TransactionTemplate transactionTemplate) {
+		this.transactionTemplate = transactionTemplate;
+	}
+
+	public void setWmqUtilities(WMQUtilities wmqUtilities) {
 		this.wmqUtilities = wmqUtilities;
 	}
     
@@ -111,12 +121,17 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
                 in.setHeader("mq.rfh2.folder." + folder.getName(), folder.toXML());
             }
         }
-    }
+    }*/
     
     @Override
     protected int poll() throws Exception {
-    	LOGGER.debug("Poll invoked on WMQConsumer");
-        Exchange exchange = getEndpoint().createExchange();
+    	LOGGER.debug("Poll invoked on WMQConsumer");    	
+    	Exchange exchange = getEndpoint().createExchange();
+    	Message in = exchange.getIn();  
+    	in.setBody("hello",String.class);
+    	getProcessor().process(exchange);
+    	return 1;
+        /*Exchange exchange = getEndpoint().createExchange();
 
         Message in = exchange.getIn();        
 
@@ -178,7 +193,7 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
             getExceptionHandler().handleException("Error processing exchange", exchange, exchange.getException());
         }
 
-        return 1;
+        return 1;*/
     }
 
     @Override
@@ -186,7 +201,7 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
         return (WMQEndpoint) super.getEndpoint();
     }
     
-    @Override
+   /* @Override
     public void doShutdown() throws Exception{
     	LOGGER.debug("Checking if queue mananger is open / connected");
     	if(queueManager.isConnected() || queueManager.isOpen()) {
@@ -199,6 +214,6 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
     		}
     	}
     	super.doShutdown();
-    }
+    }*/
 
 }

@@ -33,6 +33,7 @@ import org.apache.camel.spi.UriEndpoint;
 import org.apache.camel.spi.UriParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import com.ibm.mq.MQException;
 import com.ibm.mq.MQQueueManager;
@@ -45,9 +46,10 @@ public class WMQEndpoint extends DefaultEndpoint {
 
 	private final static Logger LOGGER = LoggerFactory.getLogger(WMQComponent.class);
 	
-	private MQQueueManager MQQueueManager;
-	
-    @UriParam
+	private WMQConfig wmqConfig;
+	private TransactionTemplate transactionTemplate;
+
+	@UriParam
     private String destinationName;
 
     public String getDestinationName() {
@@ -59,40 +61,33 @@ public class WMQEndpoint extends DefaultEndpoint {
     }
 
     public WMQEndpoint() {
+    	LOGGER.debug("Constructor called");
     }
 
     public WMQEndpoint(String uri, Component component, String destinationName) {
         super(uri, component);
         this.destinationName = destinationName;
+        LOGGER.debug("Constructor called #2");
     }
-    
-    public void setMQQueueManager(MQQueueManager mQQueueManager) {
-		MQQueueManager = mQQueueManager;
-	}
-    
-    public MQQueueManager getMQQueueManager() {
-		return MQQueueManager;
-	}
 
     public Producer createProducer() throws Exception {
     	LOGGER.debug("Creating producer");
     	WMQProducer producer = new WMQProducer(this);
-    	producer.setQueueManager(createMQQueueManager());
+    	producer.setQueueManager(getWmqConfig().createMQQueueManager());
     	producer.setWmqUtilities(new WMQUtilities());
+    	producer.setTransactionTemplate(getTransactionTemplate());
         return producer;
     }
 
     public WMQConsumer createConsumer(Processor processor) throws Exception {
     	LOGGER.debug("Creating consumer");
         WMQConsumer consumer = new WMQConsumer(this, processor);
-        consumer.setQueueManager(createMQQueueManager());
-        consumer.setWmqUtilities(new WMQUtilities());
+     //   consumer.setQueueManager(getWmqConfig().createMQQueueManager());
+     //   consumer.setWmqUtilities(new WMQUtilities());
+     //   consumer.setTransactionTemplate(getTransactionTemplate());
         consumer.setDelay(5);
         return consumer;
     }
-    
-    
-    private WMQConfig wmqConfig;
     
     public WMQConfig getWmqConfig() {
 		return wmqConfig;
@@ -101,35 +96,15 @@ public class WMQEndpoint extends DefaultEndpoint {
     public void setWmqConfig(WMQConfig wmqConfig) {
 		this.wmqConfig = wmqConfig;
 	}
-    
-    /**
-     * Create a MQQueueMananger for this Endpoint
-     * @return
-     * @throws MQException
-     */
-    public MQQueueManager createMQQueueManager() throws MQException {
-    	LOGGER.debug("Creating MQQueueManager");
-    	Hashtable<String,Object> properties = new Hashtable<String,Object>();
-    	//properties.put("hostname", get);
-         //connectionProperties.put(CMQC.TRANSPORT_PROPERTY, CMQC.TRANSPORT_MQSERIES_BINDINGS);
-    	if (getWmqConfig().getConnectionMode().equals("binding")) {
-    		properties.put(CMQC.TRANSPORT_PROPERTY, CMQC.TRANSPORT_MQSERIES_BINDINGS);
-    	} else {
-    		LOGGER.debug("ELSEBLOCK: Client connection being used");
-    		properties.put("hostname",getWmqConfig().getQueueManagerHostname());
-    		properties.put("port", Integer.parseInt(getWmqConfig().getQueueManagerPort()));
-    		properties.put("channel", getWmqConfig().getQueueManagerChannel());
-    		properties.put(MQConstants.USER_ID_PROPERTY, getWmqConfig().getQueueUsername());
-    		properties.put(MQConstants.USE_MQCSP_AUTHENTICATION_PROPERTY, true);
-    		properties.put(MQConstants.PASSWORD_PROPERTY, getWmqConfig().getQueuePassword());
-    		
-    	}
-    	LOGGER.debug("Attempting to create MQQueueManager with queue name: " + getWmqConfig().getQueueManagerName());
-    	MQQueueManager manager = new MQQueueManager(getWmqConfig().getQueueManagerName(),properties);
-    	LOGGER.debug("Manager successfully created");
-    	return manager;
-    }
+	
+	public TransactionTemplate getTransactionTemplate() {
+		return transactionTemplate;
+	}
 
+	public void setTransactionTemplate(TransactionTemplate transactionTemplate) {
+		this.transactionTemplate = transactionTemplate;
+	}
+    
     @ManagedAttribute
     public boolean isSingleton() {
         return true;

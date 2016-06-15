@@ -35,6 +35,9 @@ import org.apache.camel.Message;
 import org.apache.camel.impl.DefaultProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 
 public class WMQProducer extends DefaultProducer {
 
@@ -42,9 +45,14 @@ public class WMQProducer extends DefaultProducer {
 
     private final WMQEndpoint endpoint;
 
+    private TransactionTemplate transactionTemplate;
+    private MQQueueManager queueManager;
+    private WMQUtilities wmqUtilities;
+    
     public WMQProducer(WMQEndpoint endpoint) {
         super(endpoint);
         this.endpoint = endpoint;
+        LOGGER.debug("WMQ producer created");
     }
 
     @Override
@@ -52,10 +60,15 @@ public class WMQProducer extends DefaultProducer {
         return (WMQEndpoint) super.getEndpoint();
     }
     
-    private MQQueueManager queueManager;
-    private WMQUtilities wmqUtilities;
-    
-    public WMQUtilities getWmqUtilities() {
+    public TransactionTemplate getTransactionTemplate() {
+		return transactionTemplate;
+	}
+
+	public void setTransactionTemplate(TransactionTemplate transactionTemplate) {
+		this.transactionTemplate = transactionTemplate;
+	}
+
+	public WMQUtilities getWmqUtilities() {
 		return wmqUtilities;
 	}
     
@@ -263,7 +276,22 @@ public class WMQProducer extends DefaultProducer {
     }
     
     public void process(Exchange exchange) throws Exception {
-        
+        LOGGER.info("I AM BEING PROCESSED");
+    	
+    	LOGGER.info("EXECUTING CALLBACK");
+    	/*transactionTemplate.execute(new TransactionCallback() {
+
+			@Override
+			public Object doInTransaction(TransactionStatus arg0) {
+				LOGGER.info("I AM IN THE TRANSACTION");
+				return null;
+				
+			}
+    		
+    		
+    		
+		});*/
+    	
         Message in = exchange.getIn();
 
         LOGGER.debug("Accessing to MQQueue {}", endpoint.getDestinationName());
@@ -298,6 +326,7 @@ public class WMQProducer extends DefaultProducer {
 	        }
 		      
         	destination.close();
+
         } finally {
             if (destination != null) {
                destination.close();
@@ -305,7 +334,7 @@ public class WMQProducer extends DefaultProducer {
         }
     }
     
-    @Override
+   /* @Override
     public void doShutdown() throws Exception{
     	LOGGER.debug("Checking if queue mananger is open / connected");
     	if(queueManager.isConnected() || queueManager.isOpen()) {
@@ -318,7 +347,7 @@ public class WMQProducer extends DefaultProducer {
     		}
     	}
     	super.doShutdown();
-    }
+    }*/
 
 
 }

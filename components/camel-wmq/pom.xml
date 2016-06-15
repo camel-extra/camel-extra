@@ -43,6 +43,12 @@
 
     <dependencies>
 
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-tx</artifactId>
+		    <version>3.0.5.RELEASE</version>
+		</dependency>
+
         <!-- MQ -->
          <dependency>
             <groupId>com.ibm.mq</groupId>
@@ -50,6 +56,8 @@
             <version>8.0.0.4</version>
             <type>bundle</type>
         </dependency>
+        
+        
 
         <dependency>
             <groupId>org.apache.camel</groupId>
