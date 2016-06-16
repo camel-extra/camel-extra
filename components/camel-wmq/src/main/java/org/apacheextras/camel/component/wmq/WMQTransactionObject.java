@@ -5,8 +5,6 @@ import java.util.UUID;
 import com.ibm.mq.MQQueueManager;
 
 public class WMQTransactionObject {
-
-	
 	
 	public WMQTransactionObject() {
 		id = UUID.randomUUID().toString();

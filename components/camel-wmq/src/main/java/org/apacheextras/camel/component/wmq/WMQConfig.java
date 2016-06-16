@@ -1,8 +1,6 @@
 package org.apacheextras.camel.component.wmq;
 
-import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,30 +82,34 @@ public class WMQConfig {
 	}
 	
 	/**
-     * Create a MQQueueMananger for this Endpoint
-     * @return
-     * @throws MQException
-     */
+	 * Creates a MQQueueManager based on a connection manager passed into this class or a default pool if no pool is passed in.
+	 * 
+	 * The type of connection is controlled by the connection mode of either "binding" or "client".
+	 * 
+	 * If binding mode is specified only the queue manager name is needed.
+	 * If connection mode is specified then the host, port, channel, username and password are needed.
+	 * 
+	 * @return A MQQueueManager instance
+	 * @throws MQException - thrown if the creation of the MQQueueManager fails. Check the MQQueueManager error code for details.
+	 *                       
+	 */
     public MQQueueManager createMQQueueManager() throws MQException {
     	
-    	// if no connection manager setup, then create a default one
+    	LOGGER.trace("If no connection manager setup, then create a default one");
     	if(connectionManager == null) {
     		connectionManager = new MQSimpleConnectionManager();
     	} 
     	
-    	// set the connection manager to active
+    	LOGGER.trace("If not already, set the connection manager to active");
     	if(connectionManager.getActive() != MQSimpleConnectionManager.MODE_ACTIVE) {
     		connectionManager.setActive(MQSimpleConnectionManager.MODE_ACTIVE);
     	}
     	
-		LOGGER.debug("Creating MQQueueManager");
+		LOGGER.debug("Creating MQQueueManager based on connection mode: " + getConnectionMode());
     	Hashtable<String,Object> properties = new Hashtable<String,Object>();
-    	//properties.put("hostname", get);
-         //connectionProperties.put(CMQC.TRANSPORT_PROPERTY, CMQC.TRANSPORT_MQSERIES_BINDINGS);
     	if (getConnectionMode().equals("binding")) {
     		properties.put(CMQC.TRANSPORT_PROPERTY, CMQC.TRANSPORT_MQSERIES_BINDINGS);
     	} else {
-    		LOGGER.debug("ELSEBLOCK: Client connection being used");
     		properties.put("hostname",getQueueManagerHostname());
     		properties.put("port", Integer.parseInt(getQueueManagerPort()));
     		properties.put("channel", getQueueManagerChannel());
@@ -116,39 +118,9 @@ public class WMQConfig {
     		properties.put(MQConstants.PASSWORD_PROPERTY, getQueueManagerPassword());
     	}
     	LOGGER.debug("Attempting to create MQQueueManager with queue name: " + getQueueManagerName());
-    	MQQueueManager manager = new MQQueueManager(getQueueManagerName(),properties,connectionManager);
+    	MQQueueManager manager = new MQQueueManager(getQueueManagerName(), properties, connectionManager); 
+    	LOGGER.debug("MQQueueManager successfully created");
     	
-    	LOGGER.debug("Manager successfully created");
     	return manager;
     }
-    /*	if (instance == null) {
-    		instance = "default";
-    	}
-    	
-    	MQQueueManager manager = queueManagers.get(instance);
-    	
-    	if (manager == null) {
-    		LOGGER.debug("No queue mananger with instance name " + instance + " setup");
-    		LOGGER.debug("Creating MQQueueManager");
-        	Hashtable<String,Object> properties = new Hashtable<String,Object>();
-        	//properties.put("hostname", get);
-             //connectionProperties.put(CMQC.TRANSPORT_PROPERTY, CMQC.TRANSPORT_MQSERIES_BINDINGS);
-        	if (getConnectionMode().equals("binding")) {
-        		properties.put(CMQC.TRANSPORT_PROPERTY, CMQC.TRANSPORT_MQSERIES_BINDINGS);
-        	} else {
-        		LOGGER.debug("ELSEBLOCK: Client connection being used");
-        		properties.put("hostname",getQueueManagerHostname());
-        		properties.put("port", Integer.parseInt(getQueueManagerPort()));
-        		properties.put("channel", getQueueManagerChannel());
-        		properties.put(MQConstants.USER_ID_PROPERTY, getQueueManagerUsername());
-        		properties.put(MQConstants.USE_MQCSP_AUTHENTICATION_PROPERTY, true);
-        		properties.put(MQConstants.PASSWORD_PROPERTY, getQueueManagerPassword());
-        	}
-        	LOGGER.debug("Attempting to create MQQueueManager with queue name: " + getQueueManagerName());
-        	manager = new MQQueueManager(getQueueManagerName(),properties);
-        	queueManagers.put(instance, manager);
-        	LOGGER.debug("Manager successfully created");
-    	}
-    	return manager;
-    }*/
 }

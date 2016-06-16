@@ -22,11 +22,7 @@
 package org.apacheextras.camel.component.wmq;
 
 import org.apache.camel.CamelContext;
-import org.apache.camel.Consumer;
 import org.apache.camel.Endpoint;
-import org.apache.camel.Processor;
-import org.apache.camel.Producer;
-import org.apache.camel.impl.DefaultEndpoint;
 import org.apache.camel.impl.UriEndpointComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,12 +40,10 @@ public class WMQComponent extends UriEndpointComponent {
 
 	public WMQComponent() {
         super(WMQEndpoint.class);
-        LOGGER.debug("CALLED!");
     }
 
    public WMQComponent(CamelContext camelContext) {
         super(camelContext, WMQEndpoint.class);
-        LOGGER.debug("CALLED!!!!!");
     }    
     
     public WMQConfig getConfig() {
@@ -79,16 +73,9 @@ public class WMQComponent extends UriEndpointComponent {
     @Override
     public Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
     	LOGGER.debug("Creating endpoint on WMQ component");
-    	WMQEndpoint endpoint = new WMQEndpoint(uri, this, remaining);
-    	
-    	// need to refactor this, ugly to check it works before designing how we get the queue mananger to transaction mananger
-    	//getTransactionManager().setQueueManager(getConfig().createMQQueueManager());
-    	
-    	
-    	
+    	WMQEndpoint endpoint = new WMQEndpoint(uri, this, remaining);   	
         endpoint.setWmqConfig(getConfig());
-       // endpoint.setTransactionTemplate(new TransactionTemplate(getTransactionManager()));
-        endpoint.setTransactionTemplate(getTransactionTemplate());
+        endpoint.setTransactionTemplate(new TransactionTemplate(getTransactionManager()));
     	return endpoint;
     }
 

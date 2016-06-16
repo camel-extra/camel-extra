@@ -21,8 +21,6 @@
  ***************************************************************************************/
 package org.apacheextras.camel.component.wmq;
 
-import java.util.Hashtable;
-
 import org.apache.camel.Component;
 import org.apache.camel.Processor;
 import org.apache.camel.Producer;
@@ -35,11 +33,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import com.ibm.mq.MQException;
-import com.ibm.mq.MQQueueManager;
-import com.ibm.mq.constants.CMQC;
-import com.ibm.mq.constants.MQConstants;
-
 @ManagedResource(description = "Managed WMQ Endpoint")
 @UriEndpoint(scheme = "wmq", title = "IBM WebSphere MQ", syntax = "wmq:destinationName", consumerClass = WMQConsumer.class)
 public class WMQEndpoint extends DefaultEndpoint {
@@ -51,9 +44,6 @@ public class WMQEndpoint extends DefaultEndpoint {
 
 	@UriParam
     private String destinationName;
-	
-	@UriParam
-	private String instance;
 
     public String getDestinationName() {
         return destinationName;
@@ -63,38 +53,25 @@ public class WMQEndpoint extends DefaultEndpoint {
         this.destinationName = destinationName;
     }
 
-    public String getInstance() {
-		return instance;
-	}
-
-	public void setInstance(String instance) {
-		this.instance = instance;
-	}
-
 	public WMQEndpoint() {
-    	LOGGER.debug("Constructor called");
     }
 
     public WMQEndpoint(String uri, Component component, String destinationName) {
         super(uri, component);
         this.destinationName = destinationName;
-        LOGGER.debug("Constructor called #2");
     }
 
     public Producer createProducer() throws Exception {
-    	LOGGER.debug("Creating producer");
+    	LOGGER.trace("Creating WMQ producer");
     	WMQProducer producer = new WMQProducer(this);
-    	//producer.setQueueManager(getWmqConfig().createMQQueueManager(getInstance()));
-    	producer.setQueueManagerInstanceName(getInstance());
     	producer.setWmqUtilities(new WMQUtilities());
     	producer.setTransactionTemplate(getTransactionTemplate());
         return producer;
     }
 
     public WMQConsumer createConsumer(Processor processor) throws Exception {
-    	LOGGER.debug("Creating consumer");
+    	LOGGER.trace("Creating WMQ consumer");
         WMQConsumer consumer = new WMQConsumer(this, processor);
-     //   consumer.setQueueManager(getWmqConfig().createMQQueueManager());
         consumer.setWmqUtilities(new WMQUtilities());
         consumer.setTransactionTemplate(getTransactionTemplate());
         consumer.setDelay(5);

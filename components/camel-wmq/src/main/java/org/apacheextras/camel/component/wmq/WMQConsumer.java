@@ -78,6 +78,13 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
 		return queueManager;
 	}
 
+    /**
+     * Populate headers on the Exchange based on those found on the IBM MQ Message.
+     * @param message The IBM message
+     * @param in The exchange
+     * @throws IOException
+     * @throws MQDataException
+     */
     public void populateHeaders(MQMessage message, Message in) throws IOException, MQDataException {
     	LOGGER.trace("\tmq.mqmd.format: {}", message.format);
         in.setHeader("mq.mqmd.format", message.format);
@@ -125,7 +132,18 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
             }
         }
     }
-    
+
+    /**
+     * {@inheritDoc}
+     * 
+     * 
+     * Creates a new TransactionCallback object which will contain our transaction which follows:
+     * 
+     *  Get the MQQueueManager for this transaction
+     *  Open a connection to the destination
+     *  Get a message
+     *  Process message
+     */
     @Override
     protected int poll() throws Exception {
     	LOGGER.debug("Poll invoked on WMQConsumer"); 
@@ -134,12 +152,13 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
 			@Override
 			public Object doInTransaction(TransactionStatus status) {
 				
+				LOGGER.trace("Get the MQQueueManager for this transaction");
 				MQQueueManager manager = (MQQueueManager)TransactionSynchronizationManager.getResource("queueManager");
 				String id = (String)TransactionSynchronizationManager.getResource("id");
 				
 				LOGGER.debug("Consumer transaction started with id " + id + " and mananger " + manager.toString());
 				
-				// TODO Auto-generated method stub
+				
 				Exchange exchange = getEndpoint().createExchange();
 
 		        Message in = exchange.getIn();        
@@ -160,15 +179,10 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
 		                	MQOO = -1;
 		                }
 		            }
-		            
-		            LOGGER.trace("Destination name is {}", destinationName);
-		            LOGGER.trace("MQOO is {}", MQOO);
-		           // LOGGER.debug("QueueManager is {}", getQueueManager().getName());
-		            
-		            //MQQueueManager manager = (MQQueueManager)TransactionSynchronizationManager.getResource("queueManager");
-		            LOGGER.trace("mananger null? " + String.valueOf(manager == null));
+		            		         
+		            LOGGER.trace("Create connection to the destination {}", destinationName);
 		        	destination = wmqUtilities.accessDestination(getEndpoint().getDestinationName(), MQOO, manager);
-					//destination = wmqUtilities.accessDestination(destinationName, MQOO, getQueueManager());
+					
 		                 
 		            MQMessage message = new MQMessage();
 		            MQGetMessageOptions options = new MQGetMessageOptions();
@@ -196,9 +210,7 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
 		            getProcessor().process(exchange);
 		            LOGGER.debug("Consumer transaction finished with id " + id + " and mananger " + manager.toString());
 		        } catch (Exception e) {
-		        	// LOGGER.debug("DESTINATION OPEN? " + destination.isOpen());
-		            // LOGGER.debug("QUEUE MANAGER OPEN? CONNECTED?" + queueManager.isConnected() + ", " + queueManager.isOpen());
-		            exchange.setException(e);
+		        	exchange.setException(e);
 		        }/* finally {
 		           /* if (destination != null) {
 		                destination.close();
@@ -221,20 +233,4 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
     public WMQEndpoint getEndpoint() {
         return (WMQEndpoint) super.getEndpoint();
     }
-    
-   /* @Override
-    public void doShutdown() throws Exception{
-    	LOGGER.debug("Checking if queue mananger is open / connected");
-    	if(queueManager.isConnected() || queueManager.isOpen()) {
-    		LOGGER.debug("Shutting down queue mananger");
-    		try {
-    			queueManager.backout();
-    			queueManager.disconnect();
-    		} catch (MQException e) {
-    			LOGGER.error(e.getMessage(),e.getCause());
-    		}
-    	}
-    	super.doShutdown();
-    }*/
-
 }

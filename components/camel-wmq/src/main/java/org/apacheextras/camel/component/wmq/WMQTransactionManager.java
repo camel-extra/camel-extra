@@ -8,12 +8,6 @@ import org.springframework.transaction.support.AbstractPlatformTransactionManage
 import org.springframework.transaction.support.DefaultTransactionStatus;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.UUID;
-
 import com.ibm.mq.MQException;
 import com.ibm.mq.MQQueueManager;
 
@@ -22,18 +16,6 @@ public class WMQTransactionManager extends AbstractPlatformTransactionManager{
 	private final static Logger LOGGER = LoggerFactory.getLogger(WMQTransactionManager.class);
 	
 	private WMQConfig config;
-	
-	
-	
-	/*private MQQueueManager queueManager;
-	
-	public MQQueueManager getQueueManager() {
-		return queueManager;
-	}
-
-	public void setQueueManager(MQQueueManager queueManager) {
-		this.queueManager = queueManager;
-	}*/
 
 	public WMQConfig getConfig() {
 		return config;
@@ -43,12 +25,19 @@ public class WMQTransactionManager extends AbstractPlatformTransactionManager{
 		this.config = config;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * Responsible for creating a transaction. This method will create a MQQueueManager instance and assign it to the transaction.
+	 * 
+	 * This MQQueueManager is then used for the entirety of the transaction. 
+	 */
 	@Override
 	protected void doBegin(Object arg0, TransactionDefinition arg1) throws TransactionException {
-		// TODO Auto-generated method stub
-		//setTransactionSynchronizationName("WMQTransaction:"+UUID.randomUUID().toString());
-		WMQTransactionObject obj = (WMQTransactionObject) arg0;
 		LOGGER.debug("Begin called on thread " + Thread.currentThread().getId());
+		
+		WMQTransactionObject obj = (WMQTransactionObject) arg0;
+		
 		TransactionSynchronizationManager.setCurrentTransactionName("WMQTransaction:"+obj.getId());
 		try {
 			MQQueueManager manager = getConfig().createMQQueueManager();
@@ -66,6 +55,12 @@ public class WMQTransactionManager extends AbstractPlatformTransactionManager{
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * Responsible for committing a transaction. 
+	 * This method retrieves the MQQueueManager for this transaction and calls its commit function followed by a disconnect.
+	 */
 	@Override
 	protected void doCommit(DefaultTransactionStatus arg0) throws TransactionException {
 		LOGGER.debug("Commit called on thread " + Thread.currentThread().getId());
@@ -91,38 +86,23 @@ public class WMQTransactionManager extends AbstractPlatformTransactionManager{
 			TransactionSynchronizationManager.unbindResource("queueManager");
 			TransactionSynchronizationManager.unbindResource("id");
 		}
-		
-	/*	// TODO Auto-generated method stub
-		LOGGER.info("commit called");
-		try {
-			LOGGER.debug("Attempting to get queue mananger for this transaction");
-						
-			@SuppressWarnings("unchecked")
-			Map<String,MQQueueManager> queueManagers = (Map<String,MQQueueManager>)TransactionSynchronizationManager.getResource("queueManagers");
-			
-			if (queueManagers != null) {
-				LOGGER.debug("Set size is -> " + queueManagers.size());
-				for(Entry<String,MQQueueManager> entry: queueManagers.entrySet()){
-					LOGGER.debug("Committing individual queueMananger instance " + entry.getKey());
-					MQQueueManager manager = entry.getValue();
-					manager.commit();
-				}
-				TransactionSynchronizationManager.unbindResource("queueManagers");
-			} else {
-				LOGGER.debug("QueueManager size is 0");
-			}
-			
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}	*/	
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * This method is responsible for 2 things based on whether a transaction already exists:
+	 * 
+	 * If a transaction does not exist: Create a empty WMQTransactionObject
+	 * 
+	 * If a transaction does exist - this is checked by the presence of a MQQueueManager resource which is bound to the thread:
+	 *  Create a empty WMQTransactionObject
+	 *  Take the MQQueueManager for this transaction/thread and set it on the TransactionObject
+	 *  This case happens if there are multiple parallel transactions using the same transaction manager
+	 * 
+	 */
 	@Override
 	protected Object doGetTransaction() throws TransactionException {
-		// TODO Auto-generated method stub
-		
 		LOGGER.debug("doGetTransaction called on thread " + Thread.currentThread().getId());
 		WMQTransactionObject transaction = new WMQTransactionObject();
 		MQQueueManager queueManager = (MQQueueManager)TransactionSynchronizationManager.getResource("queueManager");
@@ -133,9 +113,13 @@ public class WMQTransactionManager extends AbstractPlatformTransactionManager{
 		}
 		
 		return transaction;
-		//return null;
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * Tells us if a transaction exists or not by checkign the presence of a MQQueueManager on the transaction object
+	 */
 	@Override
 	protected boolean isExistingTransaction(Object transaction) {
 		LOGGER.debug("isExistingTransaction called on thread " + Thread.currentThread().getId());
@@ -145,19 +129,36 @@ public class WMQTransactionManager extends AbstractPlatformTransactionManager{
 		return object.getManager() != null; 
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * Responsible for rolling back a transaction. 
+	 * This method retrieves the MQQueueManager for this transaction and calls its backout function followed by a disconnect.
+	 */
 	@Override
 	protected void doRollback(DefaultTransactionStatus arg0) throws TransactionException {
-		// TODO Auto-generated method stub
-		//LOGGER.info("doRollback called");
-		try {
-			//LOGGER.debug("Attempting to get queue mananger for this transaction");
-			
-			MQQueueManager queueManager = (MQQueueManager)TransactionSynchronizationManager.getResource("queueManager");
-			queueManager.backout();
+		LOGGER.debug("Rollback called on thread " + Thread.currentThread().getId());
+		MQQueueManager queueManager = (MQQueueManager)TransactionSynchronizationManager.getResource("queueManager");
+		String id = (String)TransactionSynchronizationManager.getResource("id");
+		
+		LOGGER.debug("OrollbackTHREADQueueManager -> " + queueManager.toString());
+		LOGGER.debug("OrollbackTHREADID -> " + id);
+		
+		WMQTransactionObject o = (WMQTransactionObject)arg0.getTransaction();
+		LOGGER.debug("Orollback id is -> " + o.getId());
+		LOGGER.debug("Orollback queueManager -> " + o.getManager().toString());
+		
+		
+		if (queueManager != null) {
+			try {
+				queueManager.backout();
+				queueManager.disconnect();
+			} catch (MQException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			TransactionSynchronizationManager.unbindResource("queueManager");
-		} catch (MQException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			TransactionSynchronizationManager.unbindResource("id");
 		}
 	}
 

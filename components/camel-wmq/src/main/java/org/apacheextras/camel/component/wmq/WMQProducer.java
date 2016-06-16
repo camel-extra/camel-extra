@@ -22,11 +22,11 @@
 package org.apacheextras.camel.component.wmq;
 
 import com.ibm.mq.MQDestination;
-import com.ibm.mq.MQException;
 import com.ibm.mq.MQMessage;
 import com.ibm.mq.MQPutMessageOptions;
 import com.ibm.mq.MQQueueManager;
 import com.ibm.mq.constants.MQConstants;
+import com.ibm.mq.headers.MQDataException;
 
 import java.io.IOException;
 
@@ -35,16 +35,8 @@ import org.apache.camel.Message;
 import org.apache.camel.impl.DefaultProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.transaction.support.TransactionTemplate;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
 
 public class WMQProducer extends DefaultProducer {
 
@@ -53,11 +45,7 @@ public class WMQProducer extends DefaultProducer {
     private final WMQEndpoint endpoint;
 
     private TransactionTemplate transactionTemplate;
-    private MQQueueManager queueManager;
     private WMQUtilities wmqUtilities;
-    private String queueManagerInstanceName;
-    
-    
     
     public WMQProducer(WMQEndpoint endpoint) {
         super(endpoint);
@@ -65,16 +53,6 @@ public class WMQProducer extends DefaultProducer {
         LOGGER.trace("WMQ producer created");
         
     }
-
-    public String getQueueManagerInstanceName() {
-		return queueManagerInstanceName;
-	}
-
-	public void setQueueManagerInstanceName(String queueManagerInstanceName) {
-		this.queueManagerInstanceName = queueManagerInstanceName;
-	}
-
-
 
 	@Override
     public WMQEndpoint getEndpoint() {
@@ -96,15 +74,14 @@ public class WMQProducer extends DefaultProducer {
     public void setWmqUtilities(WMQUtilities wmqUtilities) {
 		this.wmqUtilities = wmqUtilities;
 	}
-    
-    public void setQueueManager(MQQueueManager queueManager) {
-		this.queueManager = queueManager;
-	}
-    
-    public MQQueueManager getQueueManager() {
-		return queueManager;
-	}
 
+    /**
+     * Populate headers on the IBM MQ Message based on those found on the Exchange.
+     * @param in The Exchange
+     * @param message The IBM message
+     * @throws IOException
+     * @throws MQDataException
+     */
     public void populateHeaders(Message in, MQMessage message) throws IOException {
     	LOGGER.trace("Populating MQMD headers");
         if (in.getHeader("mq.mqmd.format") != null)
@@ -272,13 +249,18 @@ public class WMQProducer extends DefaultProducer {
     }
     
     /**
-     * Enable segmentation by default
-     * @return
+     * Checks whether message segmentation is enabled. Currently always set to true.
+     * @return true
      */
     public boolean isSegmented() {
     	return true;
     }
     
+    /**
+     * Creates put options on the IBM MQ Message based on the header mq.put.options on the exchange
+     * @param in
+     * @return
+     */
     public MQPutMessageOptions createPutMessageOptions(Message in) {
     	MQPutMessageOptions options = new MQPutMessageOptions();
     	// check if header exists, if it does then use values otherwise return null
@@ -296,25 +278,24 @@ public class WMQProducer extends DefaultProducer {
     	}
     }
     
+    /**
+     * {@inheritDoc}
+     * 
+     * Process a message in the following way:
+     *   Get the queue manager for this transaction
+     *   Create a connection to a destination
+     *   Populate headers
+     *   Send message
+     *   Close connection
+     */
     public void process(Exchange exchange) throws Exception {
        
+    	LOGGER.trace("Get the MQQueueManager for this transaction");
     	MQQueueManager manager = (MQQueueManager)TransactionSynchronizationManager.getResource("queueManager");
     	String id = (String)TransactionSynchronizationManager.getResource("id");
     	
     	LOGGER.debug("Producer transaction started with id " + id + " and mananger " + manager.toString() + " on thread " + Thread.currentThread().getId());
-    	/*transactionTemplate.execute(new TransactionCallback() {
-
-			@Override
-			public Object doInTransaction(TransactionStatus arg0) {
-				LOGGER.info("I AM IN THE TRANSACTION");
-				return null;
-				
-			}
-    		
-    		
-    		
-		});*/
-    	
+  	
         Message in = exchange.getIn();
 
         LOGGER.trace("Accessing to MQQueue {}", endpoint.getDestinationName());
@@ -326,16 +307,13 @@ public class WMQProducer extends DefaultProducer {
         
         MQDestination destination = null;
         try {
-	        //destination = wmqUtilities.accessDestination(getEndpoint().getDestinationName(), MQOO, getQueueManager());
-        	//MQQueueManager manager = (MQQueueManager)TransactionSynchronizationManager.getResource("queueManager");
-        	destination = wmqUtilities.accessDestination(getEndpoint().getDestinationName(), MQOO, manager);
+	        destination = wmqUtilities.accessDestination(getEndpoint().getDestinationName(), MQOO, manager);
         	
-        	
-	
 	        LOGGER.trace("Creating MQMessage");
 	        MQMessage message = new MQMessage();        
 	        populateHeaders(in, message);
 	        
+	        LOGGER.trace("Set message segmentation to on based on segmentation settings");
 	        if (isSegmented()) {        	
 	        	message.messageFlags = MQConstants.MQMF_SEGMENTATION_ALLOWED;
 	        	message.groupId = null;
@@ -359,21 +337,4 @@ public class WMQProducer extends DefaultProducer {
             }
         }
     }
-    
-   /* @Override
-    public void doShutdown() throws Exception{
-    	LOGGER.debug("Checking if queue mananger is open / connected");
-    	if(queueManager.isConnected() || queueManager.isOpen()) {
-    		LOGGER.debug("Shutting down queue mananger");
-    		try {
-    			queueManager.backout();
-    			queueManager.disconnect();
-    		} catch (MQException e) {
-    			LOGGER.error(e.getMessage(),e.getCause());
-    		}
-    	}
-    	super.doShutdown();
-    }*/
-
-
 }
