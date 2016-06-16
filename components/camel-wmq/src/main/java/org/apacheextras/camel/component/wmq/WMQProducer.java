@@ -40,7 +40,9 @@ import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -53,15 +55,28 @@ public class WMQProducer extends DefaultProducer {
     private TransactionTemplate transactionTemplate;
     private MQQueueManager queueManager;
     private WMQUtilities wmqUtilities;
+    private String queueManagerInstanceName;
+    
+    
     
     public WMQProducer(WMQEndpoint endpoint) {
         super(endpoint);
         this.endpoint = endpoint;
-        LOGGER.debug("WMQ producer created");
+        LOGGER.trace("WMQ producer created");
         
     }
 
-    @Override
+    public String getQueueManagerInstanceName() {
+		return queueManagerInstanceName;
+	}
+
+	public void setQueueManagerInstanceName(String queueManagerInstanceName) {
+		this.queueManagerInstanceName = queueManagerInstanceName;
+	}
+
+
+
+	@Override
     public WMQEndpoint getEndpoint() {
         return (WMQEndpoint) super.getEndpoint();
     }
@@ -91,7 +106,7 @@ public class WMQProducer extends DefaultProducer {
 	}
 
     public void populateHeaders(Message in, MQMessage message) throws IOException {
-    	LOGGER.info("Populating MQMD headers");
+    	LOGGER.trace("Populating MQMD headers");
         if (in.getHeader("mq.mqmd.format") != null)
             message.format = (String) in.getHeader("mq.mqmd.format");
         if (in.getHeader("mq.mqmd.charset") != null)
@@ -114,22 +129,22 @@ public class WMQProducer extends DefaultProducer {
             message.replyToQueueManagerName = (String) in.getHeader("mq.mqmd.replyto.q.mgr");
         boolean rfh2 = false;
         if (in.getHeaders().containsKey("mq.rfh2.format")) {
-            LOGGER.info("mq.rfh2.format");
+            LOGGER.trace("mq.rfh2.format");
             message.format = MQConstants.MQFMT_RF_HEADER_2;
             rfh2 = true;
         }
         if (in.getHeader("mq.rfh2.struct.id") != null && rfh2) {
-            LOGGER.info("mq.rfh2.struct.id defined: {}", in.getHeader("mq.rfh2.struct.id"));
+            LOGGER.trace("mq.rfh2.struct.id defined: {}", in.getHeader("mq.rfh2.struct.id"));
             message.writeString((String) in.getHeader("mq.rfh2.struct.id"));
         } else if (rfh2){
-            LOGGER.info("mq.rfh2.struct.id not defined, fallback: {}", MQConstants.MQRFH_STRUC_ID);
+            LOGGER.trace("mq.rfh2.struct.id not defined, fallback: {}", MQConstants.MQRFH_STRUC_ID);
             message.writeString(MQConstants.MQRFH_STRUC_ID);
         }
         if (in.getHeader("mq.rfh2.version") != null && rfh2) {
-            LOGGER.info("mq.rfh2.version defined: {}", in.getHeader("mq.rfh2.version"));
+            LOGGER.trace("mq.rfh2.version defined: {}", in.getHeader("mq.rfh2.version"));
             message.writeInt4((Integer) in.getHeader("mq.rfh2.version"));
         } else if (rfh2){
-            LOGGER.info("mq.rfh2.version not defined, fallback: {}", MQConstants.MQRFH_VERSION_2);
+            LOGGER.trace("mq.rfh2.version not defined, fallback: {}", MQConstants.MQRFH_VERSION_2);
             message.writeInt4(MQConstants.MQRFH_VERSION_2);
         }
 
@@ -144,37 +159,37 @@ public class WMQProducer extends DefaultProducer {
         String other = (String) in.getHeader("mq.rfh2.folder.other");
 
         if (mcd != null) {
-            LOGGER.debug("MCD V2 FOLDER: {}", mcd);
+            LOGGER.trace("MCD V2 FOLDER: {}", mcd);
             while (mcd.length() % 4 != 0) {
                 mcd = mcd + " ";
             }
         }
         if (jms != null) {
-            LOGGER.debug("JMS V2 FOLDER: {}", jms);
+            LOGGER.trace("JMS V2 FOLDER: {}", jms);
             while (jms.length() % 4 != 0) {
                 jms = jms + " ";
             }
         }
         if (usr != null) {
-            LOGGER.debug("USR V2 FOLDER: {}", usr);
+            LOGGER.trace("USR V2 FOLDER: {}", usr);
             while (usr.length() % 4 != 0) {
                 usr = usr + " ";
             }
         }
         if (pub != null) {
-            LOGGER.debug("PUB V2 FOLDER: {}", pub);
+            LOGGER.trace("PUB V2 FOLDER: {}", pub);
             while (pub.length() % 4 != 0) {
                 pub = pub + " ";
             }
         }
         if (pscr != null) {
-            LOGGER.debug("PSCR V2 FOLDER: {}", pscr);
+            LOGGER.trace("PSCR V2 FOLDER: {}", pscr);
             while (pscr.length() % 4 != 0) {
                 pscr = pscr + " ";
             }
         }
         if (other != null) {
-            LOGGER.debug("OTHER V2 FOLDER: {}", other);
+            LOGGER.trace("OTHER V2 FOLDER: {}", other);
             while (other.length() % 4 != 0) {
                 other = other + " ";
             }
@@ -208,21 +223,21 @@ public class WMQProducer extends DefaultProducer {
         }
 
         if (rfh2) {
-            LOGGER.debug("Set message length: {}", MQConstants.MQRFH_STRUC_LENGTH_FIXED_2 + folderSize + overhead);
+            LOGGER.trace("Set message length: {}", MQConstants.MQRFH_STRUC_LENGTH_FIXED_2 + folderSize + overhead);
             message.writeInt4(MQConstants.MQRFH_STRUC_LENGTH_FIXED_2 + folderSize + overhead);
         }
         if (in.getHeader("mq.rfh2.encoding") != null && rfh2) {
-            LOGGER.debug("mq.rfh2.encoding defined: {}", in.getHeader("mq.rfh2.encoding"));
+            LOGGER.trace("mq.rfh2.encoding defined: {}", in.getHeader("mq.rfh2.encoding"));
             message.writeInt4((Integer) in.getHeader("mq.rfh2.encoding"));
         } else if (rfh2) {
-            LOGGER.debug("mq.rfh2.encoding not defined, fallback: {}", MQConstants.MQENC_NATIVE);
+            LOGGER.trace("mq.rfh2.encoding not defined, fallback: {}", MQConstants.MQENC_NATIVE);
             message.writeInt4(MQConstants.MQENC_NATIVE);
         }
         if (in.getHeader("mq.rfh2.coded.charset.id") != null && rfh2) {
-            LOGGER.debug("mq.rfh2.coded.charset.id defined: {}", in.getHeader("mq.rfh2.coded.charset.id"));
+            LOGGER.trace("mq.rfh2.coded.charset.id defined: {}", in.getHeader("mq.rfh2.coded.charset.id"));
             message.writeInt4((Integer) in.getHeader("mq.rfh2.coded.charset.id"));
         } else if (rfh2) {
-            LOGGER.debug("mq.rfh2.coded.charset.id not defined, fallback: {}", MQConstants.MQCCSI_DEFAULT);
+            LOGGER.trace("mq.rfh2.coded.charset.id not defined, fallback: {}", MQConstants.MQCCSI_DEFAULT);
             message.writeInt4(MQConstants.MQCCSI_DEFAULT);
         }
         if (rfh2) {
@@ -282,9 +297,11 @@ public class WMQProducer extends DefaultProducer {
     }
     
     public void process(Exchange exchange) throws Exception {
-        LOGGER.info("I AM BEING PROCESSED");
+       
+    	MQQueueManager manager = (MQQueueManager)TransactionSynchronizationManager.getResource("queueManager");
+    	String id = (String)TransactionSynchronizationManager.getResource("id");
     	
-    	LOGGER.info("EXECUTING CALLBACK");
+    	LOGGER.debug("Producer transaction started with id " + id + " and mananger " + manager.toString() + " on thread " + Thread.currentThread().getId());
     	/*transactionTemplate.execute(new TransactionCallback() {
 
 			@Override
@@ -300,18 +317,22 @@ public class WMQProducer extends DefaultProducer {
     	
         Message in = exchange.getIn();
 
-        LOGGER.debug("Accessing to MQQueue {}", endpoint.getDestinationName());
+        LOGGER.trace("Accessing to MQQueue {}", endpoint.getDestinationName());
         int MQOO = MQConstants.MQOO_OUTPUT;
         if (in.getHeader("MQOO") != null) {
-            LOGGER.debug("MQOO defined to {}", in.getHeader("MQOO"));
+            LOGGER.trace("MQOO defined to {}", in.getHeader("MQOO"));
             MQOO = (Integer) in.getHeader("MQOO");
         }
         
         MQDestination destination = null;
         try {
-	        destination = wmqUtilities.accessDestination(getEndpoint().getDestinationName(), MQOO, getQueueManager());
+	        //destination = wmqUtilities.accessDestination(getEndpoint().getDestinationName(), MQOO, getQueueManager());
+        	//MQQueueManager manager = (MQQueueManager)TransactionSynchronizationManager.getResource("queueManager");
+        	destination = wmqUtilities.accessDestination(getEndpoint().getDestinationName(), MQOO, manager);
+        	
+        	
 	
-	        LOGGER.info("Creating MQMessage");
+	        LOGGER.trace("Creating MQMessage");
 	        MQMessage message = new MQMessage();        
 	        populateHeaders(in, message);
 	        
@@ -322,38 +343,16 @@ public class WMQProducer extends DefaultProducer {
 	        
 	        message.writeString(in.getBody(String.class));
 	        
-	        LOGGER.debug("Putting the message ...");        	
+	        LOGGER.trace("Putting the message ...");        	
 	        MQPutMessageOptions putOptions = createPutMessageOptions(in);
 	        if (putOptions != null) {
-	        	LOGGER.debug("PutOptions are present");
+	        	LOGGER.trace("PutOptions are present");
 	        	destination.put(message, putOptions);
 	        } else {
 	        	destination.put(message);
 	        }
-		      
+	        LOGGER.debug("Producer transaction finished with id " + id + " and mananger " + manager.toString() + " on thread " + Thread.currentThread().getId());
         	destination.close();
-
-        	LOGGER.debug("Syn active? " + TransactionSynchronizationManager.isSynchronizationActive());
-        	if (TransactionSynchronizationManager.isSynchronizationActive()) {
-        		
-        		@SuppressWarnings("unchecked")
-        		Set<MQQueueManager> queueManangers = (Set<MQQueueManager>) TransactionSynchronizationManager.getResource("queueManagers");
-        		if (queueManangers == null) {
-        			Set<MQQueueManager> queueManagers = new HashSet<MQQueueManager>();
-        			queueManagers.add(getQueueManager());
-        			TransactionSynchronizationManager.bindResource("queueManagers", queueManagers);
-        		} else {
-        			LOGGER.debug("Set already exists, adding queue manager to this set, may have to implement comparable");
-        			queueManangers.add(getQueueManager());
-        		}
-        		       		
-        		LOGGER.debug("NAME ------> " + getQueueManager().getName());
-        		getQueueManager().alternateUserId = "QueueManager:"+UUID.randomUUID().toString();
-        		LOGGER.debug("ALT NAME ---> " + getQueueManager().getAlternateUserId());
-        		//TransactionSynchronizationManager.bindResource("queueManager", getQueueManager());
-        		
-        	}
-        	
         } finally {
             if (destination != null) {
                destination.close();

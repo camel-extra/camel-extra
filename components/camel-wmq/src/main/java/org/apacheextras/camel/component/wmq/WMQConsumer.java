@@ -37,21 +37,24 @@ import org.apache.camel.SuspendableService;
 import org.apache.camel.impl.ScheduledPollConsumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.transaction.support.TransactionTemplate;
 
 public class WMQConsumer extends ScheduledPollConsumer implements SuspendableService {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(WMQConsumer.class);
 
-  /*  private MQQueueManager queueManager;
+    private MQQueueManager queueManager;
     private WMQUtilities wmqUtilities;
     private TransactionTemplate transactionTemplate;
-    */
+
     public WMQConsumer(WMQEndpoint endpoint, Processor processor) {
         super(endpoint, processor);
     }
     
-   /* public TransactionTemplate getTransactionTemplate() {
+    public TransactionTemplate getTransactionTemplate() {
 		return transactionTemplate;
 	}
 
@@ -76,124 +79,142 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
 	}
 
     public void populateHeaders(MQMessage message, Message in) throws IOException, MQDataException {
-    	LOGGER.info("\tmq.mqmd.format: {}", message.format);
+    	LOGGER.trace("\tmq.mqmd.format: {}", message.format);
         in.setHeader("mq.mqmd.format", message.format);
-        LOGGER.info("\tmq.mqmd.charset: {}", message.characterSet);
+        LOGGER.trace("\tmq.mqmd.charset: {}", message.characterSet);
         in.setHeader("mq.mqmd.charset", message.characterSet);
-        LOGGER.info("\tmq.mqmd.expiry: {}", message.expiry);
+        LOGGER.trace("\tmq.mqmd.expiry: {}", message.expiry);
         in.setHeader("mq.mqmd.expiry", message.expiry);
-        LOGGER.info("\tmq.mqmd.put.appl.name: {}", message.putApplicationName);
+        LOGGER.trace("\tmq.mqmd.put.appl.name: {}", message.putApplicationName);
         in.setHeader("mq.mqmd.put.appl.name", message.putApplicationName);
-        LOGGER.info("\tmq.mqmd.group.id: {}", message.groupId);
+        LOGGER.trace("\tmq.mqmd.group.id: {}", message.groupId);
         in.setHeader("mq.mqmd.group.id", message.groupId);
-        LOGGER.info("\tmq.mqmd.msg.seq.number: {}", message.messageSequenceNumber);
+        LOGGER.trace("\tmq.mqmd.msg.seq.number: {}", message.messageSequenceNumber);
         in.setHeader("mq.mqmd.msg.seq.number", message.messageSequenceNumber);
-        LOGGER.info("\tmq.mqmd.msg.accounting.token: {}", message.accountingToken);
+        LOGGER.trace("\tmq.mqmd.msg.accounting.token: {}", message.accountingToken);
         in.setHeader("mq.mqmd.msg.accounting.token", message.accountingToken);
-        LOGGER.info("\tmq.mqmd.correl.id: {}", message.correlationId);
+        LOGGER.trace("\tmq.mqmd.correl.id: {}", message.correlationId);
         in.setHeader("mq.mqmd.correl.id", message.correlationId);
-        LOGGER.info("\tmq.mqmd.replyto.q: {}", message.replyToQueueName);
+        LOGGER.trace("\tmq.mqmd.replyto.q: {}", message.replyToQueueName);
         in.setHeader("mq.mqmd.replyto.q", message.replyToQueueName);
-        LOGGER.info("\tmq.mqmd.replyto.q.mgr: {}", message.replyToQueueManagerName);
+        LOGGER.trace("\tmq.mqmd.replyto.q.mgr: {}", message.replyToQueueManagerName);
         in.setHeader("mq.mqmd.replyto.q.mgr", message.replyToQueueManagerName);
 
         MQHeaderList headerList = new MQHeaderList(message);
         // TODO MQRFH, MQCIH, MQDLH, MQIIH, MQRMH, MQSAPH, MQWIH, MQXQH, MQDH, MQEPH headers support
         int index = headerList.indexOf("MQRFH2");
         if (index >= 0) {
-            LOGGER.info("MQRFH2 header detected (index " + index + ")");
+            LOGGER.trace("MQRFH2 header detected (index " + index + ")");
             MQRFH2 rfh = (MQRFH2) headerList.get(index);
-            LOGGER.info("\tmq.rfh2.format: " + rfh.getFormat());
+            LOGGER.trace("\tmq.rfh2.format: " + rfh.getFormat());
             in.setHeader("mq.rfh2.format", rfh.getFormat());
-            LOGGER.info("\tmq.rfh2.struct.id: " + rfh.getStrucId());
+            LOGGER.trace("\tmq.rfh2.struct.id: " + rfh.getStrucId());
             in.setHeader("mq.rfh2.struct.id", rfh.getStrucId());
-            LOGGER.info("\tmq.rfh2.encoding: " + rfh.getEncoding());
+            LOGGER.trace("\tmq.rfh2.encoding: " + rfh.getEncoding());
             in.setHeader("mq.rfh2.encoding", rfh.getEncoding());
-            LOGGER.info("\tmq.rfh2.coded.charset.id: " + rfh.getCodedCharSetId());
+            LOGGER.trace("\tmq.rfh2.coded.charset.id: " + rfh.getCodedCharSetId());
             in.setHeader("mq.rfh2.coded.charset.id", rfh.getCodedCharSetId());
-            LOGGER.info("\tmq.rfh2.flags: " + rfh.getFlags());
+            LOGGER.trace("\tmq.rfh2.flags: " + rfh.getFlags());
             in.setHeader("mq.rfh2.flags", rfh.getFlags());
-            LOGGER.info("\tmq.rfh2.version: " + rfh.getVersion());
+            LOGGER.trace("\tmq.rfh2.version: " + rfh.getVersion());
             in.setHeader("mq.rfh2.version", rfh.getVersion());
             MQRFH2.Element[] folders = rfh.getFolders();
             for (MQRFH2.Element folder : folders) {
-                LOGGER.info("mq.rfh2.folder " + folder.getName() + ": " + folder.toXML());
+                LOGGER.trace("mq.rfh2.folder " + folder.getName() + ": " + folder.toXML());
                 in.setHeader("mq.rfh2.folder." + folder.getName(), folder.toXML());
             }
         }
-    }*/
+    }
     
     @Override
     protected int poll() throws Exception {
-    	LOGGER.debug("Poll invoked on WMQConsumer");    	
-    	Exchange exchange = getEndpoint().createExchange();
-    	Message in = exchange.getIn();  
-    	in.setBody("hello",String.class);
-    	getProcessor().process(exchange);
-    	return 1;
-        /*Exchange exchange = getEndpoint().createExchange();
+    	LOGGER.debug("Poll invoked on WMQConsumer"); 
+    	getTransactionTemplate().execute(new TransactionCallback<Object>() {
 
-        Message in = exchange.getIn();        
+			@Override
+			public Object doInTransaction(TransactionStatus status) {
+				
+				MQQueueManager manager = (MQQueueManager)TransactionSynchronizationManager.getResource("queueManager");
+				String id = (String)TransactionSynchronizationManager.getResource("id");
+				
+				LOGGER.debug("Consumer transaction started with id " + id + " and mananger " + manager.toString());
+				
+				// TODO Auto-generated method stub
+				Exchange exchange = getEndpoint().createExchange();
 
-        MQDestination destination = null;
-        try {
-            LOGGER.debug("Consuming from {}", getEndpoint().getDestinationName());
+		        Message in = exchange.getIn();        
 
-            String destinationName = getEndpoint().getDestinationName();
-            int MQOO;
-            
-            if (destinationName.startsWith("topic:")) {             
-                MQOO = CMQC.MQSO_CREATE | CMQC.MQSO_RESUME | CMQC.MQSO_DURABLE | CMQC.MQSO_FAIL_IF_QUIESCING;
-            } else {            
-                if (destinationName.startsWith("queue:")) {
-                    MQOO = MQConstants.MQOO_INPUT_AS_Q_DEF;
-                } else {
-                	MQOO = -1;
-                }
-            }
-            
-            LOGGER.debug("Destination name is {}", destinationName);
-            LOGGER.debug("MQOO is {}", MQOO);
-            LOGGER.debug("QueueManager is {}", getQueueManager().getName());
-			destination = wmqUtilities.accessDestination(destinationName, MQOO, getQueueManager());
-                 
-            MQMessage message = new MQMessage();
-            MQGetMessageOptions options = new MQGetMessageOptions();
-            options.options = MQConstants.MQGMO_WAIT + MQConstants.MQGMO_PROPERTIES_COMPATIBILITY + MQConstants.MQGMO_ALL_SEGMENTS_AVAILABLE + MQConstants.MQGMO_COMPLETE_MSG + MQConstants.MQGMO_ALL_MSGS_AVAILABLE;
-            options.waitInterval = MQConstants.MQWI_UNLIMITED;
-            LOGGER.info("Waiting for message ...");
-            
-            LOGGER.debug("DESTINATION OPEN? " + destination.isOpen());
-            LOGGER.debug("QUEUE MANAGER OPEN? CONNECTED?" + queueManager.isConnected() + ", " + queueManager.isOpen());
-            
-            destination.get(message, options);
+		        MQDestination destination = null;
+		        try {
+		            LOGGER.trace("Consuming from {}", getEndpoint().getDestinationName());
 
-            LOGGER.info("Message consumed");
+		            String destinationName = getEndpoint().getDestinationName();
+		            int MQOO;
+		            
+		            if (destinationName.startsWith("topic:")) {             
+		                MQOO = CMQC.MQSO_CREATE | CMQC.MQSO_RESUME | CMQC.MQSO_DURABLE | CMQC.MQSO_FAIL_IF_QUIESCING;
+		            } else {            
+		                if (destinationName.startsWith("queue:")) {
+		                    MQOO = MQConstants.MQOO_INPUT_AS_Q_DEF;
+		                } else {
+		                	MQOO = -1;
+		                }
+		            }
+		            
+		            LOGGER.trace("Destination name is {}", destinationName);
+		            LOGGER.trace("MQOO is {}", MQOO);
+		           // LOGGER.debug("QueueManager is {}", getQueueManager().getName());
+		            
+		            //MQQueueManager manager = (MQQueueManager)TransactionSynchronizationManager.getResource("queueManager");
+		            LOGGER.trace("mananger null? " + String.valueOf(manager == null));
+		        	destination = wmqUtilities.accessDestination(getEndpoint().getDestinationName(), MQOO, manager);
+					//destination = wmqUtilities.accessDestination(destinationName, MQOO, getQueueManager());
+		                 
+		            MQMessage message = new MQMessage();
+		            MQGetMessageOptions options = new MQGetMessageOptions();
+		            options.options = MQConstants.MQGMO_WAIT + MQConstants.MQGMO_PROPERTIES_COMPATIBILITY + MQConstants.MQGMO_ALL_SEGMENTS_AVAILABLE + MQConstants.MQGMO_COMPLETE_MSG + MQConstants.MQGMO_ALL_MSGS_AVAILABLE;
+		            options.waitInterval = MQConstants.MQWI_UNLIMITED;
+		            LOGGER.trace("Waiting for message ...");
+		            
+		            LOGGER.trace("DESTINATION OPEN? " + destination.isOpen());
+		            LOGGER.trace("QUEUE MANAGER OPEN? CONNECTED?" + manager.isConnected() + ", " + manager.isOpen());
+		            
+		            destination.get(message, options);
 
-            LOGGER.info("Dealing with MQMD headers");
-            populateHeaders(message, in);
-            
-            LOGGER.info("Reading body");
-            byte[] buffer = new byte[message.getDataLength()];
-            message.readFully(buffer);
-            String body = new String(buffer, "UTF-8");
+		            LOGGER.trace("Message consumed");
 
-            in.setBody(body, String.class);
-            getProcessor().process(exchange);
-        } catch (Exception e) {
-        	 LOGGER.debug("DESTINATION OPEN? " + destination.isOpen());
-             LOGGER.debug("QUEUE MANAGER OPEN? CONNECTED?" + queueManager.isConnected() + ", " + queueManager.isOpen());
-            exchange.setException(e);
-        } finally {
-            if (destination != null)
-                destination.close();
-        }
+		            LOGGER.trace("Dealing with MQMD headers");
+		            populateHeaders(message, in);
+		            
+		            LOGGER.trace("Reading body");
+		            byte[] buffer = new byte[message.getDataLength()];
+		            message.readFully(buffer);
+		            String body = new String(buffer, "UTF-8");
 
-        if (exchange.getException() != null) {
-            getExceptionHandler().handleException("Error processing exchange", exchange, exchange.getException());
-        }
+		            in.setBody(body, String.class);
+		            LOGGER.debug("Consumer transaction finished with id " + id + " and mananger " + manager.toString());
+		            getProcessor().process(exchange);
+		            
+		        } catch (Exception e) {
+		        	// LOGGER.debug("DESTINATION OPEN? " + destination.isOpen());
+		            // LOGGER.debug("QUEUE MANAGER OPEN? CONNECTED?" + queueManager.isConnected() + ", " + queueManager.isOpen());
+		            exchange.setException(e);
+		        }/* finally {
+		           /* if (destination != null) {
+		                destination.close();
+		            }
+		        }*/
 
-        return 1;*/
+		        if (exchange.getException() != null) {
+		            getExceptionHandler().handleException("Error processing exchange", exchange, exchange.getException());
+		        }
+		        
+		        
+		        return 1;
+			}
+		});
+    	
+        return 1;
     }
 
     @Override

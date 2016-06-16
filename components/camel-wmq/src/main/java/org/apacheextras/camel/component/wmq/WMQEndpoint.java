@@ -51,6 +51,9 @@ public class WMQEndpoint extends DefaultEndpoint {
 
 	@UriParam
     private String destinationName;
+	
+	@UriParam
+	private String instance;
 
     public String getDestinationName() {
         return destinationName;
@@ -60,7 +63,15 @@ public class WMQEndpoint extends DefaultEndpoint {
         this.destinationName = destinationName;
     }
 
-    public WMQEndpoint() {
+    public String getInstance() {
+		return instance;
+	}
+
+	public void setInstance(String instance) {
+		this.instance = instance;
+	}
+
+	public WMQEndpoint() {
     	LOGGER.debug("Constructor called");
     }
 
@@ -73,7 +84,8 @@ public class WMQEndpoint extends DefaultEndpoint {
     public Producer createProducer() throws Exception {
     	LOGGER.debug("Creating producer");
     	WMQProducer producer = new WMQProducer(this);
-    	producer.setQueueManager(getWmqConfig().createMQQueueManager());
+    	//producer.setQueueManager(getWmqConfig().createMQQueueManager(getInstance()));
+    	producer.setQueueManagerInstanceName(getInstance());
     	producer.setWmqUtilities(new WMQUtilities());
     	producer.setTransactionTemplate(getTransactionTemplate());
         return producer;
@@ -83,8 +95,8 @@ public class WMQEndpoint extends DefaultEndpoint {
     	LOGGER.debug("Creating consumer");
         WMQConsumer consumer = new WMQConsumer(this, processor);
      //   consumer.setQueueManager(getWmqConfig().createMQQueueManager());
-     //   consumer.setWmqUtilities(new WMQUtilities());
-     //   consumer.setTransactionTemplate(getTransactionTemplate());
+        consumer.setWmqUtilities(new WMQUtilities());
+        consumer.setTransactionTemplate(getTransactionTemplate());
         consumer.setDelay(5);
         return consumer;
     }
