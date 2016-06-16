@@ -123,7 +123,7 @@ public class WMQTransactionManager extends AbstractPlatformTransactionManager{
 	protected Object doGetTransaction() throws TransactionException {
 		// TODO Auto-generated method stub
 		
-		LOGGER.info("doGetTransaction called on thread " + Thread.currentThread().getId());
+		LOGGER.debug("doGetTransaction called on thread " + Thread.currentThread().getId());
 		WMQTransactionObject transaction = new WMQTransactionObject();
 		MQQueueManager queueManager = (MQQueueManager)TransactionSynchronizationManager.getResource("queueManager");
 		String id = (String)TransactionSynchronizationManager.getResource("id");
