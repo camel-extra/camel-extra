@@ -192,9 +192,9 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
 		            String body = new String(buffer, "UTF-8");
 
 		            in.setBody(body, String.class);
-		            LOGGER.debug("Consumer transaction finished with id " + id + " and mananger " + manager.toString());
-		            getProcessor().process(exchange);
 		            
+		            getProcessor().process(exchange);
+		            LOGGER.debug("Consumer transaction finished with id " + id + " and mananger " + manager.toString());
 		        } catch (Exception e) {
 		        	// LOGGER.debug("DESTINATION OPEN? " + destination.isOpen());
 		            // LOGGER.debug("QUEUE MANAGER OPEN? CONNECTED?" + queueManager.isConnected() + ", " + queueManager.isOpen());

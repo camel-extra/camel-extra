@@ -150,7 +150,7 @@ public class WMQProducer extends DefaultProducer {
 
         // TODO iterator on the headers and folders
         // v2 folders: mcd, jms, usr, PubSub, pscr, other
-        LOGGER.info("Dealing with RFH2 folders");
+        LOGGER.trace("Dealing with RFH2 folders");
         String mcd = (String) in.getHeader("mq.rfh2.folder.mcd");
         String jms = (String) in.getHeader("mq.rfh2.folder.jms");
         String usr = (String) in.getHeader("mq.rfh2.folder.usr");

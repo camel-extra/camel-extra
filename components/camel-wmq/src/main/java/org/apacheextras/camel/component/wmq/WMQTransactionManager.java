@@ -123,14 +123,22 @@ public class WMQTransactionManager extends AbstractPlatformTransactionManager{
 	protected Object doGetTransaction() throws TransactionException {
 		// TODO Auto-generated method stub
 		
-		LOGGER.info("doGetTransaction called");
-		return new WMQTransactionObject();
+		LOGGER.info("doGetTransaction called on thread " + Thread.currentThread().getId());
+		WMQTransactionObject transaction = new WMQTransactionObject();
+		MQQueueManager queueManager = (MQQueueManager)TransactionSynchronizationManager.getResource("queueManager");
+		String id = (String)TransactionSynchronizationManager.getResource("id");
+		if(queueManager != null) {
+			transaction.setManager(queueManager);
+			transaction.setId(id);
+		}
+		
+		return transaction;
 		//return null;
 	}
 	
 	@Override
 	protected boolean isExistingTransaction(Object transaction) {
-		LOGGER.debug("isExistingTransaction called!");
+		LOGGER.debug("isExistingTransaction called on thread " + Thread.currentThread().getId());
 		WMQTransactionObject object = (WMQTransactionObject) transaction;
 		LOGGER.debug("Get mananger -> " + object.getManager());
 		LOGGER.debug("Get id -> " + object.getId());
