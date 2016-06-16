@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import com.ibm.mq.MQException;
 import com.ibm.mq.MQQueueManager;
+import com.ibm.mq.MQSimpleConnectionManager;
 import com.ibm.mq.constants.CMQC;
 import com.ibm.mq.constants.MQConstants;
 
@@ -24,10 +25,10 @@ public class WMQConfig {
 	private String queueManagerUsername;
 	private String queueManagerPassword;
 	
-	private Map<String, MQQueueManager> queueManagers;
-	
+	private MQSimpleConnectionManager connectionManager;
+
 	public WMQConfig() {
-		queueManagers = new HashMap<String, MQQueueManager>();
+		
 	}
 	
 	public String getConnectionMode() {
@@ -74,12 +75,30 @@ public class WMQConfig {
 		this.queueManagerPassword = queueManagerPassword;
 	}
 	
+	public MQSimpleConnectionManager getConnectionManager() {
+		return connectionManager;
+	}
+
+	public void setConnectionManager(MQSimpleConnectionManager connectionManager) {
+		this.connectionManager = connectionManager;
+	}
+	
 	/**
      * Create a MQQueueMananger for this Endpoint
      * @return
      * @throws MQException
      */
     public MQQueueManager createMQQueueManager() throws MQException {
+    	
+    	// if no connection manager setup, then create a default one
+    	if(connectionManager == null) {
+    		connectionManager = new MQSimpleConnectionManager();
+    	} 
+    	
+    	// set the connection manager to active
+    	if(connectionManager.getActive() != MQSimpleConnectionManager.MODE_ACTIVE) {
+    		connectionManager.setActive(MQSimpleConnectionManager.MODE_ACTIVE);
+    	}
     	
 		LOGGER.debug("Creating MQQueueManager");
     	Hashtable<String,Object> properties = new Hashtable<String,Object>();
@@ -97,7 +116,7 @@ public class WMQConfig {
     		properties.put(MQConstants.PASSWORD_PROPERTY, getQueueManagerPassword());
     	}
     	LOGGER.debug("Attempting to create MQQueueManager with queue name: " + getQueueManagerName());
-    	MQQueueManager manager = new MQQueueManager(getQueueManagerName(),properties);
+    	MQQueueManager manager = new MQQueueManager(getQueueManagerName(),properties,connectionManager);
     	
     	LOGGER.debug("Manager successfully created");
     	return manager;
