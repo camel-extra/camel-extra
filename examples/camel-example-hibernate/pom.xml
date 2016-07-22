@@ -34,6 +34,12 @@
 
   <name>Camel Extra :: Component Examples :: A Camel Hibernate Demo</name>
 
+  <properties>
+    <camel-version>2.17.2</camel-version>
+    <spring-version>4.3.1.RELEASE</spring-version>
+    <hibernate-version>5.2.1.Final</hibernate-version>
+  </properties>
+
   <dependencies>
 
     <!-- Camel components -->
@@ -57,15 +63,35 @@
       <groupId>org.springframework</groupId>
       <artifactId>spring-tx</artifactId>
     </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-jdbc</artifactId>
+    </dependency>
 
     <!-- jdbc -->
     <dependency>
       <groupId>org.apache.derby</groupId>
       <artifactId>derby</artifactId>
+      <version>10.12.1.1</version>
     </dependency>
     <dependency>
       <groupId>commons-dbcp</groupId>
       <artifactId>commons-dbcp</artifactId>
+      <version>1.4</version>
+    </dependency>
+
+    <!-- Hibernate framework -->
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>${hibernate-version}</version>
+    </dependency>
+
+    <!-- MySQL database driver -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.39</version>
     </dependency>
 
     <!-- logging -->
