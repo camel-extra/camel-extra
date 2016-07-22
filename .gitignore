@@ -47,3 +47,5 @@ atlassian-ide-plugin.xml
 **/target/*
 **/.gitignore
 .gitignore
+
+examples/camel-example-hibernate/derby.log

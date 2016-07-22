@@ -30,7 +30,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
-import org.hibernate.service.ServiceRegistryBuilder;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -53,7 +53,7 @@ public class QueryBuilderHibernateTest {
         Configuration configuration = new Configuration().setProperty(Environment.DIALECT, "org.hibernate.dialect.DerbyDialect")
             .setProperty(Environment.URL, "jdbc:derby:target/testdb;create=true").setProperty(Environment.USER, "").setProperty(Environment.PASS, "")
             .setProperty(Environment.HBM2DDL_AUTO, "create").addResource("org/apacheextras/camel/examples/SendEmail.hbm.xml");
-        ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
+        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
         SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
         session = sessionFactory.openSession();
 
