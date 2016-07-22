@@ -42,9 +42,9 @@
 
   <camelContext xmlns="http://camel.apache.org/schema/spring">
 
-    <!-- route that generate new orders and insert them in the database -->
+    <!-- route that generates a new order every second and inserts it in the database -->
     <route id="generateOrder-route">
-      <from uri="timer:foo?period=5s"/>
+      <from uri="timer:foo?period=1s"/>
       <transform>
         <method ref="orderBean" method="generateOrder"/>
       </transform>
@@ -53,10 +53,16 @@
     </route>
 
 
-    <!-- route that process the orders by picking up new rows from the database
+    <!-- route that process the orders every 5 seconds by picking up new rows from the database
          and when done processing then update the row to mark it as processed -->
+    <!-- But, no... not really. It actually pulls the rows from the database and deletes them.
+          We definitely need something different to mark the row and leave it in the database. -->
+    <!-- Add "consumeDelete=false" to the uri tells camel to leave the row in the database.
+          But, still need something different to mark the row as processed.
+          It looks like that will require changing the "processOrder()" function to add an "@Consumed"
+          annotation, plus code to change the database row. -->
     <route id="processOrder-route">
-      <from uri="hibernate:org.apacheextras.camel.examples.hibernate.Order?delay=1s"/>
+      <from uri="hibernate:org.apacheextras.camel.examples.hibernate.Order?initialDelay=10s&amp;delay=5s"/>
       <to uri="bean:orderBean?method=processOrder"/>
       <log message="${body}"/>
     </route>
@@ -74,7 +80,8 @@
     <constructor-arg ref="sessionFactory"/>
     <constructor-arg ref="transactionTemplate"/>
   </bean>
-  <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+
+  <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
     <property name="sessionFactory" ref="sessionFactory"/>
   </bean>
   <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
@@ -82,7 +89,7 @@
   </bean>
 
   <!-- setup Hibernate session factory -->
-  <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+  <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
     <property name="dataSource" ref="dataSource"/>
     <!-- here we define the hibernate mapping files we use -->
     <property name="mappingResources">
