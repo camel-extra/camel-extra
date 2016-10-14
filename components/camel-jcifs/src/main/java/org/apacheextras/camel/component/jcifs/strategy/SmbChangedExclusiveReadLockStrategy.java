@@ -126,17 +126,7 @@ public class SmbChangedExclusiveReadLockStrategy implements GenericFileExclusive
     }
 
     @Override
-    public void releaseExclusiveReadLockOnAbort(GenericFileOperations<SmbFile> operations, GenericFile<SmbFile> file, Exchange exchange) throws Exception {
-        // noop
-    }
-
-    @Override
-    public void releaseExclusiveReadLockOnRollback(GenericFileOperations<SmbFile> operations, GenericFile<SmbFile> file, Exchange exchange) throws Exception {
-        // noop
-    }
-
-    @Override
-    public void releaseExclusiveReadLockOnCommit(GenericFileOperations<SmbFile> operations, GenericFile<SmbFile> file, Exchange exchange) throws Exception {
+    public void releaseExclusiveReadLock(GenericFileOperations<SmbFile> operations, GenericFile<SmbFile> file, Exchange exchange) throws Exception {
         // noop
     }
 
@@ -181,11 +171,6 @@ public class SmbChangedExclusiveReadLockStrategy implements GenericFileExclusive
 
     @Override
     public void setMarkerFiler(boolean markerFiler) {
-        // noop - not supported by smb
-    }
-
-    @Override
-    public void setDeleteOrphanLockFiles(boolean deleteOrphanLockFiles) {
         // noop - not supported by smb
     }
 }
