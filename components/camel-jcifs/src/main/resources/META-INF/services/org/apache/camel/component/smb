@@ -19,3 +19,4 @@
 # http://www.gnu.org/licenses/lgpl-3.0-standalone.html
 
 class=org.apacheextras.camel.component.jcifs.SmbComponent
+strategy.factory.class=org.apacheextras.camel.component.jcifs.strategy.SmbProcessStrategyFactory
