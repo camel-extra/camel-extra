@@ -79,7 +79,6 @@ public class SmbProducer extends GenericFileProducer<SmbFile> implements Service
         return endpointPath;
     }
 
-    @Override
     public void postWriteCheck() {
         // not at this time
     }
