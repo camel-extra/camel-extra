@@ -51,6 +51,7 @@ public class EsperEndpoint extends DefaultEndpoint {
     private boolean mapEvents;
     private boolean mapBody = false;
     private boolean configured = false;
+    private boolean listen = true;
     private String pattern;
     private String eql;
     private EPStatement statement;
@@ -206,5 +207,18 @@ public class EsperEndpoint extends DefaultEndpoint {
 
 	public void setMapBody(boolean mapBody) {
 		this.mapBody = mapBody;
+	}
+	
+	public boolean isListen() {
+		return listen;
+	}
+
+	/**
+     * Sets is Esper consumer listener must be create
+     *
+     * @param pattern
+     */
+	public void setListen(boolean listen) {
+		this.listen = listen;
 	}
 }

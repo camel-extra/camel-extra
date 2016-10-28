@@ -48,13 +48,17 @@ public class EsperConsumer extends DefaultConsumer implements UpdateListener {
             // statement is destroyed! re-init it!
             statement = endpoint.createStatement();
         }
-        statement.addListener(this);
+       if(endpoint.isListen()) {
+    	   statement.addListener(this);
+       } else {
+    	   log.info("Start esper consumer eql='{}' without listener!", endpoint.getEndpointConfiguration().getParameter("eql"));
+       }
     }
 
     @Override
     protected void doStop() throws Exception {
         super.doStop();
-        if (!statement.isDestroyed()) {
+        if (!statement.isDestroyed() && endpoint.isListen()) {
             // statement is not destroyed! remove the listener!
             statement.removeListener(this);
         }
