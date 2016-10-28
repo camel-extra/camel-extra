@@ -26,4 +26,10 @@
 
   <event-type name="StockTick" class="org.apacheextras.camel.component.esper.StockTick"/>
 
+  <event-type name="StockTickMap">
+	<java-util-map>
+		<map-property name="symbol" class="string"/>
+		<map-property name="price" class="double"/>
+    </java-util-map>
+  </event-type>
 </esper-configuration>

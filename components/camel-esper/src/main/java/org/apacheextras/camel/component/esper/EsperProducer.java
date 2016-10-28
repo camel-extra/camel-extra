@@ -51,7 +51,9 @@ public class EsperProducer extends DefaultProducer {
     public void process(Exchange exchange) throws Exception {
         final Message in = exchange.getIn();
         final Object body = in.getBody();
-        if (endpoint.isMapEvents()) {
+        if (this.endpoint.isMapBody()) {
+        	getEsperRuntime().sendEvent((Map)body, this.endpoint.getName());
+        } else if (endpoint.isMapEvents()) {
             Map map = new HashMap(in.getHeaders());
             map.put("body", body);
             getEsperRuntime().sendEvent(map, endpoint.getName());
