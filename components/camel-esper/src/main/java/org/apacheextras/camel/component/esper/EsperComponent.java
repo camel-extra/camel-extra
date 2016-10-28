@@ -103,4 +103,13 @@ public class EsperComponent extends DefaultComponent {
         return esperRuntime;
     }
 
+    @Override
+    protected void doStop() throws Exception {
+    	super.doStop();
+    	
+    	// destroy esper instance
+    	if(esperService != null && !esperService.isDestroyed()) {
+    		esperService.destroy();
+    	}
+    }
 }
