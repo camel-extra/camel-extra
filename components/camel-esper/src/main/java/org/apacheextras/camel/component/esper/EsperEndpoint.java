@@ -88,18 +88,18 @@ public class EsperEndpoint extends DefaultEndpoint {
 
     private EPStatement getStatement() {
         if (statement == null) {
-            statement = createStatement();
+            statement = createStatement(null);
             // statement.start();
         }
         return statement;
     }
 
-    protected EPStatement createStatement() {
+    protected EPStatement createStatement(String routeId) {
         if (pattern != null) {
-            return getEsperAdministrator().createPattern(pattern);
+            return getEsperAdministrator().createPattern(pattern, routeId);
         } else {
             ObjectHelper.notNull(eql, "eql or pattern");
-            return getEsperAdministrator().createEPL(eql);
+            return getEsperAdministrator().createEPL(eql, routeId);
         }
     }
 

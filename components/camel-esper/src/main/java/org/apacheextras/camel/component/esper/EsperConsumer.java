@@ -46,7 +46,7 @@ public class EsperConsumer extends DefaultConsumer implements UpdateListener {
         super.doStart();
         if (statement.isDestroyed()) {
             // statement is destroyed! re-init it!
-            statement = endpoint.createStatement();
+            statement = endpoint.createStatement(getRoute().getId());
         }
        if(endpoint.isListen()) {
     	   statement.addListener(this);
