@@ -51,7 +51,7 @@ public class EsperConsumer extends DefaultConsumer implements UpdateListener {
        if(endpoint.isListen()) {
     	   statement.addListener(this);
        } else {
-    	   log.info("Start esper consumer eql='{}' without listener!", endpoint.getEndpointConfiguration().getParameter("eql"));
+    	   log.debug("Start esper consumer eql='{}' without listener!", endpoint.getEndpointConfiguration().getParameter("eql"));
        }
     }
 
