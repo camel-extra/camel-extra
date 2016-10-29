@@ -46,19 +46,17 @@ public class EsperProducer extends DefaultProducer {
      * @param exchange
      * @throws Exception
      */
-    @SuppressWarnings("unchecked")
     @Override
     public void process(Exchange exchange) throws Exception {
         final Message in = exchange.getIn();
-        final Object body = in.getBody();
         if (this.endpoint.isMapBody()) {
-        	getEsperRuntime().sendEvent((Map)body, this.endpoint.getName());
+        	getEsperRuntime().sendEvent(in.getBody(Map.class), this.endpoint.getName());
         } else if (endpoint.isMapEvents()) {
-            Map map = new HashMap(in.getHeaders());
-            map.put("body", body);
+            Map<String, Object> map = new HashMap<String, Object>(in.getHeaders());
+            map.put("body", in.getBody());
             getEsperRuntime().sendEvent(map, endpoint.getName());
         } else {
-            getEsperRuntime().sendEvent(body);
+            getEsperRuntime().sendEvent(in.getBody());
         }
     }
 
