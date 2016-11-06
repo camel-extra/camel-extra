@@ -49,6 +49,7 @@ public class EsperEndpoint extends DefaultEndpoint {
     private final EsperComponent component;
     private final String name;
     private boolean mapEvents;
+    private boolean mapBody = false;
     private boolean configured = false;
     private boolean listen = true;
     private String pattern;
@@ -200,6 +201,14 @@ public class EsperEndpoint extends DefaultEndpoint {
         this.configured = configured;
     }
 
+	public boolean isMapBody() {
+		return mapBody;
+	}
+
+	public void setMapBody(boolean mapBody) {
+		this.mapBody = mapBody;
+	}
+	
 	public boolean isListen() {
 		return listen;
 	}
