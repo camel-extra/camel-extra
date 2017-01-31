@@ -412,6 +412,8 @@
               <exclude>**/test/data*/**/*</exclude>
               <exclude>.gitignore</exclude>
               <exclude>.git/**/*</exclude>
+              <exclude>**/*.adoc</exclude>
+              <exclude>**/*.md</exclude>
               <exclude>**/src/styles/print.css</exclude>
               <excludes>**/src/main/resources/META-INF/cxf/cxf.extension</excludes>
               <excludes>**/src/main/resources/META-INF/cxf/bus-extensions.txt</excludes>
