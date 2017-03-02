@@ -31,7 +31,7 @@
     </parent>
 
     <artifactId>camel-db4o</artifactId>
-    <packaging>bundle</packaging>
+    <packaging>jar</packaging>
     <name>Camel Extra :: Db4o</name>
     <description>Camel db4o support</description>
 

@@ -31,7 +31,7 @@
   </parent>
 
   <artifactId>camel-vtdxml</artifactId>
-  <packaging>bundle</packaging>
+  <packaging>jar</packaging>
   <name>Camel Extra :: VTD-XML</name>
   <description>Camel VTD-XML support</description>
 

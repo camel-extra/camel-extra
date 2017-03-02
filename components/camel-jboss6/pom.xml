@@ -30,7 +30,7 @@
     </parent>
 
     <artifactId>camel-jboss6</artifactId>
-    <packaging>bundle</packaging>
+    <packaging>jar</packaging>
     <name>Camel Extra :: JBoss 6.x</name>
     <description>Camel JBoss 6.x support</description>
 

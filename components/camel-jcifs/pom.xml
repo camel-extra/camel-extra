@@ -31,7 +31,7 @@
     </parent>
 
    <artifactId>camel-jcifs</artifactId>
-    <packaging>bundle</packaging>
+    <packaging>jar</packaging>
     <name>Camel Extra :: JCIFS</name>
     <description>Camel JCIFS (SMB) component</description>
 

@@ -31,7 +31,7 @@
   </parent>
 
   <artifactId>camel-virtualbox</artifactId>
-  <packaging>bundle</packaging>
+  <packaging>jar</packaging>
   <name>Camel Extra :: VirtualBox</name>
   <description>Camel VirtualBox support</description>
 
