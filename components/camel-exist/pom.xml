@@ -30,7 +30,7 @@
   </parent>
 
   <artifactId>camel-exist</artifactId>
-  <packaging>bundle</packaging>
+  <packaging>jar</packaging>
   <name>Camel Extra :: Exist</name>
   <description>Camel Exist support</description>
 

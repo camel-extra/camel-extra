@@ -31,7 +31,7 @@
   </parent>
 
   <artifactId>camel-cics</artifactId>
-  <packaging>bundle</packaging>
+  <packaging>jar</packaging>
 
   <name>Camel Extra :: CICS Transaction Gateway</name>
   <description>Camel CICS Transaction Gateway component</description>

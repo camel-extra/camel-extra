@@ -30,7 +30,7 @@
   </parent>
 
   <artifactId>camel-rcode</artifactId>
-  <packaging>bundle</packaging>
+  <packaging>jar</packaging>
   <name>Camel Extra :: RCode</name>
   <description>Camel RCode support</description>
 

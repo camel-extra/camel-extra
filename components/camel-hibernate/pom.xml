@@ -30,7 +30,7 @@
   </parent>
 
   <artifactId>camel-hibernate</artifactId>
-  <packaging>bundle</packaging>
+  <packaging>jar</packaging>
   <name>Camel Extra :: Hibernate</name>
   <description>Camel Hibernate support</description>
 

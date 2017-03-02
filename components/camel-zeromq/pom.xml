@@ -31,7 +31,7 @@
 
   <artifactId>camel-zeromq</artifactId>
   <name>Camel Extra :: ZeroMQ</name>
-  <packaging>bundle</packaging>
+  <packaging>jar</packaging>
 
 
     <properties>

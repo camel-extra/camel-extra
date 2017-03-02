@@ -30,7 +30,7 @@
   </parent>
 
   <artifactId>camel-esper</artifactId>
-  <packaging>bundle</packaging>
+  <packaging>jar</packaging>
   <name>Camel Extra :: Esper</name>
   <description>Camel Esper support</description>
 
