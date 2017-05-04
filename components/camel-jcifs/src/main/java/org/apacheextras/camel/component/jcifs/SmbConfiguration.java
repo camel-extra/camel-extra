@@ -36,6 +36,7 @@ public class SmbConfiguration extends GenericFileConfiguration {
     private String password;
     private String host;
     private String path;
+    private int port;
     private SmbApiFactory smbApiFactory;
 
     public SmbConfiguration(URI uri, SmbApiFactory smbApiFactory) {
@@ -62,7 +63,7 @@ public class SmbConfiguration extends GenericFileConfiguration {
         }
 
         setHost(uri.getHost());
-
+        setPort(uri.getPort());
         setPath(uri.getPath());
     }
 
@@ -70,6 +71,9 @@ public class SmbConfiguration extends GenericFileConfiguration {
         StringBuffer buffer = new StringBuffer();
         buffer.append("smb://");
         buffer.append(getHost());
+        if (getPort() > 0) {
+            buffer.append(":").append(getPort());
+        }
         buffer.append(getPath());
         return buffer.toString();
     }
@@ -78,6 +82,9 @@ public class SmbConfiguration extends GenericFileConfiguration {
         StringBuffer buffer = new StringBuffer();
         buffer.append("smb://");
         buffer.append(getHost());
+        if (getPort() > 0) {
+            buffer.append(":").append(getPort());
+        }
         buffer.append("/");
         return buffer.toString();
     }
@@ -112,6 +119,14 @@ public class SmbConfiguration extends GenericFileConfiguration {
 
     public void setHost(String host) {
         this.host = host;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
     }
 
     public void setPath(String path) {

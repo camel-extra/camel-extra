@@ -43,7 +43,7 @@ public class StubFileSmbApiFactory implements SmbApiFactory {
     public SmbFile createSmbFile(String urlString, NtlmPasswordAuthentication authentication) throws MalformedURLException, SmbException {
         try {
             URI uri = new URI(urlString);
-            return smbFiles.get(uri.getPath());
+            return smbFiles.get(uri.toString());
         } catch (URISyntaxException e) {
             throw new MalformedURLException(e.getLocalizedMessage());
         }
@@ -56,7 +56,7 @@ public class StubFileSmbApiFactory implements SmbApiFactory {
 
     public void putSmbFiles(String urlString, SmbFile file) throws URISyntaxException {
         URI uri = new URI(urlString);
-        this.smbFiles.put(uri.getPath(), file);
+        this.smbFiles.put(uri.toString(), file);
 
     }
 
