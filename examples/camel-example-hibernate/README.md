@@ -1,5 +1,4 @@
-Camel Hibernate Example
-=======================
+# Camel Hibernate Sample
 
 This example shows how to exchange data using a shared database table.
 
@@ -11,10 +10,16 @@ process the row(s), and mark the row(s) as processed when done;
 to avoid picking up the same rows again.
 
 You will need to compile this example first:
+
+```
   mvn compile
+```
 
 To run the example type
+
+```
   mvn camel:run
+```
 
 To stop the example hit ctrl + c
 
