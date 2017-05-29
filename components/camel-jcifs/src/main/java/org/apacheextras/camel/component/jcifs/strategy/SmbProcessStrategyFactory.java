@@ -26,6 +26,7 @@ import java.util.Map;
 import jcifs.smb.SmbFile;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Expression;
+import org.apache.camel.LoggingLevel;
 import org.apache.camel.component.file.GenericFileExclusiveReadLockStrategy;
 import org.apache.camel.component.file.GenericFileProcessStrategy;
 import org.apache.camel.component.file.strategy.GenericFileDeleteProcessStrategy;
@@ -119,6 +120,10 @@ public final class SmbProcessStrategyFactory {
                 if (checkInterval != null) {
                     readLockStrategy.setCheckInterval(checkInterval);
                 }
+                LoggingLevel logLevel = (LoggingLevel) params.get("readLockLoggingLevel");
+                if (null != logLevel) {
+                    readLockStrategy.setReadLockLoggingLevel(logLevel);
+                }
                 return readLockStrategy;
             } else if ("changed".equals(readLock)) {
                 SmbChangedExclusiveReadLockStrategy readLockStrategy = new SmbChangedExclusiveReadLockStrategy();
@@ -137,6 +142,10 @@ public final class SmbProcessStrategyFactory {
                 Long minAge = (Long) params.get("readLockMinAge");
                 if (null != minAge) {
                     readLockStrategy.setMinAge(minAge);
+                }
+                LoggingLevel logLevel = (LoggingLevel) params.get("readLockLoggingLevel");
+                if (null != logLevel) {
+                    readLockStrategy.setReadLockLoggingLevel(logLevel);
                 }
                 return readLockStrategy;
             }
