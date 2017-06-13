@@ -1,6 +1,6 @@
 language: java
 dist: trusty
-script: "mvn clean install -PwithRatCheck,integration"
+script: "mvn clean install -B -PwithRatCheck,integration"
 jdk:
   - openjdk8
 
