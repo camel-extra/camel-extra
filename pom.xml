@@ -94,7 +94,6 @@
     <logback-version>1.0.13</logback-version>
     <mockito-version>1.9.5</mockito-version>
     <objenesis-version>2.1</objenesis-version>
-    <pax-exam-version>3.5.0</pax-exam-version>
     <protobuf-java-bundle-version>2.4.1_1</protobuf-java-bundle-version>
     <rserve-version>1.7-3</rserve-version>
     <scala-version>2.10.1</scala-version>
