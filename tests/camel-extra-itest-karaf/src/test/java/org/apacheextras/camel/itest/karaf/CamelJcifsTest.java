@@ -26,14 +26,13 @@ import org.junit.runner.RunWith;
 import org.ops4j.pax.exam.junit.PaxExam;
 
 @RunWith(PaxExam.class)
-public class CamelJcifsTest extends AbstractFeatureTest {
+public class CamelJcifsTest extends BaseKarafTest {
 
     public static final String COMPONENT = extractName(CamelJcifsTest.class);
 
     @Test
-    public void test() {
-        assertTrue(getKarafFeatureUrl().toString().contains(KARAF_VERSION));
-        assertEquals("camel-" + COMPONENT, getFeature(new StringBuilder().append("camel-").append(COMPONENT).toString()).getName());
-        assertTrue(isInstalled(getFeature(new StringBuilder().append("camel-").append(COMPONENT).toString())));
+    public void test() throws Exception {
+        testComponent(COMPONENT, "smb");
     }
+
 }

@@ -21,29 +21,20 @@
  ***************************************************************************************/
 package org.apacheextras.camel.itest.karaf;
 
-import org.apache.karaf.features.Feature;
 import org.junit.Test;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.ops4j.pax.exam.junit.PaxExam;
 
-@Ignore
 @RunWith(PaxExam.class)
-public class CamelDb4oTest extends AbstractFeatureTest {
+public class CamelDb4oTest extends BaseKarafTest {
+
+    public static final String COMPONENT = extractName(CamelDb4oTest.class);
 
     @Test
-    public void shouldInstallFeature() {
-        assertIsFeatureInstalled();
+    @Ignore
+    public void test() throws Exception {
+        testComponent(COMPONENT);
     }
 
-    @Test
-    public void shouldInstallFeatureOnValidKaraf() {
-        assertTrue(getKarafFeatureUrl().toString().contains(KARAF_VERSION));
-    }
-
-    @Test
-    public void shouldUseProperFeatureName() {
-        Feature feature = getFeature(fullComponentName());
-        assertEquals(fullComponentName(), feature.getName());
-    }
 }

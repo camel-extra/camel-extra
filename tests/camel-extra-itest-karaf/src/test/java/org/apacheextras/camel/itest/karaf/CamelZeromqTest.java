@@ -21,20 +21,18 @@
  ***************************************************************************************/
 package org.apacheextras.camel.itest.karaf;
 
-import org.apache.karaf.features.Feature;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.ops4j.pax.exam.junit.PaxExam;
 
 @RunWith(PaxExam.class)
-public class CamelZeromqTest extends AbstractFeatureTest {
+public class CamelZeromqTest extends BaseKarafTest {
+
+    public static final String COMPONENT = extractName(CamelZeromqTest.class);
 
     @Test
-    public void test() {
-        assertTrue(getKarafFeatureUrl().toString().contains(KARAF_VERSION));
-        Feature feature = getFeature(fullComponentName());
-        assertEquals(fullComponentName(), feature.getName());
-        assertTrue(isInstalled(feature));
+    public void test() throws Exception {
+        testComponent(COMPONENT);
     }
 
 }
