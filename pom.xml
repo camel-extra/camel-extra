@@ -201,7 +201,7 @@
 
   <scm>
     <connection>scm:git:https://github.com/camel-extra/camel-extra.git</connection>
-    <developerConnection>scm:git:https://github.com/camel-extra/camel-extra.git</developerConnection>
+    <developerConnection>scm:git:git@github.com:camel-extra/camel-extra.git</developerConnection>
     <url>https://github.com/camel-extra/camel-extra</url>
     <tag>HEAD</tag>
   </scm>
