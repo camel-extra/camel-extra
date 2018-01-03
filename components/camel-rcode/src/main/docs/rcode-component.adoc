@@ -1,0 +1,133 @@
+RCode
+~~~~~
+
+*Available as of Camel Extra 2.11*
+
+The rcode component supports the integration of the statistics
+environment http://www.r-project.org/[R] via
+http://cran.r-project.org/web/packages/Rserve/Rserve.pdf[Rserve]
+
+Dependency
+^^^^^^^^^^
+
+[source,java]
+--------------------------------------------------
+<dependency>
+  <groupId>org.apache-extras.camel-extra</groupId>
+  <artifactId>camel-rcode</artifactId>
+  <version>2.12.0</version>
+</dependency>
+--------------------------------------------------
+
+URI format
+^^^^^^^^^^
+
+[source,java]
+-----------------------------------------
+rcode://host[:port]/operationId[?options]
+-----------------------------------------
+
+There are several operations available to integrate Java with R. The
+current component has implemented the following subset of operations:
+
+operationId
+
+Description
+
+ASSIGN_CONTENT
+
+Assigns a string value to a symbol in R. The symbol is created if it
+does not already exist. An exchange object passed to an endpoint
+configured with the assign_content operation must contain an objet of
+type _Entry<String,String>_ where the first String denotes the symbol
+name and the second contains the value.
+
+ASSIGN_EXPRESSION
+
+Assigns a content of a R Expression (_REXP_) to a symbol in R. The
+assignment of the symbol takes place when passing an object of type
+_Entry<String,REXP>_ via the message exchange.
+
+EVAL
+
+Evaluates a given R command and retrieves the result. The R command is
+transported as _String_ object via the exchange.
+
+PARSE_AND_EVAL
+
+Parses and evaluates a given R command and retrieves the result. The R
+command is transported as String object via the exchange.
+
+VOID_EVAL
+
+Evaluates a given R command, but does not fetch the result. The R
+command is passed as _String_ object within the exchange. This operation
+is useful for assignments or for plots having a defined file as output.
+
+The following example should clarify the component's interaction style:
+
+Configuring an endpoint that evaluates a given R command.
+
+[source,java]
+--------------------------------------------------------------------------------
+from("direct:rcode")
+  .to("rcode:localhost:6311/eval?user=test&password=test123&bufferSize=4194304")
+  .to("mock:test");
+--------------------------------------------------------------------------------
+
+Sending an R command to the endpoint. For a full list of possible
+command, please refer to the
+http://cran.r-project.org/doc/manuals/r-release/R-lang.html[R Language
+Definition]
+
+[source,java]
+-----------------------------------------------------------
+ProducerTemplate template;
+template.sendBody("direct:rcode", "c <- sqrt(2^2 + 2^2);");
+-----------------------------------------------------------
+
+Options
+^^^^^^^
+
+Name
+
+Type
+
+Default
+
+Description
+
+user
+
+String
+
+null
+
+Configures the username to authenticate secured Rserve instances
+
+password
+
+String
+
+null
+
+Adds the password to the endpoint to access a secured R environment
+
+bufferSize
+
+long
+
+2097152
+
+Defines the buffer size for the transport between Rserve and the rcode
+component. The lowest possible value is 32KB, the highest value is at
+1GB. Both values are bound to the available RAM.
+
+See Also
+^^^^^^^^
+
+* link:configuring-camel.html[Configuring Camel]
+* link:component.html[Component]
+* link:endpoint.html[Endpoint]
+* link:getting-started.html[Getting Started]
+

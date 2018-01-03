@@ -1,0 +1,53 @@
+VTD-XML
+~~~~~~~
+
+*Available as of Camel 2.10*
+
+The VTD-XML component supports the
+http://vtd-xml.sourceforge.net/[VTD-XML Library] for very fast and
+efficient link:xpath.html[XPath] processing. The *camel-vtdxml* library
+is provided by the http://code.google.com/p/camel-extra/[Camel Extra]
+project which hosts all *GPL related components for Camel.
+
+Using
+^^^^^
+
+The VTD-XML is implemented as a Camel link:language.html[Language] which
+allows you to easily use it in the Camel routes. +
+ This component is particular efficient for splitting files or other big
+payloads.
+
+For example to split a big file containing many persons, you could do:
+
+[source,java]
+----------------------------------------------------
+    from("file:inbox")
+      .split().vtdxml("/persons/person").streaming()
+        .to("activemq:queue:person")
+      .end()
+----------------------------------------------------
+
+And in XML DSL
+
+[source,java]
+--------------------------------------
+<route>
+   <from uri="file:inbox"/>
+   <split streaming="true">
+     <vtdxml>/persons/person</vtdxml>
+     <to uri="activemq:queue:person"/>
+   </split>
+</route>
+--------------------------------------
+
+This will run the link:splitter.html[Splitter] in streaming mode using
+the *vtdxml* language.
+
+See Also
+^^^^^^^^
+
+* link:configuring-camel.html[Configuring Camel]
+* link:component.html[Component]
+* link:endpoint.html[Endpoint]
+* link:getting-started.html[Getting Started]
+

@@ -1,0 +1,217 @@
+Hibernate Example
+~~~~~~~~~~~~~~~~~
+
+*Available as of Camel 2.11*
+
+This example is located in the `examples/camel-example-hibernate`
+directory of the http://camel-extra.googlecode.com/[Camel Extras]
+project. +
+ There is a `README.txt` file with instructions how to run it.
+
+The source code for this example can be viewed online at
+https://code.google.com/a/apache-extras.org/p/camel-extra/source/browse/#svn%2Ftrunk%2Fexamples%2Fcamel-example-hibernate[this
+link]
+
+If you use maven then you can easily compile and install the example
+from the command line:
+
+[source,java]
+-----------
+mvn install
+-----------
+
+About
+^^^^^
+
+This example shows how to exchange data using a shared database table.
+
+The example has two Camel routes. The first route insert new data into
+the table, triggered by a timer to run every 5th second. +
+ The second route pickup the newly inserted rows from the table, process
+the row(s), and mark the row(s) as processed when done; to avoid picking
+up the same rows again.
+
+Implementation
+^^^^^^^^^^^^^^
+
+In the `camel-context.xml` file in the
+`src/main/resources/META-INF/spring` folder we have the Spring XML file
+to setup and configure the database and Hibernate, as well the
+link:camelcontext.html[CamelContext].
+
+*Setting up database*
+
+[source,java]
+-----------------------------------------------------------------------------------------------
+<!-- this is the JDBC data source which uses an in-memory only Apache Derby database -->
+  <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+    <property name="driverClassName" value="org.apache.derby.jdbc.EmbeddedDriver"/>
+    <property name="url" value="jdbc:derby:memory:orders;create=true"/>
+    <property name="username" value=""/>
+    <property name="password" value=""/>
+  </bean>
+-----------------------------------------------------------------------------------------------
+
+And in the same file we setup Hibernate. At first we have the Camel
+Hibernate component, and then a number of beans to setup transactions.
+And then the last bean setup the Hibernate session factory where we
+refer to the data source and the hibernate mapping files, and any other
+hibernate configurations we may need.
+
+*Setting up Hibernate*
+
+[source,java]
+--------------------------------------------------------------------------------------------------------------------
+  <!-- setup the Camel hibernate component -->
+  <bean id="hibernate" class="org.apacheextras.camel.component.hibernate.HibernateComponent">
+    <property name="sessionFactory" ref="sessionFactory"/>
+    <property name="transactionStrategy" ref="springTransactionStrategy"/>
+  </bean>
+
+  <!-- setup hibernate and spring to use transaction -->
+  <bean id="springTransactionStrategy" class="org.apacheextras.camel.component.hibernate.SpringTransactionStrategy">
+    <constructor-arg ref="sessionFactory"/>
+    <constructor-arg ref="transactionTemplate"/>
+  </bean>
+  <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+    <property name="sessionFactory" ref="sessionFactory"/>
+  </bean>
+  <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+    <property name="transactionManager" ref="transactionManager"/>
+  </bean>
+
+  <!-- setup Hibernate session factory -->
+  <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+    <property name="dataSource" ref="dataSource"/>
+    <!-- here we define the hibernate mapping files we use -->
+    <property name="mappingResources">
+      <list>
+        <value>Order.hbm.xml</value>
+      </list>
+    </property>
+    <!-- and here we have additional hibernate options -->
+    <property name="hibernateProperties">
+      <value>
+        hibernate.dialect=org.hibernate.dialect.DerbyTenSevenDialect
+        hibernate.hbm2ddl.auto=create
+      </value>
+    </property>
+  </bean>
+--------------------------------------------------------------------------------------------------------------------
+
+And then in the same file we setup our Camel application. At first we
+have a orderBean that we use in the routes to generate new orders and
+process orders as well.
+
+*Camel application*
+
+[source,java]
+--------------------------------------------------------------------------------------
+  <!-- order bean is our business logic bean that creates new orders -->
+  <bean id="orderBean" class="org.apacheextras.camel.examples.hibernate.OrderBean"/>
+
+  <camelContext xmlns="http://camel.apache.org/schema/spring">
+
+    <!-- route that generate new orders and insert them in the database -->
+    <route id="generateOrder-route">
+      <from uri="timer:foo?period=5s"/>
+      <transform>
+        <method ref="orderBean" method="generateOrder"/>
+      </transform>
+      <to uri="hibernate:org.apacheextras.camel.examples.hibernate.Order"/>
+      <log message="Inserted new order ${body.id}"/>
+    </route>
+
+
+    <!-- route that process the orders by picking up new rows from the database
+         and when done processing then update the row to mark it as processed -->
+    <route id="processOrder-route">
+      <from uri="hibernate:org.apacheextras.camel.examples.hibernate.Order?delay=1s"/>
+      <to uri="bean:orderBean?method=processOrder"/>
+      <log message="${body}"/>
+    </route>
+
+  </camelContext>
+--------------------------------------------------------------------------------------
+
+Hibernate mapping and POJO beans
+++++++++++++++++++++++++++++++++
+
+In this example we have a Order POJO in the class
+`org.apacheextras.camel.examples.hibernate.Order` which we use Hibernate
+to map to/from the database. The Order pojo is just a bean with the
+following attributes with getter/setter
+
+*Order pojo*
+
+[source,java]
+-------------------------------
+public class Order {
+
+    private int id;
+    private int item;
+    private int amount;
+    private String description;
+
+    // getter/setter here
+    ...
+}
+-------------------------------
+
+The Order pojo is mapped to Hibernate using the mapping file
+`Order.hbm.xml` which is located in the `src/main/resources` directory
+of the example
+
+*Hibernate mapping file to Order pojo*
+
+[source,java]
+---------------------------------------------------------------------------------------------------------
+<hibernate-mapping>
+
+    <class name="org.apacheextras.camel.examples.hibernate.Order" schema="orders" table="incoming_order">
+
+        <id name="id">
+            <generator class="native"/>
+        </id>
+
+        <property name="item" length="8"/>
+        <property name="amount" length="4"/>
+        <property name="description" length="50"/>
+    </class>
+
+</hibernate-mapping>
+---------------------------------------------------------------------------------------------------------
+
+Running the example
+^^^^^^^^^^^^^^^^^^^
+
+This example can be run from the command line
+
+[source,java]
+-------------
+mvn camel:run
+-------------
+
+Press ctrl + c to stop the example.
+
+When running this example you should see logging in the console about
+orders being processed, for example as shown below:
+
+[source,java]
+------------------------------------------------------------------------------------------------------------------------------------------
+[pache.camel.spring.Main.main()] SpringCamelContext             INFO  Apache Camel 2.11.0 (CamelContext: camel-1) started in 0.836 seconds
+[mel-1) thread #0 - timer://foo] generateOrder-route            INFO  Inserted new order 1
+[camel.examples.hibernate.Order] processOrder-route             INFO  Processed order id 1 item 222 of 2 copies of ActiveMQ in Action
+[mel-1) thread #0 - timer://foo] generateOrder-route            INFO  Inserted new order 2
+[camel.examples.hibernate.Order] processOrder-route             INFO  Processed order id 2 item 111 of 2 copies of Camel in Action
+...
+------------------------------------------------------------------------------------------------------------------------------------------
+
+See Also
+^^^^^^^^
+
+* link:examples.html[Examples]
+* link:hibernate.html[Hibernate] component
+* http://camel-extra.googlecode.com/[Camel Extra]
+* link:sql-example.html[SQL Example]
+

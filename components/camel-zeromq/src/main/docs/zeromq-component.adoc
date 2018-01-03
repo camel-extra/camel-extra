@@ -1,0 +1,185 @@
+Camel ZeroMQ Component
+~~~~~~~~~~~~~~~~~~~~~~
+
+*Available as of Camel 2.11*
+
+The *camel-zeromq* component is provided by the
+http://code.google.com/p/camel-extra/[Camel Extra] project which hosts
+*GPL related components for Camel.
+
+The *camel-zeromq* component allows you to consumer or produce messages
+using http://zeromq.org/[ZeroMQ]. Zeromq requires a bit of work to get
+setup, especially on windows. Refer to
+http://www.zeromq.org/intro:get-the-software[the documentation]. Note:
+This component works with the stable 2.2 branch and not the pre-release
+3.2.
+
+This component uses Akka for it's Zeromq "driver" but does not use Scala
+Actors. This means the component does not require the JZMQ libraries to
+be built and present, just the native ZeroMQ library that is installed
+when you build ZeroMQ on your system. There is some discussion as to the
+speed of the Akka driver, and so it is possible to switch to using the
+JZMQ driver if you wish. Simply remove the Akka Zeromq dependancy and
+replace it with the JZMQ jar and ensure the zmq.lib is present on your
+system. For more information see
+http://www.zeromq.org/bindings:java[here].
+
+Maven users will need to add the following dependency to their `pom.xml`
+for this component:
+
+[source,java]
+------------------------------------------------------------
+<dependency>
+    <groupId>org.apache-extras.camel-extra</groupId>
+    <artifactId>camel-zeromq</artifactId>
+    <version>x.x.x</version>
+    <!-- use the same version as your Camel core version -->
+</dependency>
+------------------------------------------------------------
+
+URI format
+^^^^^^^^^^
+
+[source,java]
+------------------------------------------
+zeromq:(tcp|ipc)://hostname:port[?options]
+------------------------------------------
+
+Where *hostname* is the hostname or ip where the server will run.
+
+Options
+^^^^^^^
+
+Property
+
+Default
+
+Description
+
+`socketType`
+
+`none`
+
+Choose from PULL, SUBSCRIBE for consumers, or PUSH, PUBLISH for
+producers
+
+`asyncConsumer`
+
+`true`
+
+Sets the consumer to be async.
+
+`topics`
+
+`null`
+
+Applicable for subscribers and publishers only. Determines which topics
+to subscribe or publish to. If not specified then the subscriber will
+subscribe to all messages. If not specified by a publisher then no topic
+will be prefixed to the message. Specify multiple topics by a comma
+separated list
+
+`messageIdEnabled`
+
+`false`
+
+If enabled then camel-zeromq will add a unique UUID to each message as
+it is received
+
+`messageConvertor`
+
+`DefaultMessageConvertor`
+
+The message convertor that is used to turn an exchange into a byte array
+for dispatch through zeromq. See later section.
+
+`highWaterMark`
+
+`-1`
+
+By default, zeromq will keep messages in an in-memory buffer while
+waiting for clients to receive. The high water mark is the max number of
+messages to hold before throwing an exception. -1 sets to the zeromq
+default, 0 disables, and any positive value sets to that value.
+
+`linger`
+
+`-1`
+
+By default, zeromq will wait for sending messages to be received before
+shutting down. Linger is the number of seconds to wait before force
+closing the socket. -1 sets to the zeromq default, 0 disables, and any
+positive value sets to that value.
+
+Headers
+^^^^^^^
+
+The follwing headers are set on exchanges during message transport.
+
+Header Name
+
+Endpoint Type
+
+Description
+
+ZeroMQMessageId
+
+Consumer
+
+A type 4 UUID that is added to received messages
+
+ZeroMQTimestamp
+
+Both
+
+The timestamp when the message was received
+
+ZeroMQSource
+
+Both
+
+The socket address where the message was received from or pushed to
+
+ZeroMQSocketType
+
+Both
+
+The type of zeromq that the message was received from or pushed to
+
+Message Conversion
+^^^^^^^^^^^^^^^^^^
+
+ZeroMQ sends its messages as a byte stream and so incoming messages have
+the body set as a byte[] array. When sending to a producer, the
+messageConvertor is invoked, and passed the Exchange. The
+DefaultMessageConvertor will return the body as is, if it is a byte
+array, otherwise it will call toString().getBytes(). You can provide
+custom conversion strategies by specifying a class to the
+messageConvertor option on the endpoint.
+
+Samples
+^^^^^^^
+
+To receive all messages from a publisher, and then print those to a
+logger:
+
+[source,java]
+------------------------------------------------------------------
+from("zeromq:tcp://127.0.0.1:5555").process(someLoggingProcessor);
+------------------------------------------------------------------
+
+To broadcast a message every second on three topics:
+
+[source,java]
+-------------------------------------------------------------------------------------------------------------------------
+        from("timer://foo?fixedRate=true&period=10").process(new Processor() {
+        
+        List<String> asList = Arrays.asList("coldplay", "keane", "jethro tull", "jack bruce", "elton john", "kate bush");
+
+            @Override
+            public void process(Exchange exchange) throws Exception {
+                Collections.shuffle(asList);
+                exchange.getIn().setBody(asList.get(0));
+            }
+        }).to("zeromq:tcp://127.0.0.1:5556?socketType=PUBLISH&topics=bands,musicians,singers");
+-------------------------------------------------------------------------------------------------------------------------
