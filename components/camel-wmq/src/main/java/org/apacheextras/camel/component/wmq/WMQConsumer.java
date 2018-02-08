@@ -21,9 +21,13 @@
  ***************************************************************************************/
 package org.apacheextras.camel.component.wmq;
 
-import com.ibm.mq.*;
+import com.ibm.mq.MQDestination;
+import com.ibm.mq.MQGetMessageOptions;
+import com.ibm.mq.MQMessage;
+import com.ibm.mq.MQQueueManager;
 import com.ibm.mq.constants.CMQC;
 import com.ibm.mq.constants.MQConstants;
+import com.ibm.mq.headers.MQDataException;
 import com.ibm.mq.headers.MQHeaderList;
 import com.ibm.mq.headers.MQRFH2;
 import org.apache.camel.Exchange;
@@ -34,13 +38,28 @@ import org.apache.camel.impl.ScheduledPollConsumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
+import java.util.function.Function;
+
 public class WMQConsumer extends ScheduledPollConsumer implements SuspendableService {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(WMQConsumer.class);
 
+    private final Function<MQMessage, MQHeaderList> mqHeaderListFactory;
+
     public WMQConsumer(WMQEndpoint endpoint, Processor processor) {
-        super(endpoint, processor);
+        this(endpoint, processor, WMQConsumer::createMqHeaderList);
     }
+
+
+    public WMQConsumer(WMQEndpoint endpoint, Processor processor,
+                       Function<MQMessage, MQHeaderList> mqHeaderListFactory) {
+        super(endpoint, processor);
+        this.mqHeaderListFactory = mqHeaderListFactory;
+    }
+
 
     @Override
     protected int poll() throws Exception {
@@ -105,7 +124,7 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
             LOGGER.info("\tmq.mqmd.replyto.q.mgr: {}", message.replyToQueueManagerName);
             in.setHeader("mq.mqmd.replyto.q.mgr", message.replyToQueueManagerName);
 
-            MQHeaderList headerList = new MQHeaderList(message);
+            MQHeaderList headerList = this.mqHeaderListFactory.apply(message);
             // TODO MQRFH, MQCIH, MQDLH, MQIIH, MQRMH, MQSAPH, MQWIH, MQXQH, MQDH, MQEPH headers support
             int index = headerList.indexOf("MQRFH2");
             if (index >= 0) {
@@ -134,11 +153,11 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
             LOGGER.info("Reading body");
             byte[] buffer = new byte[message.getDataLength()];
             message.readFully(buffer);
-            String body = new String(buffer, "UTF-8");
+            saveBody(in, buffer);
 
-            in.setBody(body, String.class);
             getProcessor().process(exchange);
         } catch (Exception e) {
+            LOGGER.error(e.getMessage(), e);
             exchange.setException(e);
         } finally {
             if (destination != null)
@@ -152,9 +171,30 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
         return 1;
     }
 
+    private void saveBody(Message in, byte[] buffer) {
+        if ("bytes".equals(getEndpoint().getBodyType())) {
+            in.setBody(ByteBuffer.wrap(buffer), ByteBuffer.class);
+        } else {
+            String body = new String(buffer);
+            in.setBody(body, String.class);
+        }
+    }
+
+
     @Override
     public WMQEndpoint getEndpoint() {
         return (WMQEndpoint) super.getEndpoint();
     }
 
+
+    private static MQHeaderList createMqHeaderList(MQMessage mqMessage) {
+        try {
+            return new MQHeaderList(mqMessage);
+        } catch (IOException | MQDataException e) {
+            throw new IllegalStateException(e);
+        } catch (NoSuchMethodError e) {
+            throw new IllegalStateException("This error can happen when a specific IBM class is not on the classpath (com.ibm.mq.headers.internal.MQMessageWrapper). If you don't add it, constructor throws NoSucheMethodError. Message found : " + e.getMessage(), e);
+        }
+
+    }
 }
