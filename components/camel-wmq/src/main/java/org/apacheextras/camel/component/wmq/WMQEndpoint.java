@@ -58,6 +58,17 @@ public class WMQEndpoint extends DefaultEndpoint {
     @UriParam
     private String queueManagerCCSID;
 
+    @UriParam
+    private String bodyType;
+
+    public WMQEndpoint() {
+    }
+
+    public WMQEndpoint(String uri, Component component, String destinationName) {
+        super(uri, component);
+        this.destinationName = destinationName;
+    }
+
     public String getDestinationName() {
         return destinationName;
     }
@@ -122,12 +133,13 @@ public class WMQEndpoint extends DefaultEndpoint {
         this.queueManagerCCSID = queueManagerCCSID;
     }
 
-    public WMQEndpoint() {
+
+    public void setBodyType(String bodyType) {
+        this.bodyType = bodyType;
     }
 
-    public WMQEndpoint(String uri, Component component, String destinationName) {
-        super(uri, component);
-        this.destinationName = destinationName;
+    public String getBodyType() {
+        return bodyType;
     }
 
     public Producer createProducer() throws Exception {
@@ -144,5 +156,4 @@ public class WMQEndpoint extends DefaultEndpoint {
     public boolean isSingleton() {
         return true;
     }
-
 }
