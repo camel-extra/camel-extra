@@ -37,6 +37,11 @@
     <description>Camel IBM Websphere MQ component</description>
 
     <properties>
+        <camel.osgi.import.pkg>
+          !${camel.osgi.export.pkg},
+          org.apache.camel.*;version="[2.15,3)",
+          *
+        </camel.osgi.import.pkg>
         <camel.osgi.export.pkg>org.apacheextras.camel.component.wmq</camel.osgi.export.pkg>
         <camel.osgi.export.service>org.apache.camel.spi.ComponentResolver;component=wmq</camel.osgi.export.service>
     </properties>
