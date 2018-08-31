@@ -48,7 +48,7 @@ public class FirebaseComponent extends UriEndpointComponent {
                 getAndRemoveParameter(parameters, "serviceAccountFile", String.class))
                 .build();
 
-        firebaseConfig.init();
+        firebaseConfig.init(getCamelContext());
 
         Endpoint endpoint = new FirebaseEndpoint(uri, this, firebaseConfig);
         setProperties(endpoint, parameters);

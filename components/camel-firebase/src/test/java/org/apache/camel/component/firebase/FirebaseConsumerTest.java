@@ -78,7 +78,7 @@ public class FirebaseConsumerTest extends CamelTestSupport {
     private void insertDummyData(String databaseUrl, String originalRootReference, String serviceAccountFile) throws IOException, InterruptedException {
         FirebaseConfig config = new FirebaseConfig.Builder(databaseUrl, originalRootReference, URLDecoder.decode(serviceAccountFile, "UTF-8"))
                 .build();
-        config.init();
+        config.init(context());
         FirebaseDatabase
                 .getInstance(config.getFirebaseApp())
                 .getReference(config.getRootReference()).child("dummy").setValue("test", (databaseError, databaseReference) -> {
