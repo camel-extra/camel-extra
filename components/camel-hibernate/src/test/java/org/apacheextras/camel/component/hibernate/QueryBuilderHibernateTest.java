@@ -27,10 +27,10 @@ import org.apacheextras.camel.examples.SendEmail;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
-import org.hibernate.service.ServiceRegistryBuilder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -49,11 +49,11 @@ public class QueryBuilderHibernateTest {
     // Fixture setup
 
     @Before
-    public void setUp() {
+    public void setUp() throws Exception {
         Configuration configuration = new Configuration().setProperty(Environment.DIALECT, "org.hibernate.dialect.DerbyDialect")
             .setProperty(Environment.URL, "jdbc:derby:target/testdb;create=true").setProperty(Environment.USER, "").setProperty(Environment.PASS, "")
             .setProperty(Environment.HBM2DDL_AUTO, "create").addResource("org/apacheextras/camel/examples/SendEmail.hbm.xml");
-        ServiceRegistry serviceRegistry = new ServiceRegistryBuilder().applySettings(configuration.getProperties()).buildServiceRegistry();
+        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
         SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
         session = sessionFactory.openSession();
 
@@ -61,7 +61,7 @@ public class QueryBuilderHibernateTest {
     }
 
     @After
-    public void tearDown() {
+    public void tearDown() throws Exception {
         session.close();
     }
 

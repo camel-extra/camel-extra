@@ -106,7 +106,7 @@ public class SmbOperations<SmbFile> implements GenericFileOperations<SmbFile> {
     }
 
     @Override
-    public boolean retrieveFile(String name, Exchange exchange) {
+    public boolean retrieveFile(String name, Exchange exchange, long size) {
         if (ObjectHelper.isNotEmpty(endpoint.getLocalWorkDirectory())) {
             return retrieveFileToFileInLocalWorkDirectory(name, exchange);
         }
@@ -258,7 +258,7 @@ public class SmbOperations<SmbFile> implements GenericFileOperations<SmbFile> {
     }
 
     @Override
-    public boolean storeFile(String name, Exchange exchange) {
+    public boolean storeFile(String name, Exchange exchange, long size){
         boolean append = false;
         // if an existing file already exists what should we do?
         if (existsFile(name)) {
@@ -374,7 +374,7 @@ public class SmbOperations<SmbFile> implements GenericFileOperations<SmbFile> {
     }
 
     @Override
-    public void releaseRetreivedFileResources(Exchange exchange) {
+    public void releaseRetrievedFileResources(Exchange exchange) {
         // Right now do nothing
     }
 }

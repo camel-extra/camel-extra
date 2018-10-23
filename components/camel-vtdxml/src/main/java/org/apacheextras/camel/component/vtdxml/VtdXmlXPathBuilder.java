@@ -204,6 +204,11 @@ public class VtdXmlXPathBuilder implements Expression, Predicate, NamespaceAware
         ap.selectXPath(text);
     }
 
+    @Override
+    public Map<String, String> getNamespaces() {
+        return namespaces;
+    }
+
     /**
      * Iterator to be used for XPath expressions
      */
