@@ -22,9 +22,12 @@
 package org.apacheextras.camel.component.zeromq;
 
 import java.net.URISyntaxException;
+import java.util.HashMap;
+import org.apache.camel.CamelContext;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
+import org.apache.camel.spi.HeadersMapFactory;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -32,11 +35,20 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import org.mockito.Mock;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 public class ZeromqEndpointTest {
 
     private ZeromqEndpoint endpoint;
+    
+    @Mock
+    private CamelContext context;
+    
+    @Mock
+    private HeadersMapFactory headersMapFactory;
 
     @Test
     public void assertSingleton() throws URISyntaxException {
@@ -45,7 +57,13 @@ public class ZeromqEndpointTest {
 
     @Before
     public void before() throws URISyntaxException {
+        initMocks(this);
+        
         endpoint = new ZeromqEndpoint("zeromq:tcp://localhost:1234?socketType=PUBLISH", "tcp://localhost:1234?socketType=PUBLISH", new ZeromqComponent());
+        endpoint.setCamelContext(context);
+        
+        when(context.getHeadersMapFactory()).thenReturn(headersMapFactory);
+        when(headersMapFactory.newMap()).thenAnswer((invocation) -> new HashMap<>());
     }
 
     @Test

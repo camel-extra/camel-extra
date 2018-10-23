@@ -89,7 +89,6 @@ public class FromSmbChangedReadLockZeroLengthTest extends BaseSmbTestSupport {
                 return FILE_CONTENT.length;
             }
         });
-        expect(mockInputStream.read((byte[]) anyObject())).andReturn(-1);
         mockInputStream.close();
 
         smbApiFactory.putSmbFiles(getSmbBaseUrl() + "/", rootDir);

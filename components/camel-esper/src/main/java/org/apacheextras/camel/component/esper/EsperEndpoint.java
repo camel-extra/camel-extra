@@ -121,7 +121,7 @@ public class EsperEndpoint extends DefaultEndpoint {
      */
     public Exchange createExchange(EventBean newEventBean, EventBean oldEventBean, EPStatement statement) {
         Exchange exchange = createExchange(ExchangePattern.InOnly);
-        Message in = new EsperMessage(newEventBean, oldEventBean);
+        Message in = new EsperMessage(getCamelContext(), newEventBean, oldEventBean);
         in.setHeader("CamelEsperName", name);
         in.setHeader("CamelEsperStatement", statement);
         if (pattern != null) {

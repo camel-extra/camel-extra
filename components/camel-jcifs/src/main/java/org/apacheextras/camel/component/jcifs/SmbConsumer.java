@@ -33,6 +33,7 @@ import org.apache.camel.component.file.GenericFile;
 import org.apache.camel.component.file.GenericFileConsumer;
 import org.apache.camel.component.file.GenericFileEndpoint;
 import org.apache.camel.component.file.GenericFileOperations;
+import org.apache.camel.component.file.GenericFileProcessStrategy;
 import org.apache.camel.util.FileUtil;
 import org.apache.camel.util.ObjectHelper;
 
@@ -41,8 +42,8 @@ public class SmbConsumer extends GenericFileConsumer<SmbFile> {
     private String endpointPath;
     private String currentRelativePath = "";
 
-    public SmbConsumer(GenericFileEndpoint<SmbFile> endpoint, Processor processor, GenericFileOperations<SmbFile> operations) {
-        super(endpoint, processor, operations);
+    public SmbConsumer(GenericFileEndpoint<SmbFile> endpoint, Processor processor, GenericFileOperations<SmbFile> operations, GenericFileProcessStrategy<SmbFile> strategy) {
+        super(endpoint, processor, operations, strategy);
         this.endpointPath = endpoint.getConfiguration().getDirectory();
     }
 

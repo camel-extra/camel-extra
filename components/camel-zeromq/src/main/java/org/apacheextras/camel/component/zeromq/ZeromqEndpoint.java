@@ -101,7 +101,7 @@ public class ZeromqEndpoint extends DefaultEndpoint {
     Exchange createZeromqExchange(byte[] body) {
         Exchange exchange = new DefaultExchange(getCamelContext(), getExchangePattern());
 
-        Message message = new DefaultMessage();
+        Message message = new DefaultMessage(getCamelContext());
         message.setHeader(ZeromqConstants.HEADER_SOURCE, getSocketAddress());
         message.setHeader(ZeromqConstants.HEADER_SOCKET_TYPE, socketType);
         message.setHeader(ZeromqConstants.HEADER_TIMESTAMP, System.currentTimeMillis());

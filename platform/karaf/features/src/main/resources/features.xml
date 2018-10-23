@@ -46,7 +46,7 @@
     <feature version='${camel-version}'>camel-spring</feature>
     <bundle>mvn:org.apache-extras.camel-extra/camel-hibernate/${project.version}</bundle>
     <bundle start-level="30">mvn:org.apache.geronimo.specs/geronimo-jta_1.1_spec/${geronimo-jta-spec-version}</bundle>
-    <bundle start-level="30">mvn:org.apache.geronimo.specs/geronimo-jpa_2.0_spec/${geronimo-jpa2-spec-version}</bundle>
+    <bundle start-level="30">mvn:org.apache.geronimo.specs/geronimo-jpa_2.1_spec/${geronimo-jpa-spec-version}</bundle>
     <bundle dependency='true'>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.antlr/${antlr-bundle-hibernate-version}</bundle>
     <bundle dependency='true'>mvn:org.apache.servicemix.specs/org.apache.servicemix.specs.jsr303-api-1.0.0/${jsr303-bundle-version}</bundle>
     <bundle dependency='true'>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.dom4j/${dom4j-bundle-version}</bundle>
@@ -55,7 +55,6 @@
     <bundle dependency='true'>mvn:com.fasterxml/classmate/${classmate-version}</bundle>
     <bundle dependency='true'>mvn:org.jboss.logging/jboss-logging/${jboss-logging-version}</bundle>
     <bundle dependency='true'>mvn:org.hibernate/hibernate-core/${hibernate-version}</bundle>
-    <bundle dependency='true'>mvn:org.hibernate/hibernate-entitymanager/${hibernate-version}</bundle>
     <bundle dependency='true'>mvn:org.hibernate/hibernate-osgi/${hibernate-version}</bundle>
     <bundle dependency='true'>mvn:org.javassist/javassist/${javassist-version}</bundle>
   </feature>
