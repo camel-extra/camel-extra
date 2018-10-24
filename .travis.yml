@@ -1,6 +1,11 @@
 language: java
 dist: trusty
-script: "mvn clean install -B -PwithRatCheck,integration"
+addons:
+  sonarcloud:
+    organization: "default" 
+script: 
+  - mvn clean install -B -PwithRatCheck,integration
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
 jdk:
   - openjdk8
 
