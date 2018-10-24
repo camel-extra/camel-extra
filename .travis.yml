@@ -1,11 +1,11 @@
 language: java
 dist: trusty
-addons:
-  sonarcloud:
-    organization: "camel-extra" 
+# addons:
+#   sonarcloud:
+#     organization: "camel-extra" 
 script: 
   - mvn clean install -B -PwithRatCheck,integration
-  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
+#   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
 jdk:
   - openjdk8
 
