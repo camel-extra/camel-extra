@@ -37,7 +37,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.test.skip>true</maven.test.skip>
-        <firebase.version>4.0.3</firebase.version>
+        <firebase.version>6.4.0</firebase.version>
         <camel.osgi.export.pkg>org.apacheextras.camel.component.firebase</camel.osgi.export.pkg>
         <camel.osgi.export.service>org.apache.camel.spi.ComponentResolver;component=firebase</camel.osgi.export.service>
         <assertj-core.version>3.6.1</assertj-core.version>

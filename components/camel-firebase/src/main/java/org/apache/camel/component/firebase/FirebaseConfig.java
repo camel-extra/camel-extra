@@ -21,13 +21,14 @@
  ***************************************************************************************/
 package org.apache.camel.component.firebase;
 
+import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import org.apache.camel.CamelContext;
+import org.apache.camel.util.ResourceHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.UUID;
 
 /**
@@ -55,10 +56,10 @@ public final class FirebaseConfig {
         this.async = builder.async;
     }
 
-    public void init() throws IOException {
-        try (InputStream in = Files.newInputStream(Paths.get(serviceAccountFile))) {
+    public void init(CamelContext context) throws IOException {
+        try (InputStream in = ResourceHelper.resolveMandatoryResourceAsInputStream(context, serviceAccountFile)) {
             FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setServiceAccount(in)
+                    .setCredentials(GoogleCredentials.fromStream(in))
                     .setDatabaseUrl(this.databaseUrl)
                     .build();
             firebaseApp = FirebaseApp.initializeApp(options, UUID.randomUUID().toString());

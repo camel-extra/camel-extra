@@ -61,7 +61,7 @@ public class FirebaseProducer extends DefaultAsyncProducer {
         if (reply) { // Wait for reply
             processReply(exchange, callback, value, ref);
         } else { // Fire and forget
-            ref.setValue(value);
+            ref.setValueAsync(value);
             out.setBody(in.getBody());
             callback.done(true);
         }

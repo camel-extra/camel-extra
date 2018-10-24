@@ -21,6 +21,7 @@
  ***************************************************************************************/
 package org.apache.camel.component.firebase.provider;
 
+import org.apache.camel.CamelContext;
 import org.apache.camel.component.firebase.FirebaseConfig;
 
 import java.io.File;
@@ -48,10 +49,10 @@ public final class ConfigurationProvider {
         return URLEncoder.encode(f.getAbsolutePath(), "UTF-8");
     }
 
-    public static FirebaseConfig createDemoConfig() throws IOException, URISyntaxException {
+    public static FirebaseConfig createDemoConfig(CamelContext context) throws IOException, URISyntaxException {
         FirebaseConfig firebaseConfig = new FirebaseConfig.Builder(String.format("https://%s", createDatabaseUrl()), createRootReference(),
                 URLDecoder.decode(createFirebaseConfigLink(), "UTF-8")).build();
-        firebaseConfig.init();
+        firebaseConfig.init(context);
         return firebaseConfig;
     }
 

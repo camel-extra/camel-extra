@@ -56,7 +56,7 @@ public class FirebaseConsumerDeleteTest {
     public void whenDeleteDeleteMessageShouldBeIntercepted() throws Exception {
         CamelContext context = new DefaultCamelContext();
         boolean[] deleteMessageReceived = {false};
-        FirebaseConfig firebaseConfig = ConfigurationProvider.createDemoConfig();
+        FirebaseConfig firebaseConfig = ConfigurationProvider.createDemoConfig(context);
         createAndDeleteContent(firebaseConfig, false);
         setupRoute(context, deleteMessageReceived);
 
@@ -77,7 +77,7 @@ public class FirebaseConsumerDeleteTest {
         rootReference
                 .setValue("AETHELWULF 839-856", (databaseError, databaseReference) -> {
                     if (delete) {
-                        databaseReference.removeValue();
+                        databaseReference.removeValueAsync();
                     }
                 });
     }
@@ -103,7 +103,7 @@ public class FirebaseConsumerDeleteTest {
                                 } else {
                                     if (!deleteFired[0]) {
                                         deleteFired[0] = true;
-                                        FirebaseConfig firebaseConfig = ConfigurationProvider.createDemoConfig();
+                                        FirebaseConfig firebaseConfig = ConfigurationProvider.createDemoConfig(context);
                                         createAndDeleteContent(firebaseConfig, true);
                                     }
                                 }
