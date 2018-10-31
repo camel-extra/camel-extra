@@ -53,7 +53,11 @@
         <version>${servicemix.bundles.lucene-version}</version>
     </dependency>
 
-    
+    <dependency>
+      <groupId>org.neo4j</groupId>
+      <artifactId>neo4j-cypher-dsl</artifactId>
+      <version>${neo4j-cypher-dsl-version}</version>
+    </dependency>
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-core</artifactId>

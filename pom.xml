@@ -95,6 +95,7 @@
     <jodatime2-bundle-version>2.3_1</jodatime2-bundle-version>
     <logback-version>1.0.13</logback-version>
     <mockito-version>1.9.5</mockito-version>
+    <neo4j-cypher-dsl-version>1.7</neo4j-cypher-dsl-version>
     <objenesis-version>2.1</objenesis-version>
     <protobuf-java-bundle-version>2.4.1_1</protobuf-java-bundle-version>
     <rserve-version>1.7-3</rserve-version>
