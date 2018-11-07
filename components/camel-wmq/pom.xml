@@ -51,9 +51,10 @@
         <!-- MQ -->
         <dependency>
             <groupId>com.ibm.mq</groupId>
-            <artifactId>mq</artifactId>
-            <version>7.5</version>
+            <artifactId>osgi.java</artifactId>
+            <version>9.0.3.0</version>
         </dependency>
+        <!--
         <dependency>
             <groupId>com.ibm.mq</groupId>
             <artifactId>mqjms</artifactId>
@@ -74,6 +75,7 @@
             <artifactId>headers</artifactId>
             <version>7.5</version>
         </dependency>
+        -->
 
         <dependency>
             <groupId>org.apache.camel</groupId>

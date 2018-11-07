@@ -32,6 +32,8 @@ import org.apache.camel.impl.DefaultProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.GregorianCalendar;
+
 public class WMQProducer extends DefaultProducer {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(WMQProducer.class);
@@ -103,6 +105,38 @@ public class WMQProducer extends DefaultProducer {
             message.replyToQueueName = (String) in.getHeader("mq.mqmd.replyto.q");
         if (in.getHeader("mq.mqmd.replyto.q.mgr") != null)
             message.replyToQueueManagerName = (String) in.getHeader("mq.mqmd.replyto.q.mgr");
+        if (in.getHeader("mq.mqmd.putdatetime") != null)
+            message.putDateTime = (GregorianCalendar) in.getHeader("mq.mqmd.putdatetime");
+        if (in.getHeader("mq.mqmd.user.id") != null)
+            message.userId = (String) in.getHeader("mq.mqmd.user.id");
+        if (in.getHeader("mq.mqmd.type") != null)
+            message.messageType = (Integer) in.getHeader("mq.mqmd.type");
+        if (in.getHeader("mq.mqmd.priority") != null)
+            message.priority = (Integer) in.getHeader("mq.mqmd.priority");
+        if (in.getHeader("mq.mqmd.persistence") != null)
+            message.persistence = (Integer) in.getHeader("mq.mqmd.persistence");
+        if (in.getHeader("mq.mqmd.backout.count") != null)
+            message.backoutCount = (Integer) in.getHeader("mq.mqmd.backout.count");
+        if (in.getHeader("mq.mqmd.report") != null)
+            message.report = (Integer) in.getHeader("mq.mqmd.report");
+        if (in.getHeader("mq.mqmd.feedback") != null)
+            message.feedback = (Integer) in.getHeader("mq.mqmd.feedback");
+        if (in.getHeader("mq.mqmd.original.length") != null)
+            message.originalLength = (Integer) in.getHeader("mq.mqmd.original.length");
+        if (in.getHeader("mq.mqmd.appl.type") != null)
+            message.putApplicationType = (Integer) in.getHeader("mq.mqmd.appl.type");
+        if (in.getHeader("mq.mqmd.appl.id.data") != null)
+            message.applicationIdData = (String) in.getHeader("mq.mqmd.appl.id.data");
+        if (in.getHeader("mq.mqmd.appl.origin.data") != null)
+            message.applicationOriginData = (String) in.getHeader("mq.mqmd.appl.origin.data");
+        if (in.getHeader("mq.mqmd.id") != null)
+            message.messageId = (byte[]) in.getHeader("mq.mqmd.id");
+        if (in.getHeader("mq.mqmd.offset") != null)
+            message.offset = (Integer) in.getHeader("mq.mqmd.offset");
+        if (in.getHeader("mq.mqmd.flags") != null)
+            message.messageFlags = (Integer) in.getHeader("mq.mqmd.flags");
+        if (in.getHeader("mq.mqmd.encoding") != null)
+            message.encoding = (Integer) in.getHeader("mq.mqmd.encoding");
 
         boolean rfh2 = false;
         if (in.getHeaders().containsKey("mq.rfh2.format")) {
