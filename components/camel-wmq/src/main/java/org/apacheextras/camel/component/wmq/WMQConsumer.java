@@ -207,11 +207,16 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
         return 1;
     }
 
-    private void saveBody(Message in, byte[] buffer) {
+    private void saveBody(Message in, byte[] buffer) throws Exception {
         if ("bytes".equals(getEndpoint().getBodyType())) {
             in.setBody(ByteBuffer.wrap(buffer), ByteBuffer.class);
         } else {
-            String body = new String(buffer);
+            String body;
+            if (getEndpoint().getBodyType() != null) {
+                body = new String(buffer, getEndpoint().getBodyType());
+            } else {
+                body = new String(buffer);
+            }
             in.setBody(body, String.class);
         }
     }
