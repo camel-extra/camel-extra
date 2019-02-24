@@ -267,7 +267,7 @@ public class SmbOperations<SmbFile> implements GenericFileOperations<SmbFile> {
                 if (LOGGER.isDebugEnabled()) {
                     LOGGER.debug("An existing file already exists: " + name + ". Ignore and do not override it.");
                 }
-                return false;
+                return true;
             } else if (endpoint.getFileExist() == GenericFileExist.Fail) {
                 throw new GenericFileOperationFailedException("File already exist: " + name + ". Cannot write new file.");
             } else if (endpoint.getFileExist() == GenericFileExist.Move) {
