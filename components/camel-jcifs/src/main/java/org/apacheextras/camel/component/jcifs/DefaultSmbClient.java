@@ -107,8 +107,8 @@ public class DefaultSmbClient implements SmbClient {
       }
     } catch (IOException e) {
       LOGGER.error(
-          "Could not locate or create direction '{}' due to '{}'",
-          url, e);
+          "Could not locate or create directory '{}' due to '{}'",
+          url, e.getMessage(), e);
       return false;
     }
     return true;
@@ -194,7 +194,7 @@ public class DefaultSmbClient implements SmbClient {
         }
       }
     } catch (SmbException e) {
-      LOGGER.error("Could not delete '{}' due to '{}'", url, e);
+      LOGGER.error("Could not delete '{}' due to '{}'", url, e.getMessage(), e);
       return false;
     }
     return true;
@@ -214,7 +214,7 @@ public class DefaultSmbClient implements SmbClient {
         sFile.renameTo(renamedFile);
       }
     } catch (SmbException e) {
-      LOGGER.error("Could not rename '{}' to '{}' due to '{}'", new Object[]{ fromUrl, toUrl, e});
+      LOGGER.error("Could not rename '{}' to '{}' due to '{}'", new Object[]{ fromUrl, toUrl, e.getMessage(), e});
       return false;
     }
     return true;
