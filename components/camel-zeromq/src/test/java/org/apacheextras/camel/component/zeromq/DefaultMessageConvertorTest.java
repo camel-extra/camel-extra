@@ -23,7 +23,7 @@ package org.apacheextras.camel.component.zeromq;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
-import org.apache.camel.impl.DefaultMessage;
+import org.apache.camel.support.DefaultMessage;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -46,7 +46,7 @@ public class DefaultMessageConvertorTest {
     @Test
     public void byteArrayNoop() {
 
-        Message msg = new DefaultMessage();
+        Message msg = new DefaultMessage(exg);
         byte[] bytes = new byte[14];
         msg.setBody(bytes);
         when(exg.getIn()).thenReturn(msg);
@@ -57,7 +57,7 @@ public class DefaultMessageConvertorTest {
     @Test
     public void convertString() {
 
-        Message msg = new DefaultMessage();
+        Message msg = new DefaultMessage(exg);
         msg.setBody("mymsg");
         when(exg.getIn()).thenReturn(msg);
 
@@ -69,7 +69,7 @@ public class DefaultMessageConvertorTest {
 
         Object obj = new Object();
 
-        Message msg = new DefaultMessage();
+        Message msg = new DefaultMessage(exg);
         msg.setBody(obj);
         when(exg.getIn()).thenReturn(msg);
 

@@ -29,7 +29,7 @@ import com.espertech.esper.client.EventBean;
 import com.espertech.esper.client.UpdateListener;
 
 import org.apache.camel.Exchange;
-import org.apache.camel.impl.PollingConsumerSupport;
+import org.apache.camel.support.PollingConsumerSupport;
 
 /**
  * @version $Revision: 1.1 $

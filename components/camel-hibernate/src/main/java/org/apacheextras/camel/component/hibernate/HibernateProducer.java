@@ -26,7 +26,7 @@ import java.util.Iterator;
 import org.apache.camel.Exchange;
 import org.apache.camel.Expression;
 import org.apache.camel.converter.ObjectConverter;
-import org.apache.camel.impl.DefaultProducer;
+import org.apache.camel.support.DefaultProducer;
 import org.hibernate.Session;
 
 public class HibernateProducer extends DefaultProducer {

@@ -26,20 +26,19 @@ import java.io.File;
 import jcifs.smb.SmbFile;
 import org.apache.camel.Exchange;
 import org.apache.camel.Expression;
-import org.apache.camel.ServicePoolAware;
 import org.apache.camel.component.file.GenericFileEndpoint;
 import org.apache.camel.component.file.GenericFileExist;
 import org.apache.camel.component.file.GenericFileOperationFailedException;
 import org.apache.camel.component.file.GenericFileOperations;
 import org.apache.camel.component.file.GenericFileProducer;
-import org.apache.camel.impl.DefaultExchange;
+import org.apache.camel.support.DefaultExchange;
 import org.apache.camel.spi.Language;
-import org.apache.camel.util.ExchangeHelper;
+import org.apache.camel.support.ExchangeHelper;
 import org.apache.camel.util.FileUtil;
 import org.apache.camel.util.ObjectHelper;
 import org.apache.camel.util.StringHelper;
 
-public class SmbProducer extends GenericFileProducer<SmbFile> implements ServicePoolAware {
+public class SmbProducer extends GenericFileProducer<SmbFile> {
 
     private String endpointPath;
 
@@ -64,8 +63,7 @@ public class SmbProducer extends GenericFileProducer<SmbFile> implements Service
 
     @Override
     public void process(Exchange exchange) throws Exception {
-
-        Exchange smbExchange = getEndpoint().createExchange(exchange);
+        Exchange smbExchange = getEndpoint().createExchange(exchange.getPattern());
         setEndpointPath(getEndpoint().getEndpointUri());
         processExchange(smbExchange);
         ExchangeHelper.copyResults(exchange, smbExchange);
@@ -153,7 +151,7 @@ public class SmbProducer extends GenericFileProducer<SmbFile> implements Service
             // any done file to write?
             if (endpoint.getDoneFileName() != null) {
                 String doneFileName = getEndpoint().createDoneFileName(target);
-                ObjectHelper.notEmpty(doneFileName, "doneFileName", endpoint);
+                StringHelper.notEmpty(doneFileName, "doneFileName", endpoint);
 
                 // create empty exchange with empty body to write as the done
                 // file

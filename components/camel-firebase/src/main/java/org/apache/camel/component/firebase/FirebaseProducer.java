@@ -28,7 +28,7 @@ import org.apache.camel.AsyncCallback;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.component.firebase.exception.DatabaseErrorException;
-import org.apache.camel.impl.DefaultAsyncProducer;
+import org.apache.camel.support.DefaultAsyncProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

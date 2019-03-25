@@ -25,7 +25,7 @@ import java.io.File;
 import java.util.Iterator;
 
 import org.apache.camel.test.junit4.ExchangeTestSupport;
-import org.apache.camel.util.ObjectHelper;
+import org.apache.camel.support.ObjectHelper;
 import org.junit.Test;
 
 /**

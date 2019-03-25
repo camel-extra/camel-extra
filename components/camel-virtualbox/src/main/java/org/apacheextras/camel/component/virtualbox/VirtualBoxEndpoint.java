@@ -22,10 +22,9 @@
 package org.apacheextras.camel.component.virtualbox;
 
 import org.apache.camel.Processor;
-import org.apache.camel.impl.DefaultEndpoint;
+import org.apache.camel.support.DefaultEndpoint;
 import org.apache.camel.spi.Injector;
 import org.apache.camel.spi.UriEndpoint;
-import org.apache.camel.util.ReflectionInjector;
 import org.apacheextras.camel.component.virtualbox.command.CommandHandlersResolver;
 import org.apacheextras.camel.component.virtualbox.command.StaticCommandHandlersResolver;
 import org.apacheextras.camel.component.virtualbox.command.VirtualBoxCommandHandler;
@@ -43,7 +42,7 @@ public class VirtualBoxEndpoint extends DefaultEndpoint {
 
     private static final Logger LOG = getLogger(VirtualBoxEndpoint.class);
 
-    private static final Injector INJECTOR = new ReflectionInjector();
+    private Injector injector;
 
     private VirtualBoxCommandHandlersManager commandHandlersManager;
 
@@ -75,6 +74,7 @@ public class VirtualBoxEndpoint extends DefaultEndpoint {
         this.url = url;
         this.username = username;
         this.password = password;
+        this.injector = component.getCamelContext().getInjector();
     }
 
     @Override
@@ -87,7 +87,7 @@ public class VirtualBoxEndpoint extends DefaultEndpoint {
 
     private VirtualBoxManagerFactory resolveVirtualBoxManagerFactory() {
         if (vboxManagerFactoryClass != null) {
-            return INJECTOR.newInstance(vboxManagerFactoryClass);
+            return injector.newInstance(vboxManagerFactoryClass);
         } else {
             LOG.debug("No vboxManagerFactoryClass specified - default {} with URL {} will be used.", WebServiceVirtualBoxManagerFactory.class, url);
             return new WebServiceVirtualBoxManagerFactory(url, username, password);

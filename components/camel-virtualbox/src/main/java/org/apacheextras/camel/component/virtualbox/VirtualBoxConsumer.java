@@ -24,7 +24,7 @@ package org.apacheextras.camel.component.virtualbox;
 import org.apache.camel.Endpoint;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.apache.camel.impl.ScheduledPollConsumer;
+import org.apache.camel.support.ScheduledPollConsumer;
 import org.apacheextras.camel.component.virtualbox.command.NoReturnValue;
 import org.apacheextras.camel.component.virtualbox.template.ConsoleCallback;
 import org.apacheextras.camel.component.virtualbox.template.DetachedSession;
