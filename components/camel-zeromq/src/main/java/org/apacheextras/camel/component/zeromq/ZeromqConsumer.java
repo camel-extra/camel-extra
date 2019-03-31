@@ -21,13 +21,16 @@
  ***************************************************************************************/
 package org.apacheextras.camel.component.zeromq;
 
+import java.nio.charset.Charset;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.camel.Processor;
 import org.apache.camel.impl.DefaultConsumer;
 import org.apache.camel.util.AsyncProcessorConverterHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.zeromq.ZMQ;
 
 public class ZeromqConsumer extends DefaultConsumer {
 
@@ -35,24 +38,30 @@ public class ZeromqConsumer extends DefaultConsumer {
 
     private final Processor processor;
     private final ZeromqEndpoint endpoint;
-    private final ContextFactory contextFactory;
+    private final ZMQ.Context context;
     private final SocketFactory socketFactory;
     private ExecutorService executor;
     private Listener listener;
+    private final String controlPipeAddress;
+    private final ZMQ.Socket emitter;
 
     public ZeromqConsumer(ZeromqEndpoint endpoint, Processor processor, ContextFactory contextFactory, SocketFactory socketFactory) {
         super(endpoint, processor);
         this.endpoint = endpoint;
-        this.contextFactory = contextFactory;
+        // use same context within single consumer
+        // to enable inproc:// for control pipe
+        this.context = contextFactory.createContext(1);
         this.socketFactory = socketFactory;
         this.processor = AsyncProcessorConverterHelper.convert(processor);
+        this.controlPipeAddress =  "inproc://pipe" + endpoint.hashCode();
+        this.emitter = contextFactory.createContext(1).socket(ZMQ.PAIR);
     }
 
     @Override
     protected void doStart() throws Exception {
         super.doStart();
         executor = endpoint.getCamelContext().getExecutorServiceManager().newFixedThreadPool(this, endpoint.getEndpointUri(), 1);
-        listener = new Listener(endpoint, processor, socketFactory, contextFactory);
+        listener = new Listener(endpoint, processor, socketFactory, i -> context, controlPipeAddress);
         executor.submit(listener);
     }
 
@@ -60,20 +69,29 @@ public class ZeromqConsumer extends DefaultConsumer {
     protected void doStop() throws Exception {
         super.doStop();
         if (listener != null) {
-            listener.stop();
+            emitter.connect(controlPipeAddress);
+            emitter.send("close".getBytes(Charset.defaultCharset()), 0);
         }
         if (executor != null) {
             LOGGER.debug("Shutdown of executor");
+
+            executor.shutdown();
+            try {
+                executor.awaitTermination(3, TimeUnit.SECONDS);
+            } catch (InterruptedException e) {
+            }
+
             if (!executor.isShutdown()) {
                 executor.shutdownNow();
             }
+
             LOGGER.debug("Executor is now shutdown");
             executor = null;
         }
     }
 
     public ContextFactory getContextFactory() {
-        return contextFactory;
+        return i -> context;
     }
 
     public SocketFactory getSocketFactory() {

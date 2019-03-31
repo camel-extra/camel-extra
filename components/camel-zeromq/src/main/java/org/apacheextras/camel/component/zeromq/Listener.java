@@ -28,17 +28,19 @@ import org.apache.camel.Processor;
 import org.apache.camel.util.AsyncProcessorConverterHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.zeromq.ZMQ;
 import org.zeromq.ZMQ.Context;
+import org.zeromq.ZMQ.Poller;
 import org.zeromq.ZMQ.Socket;
 
 class Listener implements Runnable {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
 
-    private volatile boolean running = true;
-    private Socket socket;
     private Context context;
+    private Poller poller;
     private final ZeromqEndpoint endpoint;
+    private final String controlPipeAddress;
     private final Processor processor;
     private final SocketFactory akkaSocketFactory;
     private final ContextFactory akkaContextFactory;
@@ -50,7 +52,11 @@ class Listener implements Runnable {
         }
     };
 
-    public Listener(ZeromqEndpoint endpoint, Processor processor, SocketFactory akkaSocketFactory, ContextFactory akkaContextFactory) {
+    public Listener(ZeromqEndpoint endpoint,
+                    Processor processor,
+                    SocketFactory akkaSocketFactory,
+                    ContextFactory akkaContextFactory,
+                    String controlPipeAddress) {
         this.endpoint = endpoint;
         this.akkaSocketFactory = akkaSocketFactory;
         this.akkaContextFactory = akkaContextFactory;
@@ -59,11 +65,14 @@ class Listener implements Runnable {
         } else {
             this.processor = processor;
         }
+        this.controlPipeAddress = controlPipeAddress;
     }
 
     void connect() {
         context = akkaContextFactory.createContext(1);
-        socket = akkaSocketFactory.createConsumerSocket(context, endpoint.getSocketType());
+        poller = context.poller(2);
+
+        Socket socket = akkaSocketFactory.createConsumerSocket(context, endpoint.getSocketType());
 
         String addr = endpoint.getSocketAddress();
         if (endpoint.getMode() == null || endpoint.getMode().equals("CONNECT")) {
@@ -77,35 +86,40 @@ class Listener implements Runnable {
         }
 
         if (endpoint.getSocketType() == ZeromqSocketType.SUBSCRIBE) {
-            subscribe();
+            subscribe(socket);
         }
+        poller.register(socket, Poller.POLLIN);
+
+        Socket receiver = context.socket(ZMQ.PAIR);
+        receiver.bind(controlPipeAddress);
+        poller.register(receiver, ZMQ.Poller.POLLIN);
     }
 
     @Override
     public void run() {
         connect();
-        while (running) {
-            byte[] msg = socket.recv(0);
-            if (msg == null) {
-                continue;
-            }
-            LOGGER.trace("Received message [length=" + msg.length + "]");
-            Exchange exchange = endpoint.createZeromqExchange(msg);
-            LOGGER.trace("Created exchange [exchange={}]", new Object[] {exchange});
-            try {
-                if (processor instanceof AsyncProcessor) {
-                    ((AsyncProcessor)processor).process(exchange, callback);
-                } else {
-                    processor.process(exchange);
+        while (true) {
+            poller.poll();
+
+            if (poller.pollin(0)) {
+                Socket socket = poller.getSocket(0);
+                byte[] msg = socket.recv(0);
+                if (msg == null) {
+                    continue;
                 }
-            } catch (Exception e) {
-                LOGGER.error("Exception processing exchange [{}]", e);
+                handleMessage(msg);
+            } else if (poller.pollin(1)) {
+                LOGGER.debug("Requesting shutdown of consumer thread");
+                break;
             }
         }
 
         try {
-            LOGGER.info("Closing socket");
-            socket.close();
+            LOGGER.info("Closing sockets");
+
+            for (int i = 0; i < poller.getSize(); i++) {
+                poller.getSocket(i).close();
+            }
         } catch (Exception e) {
             LOGGER.error("Could not close socket during run() [{}]", e);
         }
@@ -117,24 +131,26 @@ class Listener implements Runnable {
         }
     }
 
+    private void handleMessage(byte[] msg) {
+        LOGGER.trace("Received message [length=" + msg.length + "]");
+        Exchange exchange = endpoint.createZeromqExchange(msg);
+        LOGGER.trace("Created exchange [exchange={}]", new Object[]{exchange});
+        try {
+            if (processor instanceof AsyncProcessor) {
+                ((AsyncProcessor) processor).process(exchange, callback);
+            } else {
+                processor.process(exchange);
+            }
+        } catch (Exception e) {
+            LOGGER.error("Exception processing exchange [{}]", e);
+        }
+    }
+
     public void setCallback(AsyncCallback callback) {
         this.callback = callback;
     }
 
-    void stop() {
-        LOGGER.debug("Requesting shutdown of consumer thread");
-        running = false;
-        // we have to term the context to interrupt the recv call
-        if (context != null) {
-            try {
-                context.term();
-            } catch (Exception e) {
-                LOGGER.error("Could not terminate context during stop() [{}]", e);
-            }
-        }
-    }
-
-    void subscribe() {
+    void subscribe(Socket socket) {
         if (endpoint.getTopics() == null) {
             // subscribe all by using
             // empty filter
