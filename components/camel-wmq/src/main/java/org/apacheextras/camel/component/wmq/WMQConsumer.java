@@ -24,6 +24,7 @@ package org.apacheextras.camel.component.wmq;
 import com.ibm.mq.MQDestination;
 import com.ibm.mq.MQGetMessageOptions;
 import com.ibm.mq.MQMessage;
+import com.ibm.mq.MQQueue;
 import com.ibm.mq.MQQueueManager;
 import com.ibm.mq.constants.CMQC;
 import com.ibm.mq.constants.MQConstants;
@@ -39,7 +40,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.util.function.Function;
 
@@ -48,6 +48,8 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
     private final static Logger LOGGER = LoggerFactory.getLogger(WMQConsumer.class);
 
     private final Function<MQMessage, MQHeaderList> mqHeaderListFactory;
+
+    private MQQueueManager mqQueueManager = null;
 
     public WMQConsumer(WMQEndpoint endpoint, Processor processor) {
         this(endpoint, processor, WMQConsumer::createMqHeaderList);
@@ -69,13 +71,15 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
 
         WMQComponent component = (WMQComponent) getEndpoint().getComponent();
 
-        MQQueueManager queueManager = component.getQueueManager(getEndpoint().getQueueManagerName(),
-                getEndpoint().getQueueManagerHostname(),
-                getEndpoint().getQueueManagerPort(),
-                getEndpoint().getQueueManagerChannel(),
-                getEndpoint().getQueueManagerUserID(),
-                getEndpoint().getQueueManagerPassword(),
-                getEndpoint().getQueueManagerCCSID());
+        if (mqQueueManager == null) {
+            mqQueueManager = component.getQueueManager(getEndpoint().getQueueManagerName(),
+                    getEndpoint().getQueueManagerHostname(),
+                    getEndpoint().getQueueManagerPort(),
+                    getEndpoint().getQueueManagerChannel(),
+                    getEndpoint().getQueueManagerUserID(),
+                    getEndpoint().getQueueManagerPassword(),
+                    getEndpoint().getQueueManagerCCSID());
+        }
 
         MQDestination destination = null;
         try {
@@ -84,13 +88,13 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
             if (getEndpoint().getDestinationName().startsWith("topic:")) {
                 String destinationName = getEndpoint().getDestinationName().substring("topic:".length());
                 int options = CMQC.MQSO_CREATE | CMQC.MQSO_RESUME | CMQC.MQSO_DURABLE | CMQC.MQSO_FAIL_IF_QUIESCING;
-                destination = queueManager.accessTopic(destinationName, null, options, null, null);
+                destination = mqQueueManager.accessTopic(destinationName, null, options, null, null);
             } else {
                 String destinationName = getEndpoint().getDestinationName();
                 if (destinationName.startsWith("queue:")) {
                     destinationName = destinationName.substring("queue:".length());
                 }
-                destination = queueManager.accessQueue(destinationName, MQConstants.MQOO_INPUT_AS_Q_DEF, null, null, null);
+                destination = mqQueueManager.accessQueue(destinationName, MQConstants.MQOO_INPUT_AS_Q_DEF, null, null, null);
             }
 
             MQMessage message = new MQMessage();

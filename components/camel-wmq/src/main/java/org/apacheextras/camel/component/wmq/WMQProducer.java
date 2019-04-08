@@ -40,6 +40,8 @@ public class WMQProducer extends DefaultProducer {
 
     private final WMQEndpoint endpoint;
 
+    private MQQueueManager mqQueueManager;
+
     public WMQProducer(WMQEndpoint endpoint) {
         super(endpoint);
         this.endpoint = endpoint;
@@ -53,13 +55,15 @@ public class WMQProducer extends DefaultProducer {
     public void process(Exchange exchange) throws Exception {
         WMQComponent component = (WMQComponent) this.getEndpoint().getComponent();
 
-        MQQueueManager queueManager = component.getQueueManager(getEndpoint().getQueueManagerName(),
-                getEndpoint().getQueueManagerHostname(),
-                getEndpoint().getQueueManagerPort(),
-                getEndpoint().getQueueManagerChannel(),
-                getEndpoint().getQueueManagerUserID(),
-                getEndpoint().getQueueManagerPassword(),
-                getEndpoint().getQueueManagerCCSID());
+        if (mqQueueManager == null) {
+            mqQueueManager = component.getQueueManager(getEndpoint().getQueueManagerName(),
+                    getEndpoint().getQueueManagerHostname(),
+                    getEndpoint().getQueueManagerPort(),
+                    getEndpoint().getQueueManagerChannel(),
+                    getEndpoint().getQueueManagerUserID(),
+                    getEndpoint().getQueueManagerPassword(),
+                    getEndpoint().getQueueManagerCCSID());
+        }
 
         Message in = exchange.getIn();
 
@@ -72,13 +76,13 @@ public class WMQProducer extends DefaultProducer {
         MQDestination destination;
         if (getEndpoint().getDestinationName().startsWith("topic:")) {
             String destinationName = getEndpoint().getDestinationName().substring("topic:".length());
-            destination = queueManager.accessTopic(destinationName, null, MQOO, null, null);
+            destination = mqQueueManager.accessTopic(destinationName, null, MQOO, null, null);
         } else {
             String destinationName = getEndpoint().getDestinationName();
             if (destinationName.startsWith("queue:")) {
                 destinationName = destinationName.substring("queue:".length());
             }
-            destination = queueManager.accessQueue(destinationName, MQOO, null, null, null);
+            destination = mqQueueManager.accessQueue(destinationName, MQOO, null, null, null);
         }
 
         LOGGER.info("Creating MQMessage");

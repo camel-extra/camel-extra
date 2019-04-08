@@ -39,7 +39,6 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
 import java.util.function.Function;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -92,7 +91,7 @@ public class WMQConsumerTest {
         doReturn(exchange).when(this.wmqEndpoint).createExchange();
         doReturn(wmqComponent).when(this.wmqEndpoint).getComponent();
         doReturn("topic:test").when(this.wmqEndpoint).getDestinationName();
-        doReturn(mqQueueManager).when(wmqComponent).getQueueManager(anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyString());
+        doReturn(mqQueueManager).when(this.wmqComponent).getQueueManager(anyString(), anyString(), anyString(), anyString(), anyString(), anyString(), anyString());
         doReturn(mqDestination).when(mqQueueManager).accessTopic(anyString(), anyString(), anyInt(), anyString(), anyString());
         doReturn(mqHeaderList).when(headerListFactory).apply(any(MQMessage.class));
         doReturn(-1).when(mqHeaderList).indexOf("MQRFH2");
