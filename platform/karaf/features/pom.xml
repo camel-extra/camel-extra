@@ -26,7 +26,8 @@
   <parent>
     <groupId>org.apache-extras.camel-extra</groupId>
     <artifactId>features</artifactId>
-    <version>2.22-SNAPSHOT</version>
+    <version>3.0.0-M1</version>
+    <relativePath>..</relativePath>
   </parent>
 
   <groupId>org.apache-extras.camel-extra.karaf</groupId>
@@ -44,6 +45,7 @@
     <dependency>
       <groupId>org.osgi</groupId>
       <artifactId>org.osgi.core</artifactId>
+      <version>${osgi-version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>

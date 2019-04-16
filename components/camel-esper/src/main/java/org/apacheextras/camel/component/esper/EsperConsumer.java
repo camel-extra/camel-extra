@@ -26,7 +26,9 @@ import com.espertech.esper.client.EventBean;
 import com.espertech.esper.client.UpdateListener;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.apache.camel.impl.DefaultConsumer;
+import org.apache.camel.support.DefaultConsumer;
+
+import java.util.Objects;
 
 /**
  * @version $Revision: 1.1 $
@@ -51,7 +53,7 @@ public class EsperConsumer extends DefaultConsumer implements UpdateListener {
        if(endpoint.isListen()) {
     	   statement.addListener(this);
        } else {
-    	   log.debug("Start esper consumer eql='"+endpoint.getEndpointConfiguration().getParameter("eql")+"' without listener!");
+    	   log.debug("Start esper consumer eql='"+endpoint.getConsumerProperties().get("eql")+"' without listener!");
        }
     }
 

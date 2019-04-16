@@ -24,7 +24,7 @@ package org.apacheextras.camel.component.jcifs;
 import java.net.URI;
 
 import org.apache.camel.component.file.GenericFileConfiguration;
-import org.apache.camel.util.ObjectHelper;
+import org.apache.camel.util.StringHelper;
 
 public class SmbConfiguration extends GenericFileConfiguration {
 
@@ -51,12 +51,12 @@ public class SmbConfiguration extends GenericFileConfiguration {
 
         if (userInfo != null) {
             if (userInfo.contains(DOMAIN_SEPARATOR)) {
-                setDomain(ObjectHelper.before(userInfo, DOMAIN_SEPARATOR));
-                userInfo = ObjectHelper.after(userInfo, DOMAIN_SEPARATOR);
+                setDomain(StringHelper.before(userInfo, DOMAIN_SEPARATOR));
+                userInfo = StringHelper.after(userInfo, DOMAIN_SEPARATOR);
             }
             if (userInfo.contains(USER_PASS_SEPARATOR)) {
-                setUsername(ObjectHelper.before(userInfo, USER_PASS_SEPARATOR));
-                setPassword(ObjectHelper.after(userInfo, USER_PASS_SEPARATOR));
+                setUsername(StringHelper.before(userInfo, USER_PASS_SEPARATOR));
+                setPassword(StringHelper.after(userInfo, USER_PASS_SEPARATOR));
             } else {
                 setUsername(userInfo);
             }

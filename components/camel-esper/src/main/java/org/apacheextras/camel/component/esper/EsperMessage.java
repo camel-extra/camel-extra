@@ -24,7 +24,7 @@ package org.apacheextras.camel.component.esper;
 
 import com.espertech.esper.client.EventBean;
 import org.apache.camel.CamelContext;
-import org.apache.camel.impl.DefaultMessage;
+import org.apache.camel.support.DefaultMessage;
 
 /**
  * {@inheritDoc} Class EsperMessage wraps two EventBeans into a single

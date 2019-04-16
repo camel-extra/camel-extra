@@ -21,7 +21,7 @@
  ***************************************************************************************/
 package org.apacheextras.camel.component.virtualbox;
 
-import org.apache.camel.impl.DefaultComponent;
+import org.apache.camel.support.DefaultComponent;
 import org.apacheextras.camel.component.virtualbox.command.VirtualBoxCommandHandlersManager;
 import org.apacheextras.camel.component.virtualbox.template.VirtualBoxManagerFactory;
 import org.apacheextras.camel.component.virtualbox.template.VirtualBoxTemplate;

@@ -24,6 +24,7 @@ package org.apacheextras.camel.component.rcode;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Endpoint;
 import org.apache.camel.impl.DefaultCamelContext;
+import org.apache.camel.support.DefaultEndpoint;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -59,8 +60,12 @@ public class RCodeComponentTest {
         Endpoint endpoint = component.createEndpoint(uri, "/eval", params);
         assertNotNull(endpoint);
         assertEquals(uri, endpoint.getEndpointUri());
-        assertEquals(params.get("user"), endpoint.getEndpointConfiguration().getParameter("user"));
-        assertEquals(params.get("password"), endpoint.getEndpointConfiguration().getParameter("password"));
-        assertEquals(params.get("bufferSize"), endpoint.getEndpointConfiguration().getParameter("bufferSize"));
+
+        if (endpoint instanceof DefaultEndpoint) {
+            DefaultEndpoint ep = (DefaultEndpoint) endpoint;
+            assertEquals(params.get("user"), ep.getConsumerProperties().get("user"));
+            assertEquals(params.get("password"), ep.getConsumerProperties().get("password"));
+            assertEquals(params.get("bufferSize"), ep.getConsumerProperties().get("bufferSize"));
+        }
     }
 }

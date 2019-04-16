@@ -27,8 +27,8 @@ import org.apache.camel.Processor;
 import org.apache.camel.component.file.GenericFile;
 import org.apache.camel.component.file.GenericFileEndpoint;
 import org.apache.camel.component.file.GenericFileProducer;
-import org.apache.camel.impl.DefaultExchange;
-import org.apache.camel.processor.idempotent.MemoryIdempotentRepository;
+import org.apache.camel.support.DefaultExchange;
+import org.apache.camel.support.processor.idempotent.MemoryIdempotentRepository;
 import org.apache.camel.spi.UriEndpoint;
 
 @UriEndpoint(scheme = "smb", title = "SMB", syntax = "smb://user@server.example.com/sharename?password=secret&localWorkDirectory=/tmp", consumerClass = SmbConsumer.class)

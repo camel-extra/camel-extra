@@ -39,7 +39,6 @@ import org.apache.camel.component.file.GenericFileEndpoint;
 import org.apache.camel.component.file.GenericFileExist;
 import org.apache.camel.component.file.GenericFileOperationFailedException;
 import org.apache.camel.component.file.GenericFileOperations;
-import org.apache.camel.util.ExchangeHelper;
 import org.apache.camel.util.FileUtil;
 import org.apache.camel.util.IOHelper;
 import org.apache.camel.util.ObjectHelper;
@@ -292,7 +291,7 @@ public class SmbOperations<SmbFile> implements GenericFileOperations<SmbFile> {
 
         InputStream is = null;
         try {
-            is = ExchangeHelper.getMandatoryInBody(exchange, InputStream.class);
+            is = exchange.getMessage().getMandatoryBody(InputStream.class);
 
             login();
             client.storeFile(storeName, is, append, lastModifiedDate(exchange));

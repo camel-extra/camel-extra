@@ -25,7 +25,7 @@ import org.apache.camel.Exchange;
 import org.apache.camel.ExchangePattern;
 import org.apache.camel.Message;
 import org.apache.camel.PollingConsumer;
-import org.apache.camel.impl.DefaultPollingEndpoint;
+import org.apache.camel.support.DefaultPollingEndpoint;
 import org.apache.camel.spi.UriEndpoint;
 import org.apache.camel.util.ObjectHelper;
 import org.xmldb.api.base.Collection;

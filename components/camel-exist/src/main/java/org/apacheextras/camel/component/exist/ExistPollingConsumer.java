@@ -22,7 +22,7 @@
 package org.apacheextras.camel.component.exist;
 
 import org.apache.camel.Exchange;
-import org.apache.camel.impl.PollingConsumerSupport;
+import org.apache.camel.support.PollingConsumerSupport;
 import org.xmldb.api.base.Resource;
 import org.xmldb.api.base.ResourceIterator;
 import org.xmldb.api.base.XMLDBException;

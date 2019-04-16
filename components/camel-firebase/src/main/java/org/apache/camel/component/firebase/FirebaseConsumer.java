@@ -30,7 +30,7 @@ import org.apache.camel.Processor;
 import org.apache.camel.RuntimeCamelException;
 import org.apache.camel.component.firebase.data.FirebaseMessage;
 import org.apache.camel.component.firebase.data.Operation;
-import org.apache.camel.impl.DefaultConsumer;
+import org.apache.camel.support.DefaultConsumer;
 
 /**
  * Listens to child events of the root reference and forwards the incoming message on the route.

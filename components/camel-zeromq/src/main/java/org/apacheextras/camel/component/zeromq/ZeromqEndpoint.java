@@ -28,10 +28,11 @@ import java.util.UUID;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
-import org.apache.camel.impl.DefaultEndpoint;
-import org.apache.camel.impl.DefaultExchange;
-import org.apache.camel.impl.DefaultMessage;
 import org.apache.camel.spi.UriEndpoint;
+import org.apache.camel.support.DefaultEndpoint;
+import org.apache.camel.support.DefaultExchange;
+import org.apache.camel.support.DefaultMessage;
+
 
 @UriEndpoint(scheme = "zeromq", title = "ZeroMQ", syntax = "zeromq:(tcp|ipc)://hostname:port", consumerClass = ZeromqConsumer.class)
 public class ZeromqEndpoint extends DefaultEndpoint {

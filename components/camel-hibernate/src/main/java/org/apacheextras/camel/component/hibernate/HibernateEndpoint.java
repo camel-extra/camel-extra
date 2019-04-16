@@ -28,7 +28,7 @@ import org.apache.camel.NoTypeConversionAvailableException;
 import org.apache.camel.Processor;
 import org.apache.camel.Producer;
 import org.apache.camel.builder.ExpressionBuilder;
-import org.apache.camel.impl.ScheduledPollEndpoint;
+import org.apache.camel.support.ScheduledPollEndpoint;
 import org.apache.camel.spi.UriEndpoint;
 import org.apache.camel.util.ObjectHelper;
 import org.hibernate.SessionFactory;

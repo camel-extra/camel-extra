@@ -28,7 +28,7 @@ import java.util.Map;
 import com.espertech.esper.client.EPRuntime;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
-import org.apache.camel.impl.DefaultProducer;
+import org.apache.camel.support.DefaultProducer;
 
 /**
  * @version $Revision: 1.1 $
