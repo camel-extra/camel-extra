@@ -54,7 +54,7 @@
   </prerequisites>
 
   <properties>
-    <camel-version>2.22.0</camel-version>
+    <camel-version>2.22.3</camel-version>
 
     <site-repo-url>scpexe://people.apache.org/www/activemq.apache.org/camel/maven/</site-repo-url>
     <sonatypeOssDistMgmtSnapshotsUrl>https://oss.sonatype.org/content/repositories/snapshots/
