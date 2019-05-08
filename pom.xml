@@ -32,7 +32,7 @@
 
   <groupId>org.apache-extras.camel-extra</groupId>
   <artifactId>camel-parent</artifactId>
-  <version>2.17.7-SNAPSHOT</version>
+  <version>2.17.7</version>
   <packaging>pom</packaging>
   <name>Camel Extra</name>
   <description>Camel Extra Parent POM</description>
@@ -206,7 +206,7 @@
     <connection>scm:git:https://github.com/camel-extra/camel-extra.git</connection>
     <developerConnection>scm:git:https://github.com/camel-extra/camel-extra.git</developerConnection>
     <url>https://github.com/camel-extra/camel-extra</url>
-    <tag>HEAD</tag>
+    <tag>camel-parent-2.17.7</tag>
   </scm>
 
   <modules>
