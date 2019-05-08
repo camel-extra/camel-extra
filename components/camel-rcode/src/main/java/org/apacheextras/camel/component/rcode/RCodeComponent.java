@@ -42,7 +42,7 @@ public class RCodeComponent extends DefaultComponent {
      *
      * @param uri String
      * @param remaining String
-     * @param parameters Map<String, Object>
+     * @param parameters Map
      * @return Endpoint
      */
     @Override

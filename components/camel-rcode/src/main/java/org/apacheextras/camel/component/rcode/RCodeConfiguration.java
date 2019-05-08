@@ -72,7 +72,7 @@ public final class RCodeConfiguration implements Cloneable {
 
     /**
      * Creates a new RCodeConfiguration object with default values. The default
-     * values are:</br>
+     * values are:
      * <ul>
      * <li>host = 127.0.0.1</li>
      * <li>port = 6311</li>
