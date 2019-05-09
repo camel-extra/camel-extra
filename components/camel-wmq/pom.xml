@@ -131,6 +131,19 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-javadoc-plugin</artifactId>
+              <configuration>
+                <attach>true</attach>
+                <source>1.8</source>
+                <quiet>true</quiet>
+                <bottom>Apache Extras Camel-Extra</bottom>
+                <detectOfflineLinks>false</detectOfflineLinks>
+                <javadocVersion>1.8</javadocVersion>
+                <encoding>UTF-8</encoding>
+              </configuration>
+            </plugin>
         </plugins>
     </build>
 
