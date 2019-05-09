@@ -131,6 +131,9 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+        </plugins>
+        <pluginManagement>
+          <plugins>
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-javadoc-plugin</artifactId>
@@ -147,18 +150,19 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-release-plugin</artifactId>
-              <version>2.4.2</version>
+              <version>2.5.3</version>
               <configuration>
-                <mavenExecutorId>forked-path</mavenExecutorId>
-                <pomFileName>pom.xml</pomFileName>
                 <useReleaseProfile>false</useReleaseProfile>
                 <preparationGoals>clean install</preparationGoals>
                 <goals>deploy</goals>
                 <arguments>-Psonatype-oss-release</arguments>
                 <autoVersionSubmodules>true</autoVersionSubmodules>
+                <commitByProject>true</commitByProject>
+                <pushChanges>true</pushChanges>
               </configuration>
             </plugin>
-        </plugins>
+          </plugins>
+        </pluginManagement>
     </build>
 
 </project>
