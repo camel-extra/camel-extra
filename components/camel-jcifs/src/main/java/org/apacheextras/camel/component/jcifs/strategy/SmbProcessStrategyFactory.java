@@ -37,7 +37,7 @@ import org.apache.camel.component.file.strategy.GenericFileRenameProcessStrategy
 import org.apache.camel.util.ObjectHelper;
 
 /**
- * @see org.apache.camel.component.file.remote.strategy.SftpProcessStrategyFactory
+ * see org.apache.camel.component.file.remote.strategy.SftpProcessStrategyFactory
  */
 public final class SmbProcessStrategyFactory {
 

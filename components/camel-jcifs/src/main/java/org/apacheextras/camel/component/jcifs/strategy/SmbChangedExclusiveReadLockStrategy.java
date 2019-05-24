@@ -37,7 +37,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @see org.apache.camel.component.file.remote.strategy.SftpChangedExclusiveReadLockStrategy
+ * see org.apache.camel.component.file.remote.strategy.SftpChangedExclusiveReadLockStrategy
  */
 public class SmbChangedExclusiveReadLockStrategy implements GenericFileExclusiveReadLockStrategy<SmbFile> {
     private static final Logger LOG = LoggerFactory.getLogger(SmbChangedExclusiveReadLockStrategy.class);

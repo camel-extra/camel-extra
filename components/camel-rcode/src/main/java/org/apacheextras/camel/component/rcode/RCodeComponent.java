@@ -40,9 +40,9 @@ public class RCodeComponent extends DefaultComponent {
     /**
      * Creates an endpoint instance by checking the configuration parameters.
      *
-     * @param uri String
-     * @param remaining String
-     * @param parameters Map<String, Object>
+     * @param uri
+     * @param remaining 
+     * @param parameters 
      * @return Endpoint
      */
     @Override

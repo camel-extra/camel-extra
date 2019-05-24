@@ -215,8 +215,6 @@ public class EsperEndpoint extends DefaultEndpoint {
 
 	/**
      * Sets is Esper consumer listener must be create
-     *
-     * @param pattern
      */
 	public void setListen(boolean listen) {
 		this.listen = listen;
