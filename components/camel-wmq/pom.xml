@@ -32,7 +32,7 @@
     </parent>
 
     <artifactId>camel-wmq</artifactId>
-    <version>2.23.2-SNAPSHOT</version>
+    <version>2.23.1</version>
     <packaging>jar</packaging>
     <name>Camel Extra :: IBM Websphere MQ</name>
     <description>Camel IBM Websphere MQ component</description>
