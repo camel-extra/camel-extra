@@ -28,13 +28,19 @@
     <parent>
         <groupId>org.apache-extras.camel-extra</groupId>
         <artifactId>components</artifactId>
-        <version>2.23.1-SNAPSHOT</version>
+        <version>2.23.1</version>
     </parent>
 
     <artifactId>camel-wmq</artifactId>
     <packaging>jar</packaging>
     <name>Camel Extra :: IBM Websphere MQ</name>
     <description>Camel IBM Websphere MQ component</description>
+
+    <scm>
+      <connection>scm:git:https://github.com/camel-extra/camel-extra.git</connection>
+      <developerConnection>scm:git:https://github.com/camel-extra/camel-extra.git</developerConnection>
+      <url>https://github.com/camel-extra/camel-extra</url>
+    </scm>
 
     <properties>
         <camel.osgi.import.pkg>
