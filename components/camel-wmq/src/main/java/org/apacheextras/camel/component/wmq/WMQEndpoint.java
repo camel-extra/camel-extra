@@ -61,6 +61,9 @@ public class WMQEndpoint extends DefaultEndpoint {
     @UriParam
     private String bodyType;
 
+    @UriParam
+    private int delay = 5;
+
     public WMQEndpoint() {
     }
 
@@ -148,7 +151,7 @@ public class WMQEndpoint extends DefaultEndpoint {
 
     public WMQConsumer createConsumer(Processor processor) throws Exception {
         WMQConsumer consumer = new WMQConsumer(this, processor);
-        consumer.setDelay(5);
+        consumer.setDelay(delay);
         return consumer;
     }
 
