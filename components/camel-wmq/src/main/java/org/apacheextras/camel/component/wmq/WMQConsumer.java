@@ -73,18 +73,20 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
 
         WMQComponent component = (WMQComponent) getEndpoint().getComponent();
 
-        if (mqQueueManager == null) {
-            mqQueueManager = component.getQueueManager(getEndpoint().getQueueManagerName(),
-                    getEndpoint().getQueueManagerHostname(),
-                    getEndpoint().getQueueManagerPort(),
-                    getEndpoint().getQueueManagerChannel(),
-                    getEndpoint().getQueueManagerUserID(),
-                    getEndpoint().getQueueManagerPassword(),
-                    getEndpoint().getQueueManagerCCSID());
-        }
-
         MQDestination destination = null;
+        
         try {
+        
+	        if (mqQueueManager == null) {
+	            mqQueueManager = component.getQueueManager(getEndpoint().getQueueManagerName(),
+	                    getEndpoint().getQueueManagerHostname(),
+	                    getEndpoint().getQueueManagerPort(),
+	                    getEndpoint().getQueueManagerChannel(),
+	                    getEndpoint().getQueueManagerUserID(),
+	                    getEndpoint().getQueueManagerPassword(),
+	                    getEndpoint().getQueueManagerCCSID());
+	        }
+
             LOGGER.debug("Consuming from {}", getEndpoint().getDestinationName());
 
             if (getEndpoint().getDestinationName().startsWith("topic:")) {
@@ -234,7 +236,7 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
         return (WMQEndpoint) super.getEndpoint();
     }
 
-    public setDelayOnException(int delayOnException) {
+    public void setDelayOnException(int delayOnException) {
         this.delayOnException = delayOnException;
     }
 
