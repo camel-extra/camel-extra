@@ -51,6 +51,8 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
 
     private MQQueueManager mqQueueManager = null;
 
+    private int delayOnException = 60*1000;
+    
     public WMQConsumer(WMQEndpoint endpoint, Processor processor) {
         this(endpoint, processor, WMQConsumer::createMqHeaderList);
     }
@@ -199,6 +201,7 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
         } catch (Exception e) {
             LOGGER.error(e.getMessage(), e);
             exchange.setException(e);
+            Thread.sleep(delayOnException);
         } finally {
             if (destination != null)
                 destination.close();
@@ -231,6 +234,9 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
         return (WMQEndpoint) super.getEndpoint();
     }
 
+    public setDelayOnException(int delayOnException) {
+        this.delayOnException = delayOnException;
+    }
 
     private static MQHeaderList createMqHeaderList(MQMessage mqMessage) {
         try {
