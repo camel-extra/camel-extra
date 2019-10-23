@@ -45,7 +45,8 @@
     <module>camel-jboss6</module>
     <module>camel-jcifs</module>
     <module>camel-rcode</module>
-    <module>camel-spring-neo4j</module>
+    <!-- temporary exclude as neo4j maven repository is not available right now -->
+    <!-- <module>camel-spring-neo4j</module> -->
     <module>camel-virtualbox</module>
     <module>camel-vtdxml</module>
     <!-- <module>camel-wmq</module> -->
