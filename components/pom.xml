@@ -49,7 +49,7 @@
     <!-- <module>camel-spring-neo4j</module> -->
     <module>camel-virtualbox</module>
     <module>camel-vtdxml</module>
-    <!-- <module>camel-wmq</module> -->
+    <module>camel-wmq</module>
     <module>camel-zeromq</module>
     <module>camel-firebase</module>
   </modules>
