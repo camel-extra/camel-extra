@@ -21,12 +21,12 @@
  ***************************************************************************************/
 package org.apacheextras.camel.component.jcifs;
 
-import jcifs.smb.SmbFile;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
+
+import jcifs.smb.SmbFile;
 
 public interface SmbClient {
     void login(String domain, String username, String password);

@@ -28,10 +28,7 @@ import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 
-import jcifs.smb.NtlmPasswordAuthentication;
-import jcifs.smb.SmbException;
-import jcifs.smb.SmbFile;
-import jcifs.smb.SmbFileOutputStream;
+import jcifs.smb.*;
 
 import org.apacheextras.camel.component.jcifs.SmbApiFactory;
 
@@ -40,7 +37,7 @@ public class StubFileSmbApiFactory implements SmbApiFactory {
     Map<String, SmbFile> smbFiles = new HashMap<String, SmbFile>();
     Map<String, SmbFileOutputStream> smbFileOutputStream = new HashMap<String, SmbFileOutputStream>();
 
-    public SmbFile createSmbFile(String urlString, NtlmPasswordAuthentication authentication) throws MalformedURLException, SmbException {
+    public SmbFile createSmbFile(String urlString, NtlmPasswordAuthenticator authenticator) throws MalformedURLException, SmbException {
         try {
             URI uri = new URI(urlString);
             return smbFiles.get(uri.toString());
