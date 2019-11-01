@@ -25,7 +25,6 @@ import java.net.URI;
 import java.util.Map;
 
 import jcifs.smb.SmbFile;
-
 import org.apache.camel.CamelContext;
 import org.apache.camel.component.file.GenericFileComponent;
 import org.apache.camel.component.file.GenericFileEndpoint;

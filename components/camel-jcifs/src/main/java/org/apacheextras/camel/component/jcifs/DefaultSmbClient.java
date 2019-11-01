@@ -28,11 +28,10 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import jcifs.smb.NtlmPasswordAuthentication;
+import jcifs.smb.NtlmPasswordAuthenticator;
 import jcifs.smb.SmbException;
 import jcifs.smb.SmbFile;
 import jcifs.smb.SmbFileOutputStream;
-
 import org.apache.camel.util.IOHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +44,7 @@ public class DefaultSmbClient implements SmbClient {
   private static final Logger LOGGER = LoggerFactory
       .getLogger(DefaultSmbClient.class);
 
-  private NtlmPasswordAuthentication authentication;
+  private NtlmPasswordAuthenticator authenticator;
   private SmbApiFactory smbApiFactory = new JcifsSmbApiFactory();
 
   /**
@@ -72,8 +71,7 @@ public class DefaultSmbClient implements SmbClient {
       LOGGER.debug("login() domain[" + domain + "] username[" + username
           + "] password[***]");
     }
-    setAuthentication(new NtlmPasswordAuthentication(domain, username,
-        password));
+    setAuthenticator(new NtlmPasswordAuthenticator(domain, username, password));
   }
 
   /**
@@ -89,7 +87,7 @@ public class DefaultSmbClient implements SmbClient {
     if (LOGGER.isDebugEnabled()) {
       LOGGER.debug("retrieveFile() path[" + url + "]");
     }
-    SmbFile smbFile = smbApiFactory.createSmbFile(url, authentication);
+    SmbFile smbFile = smbApiFactory.createSmbFile(url, authenticator);
     IOHelper.copyAndCloseInput(smbFile.getInputStream(), out);
     return true;
   }
@@ -101,7 +99,7 @@ public class DefaultSmbClient implements SmbClient {
     }
     SmbFile smbFile;
     try {
-      smbFile = smbApiFactory.createSmbFile(url, authentication);
+      smbFile = smbApiFactory.createSmbFile(url, authenticator);
       if (!smbFile.exists()) {
         smbFile.mkdirs();
       }
@@ -120,7 +118,7 @@ public class DefaultSmbClient implements SmbClient {
     if (LOGGER.isDebugEnabled()) {
       LOGGER.debug("getInputStream() path[" + url + "]");
     }
-    SmbFile smbFile = smbApiFactory.createSmbFile(url, authentication);
+    SmbFile smbFile = smbApiFactory.createSmbFile(url, authenticator);
     return smbFile.getInputStream();
   }
 
@@ -130,7 +128,7 @@ public class DefaultSmbClient implements SmbClient {
     if (LOGGER.isDebugEnabled()) {
       LOGGER.debug("storeFile() path[" + url + "]");
     }
-    SmbFile smbFile = smbApiFactory.createSmbFile(url, authentication);
+    SmbFile smbFile = smbApiFactory.createSmbFile(url, authenticator);
     SmbFileOutputStream smbout = smbApiFactory.createSmbFileOutputStream(
         smbFile, append);
     byte[] buf = new byte[512 * 1024];
@@ -151,7 +149,7 @@ public class DefaultSmbClient implements SmbClient {
   @Override
   public List<SmbFile> listFiles(String url) throws IOException {
     final List<SmbFile> fileList = new ArrayList<SmbFile>();
-    final SmbFile dir = smbApiFactory.createSmbFile(url, authentication);
+    final SmbFile dir = smbApiFactory.createSmbFile(url, authenticator);
     // Catch NPE for empty folders - see the following discussion for
     // details:
     // http://camel-extra.1091541.n5.nabble.com/NPE-on-SmbOperations-td256.html
@@ -177,13 +175,13 @@ public class DefaultSmbClient implements SmbClient {
 
   @Override
   public boolean isExist(String url) throws Exception {
-    SmbFile sFile = smbApiFactory.createSmbFile(url, authentication);
+    SmbFile sFile = smbApiFactory.createSmbFile(url, authenticator);
     return sFile.exists();
   }
 
   @Override
   public boolean delete(String url) throws Exception {
-    SmbFile sFile = smbApiFactory.createSmbFile(url, authentication);
+    SmbFile sFile = smbApiFactory.createSmbFile(url, authenticator);
     try {
       // Only try to delete if the file do exists to avoid error message
       if ( sFile.exists() ) {
@@ -202,8 +200,8 @@ public class DefaultSmbClient implements SmbClient {
 
   @Override
   public boolean rename(String fromUrl, String toUrl) throws Exception {
-    final SmbFile sFile = smbApiFactory.createSmbFile(fromUrl, authentication);
-    final SmbFile renamedFile = smbApiFactory.createSmbFile(toUrl, authentication);
+    final SmbFile sFile = smbApiFactory.createSmbFile(fromUrl, authenticator);
+    final SmbFile renamedFile = smbApiFactory.createSmbFile(toUrl, authenticator);
 
     try {
       if (sFile.exists()) {
@@ -220,11 +218,11 @@ public class DefaultSmbClient implements SmbClient {
     return true;
   }
 
-  public NtlmPasswordAuthentication getAuthentication() {
-    return authentication;
+  public NtlmPasswordAuthenticator getAuthenticator() {
+    return authenticator;
   }
 
-  public void setAuthentication(NtlmPasswordAuthentication authentication) {
-    this.authentication = authentication;
+  public void setAuthenticator(NtlmPasswordAuthenticator authenticator) {
+    this.authenticator = authenticator;
   }
 }
