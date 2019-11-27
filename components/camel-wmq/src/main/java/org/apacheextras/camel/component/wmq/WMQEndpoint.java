@@ -145,6 +145,14 @@ public class WMQEndpoint extends DefaultEndpoint {
         return bodyType;
     }
 
+    public int getDelay() {
+        return delay;
+    }
+
+    public void setDelay(int delay) {
+        this.delay = delay;
+    }
+
     public Producer createProducer() throws Exception {
         return new WMQProducer(this);
     }
