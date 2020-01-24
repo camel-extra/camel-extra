@@ -122,5 +122,4 @@ public class WMQConsumerTest {
         assertThat(bodyClassCaptor.getValue()).isEqualTo(ByteBuffer.class);
     }
 
-
 }

@@ -64,6 +64,9 @@ public class WMQEndpoint extends DefaultEndpoint {
     @UriParam
     private int delay = 5;
 
+    @UriParam
+    private int delayOnException = 60*1000;
+
     public WMQEndpoint() {
     }
 
@@ -151,6 +154,14 @@ public class WMQEndpoint extends DefaultEndpoint {
 
     public void setDelay(int delay) {
         this.delay = delay;
+    }
+
+    public int getDelayOnException() {
+        return delayOnException;
+    }
+
+    public void setDelayOnException(int delayOnException) {
+        this.delayOnException = delayOnException;
     }
 
     public Producer createProducer() throws Exception {

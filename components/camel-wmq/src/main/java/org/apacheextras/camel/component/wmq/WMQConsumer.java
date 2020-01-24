@@ -189,7 +189,6 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
                 }
             }
 
-
             LOGGER.info("Reading body");
             byte[] buffer = new byte[message.getDataLength()];
             message.readFully(buffer);
@@ -197,7 +196,8 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
 
             getProcessor().process(exchange);
         } catch (Exception e) {
-            LOGGER.error(e.getMessage(), e);
+            LOGGER.error("Error occurred while consuming message, waiting for {}", getEndpoint().getDelayOnException(), e);
+            Thread.sleep(getEndpoint().getDelayOnException());
             exchange.setException(e);
         } finally {
             if (destination != null)
@@ -230,7 +230,6 @@ public class WMQConsumer extends ScheduledPollConsumer implements SuspendableSer
     public WMQEndpoint getEndpoint() {
         return (WMQEndpoint) super.getEndpoint();
     }
-
 
     private static MQHeaderList createMqHeaderList(MQMessage mqMessage) {
         try {
