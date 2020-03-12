@@ -23,11 +23,8 @@ package org.apacheextras.camel.component.jcifs;
 
 import java.io.IOException;
 
-import java.net.MalformedURLException;
-import java.net.UnknownHostException;
-
-import jcifs.smb.NtlmPasswordAuthentication;
-import jcifs.smb.SmbException;
+import jcifs.context.SingletonContext;
+import jcifs.smb.NtlmPasswordAuthenticator;
 import jcifs.smb.SmbFile;
 import jcifs.smb.SmbFileOutputStream;
 
@@ -37,8 +34,8 @@ import jcifs.smb.SmbFileOutputStream;
 public class JcifsSmbApiFactory implements SmbApiFactory {
 
     @Override
-    public SmbFile createSmbFile(String url, NtlmPasswordAuthentication authentication) throws IOException {
-        return new SmbFile(url, authentication);
+    public SmbFile createSmbFile(String url, NtlmPasswordAuthenticator authenticator) throws IOException {
+        return new SmbFile(url, SingletonContext.getInstance().withCredentials(authenticator));
     }
 
     @Override
