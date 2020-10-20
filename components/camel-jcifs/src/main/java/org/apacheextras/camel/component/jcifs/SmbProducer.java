@@ -94,7 +94,7 @@ public class SmbProducer extends GenericFileProducer<SmbFile> implements Service
                 log.debug("processExchange() target[" + target + "]");
             }
 
-            preWriteCheck();
+            preWriteCheck(exchange);
 
             // should we write to a temporary name and then afterwards rename to
             // real target
