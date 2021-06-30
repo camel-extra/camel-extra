@@ -2,6 +2,16 @@
 
 Additional components for the [Apache Camel](camel.apache.org) integration framework.
 
-## Build status
+Each component are independent, allowing to be released with their own pace, and each supporting different Camel version.
 
-* Master [![Master](https://travis-ci.org/camel-extra/camel-extra.svg?branch=master)](https://travis-ci.org/camel-extra/camel-extra)
+The current extra components list is:
+
+* camel-esper
+* camel-exist
+* camel-firebase
+* camel-hibernate
+* camel-rcode
+* camel-virtualbox
+* camel-vtdxml
+* camel-wmq
+* camel-zeromq
