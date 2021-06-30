@@ -21,30 +21,39 @@
     http://www.gnu.org/licenses/lgpl-3.0-standalone.html
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-      <groupId>org.apache-extras.camel-extra</groupId>
-      <artifactId>components</artifactId>
-      <version>2.25.3-SNAPSHOT</version>
-  </parent>
-
+  <groupId>org.apache-extras.camel-extra</groupId>
   <artifactId>camel-exist</artifactId>
+  <version>3.10.0-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>Camel Extra :: Exist</name>
   <description>Camel Exist support</description>
 
-    <properties>
-        <camel.osgi.export.pkg>org.apacheextras.camel.component.exist</camel.osgi.export.pkg>
-        <camel.osgi.export.service>org.apache.camel.spi.ComponentResolver;component=exist</camel.osgi.export.service>
-    </properties>
+  <properties>
+    <exist-version>0.9.2</exist-version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-bom</artifactId>
+        <version>3.10.0</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
 
     <dependency>
       <groupId>org.apache.camel</groupId>
-      <artifactId>camel-core</artifactId>
+      <artifactId>camel-support</artifactId>
     </dependency>
+
     <dependency>
       <groupId>exist</groupId>
       <artifactId>exist</artifactId>
@@ -60,30 +69,39 @@
     <dependency>
       <groupId>org.apache.camel</groupId>
       <artifactId>camel-test</artifactId>
+      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>xmlrpc</groupId>
       <artifactId>xmlrpc</artifactId>
-        <version>1.2</version>
+      <version>1.2</version>
       <scope>test</scope>
     </dependency>
 
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
+      <version>1.7.30</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>log4j</groupId>
       <artifactId>log4j</artifactId>
+      <version>1.2.17</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
 
-
   <build>
     <plugins>
-
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+        </configuration>
+      </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
@@ -96,4 +114,5 @@
       </plugin>
     </plugins>
   </build>
+
 </project>

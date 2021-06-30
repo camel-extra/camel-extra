@@ -23,9 +23,9 @@ package org.apacheextras.camel.component.hibernate;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.apache.camel.impl.ScheduledPollConsumer;
-import org.apache.camel.util.ObjectHelper;
+import org.apache.camel.support.ScheduledPollConsumer;
 import org.apache.camel.RuntimeCamelException;
+import org.apache.camel.util.ObjectHelper;
 import org.hibernate.LockMode;
 import org.hibernate.LockOptions;
 import org.hibernate.Query;
@@ -221,7 +221,7 @@ public class HibernateConsumer extends ScheduledPollConsumer {
 
                 return new DeleteHandler<Object>() {
                     public void deleteObject(Session session, Object entityBean) {
-                        ObjectHelper.invokeMethod(method, entityBean);
+                        org.apache.camel.support.ObjectHelper.invokeMethod(method, entityBean);
                     }
                 };
             }

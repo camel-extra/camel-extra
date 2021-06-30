@@ -16,7 +16,8 @@ package org.apacheextras.camel.component.wmq;
 import com.ibm.mq.MQQueueManager;
 import org.apache.camel.CamelContext;
 import org.apache.camel.Endpoint;
-import org.apache.camel.impl.UriEndpointComponent;
+import org.apache.camel.spi.annotations.Component;
+import org.apache.camel.support.DefaultComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,21 +28,16 @@ import java.util.Hashtable;
 import java.util.Map;
 import java.util.Properties;
 
-public class WMQComponent extends UriEndpointComponent {
+@Component("wmq")
+public class WMQComponent extends DefaultComponent {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(WMQComponent.class);
 
-    public WMQComponent() {
-        super(WMQEndpoint.class);
-    }
-
-    public WMQComponent(CamelContext camelContext) {
-        super(camelContext, WMQEndpoint.class);
-    }
-
     @Override
     public Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
-        return new WMQEndpoint(uri, this, remaining);
+        Endpoint endpoint = new WMQEndpoint(uri, this);
+        setProperties(endpoint, parameters);
+        return endpoint;
     }
 
     public MQQueueManager getQueueManager() {

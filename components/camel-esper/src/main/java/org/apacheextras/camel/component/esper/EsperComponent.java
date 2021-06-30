@@ -28,15 +28,16 @@ import com.espertech.esper.client.Configuration;
 import com.espertech.esper.client.EPRuntime;
 import com.espertech.esper.client.EPServiceProvider;
 import com.espertech.esper.client.EPServiceProviderManager;
-
 import org.apache.camel.Endpoint;
-import org.apache.camel.impl.DefaultComponent;
+import org.apache.camel.spi.annotations.Component;
+import org.apache.camel.support.DefaultComponent;
 
 /**
  * A component for working with <a href="http//esper.codehaus.org/">Esper</a>
  *
  * @version $Revision: 1.1 $
  */
+@Component("esper")
 public class EsperComponent extends DefaultComponent {
 
     /**
@@ -52,10 +53,10 @@ public class EsperComponent extends DefaultComponent {
     /**
      * Creates an Esper endpoint. {@inheritDoc}
      *
-     * @param uri
-     * @param remaining
-     * @param parameters
-     * @return Endpoint
+     * @param  uri
+     * @param  remaining
+     * @param  parameters
+     * @return                     Endpoint
      * @throws java.lang.Exception
      */
     @Override
@@ -64,8 +65,8 @@ public class EsperComponent extends DefaultComponent {
     }
 
     /**
-     * Returns the event processing service provider. If the provider is null an
-     * instance will be created via the EPServiceProviderManager.
+     * Returns the event processing service provider. If the provider is null an instance will be created via the
+     * EPServiceProviderManager.
      *
      * @return event processing service provider
      */
@@ -105,11 +106,11 @@ public class EsperComponent extends DefaultComponent {
 
     @Override
     protected void doStop() throws Exception {
-    	super.doStop();
-    	
-    	// destroy esper instance
-    	if(esperService != null && !esperService.isDestroyed()) {
-    		esperService.destroy();
-    	}
+        super.doStop();
+
+        // destroy esper instance
+        if (esperService != null && !esperService.isDestroyed()) {
+            esperService.destroy();
+        }
     }
 }

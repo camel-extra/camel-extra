@@ -23,22 +23,14 @@ package org.apache.camel.component.firebase;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.Endpoint;
-import org.apache.camel.impl.UriEndpointComponent;
+import org.apache.camel.support.DefaultComponent;
 
 import java.util.Map;
 
 /**
  * Represents the component that manages {@link FirebaseEndpoint}.
  */
-public class FirebaseComponent extends UriEndpointComponent {
-
-    public FirebaseComponent() {
-        super(FirebaseEndpoint.class);
-    }
-
-    public FirebaseComponent(CamelContext context) {
-        super(context, FirebaseEndpoint.class);
-    }
+public class FirebaseComponent extends DefaultComponent {
 
     protected Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
 

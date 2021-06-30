@@ -62,7 +62,7 @@ public class ZeromqEndpointTest {
         endpoint = new ZeromqEndpoint("zeromq:tcp://localhost:1234?socketType=PUBLISH", "tcp://localhost:1234?socketType=PUBLISH", new ZeromqComponent());
         endpoint.setCamelContext(context);
         
-        when(context.getHeadersMapFactory()).thenReturn(headersMapFactory);
+        // when(context.getHeadersMapFactory()).thenReturn(headersMapFactory);
         when(headersMapFactory.newMap()).thenAnswer((invocation) -> new HashMap<>());
     }
 

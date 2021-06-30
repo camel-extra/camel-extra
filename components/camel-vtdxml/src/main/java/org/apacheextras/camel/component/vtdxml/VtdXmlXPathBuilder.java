@@ -36,12 +36,7 @@ import com.ximpleware.VTDNav;
 import com.ximpleware.XPathEvalException;
 import com.ximpleware.XPathParseException;
 
-import org.apache.camel.Exchange;
-import org.apache.camel.Expression;
-import org.apache.camel.Predicate;
-import org.apache.camel.RuntimeExchangeException;
-import org.apache.camel.RuntimeExpressionException;
-import org.apache.camel.Service;
+import org.apache.camel.*;
 import org.apache.camel.spi.NamespaceAware;
 import org.apache.camel.util.IOHelper;
 import org.slf4j.Logger;
@@ -168,6 +163,11 @@ public class VtdXmlXPathBuilder implements Expression, Predicate, NamespaceAware
         return exchange.getContext().getTypeConverter().convertTo(type, result);
     }
 
+    @Override
+    public void init(CamelContext context) {
+        Expression.super.init(context);
+    }
+
     private Object evaluateFile(Exchange exchange, File file) throws Exception {
         VTDGen vg = new VTDGen();
         vg.parseFile(file.getAbsolutePath(), true);
@@ -271,12 +271,12 @@ public class VtdXmlXPathBuilder implements Expression, Predicate, NamespaceAware
     }
 
     @Override
-    public void start() throws Exception {
+    public void start() {
         // noop
     }
 
     @Override
-    public void stop() throws Exception {
+    public void stop() {
         // noop
     }
 

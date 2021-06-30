@@ -22,7 +22,7 @@
 package org.apacheextras.camel.component.exist;
 
 import org.apache.camel.Exchange;
-import org.apache.camel.impl.DefaultProducer;
+import org.apache.camel.support.DefaultProducer;
 import org.w3c.dom.Node;
 import org.xmldb.api.base.Collection;
 import org.xmldb.api.modules.XMLResource;

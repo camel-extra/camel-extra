@@ -27,14 +27,18 @@ import java.util.concurrent.TimeUnit;
 import com.espertech.esper.client.EPStatement;
 import com.espertech.esper.client.EventBean;
 import com.espertech.esper.client.UpdateListener;
-
 import org.apache.camel.Exchange;
-import org.apache.camel.impl.PollingConsumerSupport;
+import org.apache.camel.support.PollingConsumerSupport;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @version $Revision: 1.1 $
  */
 public class EsperPollingConsumer extends PollingConsumerSupport implements UpdateListener {
+
+    private final static Logger LOG = LoggerFactory.getLogger(EsperPollingConsumer.class);
+
     private final EsperEndpoint endpoint;
     private final EPStatement statement;
     private final LinkedBlockingQueue<EventBean> beanForwardQueue = new LinkedBlockingQueue<EventBean>();
@@ -63,7 +67,7 @@ public class EsperPollingConsumer extends PollingConsumerSupport implements Upda
                 // put the new events to the forwarding queue
                 beanForwardQueue.put(bean);
             } catch (InterruptedException e) {
-                log.error("Could not update due to '{}', exception '{}'", e.getMessage(), e);
+                LOG.error("Could not update due to '{}', exception '{}'", e.getMessage(), e);
                 return;
             }
         }
@@ -75,7 +79,7 @@ public class EsperPollingConsumer extends PollingConsumerSupport implements Upda
         try {
             bean = beanForwardQueue.take();
         } catch (InterruptedException e) {
-            log.error("Could not receive due to '{}', exception '{}'", e.getMessage(), e);
+            LOG.error("Could not receive due to '{}', exception '{}'", e.getMessage(), e);
             return null;
         }
         if (bean == null) {
@@ -99,7 +103,7 @@ public class EsperPollingConsumer extends PollingConsumerSupport implements Upda
         try {
             bean = beanForwardQueue.poll(timeout, TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
-            log.error("Unable to receive '{}', exception '{}'", e.getMessage(), e);
+            LOG.error("Unable to receive '{}', exception '{}'", e.getMessage(), e);
             return null;
         }
         if (bean == null) {

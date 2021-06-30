@@ -59,8 +59,5 @@ public class RCodeComponentTest {
         Endpoint endpoint = component.createEndpoint(uri, "/eval", params);
         assertNotNull(endpoint);
         assertEquals(uri, endpoint.getEndpointUri());
-        assertEquals(params.get("user"), endpoint.getEndpointConfiguration().getParameter("user"));
-        assertEquals(params.get("password"), endpoint.getEndpointConfiguration().getParameter("password"));
-        assertEquals(params.get("bufferSize"), endpoint.getEndpointConfiguration().getParameter("bufferSize"));
     }
 }

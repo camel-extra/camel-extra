@@ -21,10 +21,12 @@
  ***************************************************************************************/
 package org.apacheextras.camel.component.zeromq;
 
+import org.apache.camel.spi.annotations.Component;
+import org.apache.camel.support.DefaultComponent;
+
 import java.util.Map;
 
-import org.apache.camel.impl.DefaultComponent;
-
+@Component("zeromq")
 public class ZeromqComponent extends DefaultComponent {
 
     @Override

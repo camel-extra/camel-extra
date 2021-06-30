@@ -34,8 +34,8 @@ import org.apache.camel.ExchangePattern;
 import org.apache.camel.Message;
 import org.apache.camel.PollingConsumer;
 import org.apache.camel.Processor;
-import org.apache.camel.impl.DefaultEndpoint;
 import org.apache.camel.spi.UriEndpoint;
+import org.apache.camel.support.DefaultEndpoint;
 import org.apache.camel.util.ObjectHelper;
 
 /**
@@ -114,10 +114,10 @@ public class EsperEndpoint extends DefaultEndpoint {
     /**
      * Creates a Camel {@link Exchange} from an Esper {@link EventBean} instance
      *
-     * @param newEventBean
-     * @param oldEventBean
-     * @param statement
-     * @return Exchange
+     * @param  newEventBean
+     * @param  oldEventBean
+     * @param  statement
+     * @return              Exchange
      */
     public Exchange createExchange(EventBean newEventBean, EventBean oldEventBean, EPStatement statement) {
         Exchange exchange = createExchange(ExchangePattern.InOnly);
@@ -157,9 +157,8 @@ public class EsperEndpoint extends DefaultEndpoint {
     }
 
     /**
-     * Should we use Map events (the default approach) containing all the
-     * message headers and the message body in the "body" entry, or should we
-     * just send the body of the message as the event.
+     * Should we use Map events (the default approach) containing all the message headers and the message body in the
+     * "body" entry, or should we just send the body of the message as the event.
      *
      * @param mapEvents whether or not we should send map events.
      */
@@ -201,22 +200,22 @@ public class EsperEndpoint extends DefaultEndpoint {
         this.configured = configured;
     }
 
-	public boolean isMapBody() {
-		return mapBody;
-	}
+    public boolean isMapBody() {
+        return mapBody;
+    }
 
-	public void setMapBody(boolean mapBody) {
-		this.mapBody = mapBody;
-	}
-	
-	public boolean isListen() {
-		return listen;
-	}
+    public void setMapBody(boolean mapBody) {
+        this.mapBody = mapBody;
+    }
 
-	/**
+    public boolean isListen() {
+        return listen;
+    }
+
+    /**
      * Sets is Esper consumer listener must be create
      */
-	public void setListen(boolean listen) {
-		this.listen = listen;
-	}
+    public void setListen(boolean listen) {
+        this.listen = listen;
+    }
 }

@@ -24,8 +24,8 @@ package org.apacheextras.camel.component.zeromq;
 import java.util.concurrent.ExecutorService;
 
 import org.apache.camel.Processor;
-import org.apache.camel.impl.DefaultConsumer;
-import org.apache.camel.util.AsyncProcessorConverterHelper;
+import org.apache.camel.support.AsyncProcessorConverterHelper;
+import org.apache.camel.support.DefaultConsumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,17 +81,25 @@ public class ZeromqConsumer extends DefaultConsumer {
     }
 
     @Override
-    public void resume() throws Exception {
+    public void resume() {
         super.resume();
-        doStart();
+        try {
+            doStart();
+        } catch (Exception e) {
+            LOGGER.error("Can't start consumer", e);
+        }
     }
 
     @Override
-    public void suspend() throws Exception {
+    public void suspend() {
         super.suspend();
         // currently do not support resume and suspend of listener, right
         // now this delegates to just stopping and
         // starting the consumer.
-        doStop();
+        try {
+            doStop();
+        } catch (Exception e) {
+            LOGGER.error("Can't stop consumer", e);
+        }
     }
 }

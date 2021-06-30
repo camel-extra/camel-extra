@@ -26,12 +26,17 @@ import com.espertech.esper.client.EventBean;
 import com.espertech.esper.client.UpdateListener;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.apache.camel.impl.DefaultConsumer;
+import org.apache.camel.support.DefaultConsumer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @version $Revision: 1.1 $
  */
 public class EsperConsumer extends DefaultConsumer implements UpdateListener {
+
+    private final static Logger LOG = LoggerFactory.getLogger(EsperConsumer.class);
+
     private final EsperEndpoint endpoint;
     private EPStatement statement;
 
@@ -48,11 +53,12 @@ public class EsperConsumer extends DefaultConsumer implements UpdateListener {
             // statement is destroyed! re-init it!
             statement = endpoint.createStatement(getRoute().getId());
         }
-       if(endpoint.isListen()) {
-    	   statement.addListener(this);
-       } else {
-    	   log.debug("Start esper consumer eql='"+endpoint.getEndpointConfiguration().getParameter("eql")+"' without listener!");
-       }
+        if (endpoint.isListen()) {
+            statement.addListener(this);
+        } else {
+            LOG.debug("Start esper consumer eql='" + endpoint.getEql()
+                      + "' without listener!");
+        }
     }
 
     @Override

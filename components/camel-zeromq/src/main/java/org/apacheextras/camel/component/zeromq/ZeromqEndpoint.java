@@ -25,15 +25,17 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.UUID;
 
+import org.apache.camel.Category;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
 import org.apache.camel.Processor;
-import org.apache.camel.impl.DefaultEndpoint;
-import org.apache.camel.impl.DefaultExchange;
-import org.apache.camel.impl.DefaultMessage;
 import org.apache.camel.spi.UriEndpoint;
+import org.apache.camel.spi.UriPath;
+import org.apache.camel.support.DefaultEndpoint;
+import org.apache.camel.support.DefaultExchange;
+import org.apache.camel.support.DefaultMessage;
 
-@UriEndpoint(scheme = "zeromq", title = "ZeroMQ", syntax = "zeromq:(tcp|ipc)://hostname:port", consumerClass = ZeromqConsumer.class)
+@UriEndpoint(firstVersion = "2.25.0", scheme = "zeromq", title = "ZeroMQ", syntax = "zeromq:(tcp|ipc)://hostname:port", category = Category.JAVA)
 public class ZeromqEndpoint extends DefaultEndpoint {
 
     private static final String URI_ERROR = "Invalid URI. Format must be of the form zeromq:(tcp|icp)://hostname:port[?options...]";

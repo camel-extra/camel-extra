@@ -54,7 +54,8 @@ public class EsperConfigurationTest extends CamelTestSupport {
             public void configure() throws Exception {
                 from("direct:feed").to("esper:StockTicker");
 
-                from("esper:StockTicker?configured=true&eql=select avg(price) from StockTick.win:time(1 sec) where symbol='GOOG'").to("mock:EsperStockTickerMock");
+                from("esper:StockTicker?configured=true&eql=select avg(price) from StockTick.win:time(1 sec) where symbol='GOOG'")
+                        .to("mock:EsperStockTickerMock");
             }
         };
     }

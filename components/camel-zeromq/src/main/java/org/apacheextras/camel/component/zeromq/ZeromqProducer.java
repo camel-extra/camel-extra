@@ -22,7 +22,7 @@
 package org.apacheextras.camel.component.zeromq;
 
 import org.apache.camel.Exchange;
-import org.apache.camel.impl.DefaultProducer;
+import org.apache.camel.support.DefaultProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.zeromq.ZMQ.Context;
@@ -86,7 +86,7 @@ public class ZeromqProducer extends DefaultProducer {
     }
 
     @Override
-    public void start() throws Exception {
+    public void start() {
 
         this.context = contextFactory.createContext(1);
         this.socket = socketFactory.createProducerSocket(context, endpoint.getSocketType());
@@ -105,7 +105,7 @@ public class ZeromqProducer extends DefaultProducer {
     }
 
     @Override
-    public void stop() throws Exception {
+    public void stop() {
         Thread t = new Thread(new Runnable() {
 
             @Override
@@ -119,7 +119,11 @@ public class ZeromqProducer extends DefaultProducer {
         });
         t.start();
         LOGGER.debug("Waiting {}ms for producer socket to close", shutdownWait);
-        t.join(shutdownWait);
+        try {
+            t.join(shutdownWait);
+        } catch (Exception e) {
+            LOGGER.error("Count not join thread", e);
+        }
         try {
             context.term();
         } catch (Exception e) {

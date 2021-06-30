@@ -34,34 +34,34 @@ import org.junit.Test;
 
 public class EsperMapBodyTest extends CamelTestSupport {
 
-	@Produce(uri = "direct://feed")
-	ProducerTemplate template;
+    @Produce(uri = "direct://feed")
+    ProducerTemplate template;
 
-	@EndpointInject(uri = "mock:StockTickMock")
-	MockEndpoint mockEndpoint;
+    @EndpointInject(uri = "mock:StockTickMock")
+    MockEndpoint mockEndpoint;
 
-	@Test
-	public void sendStockTickToLogTest() throws InterruptedException {
-		final Map<String, Object> stockTickMap = new HashMap<String, Object>();
-		stockTickMap.put("symbol", "GOOG");
-		stockTickMap.put("price", 1141.23);
+    @Test
+    public void sendStockTickToLogTest() throws InterruptedException {
+        final Map<String, Object> stockTickMap = new HashMap<String, Object>();
+        stockTickMap.put("symbol", "GOOG");
+        stockTickMap.put("price", 1141.23);
 
-		mockEndpoint.expectedMessageCount(1);
-		template.sendBody(stockTickMap);
+        mockEndpoint.expectedMessageCount(1);
+        template.sendBody(stockTickMap);
 
-		assertMockEndpointsSatisfied();
-	}
+        assertMockEndpointsSatisfied();
+    }
 
-	@Override
-	protected RouteBuilder createRouteBuilder() throws Exception {
-		return new RouteBuilder() {
-			@Override
-			public void configure() throws Exception {
-				from("direct://feed").to("esper://StockTickMap?mapBody=true");
+    @Override
+    protected RouteBuilder createRouteBuilder() throws Exception {
+        return new RouteBuilder() {
+            @Override
+            public void configure() throws Exception {
+                from("direct://feed").to("esper://StockTickMap?mapBody=true");
 
-				from("esper://myEsperConsumer?configured=true&eql=select * from StockTickMap")
-						.to("mock://StockTickMock");
-			}
-		};
-	}
+                from("esper://myEsperConsumer?configured=true&eql=select * from StockTickMap")
+                        .to("mock://StockTickMock");
+            }
+        };
+    }
 }

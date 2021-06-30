@@ -43,7 +43,7 @@ public class EsperPojoRouteTest extends CamelTestSupport {
         template.sendBody("direct:start", new MyEvent("c", 1));
         template.sendBody("direct:start", new MyEvent("d", 5));
 
-        String[] expectedFoos = {"b", "d"};
+        String[] expectedFoos = { "b", "d" };
 
         assertMockEndpointsSatisfied();
         List<Exchange> list = endpoint.getReceivedExchanges();
@@ -70,7 +70,8 @@ public class EsperPojoRouteTest extends CamelTestSupport {
             public void configure() throws Exception {
                 from("direct:start").to("esper://cheese");
 
-                from("esper://cheese?pattern=every event=org.apacheextras.camel.component.esper.MyEvent(bar=5)").to("mock:results");
+                from("esper://cheese?pattern=every event=org.apacheextras.camel.component.esper.MyEvent(bar=5)")
+                        .to("mock:results");
             }
         };
     }

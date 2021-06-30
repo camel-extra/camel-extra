@@ -25,7 +25,7 @@ import java.net.URI;
 import java.util.Map;
 
 import org.apache.camel.Endpoint;
-import org.apache.camel.impl.DefaultComponent;
+import org.apache.camel.support.DefaultComponent;
 
 /**
  * An <a href="https://github.com/cemmersb/camel-rcode">RCode Component</a>.

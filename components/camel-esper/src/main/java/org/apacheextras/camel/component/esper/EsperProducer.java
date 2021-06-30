@@ -28,7 +28,7 @@ import java.util.Map;
 import com.espertech.esper.client.EPRuntime;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
-import org.apache.camel.impl.DefaultProducer;
+import org.apache.camel.support.DefaultProducer;
 
 /**
  * @version $Revision: 1.1 $
@@ -43,14 +43,14 @@ public class EsperProducer extends DefaultProducer {
     }
 
     /**
-     * @param exchange
+     * @param  exchange
      * @throws Exception
      */
     @Override
     public void process(Exchange exchange) throws Exception {
         final Message in = exchange.getIn();
         if (this.endpoint.isMapBody()) {
-        	getEsperRuntime().sendEvent(in.getBody(Map.class), this.endpoint.getName());
+            getEsperRuntime().sendEvent(in.getBody(Map.class), this.endpoint.getName());
         } else if (endpoint.isMapEvents()) {
             Map<String, Object> map = new HashMap<String, Object>(in.getHeaders());
             map.put("body", in.getBody());

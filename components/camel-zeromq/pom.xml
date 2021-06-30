@@ -20,68 +20,158 @@
 
     http://www.gnu.org/licenses/lgpl-3.0-standalone.html
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-  <parent>
+    <modelVersion>4.0.0</modelVersion>
+
     <groupId>org.apache-extras.camel-extra</groupId>
-    <artifactId>components</artifactId>
-    <version>2.25.3-SNAPSHOT</version>
-  </parent>
-
-  <artifactId>camel-zeromq</artifactId>
-  <name>Camel Extra :: ZeroMQ</name>
-  <packaging>jar</packaging>
-
+    <artifactId>camel-zeromq</artifactId>
+    <version>3.10.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <name>Camel Extra :: ZeroMQ</name>
+    <description>
+        ZeroMQ Camel component
+    </description>
 
     <properties>
-        <camel.osgi.export.pkg>org.apacheextras.camel.component.zeromq</camel.osgi.export.pkg>
-        <camel.osgi.export.service>org.apache.camel.spi.ComponentResolver;component=zeromq</camel.osgi.export.service>
+      <akka-version>2.3.11</akka-version>
+      <camel-version>3.10.0</camel-version>
+      <zeromq-scala-binding-version>0.0.7</zeromq-scala-binding-version>
     </properties>
 
-  <dependencies>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-bom</artifactId>
+                <version>${camel-version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
-    <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-core</artifactId>
-    </dependency>
+    <dependencies>
 
-    <!-- akka-zeromq -->
-    <dependency>
-      <groupId>com.typesafe.akka</groupId>
-      <artifactId>akka-zeromq_2.10</artifactId>
-      <version>${akka-version}</version>
-    </dependency>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-core</artifactId>
+        </dependency>
 
-    <dependency>
-      <groupId>org.zeromq</groupId>
-      <artifactId>zeromq-scala-binding_2.10</artifactId>
-      <version>${zeromq-scala-binding-version}</version>
-    </dependency>
-    
-    <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-all</artifactId>
-      <version>${mockito-version}</version>
-      <scope>test</scope>
-    </dependency>
+        <!-- akka-zeromq -->
+        <dependency>
+            <groupId>com.typesafe.akka</groupId>
+            <artifactId>akka-zeromq_2.10</artifactId>
+            <version>${akka-version}</version>
+        </dependency>
 
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-log4j12</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>log4j</groupId>
-      <artifactId>log4j</artifactId>
-      <scope>test</scope>
-    </dependency>
+        <dependency>
+            <groupId>org.zeromq</groupId>
+            <artifactId>zeromq-scala-binding_2.10</artifactId>
+            <version>${zeromq-scala-binding-version}</version>
+        </dependency>
 
-  </dependencies>
+        <dependency>
+            <groupId>org.apache.camel</groupId>
+            <artifactId>camel-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.9.5</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.30</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <!--
+            <plugin>
+                <groupId>org.apache.camel</groupId>
+                <artifactId>camel-component-maven-plugin</artifactId>
+                <version>${camel-version}</version>
+                <executions>
+                    <execution>
+                        <id>generate</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <phase>process-classes</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <phase>initialize</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                            <goal>add-resource</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/generated/java</source>
+                            </sources>
+                            <resources>
+                                <resource>
+                                    <directory>src/generated/resources</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            -->
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>5.1.2</version>
+                <extensions>true</extensions>
+                <inherited>true</inherited>
+                <configuration>
+                    <instructions>
+                        <Export-Package>
+                            org.apacheextras.camel.component.zeromq
+                        </Export-Package>
+                        <Import-Package>
+                            org.apache.camel*;version="[3,4)",
+                            org.slf4j*;resolution:=optional,
+                            *
+                        </Import-Package>
+                        <Provide-Capability>
+                            osgi.service;effective:=active;objectClass="org.apache.camel.spi.ComponentResolver";component=zeromq
+                        </Provide-Capability>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

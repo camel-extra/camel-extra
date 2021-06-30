@@ -22,7 +22,7 @@
 package org.apacheextras.camel.component.virtualbox;
 
 import org.apache.camel.Exchange;
-import org.apache.camel.impl.DefaultProducer;
+import org.apache.camel.support.DefaultProducer;
 import org.apacheextras.camel.component.virtualbox.command.NoHandlerRegisteredException;
 import org.apacheextras.camel.component.virtualbox.command.VirtualBoxCommandHandlersManager;
 import org.slf4j.Logger;

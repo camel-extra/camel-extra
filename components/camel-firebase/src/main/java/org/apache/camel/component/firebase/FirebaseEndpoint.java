@@ -25,11 +25,11 @@ import com.google.firebase.FirebaseApp;
 import org.apache.camel.Consumer;
 import org.apache.camel.Processor;
 import org.apache.camel.Producer;
-import org.apache.camel.impl.DefaultEndpoint;
 import org.apache.camel.spi.Metadata;
 import org.apache.camel.spi.UriEndpoint;
 import org.apache.camel.spi.UriParam;
 import org.apache.camel.spi.UriPath;
+import org.apache.camel.support.DefaultEndpoint;
 
 /**
  * The Google Firebase component enables you to save and modify data in a Google Firebase database
@@ -43,26 +43,26 @@ public class FirebaseEndpoint extends DefaultEndpoint {
     private final FirebaseConfig firebaseConfig;
 
     @UriPath(description = "The Firebase database URL. Always uses https")
-    @Metadata(required = "true")
+    @Metadata(required = true)
     private String databaseUrl;
 
     @UriParam(description = "The path in the database tree where the key value pairs are to be stored")
-    @Metadata(required = "true")
+    @Metadata(required = true)
     private String rootReference;
 
     @UriParam(description = "The path to the JSON file which provided the keys used to connect to Firebase. #"
             + "This file is typically generated when you create the database")
-    @Metadata(required = "true")
+    @Metadata(required = true)
     private String serviceAccountFile;
 
     @UriParam(defaultValue = "firebaseKey", description = "The Camel exchange header name in which "
             + "the Firebase key is specified. Only needed in case you are saving or updating data")
-    @Metadata(required = "false")
+    @Metadata(required = false)
     private String keyName = "firebaseKey";
 
     @UriParam(defaultValue = "reply", description = "If true, the save or update request (set value in Firebase terms) "
             + "is fired and the reply will be ignored, else the routing thread will wait and the reply will be saved in the exchange message")
-    @Metadata(required = "false")
+    @Metadata(required = false)
     private boolean reply;
 
     public FirebaseEndpoint(String uri, FirebaseComponent firebaseComponent, FirebaseConfig firebaseConfig) {

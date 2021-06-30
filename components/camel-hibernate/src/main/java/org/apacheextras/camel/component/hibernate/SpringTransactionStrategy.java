@@ -21,7 +21,7 @@
  ***************************************************************************************/
 package org.apacheextras.camel.component.hibernate;
 
-import org.apache.camel.support.ServiceSupport;
+import org.apache.camel.support.service.ServiceSupport;
 import org.hibernate.SessionFactory;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionTemplate;

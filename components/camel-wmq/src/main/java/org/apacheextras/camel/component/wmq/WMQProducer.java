@@ -15,12 +15,11 @@ package org.apacheextras.camel.component.wmq;
 
 import com.ibm.mq.MQDestination;
 import com.ibm.mq.MQMessage;
-import com.ibm.mq.MQQueue;
 import com.ibm.mq.MQQueueManager;
 import com.ibm.mq.constants.MQConstants;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
-import org.apache.camel.impl.DefaultProducer;
+import org.apache.camel.support.DefaultProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

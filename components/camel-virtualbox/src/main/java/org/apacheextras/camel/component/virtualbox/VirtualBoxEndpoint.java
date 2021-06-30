@@ -22,10 +22,11 @@
 package org.apacheextras.camel.component.virtualbox;
 
 import org.apache.camel.Processor;
-import org.apache.camel.impl.DefaultEndpoint;
+import org.apache.camel.RuntimeCamelException;
 import org.apache.camel.spi.Injector;
 import org.apache.camel.spi.UriEndpoint;
-import org.apache.camel.util.ReflectionInjector;
+import org.apache.camel.support.DefaultEndpoint;
+import org.apache.camel.support.ObjectHelper;
 import org.apacheextras.camel.component.virtualbox.command.CommandHandlersResolver;
 import org.apacheextras.camel.component.virtualbox.command.StaticCommandHandlersResolver;
 import org.apacheextras.camel.component.virtualbox.command.VirtualBoxCommandHandler;
@@ -36,14 +37,47 @@ import org.apacheextras.camel.component.virtualbox.template.VirtualBoxTemplate;
 import org.apacheextras.camel.component.virtualbox.template.WebServiceVirtualBoxManagerFactory;
 import org.slf4j.Logger;
 
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+
 import static org.slf4j.LoggerFactory.getLogger;
 
-@UriEndpoint(scheme = "virtualbox", title = "VirtuaBox", syntax = "virtualbox:machine[?options]", consumerClass = VirtualBoxConsumer.class)
+@UriEndpoint(scheme = "virtualbox", title = "VirtualBox", syntax = "virtualbox:machine[?options]", consumerClass = VirtualBoxConsumer.class)
 public class VirtualBoxEndpoint extends DefaultEndpoint {
 
     private static final Logger LOG = getLogger(VirtualBoxEndpoint.class);
 
-    private static final Injector INJECTOR = new ReflectionInjector();
+    private static final Injector INJECTOR = new Injector() {
+        @Override
+        public <T> T newInstance(Class<T> type) {
+            return newInstance(type, true);
+        }
+
+        @Override
+        public <T> T newInstance(Class<T> type, String factoryMethod) {
+            T answer = null;
+            try {
+                // lookup factory method
+                Method fm = type.getMethod(factoryMethod);
+                if (Modifier.isStatic(fm.getModifiers()) && Modifier.isPublic(fm.getModifiers()) && fm.getReturnType() == type) {
+                    answer = (T) fm.invoke(null);
+                }
+            } catch (Exception e) {
+                throw new RuntimeCamelException("Error invoking factory method: " + factoryMethod + " on class: " + type, e);
+            }
+            return answer;
+        }
+
+        @Override
+        public <T> T newInstance(Class<T> type, boolean postProcessBean) {
+            return ObjectHelper.newInstance(type);
+        }
+
+        @Override
+        public boolean supportsAutoWiring() {
+            return false;
+        }
+    };
 
     private VirtualBoxCommandHandlersManager commandHandlersManager;
 

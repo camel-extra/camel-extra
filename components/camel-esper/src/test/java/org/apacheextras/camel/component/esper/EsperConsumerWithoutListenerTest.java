@@ -31,7 +31,7 @@ import org.junit.Test;
 
 public class EsperConsumerWithoutListenerTest extends CamelTestSupport {
 
-	@Produce(uri = "direct://feed")
+    @Produce(uri = "direct://feed")
     ProducerTemplate template;
 
     @EndpointInject(uri = "mock://EsperStockTickerWithoutListenerMock")
@@ -47,10 +47,11 @@ public class EsperConsumerWithoutListenerTest extends CamelTestSupport {
         return new RouteBuilder() {
             @Override
             public void configure() throws Exception {
-//                from("direct://feed").to("esper://EsperStockTickerWithoutListenerMock");
+                //                from("direct://feed").to("esper://EsperStockTickerWithoutListenerMock");
 
-				from("esper://EsperStockTickerWithoutListenerMock?listen=false&configured=true&eql=create window TenSecOfTicksWindow.win:time(10 sec) as StockTick").to("mock://EsperWithoutListenerMock");
-			}
-		};
-	}
+                from("esper://EsperStockTickerWithoutListenerMock?listen=false&configured=true&eql=create window TenSecOfTicksWindow.win:time(10 sec) as StockTick")
+                        .to("mock://EsperWithoutListenerMock");
+            }
+        };
+    }
 }

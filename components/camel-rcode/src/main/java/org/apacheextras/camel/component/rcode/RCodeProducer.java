@@ -23,7 +23,7 @@ package org.apacheextras.camel.component.rcode;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
-import org.apache.camel.impl.DefaultProducer;
+import org.apache.camel.support.DefaultProducer;
 import org.rosuda.REngine.REXP;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,7 +75,6 @@ public class RCodeProducer extends DefaultProducer {
         }
 
         exchange.getOut().getHeaders().putAll(in.getHeaders());
-        exchange.getOut().setAttachments(in.getAttachments());
     }
 
     private void executeOperation(Message in) throws Exception {

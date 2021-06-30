@@ -22,11 +22,16 @@
  */
 package org.apacheextras.camel.component.esper;
 
-import com.espertech.esper.event.map.MapEventBean;
 import java.util.List;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+
+import com.espertech.esper.event.map.MapEventBean;
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
@@ -34,8 +39,6 @@ import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 public class EsperDomNodeRouteTest extends CamelTestSupport {
 
@@ -75,7 +78,7 @@ public class EsperDomNodeRouteTest extends CamelTestSupport {
         List<Exchange> exchanges = endpoint.getExchanges();
         for (Exchange exchange : exchanges) {
             MapEventBean eventBean = exchange.getIn().getBody(MapEventBean.class);
-            Document doc = (Document)eventBean.get("childNodes");
+            Document doc = (Document) eventBean.get("childNodes");
             Element element = doc.getDocumentElement();
             assertTrue(element.toString().contains("root"));
             assertEquals("root", element.getNodeName());
@@ -91,7 +94,8 @@ public class EsperDomNodeRouteTest extends CamelTestSupport {
                 // Start route
                 from("direct://start").to("log://esper-dom?level=INFO").to("esper://esper-dom");
                 // Esper stream route
-                from("esper://esper-dom?eql=insert into DomStream select * from org.w3c.dom.Document").to("log://esper-dom?level=INFO");
+                from("esper://esper-dom?eql=insert into DomStream select * from org.w3c.dom.Document")
+                        .to("log://esper-dom?level=INFO");
                 // Esper selection route
                 from("esper://esper-dom?eql=select childNodes from DomStream").to("mock:results");
             }

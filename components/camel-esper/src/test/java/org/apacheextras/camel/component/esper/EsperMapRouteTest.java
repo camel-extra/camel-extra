@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.mock.MockEndpoint;
 import org.apache.camel.test.junit4.CamelTestSupport;
@@ -72,7 +73,8 @@ public class EsperMapRouteTest extends CamelTestSupport {
                 // Route to publish map events to
                 from("direct://start").to("log://map-test-1?level=INFO").to("esper://map-test");
                 // Esper consumer filtering map events
-                from("esper://map-test?pattern=every event=java.util.HashMap").to("log://map-test-2?level=INFO").to("mock://results");
+                from("esper://map-test?pattern=every event=java.util.HashMap").to("log://map-test-2?level=INFO")
+                        .to("mock://results");
             }
         };
     }

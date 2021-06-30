@@ -13,58 +13,67 @@
  */
 package org.apacheextras.camel.component.wmq;
 
-import org.apache.camel.Component;
+import org.apache.camel.Category;
 import org.apache.camel.Processor;
 import org.apache.camel.Producer;
 import org.apache.camel.api.management.ManagedAttribute;
-import org.apache.camel.api.management.ManagedResource;
-import org.apache.camel.impl.DefaultEndpoint;
+import org.apache.camel.spi.Metadata;
 import org.apache.camel.spi.UriEndpoint;
 import org.apache.camel.spi.UriParam;
+import org.apache.camel.spi.UriPath;
+import org.apache.camel.support.DefaultEndpoint;
 
-@ManagedResource(description = "Managed WMQ Endpoint")
-@UriEndpoint(scheme = "wmq", title = "IBM WebSphere MQ", syntax = "wmq:destinationName", consumerClass = WMQConsumer.class)
+@UriEndpoint(firstVersion="2.25.3", scheme = "wmq", title = "IBM WebSphere MQ", syntax = "wmq:destinationName", category = {Category.JAVA})
 public class WMQEndpoint extends DefaultEndpoint {
 
-    @UriParam
+    @UriPath
+    @Metadata(required = true, description = "MQ destination name")
     private String destinationName;
 
     @UriParam
+    @Metadata(description = "Queue manager name")
     private String queueManagerName;
 
     @UriParam
+    @Metadata(description = "Queue manager hostname")
     private String queueManagerHostname;
 
     @UriParam
+    @Metadata(description = "Queue manager port number")
     private String queueManagerPort;
 
     @UriParam
+    @Metadata(description = "Queue manager channel name")
     private String queueManagerChannel;
 
     @UriParam
+    @Metadata(description = "Queue manager user ID")
     private String queueManagerUserID;
 
     @UriParam
+    @Metadata(description = "Queue manager password")
     private String queueManagerPassword;
 
     @UriParam
+    @Metadata(description = "Queue manager CCSID")
     private String queueManagerCCSID;
 
     @UriParam
+    @Metadata(description = "Type of the message body")
     private String bodyType;
 
     @UriParam
+    @Metadata(description = "Polling delay (iteration)")
     private int delay = 5;
 
     @UriParam
+    @Metadata(description = "Timeout/delay when exception occur")
     private int delayOnException = 60*1000;
 
-    public WMQEndpoint() {
-    }
+    public WMQEndpoint() {}
 
-    public WMQEndpoint(String uri, Component component, String destinationName) {
+    public WMQEndpoint(String uri, WMQComponent component) {
         super(uri, component);
-        this.destinationName = destinationName;
     }
 
     public String getDestinationName() {
