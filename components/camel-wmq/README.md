@@ -5,17 +5,26 @@ It natively uses the MQ API to consume and produce messages on the destinations.
 
 The component provides both consumer and producer endpoints.
 
-## Building
+## Building & Installing
 
-In order to be able to build the component, you have to add the IBM MQ dependencies in your local Maven repository
-using the `mvn install:install-file` command:
+To build camel-wmq component, simple do:
 
 ```
-mvn install:install-file -DgroupId=com.ibm.mq -DartifactId=mq -Dversion=7.5 -Dpackaging=jar -Dfile=/path/to/mq.jar
-mvn install:install-file -DgroupId=com.ibm.mq -DartifactId=mqjms -Dversion=7.5 -Dpackaging=jar -Dfile=/path/to/mqjms.jar
-mvn install:install-file -DgroupId=com.ibm.mq -DartifactId=jmqi -Dversion=7.5 -Dpackaging=jar -Dfile=/path/to/jmqi.jar
-mvn install:install-file -DgroupId=com.ibm.mq -DartifactId=connector -Dversion=7.5 -Dpackaging=jar -Dfile=/path/to/connector.jar
-mvn install:install-file -DgroupId=com.ibm.mq -DartifactId=headers -Dversion=7.5 -Dpackaging=jar -Dfile=/path/to/headers.jar
+mvn clean install
+```
+
+Camel WMQ supports IBM MQ Client 9.x.
+
+If you are using Karaf, you have to wrap and install IBM MQ AllClient artifacts before installing camel-wmq:
+
+```
+karaf@root()> bundle:install -s wrap:mvn:com.ibm.mq/com.ibm.mq.allclient/9.2.2.0
+```
+
+then you can install camel-wmq (assuming camel is already installed):
+
+```
+karaf@root()> bundle:install -s mvn:org.apache-extras.camel-extra/camel-wmq/3.10.0
 ```
 
 ## Usage
@@ -134,16 +143,3 @@ uses it if present):
 * `mq.rfh2.flags`: the message RFH2 flags
 * `mq.rfh2.version`: the message RFH2 version
 * `mq.rfh2.folder.[FOLDER_NAME]`: the message RFH2 folder, where the [FOLDER_NAME] can be MCD, JMS, USR, PSC, PSCR, OTHER (depending of the content of the message).
-
-## Installation in Apache Karaf
-
-The camel-wmq component can be installed directly in Karaf.
-
-For that, we have to copy the following MQ jar files into Karaf lib/ext folder:
-*
-
-The MQ packages have to be declared in Karaf etc/custom.properties:
-
-```
-
-```
