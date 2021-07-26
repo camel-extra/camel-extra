@@ -27,25 +27,26 @@
         <camel-version>3.11.0</camel-version>
     </properties>
 
-  <distributionManagement>
-    <snapshotRepository>
-      <id>sonatype-nexus-snapshots</id>
-      <name>Sonatype Nexus Snapshots</name>
-      <url>${sonatypeOssDistMgmtSnapshotsUrl}</url>
-    </snapshotRepository>
-    <repository>
-      <id>sonatype-nexus-staging</id>
-      <name>Nexus Release Repository</name>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-  </distributionManagement>
+    <url>https://camel-extra.github.io</url>
 
-  <scm>
-    <connection>scm:git:https://github.com/camel-extra/camel-extra.git</connection>
-    <developerConnection>scm:git:https://github.com/camel-extra/camel-extra.git</developerConnection>
-    <url>https://github.com/camel-extra/camel-extra</url>
-    <tag>HEAD</tag>
-  </scm>
+    <distributionManagement>
+      <snapshotRepository>
+        <id>sonatype-nexus-snapshots</id>
+        <name>Sonatype Nexus Snapshots</name>
+        <url>${sonatypeOssDistMgmtSnapshotsUrl}</url>
+      </snapshotRepository>
+      <repository>
+        <id>sonatype-nexus-staging</id>
+        <name>Nexus Release Repository</name>
+        <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+      </repository>
+    </distributionManagement>
+
+    <scm>
+      <connection>scm:git:https://github.com/camel-extra/camel-extra.git</connection>
+      <developerConnection>scm:git:https://github.com/camel-extra/camel-extra.git</developerConnection>
+      <url>https://github.com/camel-extra/camel-extra</url>
+    </scm>
 
     <dependencyManagement>
         <dependencies>
