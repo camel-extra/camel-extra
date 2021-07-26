@@ -42,11 +42,21 @@
       </repository>
     </distributionManagement>
 
+    <developers>
+      <developer>
+        <name>The Apache Camel Team</name>
+        <email>dev@camel.apache.org</email>
+        <url>http://camel.apache.org</url>
+        <organization>Apache Software Foundation</organization>
+        <organizationUrl>http://apache.org/</organizationUrl>
+      </developer>
+    </developers>
+
     <scm>
       <connection>scm:git:https://github.com/camel-extra/camel-extra.git</connection>
       <developerConnection>scm:git:https://github.com/camel-extra/camel-extra.git</developerConnection>
       <url>https://github.com/camel-extra/camel-extra</url>
-  </scm>
+    </scm>
 
     <dependencyManagement>
         <dependencies>
