@@ -157,6 +157,33 @@
                 </configuration>
             </plugin>
         </plugins>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-release-plugin</artifactId>
+              <version>2.4.2</version>
+              <dependencies>
+                <dependency>
+                  <groupId>org.apache.maven.scm</groupId>
+                  <artifactId>maven-scm-provider-gitexe</artifactId>
+                  <version>1.9</version>
+                </dependency>
+              </dependencies>
+              <configuration>
+                <localCheckout>true</localCheckout>
+                <pushChanges>true</pushChanges>
+                <tagNameFormat>@{project.artifactId}-@{project.version}</tagNameFormat>
+                <useReleaseProfile>false</useReleaseProfile>
+                <preparationGoals>clean install</preparationGoals>
+                <goals>deploy</goals>
+                <!--  The profile we want to use when doing the release  -->
+                <arguments>-Prelease,apache-release,enable-schemagen,apt,sourcecheck,hibernate</arguments>
+                <autoVersionSubmodules>true</autoVersionSubmodules>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
     </build>
 
 </project>
