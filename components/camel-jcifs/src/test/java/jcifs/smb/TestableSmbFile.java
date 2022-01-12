@@ -23,6 +23,8 @@ package jcifs.smb;
 
 import java.net.MalformedURLException;
 
+import jcifs.CIFSException;
+
 public class TestableSmbFile extends SmbFile {
 
     public TestableSmbFile(String url) throws MalformedURLException {
@@ -30,7 +32,7 @@ public class TestableSmbFile extends SmbFile {
     }
 
     @Override
-    public void delete(String fileName) throws SmbException {
+    public void delete(String fileName) throws CIFSException {
         super.delete(fileName);
     }
 

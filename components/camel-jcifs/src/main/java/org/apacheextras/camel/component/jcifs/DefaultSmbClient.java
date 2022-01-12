@@ -32,6 +32,7 @@ import org.apache.camel.util.IOHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jcifs.context.SingletonContext;
 import jcifs.smb.NtlmPasswordAuthentication;
 import jcifs.smb.SmbException;
 import jcifs.smb.SmbFile;
@@ -71,7 +72,7 @@ public class DefaultSmbClient implements SmbClient {
       LOGGER.debug("login() domain[" + domain + "] username[" + username
           + "] password[***]");
     }
-    setAuthentication(new NtlmPasswordAuthentication(domain, username,
+    setAuthentication(new NtlmPasswordAuthentication(SingletonContext.getInstance(), domain, username,
         password));
   }
 
