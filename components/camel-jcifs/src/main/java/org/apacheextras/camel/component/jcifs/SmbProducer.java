@@ -67,11 +67,7 @@ public class SmbProducer extends GenericFileProducer<SmbFile> {
 
     @Override
     public void process(final Exchange exchange) throws Exception {
-
-        Exchange smbExchange = getEndpoint().createExchange(exchange.getPattern());
-        setEndpointPath(getEndpoint().getEndpointUri());
-        processExchange(smbExchange);
-        ExchangeHelper.copyResults(exchange, smbExchange);
+        processExchange(exchange);
     }
 
     public void setEndpointPath(final String endpointPath) {

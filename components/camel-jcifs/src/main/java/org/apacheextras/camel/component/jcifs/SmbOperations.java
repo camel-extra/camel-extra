@@ -304,7 +304,7 @@ public class SmbOperations<SmbFile> implements GenericFileOperations<SmbFile> {
         InputStream is = null;
         try {
 
-            is = exchange.getMessage(InputStream.class);
+            is = exchange.getIn().getMandatoryBody(InputStream.class);
 
             login();
             client.storeFile(storeName, is, append, lastModifiedDate(exchange));
