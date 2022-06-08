@@ -34,9 +34,11 @@ public class WMQComponent extends DefaultComponent {
     private final static Logger LOGGER = LoggerFactory.getLogger(WMQComponent.class);
 
     @Override
-    public Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
-        Endpoint endpoint = new WMQEndpoint(uri, this);
+    public WMQEndpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
+        String destinationName = remaining;
+        WMQEndpoint endpoint = new WMQEndpoint(uri, this);
         setProperties(endpoint, parameters);
+        endpoint.setDestinationName(destinationName);
         return endpoint;
     }
 
