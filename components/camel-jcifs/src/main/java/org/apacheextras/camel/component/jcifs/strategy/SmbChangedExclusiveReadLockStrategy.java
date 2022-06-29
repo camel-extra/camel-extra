@@ -21,6 +21,7 @@
  ***************************************************************************************/
 package org.apacheextras.camel.component.jcifs.strategy;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -81,7 +82,7 @@ public class SmbChangedExclusiveReadLockStrategy implements GenericFileExclusive
 
             LOG.trace("Using full directory listing to update file information for {}.", file);
             // fast option not available (smb listFiles only handles directories), so list the directory and filter the file name
-            List<SmbFile> files = operations.listFiles(file.getParent());
+            List<SmbFile> files = Arrays.asList(operations.listFiles(file.getParent()));
 
             LOG.trace("List files {} found {} files", file.getAbsoluteFilePath(), files.size());
             for (SmbFile f : files) {

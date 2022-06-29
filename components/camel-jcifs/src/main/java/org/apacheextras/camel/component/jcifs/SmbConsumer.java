@@ -61,7 +61,7 @@ public class SmbConsumer extends GenericFileConsumer<SmbFile> {
 
 
         boolean currentFileIsDir = false;
-        List<SmbFile> smbFiles = operations.listFiles(fileName);
+        SmbFile[] smbFiles = operations.listFiles(fileName);
         for (SmbFile smbFile : smbFiles) {
             if (!canPollMoreFiles(fileList)) {
                 return false;
@@ -126,7 +126,7 @@ public class SmbConsumer extends GenericFileConsumer<SmbFile> {
 
 
     @Override
-    protected boolean isMatched(final GenericFile<SmbFile> file, final String doneFileName, final List<SmbFile> files) {
+    protected boolean isMatched(final GenericFile<SmbFile> file, final String doneFileName, final SmbFile[] files) {
         String onlyName = FileUtil.stripPath(doneFileName);
 
         for (SmbFile f : files) {
