@@ -28,10 +28,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.component.file.FileComponent;
@@ -305,6 +302,9 @@ public class SmbOperations<SmbFile> implements GenericFileOperations<SmbFile> {
         try {
 
             is = exchange.getMessage(InputStream.class);
+            if(is == null){
+                is = exchange.getIn().getBody(InputStream.class);
+            }
 
             login();
             client.storeFile(storeName, is, append, lastModifiedDate(exchange));
@@ -344,17 +344,17 @@ public class SmbOperations<SmbFile> implements GenericFileOperations<SmbFile> {
     }
 
     @Override
-    public List<SmbFile> listFiles() {
-        return Collections.emptyList();
+    public SmbFile[] listFiles() {
+        return null;
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<SmbFile> listFiles(final String path) {
+    public SmbFile[] listFiles(final String path) {
         String listPath = getDirPath(path);
         try {
             login();
-            return Arrays.asList((SmbFile[]) client.listFiles(listPath).toArray(EMPTY));
+            return (SmbFile[]) client.listFiles(listPath).toArray(EMPTY);
         } catch (Exception e) {
             throw new GenericFileOperationFailedException("Could not get files " + e.getMessage(), e);
         }

@@ -26,6 +26,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.camel.util.IOHelper;
@@ -158,9 +159,7 @@ public class DefaultSmbClient implements SmbClient {
     // Catch NPE for empty folders - see the following discussion for details:
     // http://camel-extra.1091541.n5.nabble.com/NPE-on-SmbOperations-td256.html
     try {
-      for (SmbFile f : dir.listFiles()) {
-        fileList.add(f);
-      }
+      fileList.addAll(Arrays.asList(dir.listFiles()));
     } catch (NullPointerException ex) {
       StackTraceElement[] elements = ex.getStackTrace();
       if (elements != null && elements.length > 0 && elements[0] != null
