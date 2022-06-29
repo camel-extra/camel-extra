@@ -10,6 +10,7 @@ The current extra components list is:
 * camel-exist
 * camel-firebase
 * camel-hibernate
+* camel-jcifs
 * camel-rcode
 * camel-virtualbox
 * camel-vtdxml
