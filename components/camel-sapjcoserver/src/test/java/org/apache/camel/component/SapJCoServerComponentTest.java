@@ -28,8 +28,7 @@ public class SapJCoServerComponentTest extends CamelTestSupport {
     protected RouteBuilder createRouteBuilder() throws Exception {
         return new RouteBuilder() {
             public void configure() {
-                from("SapJCoServer://foo")
-                  .to("SapJCoServer://bar")
+                from("SapJCoServer://HCD")
                   .to("mock:result");
             }
         };
