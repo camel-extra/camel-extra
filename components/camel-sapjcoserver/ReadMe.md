@@ -1,22 +1,16 @@
-Camel Component Project
+SapJCoServer
 =======================
 
-This project is a template of a Camel component.
-
-To build this project use
-
-    mvn install
-
-For more help see the Apache Camel documentation:
-
-    https://camel.apache.org/writing-components.html
+Thsi component only support Consumer Mode, it can recieved SAPJCO ABAP function's result and wrap it as body in camel Exchange
     
-    https://github.com/apache/camel/tree/main/components/camel-timer
-    
-    
+### Run program with -D param as below
 
+```
+
+-Djava.library.path=<SAP_JCO_LIB>   -Dloader.path=<SAP_JCO_LIB>  
+```
  
- ### TODO ####
+### Example 
     
 ```
 
