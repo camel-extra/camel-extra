@@ -126,7 +126,8 @@ public class WMQComponent extends DefaultComponent {
             WorkQueueManager.close();
         } catch (CSIException e) {
             throw new RuntimeException(e);
+        } finally {
+            super.close();
         }
-        super.close();
     }
 }
