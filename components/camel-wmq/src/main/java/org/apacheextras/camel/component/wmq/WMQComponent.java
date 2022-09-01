@@ -13,20 +13,22 @@
  */
 package org.apacheextras.camel.component.wmq;
 
-import com.ibm.mq.MQQueueManager;
-import org.apache.camel.CamelContext;
-import org.apache.camel.Endpoint;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Hashtable;
+import java.util.Map;
+import java.util.Properties;
+
 import org.apache.camel.spi.annotations.Component;
 import org.apache.camel.support.DefaultComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.util.Hashtable;
-import java.util.Map;
-import java.util.Properties;
+import com.ibm.mq.MQQueueManager;
+import com.ibm.msg.client.commonservices.CSIException;
+import com.ibm.msg.client.commonservices.workqueue.WorkQueueManager;
 
 @Component("wmq")
 public class WMQComponent extends DefaultComponent {
@@ -118,4 +120,13 @@ public class WMQComponent extends DefaultComponent {
         }
     }
 
+    @Override
+    public void close() throws IOException {
+        try {
+            WorkQueueManager.close();
+        } catch (CSIException e) {
+            throw new RuntimeException(e);
+        }
+        super.close();
+    }
 }
