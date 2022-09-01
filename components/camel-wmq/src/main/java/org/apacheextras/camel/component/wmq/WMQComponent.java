@@ -15,8 +15,8 @@ package org.apacheextras.camel.component.wmq;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Field;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.Properties;
@@ -27,7 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ibm.mq.MQQueueManager;
-import com.ibm.msg.client.commonservices.CSIException;
+import com.ibm.msg.client.commonservices.j2se.workqueue.WorkQueueManagerImplementation;
 import com.ibm.msg.client.commonservices.workqueue.WorkQueueManager;
 
 @Component("wmq")
@@ -121,13 +121,37 @@ public class WMQComponent extends DefaultComponent {
     }
 
     @Override
-    public void close() throws IOException {
+    public void stop()  {
         try {
             WorkQueueManager.close();
-        } catch (CSIException e) {
+            interruptMangerThread();
+        } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
-            super.close();
+            super.stop();
+        }
+    }
+
+    /***
+     * Code of {@link WorkQueueManager.close()} is not implemented correctly and still leaves
+     * hanging thread behind the only way to really kill it is to access it through reflection and
+     * call interrupt()
+     * @throws NoSuchFieldException
+     * @throws IllegalAccessException
+     */
+    private void interruptMangerThread() throws NoSuchFieldException, IllegalAccessException {
+        Field managerImplField = WorkQueueManager.class.getDeclaredField("manager");
+        managerImplField.setAccessible(true);
+        Object managerImpl = managerImplField.get(null);
+        if (managerImpl != null && WorkQueueManagerImplementation.class.isAssignableFrom(managerImpl.getClass())){
+            WorkQueueManagerImplementation managerImplementation = (WorkQueueManagerImplementation) managerImpl;
+            Field managerThreadFld = WorkQueueManagerImplementation.class.getDeclaredField("workManagerThread");
+            managerThreadFld.setAccessible(true);
+            Object actualManagerThread = managerThreadFld.get(managerImplementation);
+            if (actualManagerThread != null && Thread.class.isAssignableFrom(actualManagerThread.getClass())){
+                Thread managerThread = (Thread) actualManagerThread;
+                managerThread.interrupt();
+            }
         }
     }
 }
