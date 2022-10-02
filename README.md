@@ -1,6 +1,6 @@
 # Camel-extra
 
-Additional components for the [Apache Camel](camel.apache.org) integration framework.
+Additional components for the [Apache Camel](https://camel.apache.org/) integration framework.
 
 Each component are independent, allowing to be released with their own pace, and each supporting different Camel version.
 
@@ -12,6 +12,7 @@ The current extra components list is:
 * camel-hibernate
 * camel-jcifs
 * camel-rcode
+* camel-sapjcoserver
 * camel-virtualbox
 * camel-vtdxml
 * camel-wmq
