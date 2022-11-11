@@ -1,7 +1,7 @@
 SapJCoServer
 =======================
 
-Thsi component only support Consumer Mode, it can recieved SAPJCO ABAP function's result and wrap it as body in camel Exchange
+This component only support Consumer Mode, it can recieved SAPJCO ABAP function's result and wrap it as body in camel Exchange
     
 ### Run program with -D param as below
 
