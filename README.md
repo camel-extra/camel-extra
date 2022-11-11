@@ -12,7 +12,7 @@ The current extra components list is:
 * camel-hibernate
 * camel-jcifs
 * camel-rcode
-* [camel-sapjcoserver](camel-sapjcoserver/readme.adoc)
+* [camel-sapjcoserver](components/camel-sapjcoserver)
 * camel-virtualbox
 * camel-vtdxml
 * camel-wmq
