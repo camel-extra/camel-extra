@@ -172,6 +172,7 @@ public class WMQEndpoint extends DefaultEndpoint {
     public WMQConsumer createConsumer(Processor processor) throws Exception {
         WMQConsumer consumer = new WMQConsumer(this, processor);
         consumer.setDelay(delay);
+        this.configureConsumer(consumer);
         return consumer;
     }
 
