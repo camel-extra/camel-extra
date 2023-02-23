@@ -145,6 +145,7 @@ public class WMQComponent extends DefaultComponent {
         Object managerImpl = managerImplField.get(null);
         if (managerImpl != null && WorkQueueManagerImplementation.class.isAssignableFrom(managerImpl.getClass())){
             WorkQueueManagerImplementation managerImplementation = (WorkQueueManagerImplementation) managerImpl;
+            managerImplementation.close();
             Field managerThreadFld = WorkQueueManagerImplementation.class.getDeclaredField("workManagerThread");
             managerThreadFld.setAccessible(true);
             Object actualManagerThread = managerThreadFld.get(managerImplementation);
