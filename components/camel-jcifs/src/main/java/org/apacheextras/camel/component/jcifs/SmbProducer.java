@@ -25,6 +25,8 @@ import java.io.File;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.Expression;
+import org.apache.camel.component.file.FileComponent;
+import org.apache.camel.component.file.GenericFile;
 import org.apache.camel.component.file.GenericFileEndpoint;
 import org.apache.camel.component.file.GenericFileExist;
 import org.apache.camel.component.file.GenericFileOperationFailedException;
@@ -67,7 +69,11 @@ public class SmbProducer extends GenericFileProducer<SmbFile> {
 
     @Override
     public void process(final Exchange exchange) throws Exception {
-        processExchange(exchange);
+        GenericFile<SmbFile> file = (GenericFile<SmbFile>) exchange.getProperty(FileComponent.FILE_EXCHANGE_FILE);
+        Exchange smbExchange = getEndpoint().createExchange(file);
+        setEndpointPath(getEndpoint().getEndpointUri());
+        ExchangeHelper.copyResults(smbExchange, exchange);
+        processExchange(smbExchange);
     }
 
     public void setEndpointPath(final String endpointPath) {

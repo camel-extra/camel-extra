@@ -13,20 +13,22 @@
  */
 package org.apacheextras.camel.component.wmq;
 
-import com.ibm.mq.MQQueueManager;
-import org.apache.camel.CamelContext;
-import org.apache.camel.Endpoint;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.lang.reflect.Field;
+import java.util.Hashtable;
+import java.util.Map;
+import java.util.Properties;
+
 import org.apache.camel.spi.annotations.Component;
 import org.apache.camel.support.DefaultComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.util.Hashtable;
-import java.util.Map;
-import java.util.Properties;
+import com.ibm.mq.MQQueueManager;
+import com.ibm.msg.client.commonservices.j2se.workqueue.WorkQueueManagerImplementation;
+import com.ibm.msg.client.commonservices.workqueue.WorkQueueManager;
 
 @Component("wmq")
 public class WMQComponent extends DefaultComponent {
@@ -34,9 +36,11 @@ public class WMQComponent extends DefaultComponent {
     private final static Logger LOGGER = LoggerFactory.getLogger(WMQComponent.class);
 
     @Override
-    public Endpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
-        Endpoint endpoint = new WMQEndpoint(uri, this);
+    public WMQEndpoint createEndpoint(String uri, String remaining, Map<String, Object> parameters) throws Exception {
+        String destinationName = remaining;
+        WMQEndpoint endpoint = new WMQEndpoint(uri, this);
         setProperties(endpoint, parameters);
+        endpoint.setDestinationName(destinationName);
         return endpoint;
     }
 
@@ -116,4 +120,39 @@ public class WMQComponent extends DefaultComponent {
         }
     }
 
+    @Override
+    public void stop()  {
+        try {
+            WorkQueueManager.close();
+            interruptMangerThread();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            super.stop();
+        }
+    }
+
+    /***
+     * Code of {@link WorkQueueManager.close()} is not implemented correctly and still leaves
+     * hanging thread behind the only way to really kill it is to access it through reflection and
+     * call interrupt()
+     * @throws NoSuchFieldException
+     * @throws IllegalAccessException
+     */
+    private void interruptMangerThread() throws NoSuchFieldException, IllegalAccessException {
+        Field managerImplField = WorkQueueManager.class.getDeclaredField("manager");
+        managerImplField.setAccessible(true);
+        Object managerImpl = managerImplField.get(null);
+        if (managerImpl != null && WorkQueueManagerImplementation.class.isAssignableFrom(managerImpl.getClass())){
+            WorkQueueManagerImplementation managerImplementation = (WorkQueueManagerImplementation) managerImpl;
+            managerImplementation.close();
+            Field managerThreadFld = WorkQueueManagerImplementation.class.getDeclaredField("workManagerThread");
+            managerThreadFld.setAccessible(true);
+            Object actualManagerThread = managerThreadFld.get(managerImplementation);
+            if (actualManagerThread != null && Thread.class.isAssignableFrom(actualManagerThread.getClass())){
+                Thread managerThread = (Thread) actualManagerThread;
+                managerThread.interrupt();
+            }
+        }
+    }
 }
