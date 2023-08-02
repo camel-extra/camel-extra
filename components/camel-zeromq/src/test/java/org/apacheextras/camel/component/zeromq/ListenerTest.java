@@ -21,6 +21,8 @@
  ***************************************************************************************/
 package org.apacheextras.camel.component.zeromq;
 
+import java.nio.charset.Charset;
+import java.util.Random;
 import java.util.concurrent.ArrayBlockingQueue;
 
 import org.apache.camel.AsyncCallback;
@@ -33,6 +35,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import org.zeromq.ZMQ;
 import org.zeromq.ZMQ.Context;
 import org.zeromq.ZMQ.Socket;
 
@@ -58,6 +61,8 @@ public class ListenerTest {
     @Mock
     private ZeromqEndpoint endpoint;
 
+    private String controlPipeAddress =  "inproc://pipe" + new Random().nextInt(10000);
+
     private Listener listener;
 
     @Mock
@@ -78,15 +83,24 @@ public class ListenerTest {
     public void asyncProcessorInvoked() throws InterruptedException {
         when(endpoint.getSocketType()).thenReturn(ZeromqSocketType.PULL);
         when(endpoint.isAsyncConsumer()).thenReturn(true);
-        listener = new Listener(endpoint, asyncProcessor, akkaSocketFactory, akkaContextFactory);
+
+        listener = new Listener(endpoint, asyncProcessor, akkaSocketFactory, i -> context, controlPipeAddress);
         listener.setCallback(callback);
         listener.connect();
         Thread t = new Thread(listener);
         t.start();
         Thread.sleep(100);
-        listener.stop();
+
+        stop();
+
         t.join();
         verify(asyncProcessor, atLeast(1)).process(any(Exchange.class), eq(callback));
+    }
+
+    private void stop() {
+        Socket emitter = context.socket(ZMQ.PAIR);
+        emitter.connect(controlPipeAddress);
+        emitter.send("close".getBytes(Charset.defaultCharset()), 0);
     }
 
     @Before
@@ -105,7 +119,9 @@ public class ListenerTest {
         when(endpoint.getSocketAddress()).thenReturn("tcp://localhost:5555");
         when(akkaContextFactory.createContext(anyInt())).thenReturn(context);
         when(akkaSocketFactory.createConsumerSocket(eq(context), any(ZeromqSocketType.class))).thenReturn(socket);
-        listener = new Listener(endpoint, processor, akkaSocketFactory, akkaContextFactory);
+
+        controlPipeAddress =  "inproc://pipe" + endpoint.hashCode();
+        listener = new Listener(endpoint, processor, akkaSocketFactory, i -> context, controlPipeAddress);
     }
 
     @Test
@@ -115,7 +131,9 @@ public class ListenerTest {
         Thread t = new Thread(listener);
         t.start();
         Thread.sleep(100);
-        listener.stop();
+
+        stop();
+
         t.join();
         verify(endpoint, atLeast(1)).createZeromqExchange("mymsg".getBytes());
     }
@@ -135,7 +153,7 @@ public class ListenerTest {
         // pause to allow thread to start
         Thread.sleep(100);
         // stop will shutdown the thread
-        listener.stop();
+        stop();
         // wait for thread to die
         t.join();
     }
@@ -154,7 +172,7 @@ public class ListenerTest {
 
     @Test
     public void stopIgnoresNullContext() {
-        listener.stop();
+        stop();
     }
 
     @Test
@@ -165,7 +183,7 @@ public class ListenerTest {
         // pause to allow thread to start
         Thread.sleep(100);
         // stop will shutdown the thread
-        listener.stop();
+        stop();
         // wait for thread to die
         t.join();
         // socket should have been closed up
@@ -195,7 +213,7 @@ public class ListenerTest {
         // pause to allow thread to start
         Thread.sleep(100);
         // stop will shutdown the thread
-        listener.stop();
+        stop();
         // wait for thread to die
         t.join();
         // socket should have been closed up
@@ -205,7 +223,7 @@ public class ListenerTest {
     @Test
     public void stopTermsContext() {
         listener.connect();
-        listener.stop();
+        stop();
         verify(context).term();
     }
 
@@ -237,7 +255,7 @@ public class ListenerTest {
         Thread t = new Thread(listener);
         t.start();
         Thread.sleep(100);
-        listener.stop();
+        stop();
         t.join();
         verify(processor, atLeast(1)).process(any(Exchange.class));
     }
