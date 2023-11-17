@@ -29,9 +29,13 @@ import org.apache.camel.component.file.GenericFileComponent;
 import org.apache.camel.component.file.GenericFileEndpoint;
 
 import jcifs.smb.SmbFile;
+import org.apache.camel.spi.Metadata;
+import org.apache.camel.spi.annotations.Component;
 
+@Component("smb")
 public class SmbComponent extends GenericFileComponent<SmbFile> {
 
+    @Metadata(label = "advanced")
     private SmbApiFactory smbApiFactory;
 
     public SmbComponent() {
@@ -42,8 +46,15 @@ public class SmbComponent extends GenericFileComponent<SmbFile> {
         super(context);
     }
 
+    /**
+     * The factory for creating jcifs API objects.
+     */
     public void setSmbApiFactoryClass(final SmbApiFactory smbApiFactory) {
         this.smbApiFactory = smbApiFactory;
+    }
+
+    public SmbApiFactory getSmbApiFactoryClass() {
+        return smbApiFactory;
     }
 
     @Override
@@ -52,7 +63,7 @@ public class SmbComponent extends GenericFileComponent<SmbFile> {
             log.debug("buildFileEndpoint() uri[" + uri + "] remaining[" + remaining + "] parameters[" + parameters + "]");
         }
         uri = fixSpaces(uri);
-        SmbConfiguration config = new SmbConfiguration(new URI(uri), smbApiFactory);
+        SmbConfiguration config = new SmbConfiguration(new URI(uri));
         SmbEndpoint endpoint = new SmbEndpoint(uri, this, config);
         return endpoint;
     }
@@ -67,5 +78,4 @@ public class SmbComponent extends GenericFileComponent<SmbFile> {
     private String fixSpaces(final String input) {
         return input.replace(" ", "%20");
     }
-
 }

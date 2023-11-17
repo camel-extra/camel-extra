@@ -24,24 +24,34 @@ package org.apacheextras.camel.component.jcifs;
 import java.net.URI;
 
 import org.apache.camel.component.file.GenericFileConfiguration;
+import org.apache.camel.spi.Metadata;
+import org.apache.camel.spi.UriParam;
+import org.apache.camel.spi.UriParams;
+import org.apache.camel.spi.UriPath;
 import org.apache.camel.util.StringHelper;
 
+@UriParams
 public class SmbConfiguration extends GenericFileConfiguration {
 
     private static final String DOMAIN_SEPARATOR = ";";
     private static final String USER_PASS_SEPARATOR = ":";
 
+    @UriPath(description = "Domain of the SMB server")
     private String domain;
+    @UriPath(label = "security", secret = true, description = "Username to use for login")
     private String username;
+    @UriParam(label = "security", secret = true, description = "Password to use for login")
     private String password;
+    @UriPath(description = "Hostname of the SMB server")
+    @Metadata(required = true)
     private String host;
+    @UriPath(description = "Path on the SMB server")
     private String path;
+    @UriPath(description = "Port of the SMB server")
     private int port;
-    private SmbApiFactory smbApiFactory;
 
-    public SmbConfiguration(final URI uri, final SmbApiFactory smbApiFactory) {
+    public SmbConfiguration(final URI uri) {
         configure(uri);
-        this.smbApiFactory = smbApiFactory;
     }
 
     @Override
@@ -68,7 +78,7 @@ public class SmbConfiguration extends GenericFileConfiguration {
     }
 
     public String getSmbPath() {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         buffer.append("smb://");
         buffer.append(getHost());
         if (getPort() > 0) {
@@ -79,7 +89,7 @@ public class SmbConfiguration extends GenericFileConfiguration {
     }
 
     public String getSmbHostPath() {
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         buffer.append("smb://");
         buffer.append(getHost());
         if (getPort() > 0) {
@@ -147,13 +157,4 @@ public class SmbConfiguration extends GenericFileConfiguration {
 
         return s;
     }
-
-    public void setSmbApiFactory(final SmbApiFactory smbApiFactory) {
-        this.smbApiFactory = smbApiFactory;
-    }
-
-    public SmbApiFactory getSmbApiFactory() {
-        return smbApiFactory;
-    }
-
 }

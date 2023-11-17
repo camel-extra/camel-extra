@@ -52,7 +52,7 @@ public class FromSmbRecursiveTest extends BaseSmbTestSupport {
     SmbFileInputStream mockInputStream1;
     SmbFileInputStream mockInputStream2;
 
-    @EndpointInject(uri = "mock:result")
+    @EndpointInject("mock:result")
     private MockEndpoint mockResult;
 
     protected String getSmbBaseUrl() {

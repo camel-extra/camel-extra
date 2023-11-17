@@ -49,7 +49,7 @@ public class SmbOperations<SmbFile> implements GenericFileOperations<SmbFile> {
     private static final jcifs.smb.SmbFile[] EMPTY = {};
 
     private GenericFileEndpoint<SmbFile> endpoint;
-    private SmbClient client;
+    private final SmbClient client;
 
     public SmbOperations(final SmbClient smbClient) {
         this.client = smbClient;

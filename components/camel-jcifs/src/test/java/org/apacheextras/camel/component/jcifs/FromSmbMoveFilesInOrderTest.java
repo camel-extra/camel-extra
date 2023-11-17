@@ -56,7 +56,7 @@ public class FromSmbMoveFilesInOrderTest extends BaseSmbTestSupport {
     private List<Object> mocks;
     private List<String> fileContents;
 
-    @EndpointInject(uri = "mock:result")
+    @EndpointInject("mock:result")
     private MockEndpoint mockResult;
 
     protected String getSmbBaseUrl() {
@@ -67,8 +67,8 @@ public class FromSmbMoveFilesInOrderTest extends BaseSmbTestSupport {
         return "smb://" + getDomain() + ";" + getUsername() + "@localhost/" + getShare() + "/camel/" + getClass().getSimpleName() + "?password=" + getPassword()
                + "&maxMessagesPerPoll=1" + "&sortBy=file:modified" + "&eagerMaxMessagesPerPoll=false"
                // + "&consumer.eagerLimitMaxMessagesPerPoll=false" // this is an
-               // alternatiwe which worked
-               + "&delete=true"; // &consumer.delay=5000
+               // alternative which worked
+               + "&delete=true"; // &delay=5000
     }
 
     @Override
@@ -100,6 +100,7 @@ public class FromSmbMoveFilesInOrderTest extends BaseSmbTestSupport {
             final byte[] content = stringContent.getBytes();
             fileContents.add(stringContent);
 
+            expect(sourceFile.exists()).andReturn(false).anyTimes();
             expect(sourceFile.isDirectory()).andReturn(false).anyTimes();
             expect(sourceFile.getName()).andReturn("hello" + i + ".txt").anyTimes();
             expect(sourceFile.getContentLength()).andReturn(content.length).anyTimes();

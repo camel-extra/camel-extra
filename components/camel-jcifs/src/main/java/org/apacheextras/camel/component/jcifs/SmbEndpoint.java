@@ -21,6 +21,7 @@
  ***************************************************************************************/
 package org.apacheextras.camel.component.jcifs;
 
+import org.apache.camel.Category;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.component.file.GenericFile;
@@ -28,6 +29,8 @@ import org.apache.camel.component.file.GenericFileEndpoint;
 import org.apache.camel.component.file.GenericFileProcessStrategy;
 import org.apache.camel.component.file.GenericFileProducer;
 import org.apache.camel.spi.UriEndpoint;
+import org.apache.camel.spi.UriParam;
+import org.apache.camel.spi.UriParams;
 import org.apache.camel.support.DefaultExchange;
 import org.apache.camel.support.processor.idempotent.MemoryIdempotentRepository;
 import org.apacheextras.camel.component.jcifs.strategy.SmbProcessStrategyFactory;
@@ -36,21 +39,24 @@ import org.slf4j.LoggerFactory;
 
 import jcifs.smb.SmbFile;
 
-@UriEndpoint(scheme = "smb", title = "SMB", syntax = "smb://user@server.example.com/sharename?password=secret&localWorkDirectory=/tmp", consumerClass = SmbConsumer.class)
+@UriEndpoint(firstVersion = "2.11", scheme = "smb", title = "SMB", syntax = "smb://domain;username@host:port/path?password=secret&localWorkDirectory=/tmp",
+            consumerClass = SmbConsumer.class, category = Category.FILE)
 public class SmbEndpoint extends GenericFileEndpoint<SmbFile> {
 
     private static final Logger LOG = LoggerFactory.getLogger(SmbEndpoint.class);
 
+    @UriParam
+    private final SmbConfiguration smbConfiguration;
     private boolean download = true;
 
     public SmbEndpoint(final String uri, final SmbComponent smbComponent, final SmbConfiguration configuration) {
         super(uri, smbComponent);
         this.configuration = configuration;
+        this.smbConfiguration = configuration;
     }
 
-    @Override
-    public SmbConfiguration getConfiguration() {
-        return (SmbConfiguration)configuration;
+    public SmbConfiguration getSmbConfiguration() {
+        return smbConfiguration;
     }
 
     @Override
@@ -96,8 +102,9 @@ public class SmbEndpoint extends GenericFileEndpoint<SmbFile> {
     @SuppressWarnings({"rawtypes", "unchecked"})
     public SmbOperations<SmbFile> createSmbOperations() {
         DefaultSmbClient client = new DefaultSmbClient();
-        if (((SmbConfiguration)this.configuration).getSmbApiFactory() != null) {
-            client.setSmbApiFactory(((SmbConfiguration)this.configuration).getSmbApiFactory());
+        SmbComponent component = (SmbComponent) this.getComponent();
+        if (component.getSmbApiFactoryClass() != null) {
+            client.setSmbApiFactory(component.getSmbApiFactoryClass());
         }
         SmbOperations operations = new SmbOperations(client);
         operations.setEndpoint(this);

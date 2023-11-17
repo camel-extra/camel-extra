@@ -51,7 +51,7 @@ public class FromSmbMoveFileTest extends BaseSmbTestSupport {
   private SmbFileOutputStream mockOutputStream;
   private SmbFile renamedFile;
 
-  @EndpointInject(uri = "mock:result")
+  @EndpointInject("mock:result")
   private MockEndpoint mockResult;
 
   protected String getSmbBaseUrl() {
@@ -62,7 +62,7 @@ public class FromSmbMoveFileTest extends BaseSmbTestSupport {
     return "smb://" + getDomain() + ";" + getUsername() + "@localhost/"
         + getShare() + "/camel/" + getClass().getSimpleName()
         + "?password=" + getPassword()
-        + "&move=done/sub2/${file:name}.old&consumer.delay=5000";
+        + "&move=done/sub2/${file:name}.old&delay=5000";
   }
 
   @Override
@@ -79,7 +79,6 @@ public void setUpFileSystem() throws Exception {
     expect(rootDir.listFiles()).andReturn(new SmbFile[]{sourceFile}).anyTimes();
 
     expect(sub2Dir.listFiles()).andReturn(new SmbFile[]{}).anyTimes();
-    expect(sub2Dir.exists()).andReturn(true);
     expect(sub2Dir.isDirectory()).andReturn(true).anyTimes();
 
     expect(sourceFile.isDirectory()).andReturn(false).anyTimes();
@@ -87,11 +86,6 @@ public void setUpFileSystem() throws Exception {
     expect(sourceFile.getContentLength()).andReturn(FILE_CONTENT.length).anyTimes();
     expect(sourceFile.getLastModified()).andReturn(startTime).anyTimes();
     expect(sourceFile.getInputStream()).andReturn(mockInputStream).anyTimes();
-    expect(renamedFile.exists()).andReturn(false);
-    expect(sourceFile.exists()).andReturn(true);
-    expect(renamedFile.exists()).andReturn(false);
-    sourceFile.renameTo(renamedFile);
-
 
     expect(mockInputStream.available()).andReturn(FILE_CONTENT.length);
     expect(mockInputStream.read((byte[]) anyObject())).andAnswer(new IAnswer<Integer>() {
