@@ -101,7 +101,7 @@ public class FromFileToSmbWithPortTest extends BaseSmbTestSupport {
         return new RouteBuilder() {
             @Override
             public void configure() throws Exception {
-                from("file:src/test/data?noop=true&consumer.delay=3000").to(getSmbUrl()).to("mock:result");
+                from("file:src/test/data?noop=true&delay=3000").to(getSmbUrl()).to("mock:result");
             }
         };
     }

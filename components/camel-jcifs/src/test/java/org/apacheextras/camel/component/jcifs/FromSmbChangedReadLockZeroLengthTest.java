@@ -49,7 +49,7 @@ public class FromSmbChangedReadLockZeroLengthTest extends BaseSmbTestSupport {
     private SmbFileInputStream mockInputStream;
     private SmbFileOutputStream mockOutputStream;
 
-    @EndpointInject(uri = "mock:result")
+    @EndpointInject("mock:result")
     private MockEndpoint mockResult;
 
     protected String getSmbBaseUrl() {
@@ -60,7 +60,7 @@ public class FromSmbChangedReadLockZeroLengthTest extends BaseSmbTestSupport {
         return "smb://" + getDomain() + ";" + getUsername() + "@localhost/"
                 + getShare() + "/camel/" + getClass().getSimpleName()
                 + "?password=" + getPassword()
-                + "&consumer.delay=5000"
+                + "&delay=5000"
                 + "&readLock=changed&readLockCheckInterval=1000"
                 + "&readLockMinLength=0";
     }

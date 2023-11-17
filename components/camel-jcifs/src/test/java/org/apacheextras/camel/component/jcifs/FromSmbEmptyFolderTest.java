@@ -21,7 +21,6 @@
  ***************************************************************************************/
 package org.apacheextras.camel.component.jcifs;
 
-import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -46,7 +45,7 @@ public class FromSmbEmptyFolderTest extends BaseSmbTestSupport {
 
     private SmbFile rootDir;
 
-    @EndpointInject(uri = "mock:result")
+    @EndpointInject("mock:result")
     private MockEndpoint mockResult;
 
     @Override
@@ -61,10 +60,9 @@ public class FromSmbEmptyFolderTest extends BaseSmbTestSupport {
         return "smb://localhost/" + getShare() + "/camel/" + getClass().getSimpleName();
     }
 
-    private String getSmbUrl() throws UnsupportedEncodingException {
-        final String uri = "smb://" + getDomain() + ";" + getUsername() + "@localhost/" + getShare() + "/camel/" + getClass().getSimpleName() + "?delete=true"
+    private String getSmbUrl() {
+        return "smb://" + getDomain() + ";" + getUsername() + "@localhost/" + getShare() + "/camel/" + getClass().getSimpleName() + "?delete=true"
                            + "&include=test.txt" + "&localWorkDirectory=/temp/folder/" + "&password=" + getPassword() + "&sortBy=file:name;file:modified";
-        return uri;
     }
 
     @Test
