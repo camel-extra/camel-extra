@@ -18,13 +18,13 @@
 
     <groupId>org.apache-extras.camel-extra</groupId>
     <artifactId>camel-wmq</artifactId>
-    <version>3.20.8-SNAPSHOT</version>
+    <version>3.20.9-SNAPSHOT</version>
     <packaging>bundle</packaging>
     <name>Camel Extra :: IBM Websphere MQ</name>
     <description>Camel IBM Websphere MQ component</description>
 
     <properties>
-        <camel-version>3.20.8</camel-version>
+        <camel-version>3.20.9</camel-version>
     </properties>
 
     <url>https://camel-extra.github.io</url>
@@ -84,7 +84,7 @@
         <dependency>
             <groupId>com.ibm.mq</groupId>
             <artifactId>com.ibm.mq.allclient</artifactId>
-            <version>9.3.2.1</version>
+            <version>9.3.5.1</version>
         </dependency>
 
         <!-- camel -->

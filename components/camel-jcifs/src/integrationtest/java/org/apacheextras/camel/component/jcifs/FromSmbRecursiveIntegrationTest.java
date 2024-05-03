@@ -42,7 +42,7 @@ public class FromSmbRecursiveIntegrationTest extends BaseSmbIntegrationTestSuppo
         return "smb://" + getDomain() + ";" + getUsername() + "@localhost/"
              + getShare() + "/camel/" + getClass().getSimpleName()
              +  "?password=" + getPassword()
-             + "&recursive=true&consumer.delay=5000";
+             + "&recursive=true&delay=5000";
     }
     
     @Override

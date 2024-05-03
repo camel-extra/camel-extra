@@ -36,7 +36,7 @@ public class FromSmbMoveFileIntegrationTest extends BaseSmbIntegrationTestSuppor
     private String getSmbUrl() {
         return "smb://" + getDomain() + ";" + getUsername() + "@localhost/" + getShare() + "/camel/"
             + getClass().getSimpleName() + "?password=" + getPassword()
-            + "&move=done/sub2/${file:name}.old&consumer.delay=5000";
+            + "&move=done/sub2/${file:name}.old&delay=5000";
     }
 
     @Test

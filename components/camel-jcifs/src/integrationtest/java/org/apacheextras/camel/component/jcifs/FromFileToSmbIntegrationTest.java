@@ -45,7 +45,7 @@ public class FromFileToSmbIntegrationTest extends BaseSmbIntegrationTestSupport 
         return new RouteBuilder() {
             public void configure() throws Exception {
                 from(getSmbUrl()).to("mock:result");
-                from("file:src/test/data?noop=true&consumer.delay=3000").to(getSmbUrl());
+                from("file:src/test/data?noop=true&delay=3000").to(getSmbUrl());
             }
         };
     }
