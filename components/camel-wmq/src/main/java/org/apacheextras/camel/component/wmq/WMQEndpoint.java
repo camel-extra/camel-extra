@@ -23,7 +23,7 @@ import org.apache.camel.spi.UriParam;
 import org.apache.camel.spi.UriPath;
 import org.apache.camel.support.DefaultEndpoint;
 
-@UriEndpoint(firstVersion="2.25.3", scheme = "wmq", title = "IBM WebSphere MQ", syntax = "wmq:destinationName", category = {Category.JAVA})
+@UriEndpoint(firstVersion="2.25.3", scheme = "wmq", title = "IBM WebSphere MQ", syntax = "wmq:destinationName", category = {Category.MESSAGING})
 public class WMQEndpoint extends DefaultEndpoint {
 
     @UriPath

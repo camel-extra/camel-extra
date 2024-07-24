@@ -18,13 +18,13 @@ Camel WMQ supports IBM MQ Client 9.x.
 If you are using Karaf, you have to wrap and install IBM MQ AllClient artifacts before installing camel-wmq:
 
 ```
-karaf@root()> bundle:install -s wrap:mvn:com.ibm.mq/com.ibm.mq.allclient/9.2.2.0
+karaf@root()> bundle:install -s wrap:mvn:com.ibm.mq/com.ibm.mq.allclient/9.3.0.20
 ```
 
 then you can install camel-wmq (assuming camel is already installed):
 
 ```
-karaf@root()> bundle:install -s mvn:org.apache-extras.camel-extra/camel-wmq/3.10.0
+karaf@root()> bundle:install -s mvn:org.apache-extras.camel-extra/camel-wmq/4.7.0
 ```
 
 ## Usage
