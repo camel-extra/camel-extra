@@ -18,13 +18,13 @@
 
     <groupId>org.apache-extras.camel-extra</groupId>
     <artifactId>camel-wmq</artifactId>
-    <version>3.20.6-SNAPSHOT</version>
+    <version>4.7.0</version>
     <packaging>bundle</packaging>
     <name>Camel Extra :: IBM Websphere MQ</name>
     <description>Camel IBM Websphere MQ component</description>
 
     <properties>
-        <camel-version>3.20.6</camel-version>
+        <camel-version>4.7.0</camel-version>
     </properties>
 
     <url>https://camel-extra.github.io</url>
@@ -84,7 +84,7 @@
         <dependency>
             <groupId>com.ibm.mq</groupId>
             <artifactId>com.ibm.mq.allclient</artifactId>
-            <version>9.3.2.1</version>
+            <version>9.3.0.20</version>
         </dependency>
 
         <!-- camel -->
@@ -145,7 +145,7 @@
             <plugin>
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
-                <version>5.1.2</version>
+                <version>5.1.9</version>
                 <extensions>true</extensions>
                 <inherited>true</inherited>
                 <configuration>
@@ -154,7 +154,7 @@
                             org.apacheextras.camel.component.wmq
                         </Export-Package>
                         <Import-Package>
-                            org.apache.camel*;version="[3,4)",
+                            org.apache.camel*;version="[4,5)",
                             org.slf4j*;resolution:=optional,
                             *
                         </Import-Package>
