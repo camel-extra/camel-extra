@@ -28,7 +28,7 @@
   <artifactId>camel-hibernate</artifactId>
   <packaging>jar</packaging>
   <name>Camel Extra :: Hibernate</name>
-  <version>3.10.0-SNAPSHOT</version>
+  <version>3.22.4-SNAPSHOT</version>
   <description>Camel Hibernate support</description>
 
   <dependencyManagement>
@@ -36,7 +36,7 @@
       <dependency>
         <groupId>org.apache.camel</groupId>
         <artifactId>camel-bom</artifactId>
-        <version>3.10.0</version>
+        <version>3.22.4</version>
         <scope>import</scope>
         <type>pom</type>
       </dependency>

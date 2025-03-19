@@ -24,7 +24,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.apache-extras.camel-extra</groupId>
 	<artifactId>camel-jcifs</artifactId>
-	<version>3.14.3-SNAPSHOT</version>
+	<version>3.22.4-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>Camel Extra :: JCIFS</name>
 	<description>Camel JCIFS (SMB) component</description>
@@ -37,7 +37,7 @@
 			<dependency>
 				<groupId>org.apache.camel</groupId>
 				<artifactId>camel-bom</artifactId>
-				<version>3.14.3</version>
+				<version>3.22.4</version>
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>
